@@ -47,7 +47,7 @@ The project is not trying to assign a dramatic single-number probability to “s
 
 ### Physics and representation
 
-- Local Landauer, Margolus-Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented with explicit SI inputs.
+- Local Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented with explicit SI inputs.
 - Cross-level cost remains an input assumption rather than an inferred consequence.
 - Program multiplicity and Kraft diagnostics expose coding-language sensitivity.
 
