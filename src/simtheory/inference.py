@@ -61,7 +61,6 @@ def normalize(weights: Iterable[float]) -> list[float]:
 
 
 def total_variation(p: Sequence[float], q: Sequence[float]) -> float:
-    """Exact finite-space total variation after validating distributions."""
     if len(p) != len(q) or not p:
         raise ValueError("distributions must be nonempty and equal length")
     if any(x < 0.0 for x in p) or any(x < 0.0 for x in q):
@@ -72,15 +71,10 @@ def total_variation(p: Sequence[float], q: Sequence[float]) -> float:
 
 
 def optimal_equal_prior_accuracy(p: Sequence[float], q: Sequence[float]) -> float:
-    """Bayes-optimal classification accuracy for two simple equal-prior laws."""
     return 0.5 * (1.0 + total_variation(p, q))
 
 
 def test_power_gap_bound(p_null: Sequence[float], p_alt: Sequence[float], test: Sequence[float]) -> float:
-    """Return power-size; its absolute value is <= total variation.
-
-    `test[x]` is the rejection probability on outcome x.
-    """
     if len(test) != len(p_null) or any(t < 0.0 or t > 1.0 for t in test):
         raise ValueError("test must have one [0,1] value per outcome")
     size = sum(t * p for t, p in zip(test, p_null))
@@ -89,11 +83,6 @@ def test_power_gap_bound(p_null: Sequence[float], p_alt: Sequence[float], test: 
 
 
 def likelihood_ratio_path(log_likelihood_ratios: Iterable[float], prior_sim: float) -> list[float]:
-    """Sequential posterior path from per-step log likelihood ratios.
-
-    This is bookkeeping only. Valid inference still requires the supplied
-    likelihood model to be correct for the observation process.
-    """
     _check_probability(prior_sim)
     current = log_odds(prior_sim)
     out: list[float] = []
@@ -101,3 +90,22 @@ def likelihood_ratio_path(log_likelihood_ratios: Iterable[float], prior_sim: flo
         current += increment
         out.append(logistic(current))
     return out
+
+
+def robust_posterior_interval(
+    prior_interval: tuple[float, float],
+    bayes_factor_interval: tuple[float, float],
+) -> tuple[float, float]:
+    """Sharp posterior range for rectangular prior/Bayes-factor uncertainty."""
+    prior_low, prior_high = prior_interval
+    bf_low, bf_high = bayes_factor_interval
+    _check_probability(prior_low)
+    _check_probability(prior_high)
+    if prior_low > prior_high:
+        raise ValueError("prior interval must be ordered")
+    if bf_low < 0.0 or bf_high < bf_low:
+        raise ValueError("Bayes-factor interval must be ordered and nonnegative")
+    return (
+        posterior_from_bayes_factor(prior_low, bf_low),
+        posterior_from_bayes_factor(prior_high, bf_high),
+    )
