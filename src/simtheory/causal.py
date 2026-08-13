@@ -33,7 +33,12 @@ def logistic(value: float) -> float:
     return z / (1.0 + z)
 
 
-def selected_binary_probability(raw_probability: float, retain_if_one: float, retain_if_zero: float) -> float:
+def selected_binary_probability(
+    raw_probability: float,
+    retain_if_one: float,
+    retain_if_zero: float,
+) -> float:
+    """P(Y=1 | retained) under outcome-dependent retention."""
     raw_probability = _closed_probability(raw_probability, "raw_probability")
     retain_if_one = _closed_probability(retain_if_one, "retain_if_one")
     retain_if_zero = _closed_probability(retain_if_zero, "retain_if_zero")
@@ -45,6 +50,7 @@ def selected_binary_probability(raw_probability: float, retain_if_one: float, re
 
 
 def selection_log_odds_shift(retain_if_one: float, retain_if_zero: float) -> float:
+    """Exact additive shift from raw to selected log-odds."""
     retain_if_one = _closed_probability(retain_if_one, "retain_if_one")
     retain_if_zero = _closed_probability(retain_if_zero, "retain_if_zero")
     if retain_if_one <= 0.0 or retain_if_zero <= 0.0:
@@ -52,7 +58,16 @@ def selection_log_odds_shift(retain_if_one: float, retain_if_zero: float) -> flo
     return log(retain_if_one / retain_if_zero)
 
 
-def raw_probability_bounds_from_selected(selected_probability: float, gamma: float) -> tuple[float, float]:
+def raw_probability_bounds_from_selected(
+    selected_probability: float,
+    gamma: float,
+) -> tuple[float, float]:
+    """Sharp binary sensitivity interval under bounded retention odds ratio.
+
+    Assumes ``1/gamma <= retain_if_one/retain_if_zero <= gamma``. Then
+
+        logit(raw) = logit(selected) - log(retention ratio).
+    """
     selected_probability = _open_probability(selected_probability, "selected_probability")
     gamma = float(gamma)
     if gamma < 1.0:
@@ -63,6 +78,7 @@ def raw_probability_bounds_from_selected(selected_probability: float, gamma: flo
 
 
 def minimum_selection_gamma(raw_probability: float, selected_probability: float) -> float:
+    """Smallest symmetric odds-ratio bound capable of explaining the shift."""
     raw_probability = _open_probability(raw_probability, "raw_probability")
     selected_probability = _open_probability(selected_probability, "selected_probability")
     ratio = exp(logit(selected_probability) - logit(raw_probability))
@@ -86,6 +102,12 @@ def retained_distribution(raw: Sequence[float], retention: Sequence[float]) -> l
 
 
 def retention_policy_for_target(raw: Sequence[float], target: Sequence[float]) -> list[float]:
+    """Construct a valid retention policy mapping raw exactly to target.
+
+    This finite reweighting construction exists precisely when target has no
+    positive mass outside the support of raw. It demonstrates non-identifiability
+    under an unrestricted observation-dependent retention policy.
+    """
     if len(raw) != len(target) or not raw:
         raise ValueError("raw and target must be nonempty and equal length")
     raw_values = [float(value) for value in raw]
@@ -108,14 +130,22 @@ def retention_policy_for_target(raw: Sequence[float], target: Sequence[float]) -
     return [ratio / scale for ratio in ratios]
 
 
-def intervention_mixture(baseline_probability: float, intervention_probability: float, intervention_rate: float) -> float:
+def intervention_mixture(
+    baseline_probability: float,
+    intervention_probability: float,
+    intervention_rate: float,
+) -> float:
     baseline_probability = _closed_probability(baseline_probability, "baseline_probability")
     intervention_probability = _closed_probability(intervention_probability, "intervention_probability")
     intervention_rate = _closed_probability(intervention_rate, "intervention_rate")
     return (1.0 - intervention_rate) * baseline_probability + intervention_rate * intervention_probability
 
 
-def minimum_unrestricted_intervention_rate(baseline_probability: float, observed_probability: float) -> float:
+def minimum_unrestricted_intervention_rate(
+    baseline_probability: float,
+    observed_probability: float,
+) -> float:
+    """Minimum mixture weight needed if the intervention law is otherwise free."""
     baseline_probability = _closed_probability(baseline_probability, "baseline_probability")
     observed_probability = _closed_probability(observed_probability, "observed_probability")
     if observed_probability == baseline_probability:

@@ -26,6 +26,7 @@ def total_variation(p: Distribution, q: Distribution) -> float:
 
 
 def kl_divergence(p: Distribution, q: Distribution) -> float:
+    """Finite KL(P||Q), with infinity on unsupported positive P mass."""
     p_values = _validate_distribution(p)
     q_values = _validate_distribution(q)
     if len(p_values) != len(q_values):
@@ -40,7 +41,10 @@ def kl_divergence(p: Distribution, q: Distribution) -> float:
     return total
 
 
-def mixture_distribution(models: Sequence[Distribution], weights: Sequence[float] | None = None) -> list[float]:
+def mixture_distribution(
+    models: Sequence[Distribution],
+    weights: Sequence[float] | None = None,
+) -> list[float]:
     if len(models) < 1:
         raise ValueError("at least one model is required")
     validated = [_validate_distribution(model) for model in models]
@@ -63,6 +67,7 @@ def mixture_distribution(models: Sequence[Distribution], weights: Sequence[float
 
 
 def uniform_model_information(models: Sequence[Distribution]) -> float:
+    """I(Theta;X) for a uniform finite model index and one observation."""
     if len(models) < 2:
         raise ValueError("at least two models are required")
     mixture = mixture_distribution(models)
@@ -70,6 +75,7 @@ def uniform_model_information(models: Sequence[Distribution]) -> float:
 
 
 def fano_error_lower_bound(models: Sequence[Distribution]) -> float:
+    """Uniform-prior one-observation Fano lower bound on model-ID error."""
     model_count = len(models)
     if model_count < 2:
         raise ValueError("at least two models are required")
@@ -79,6 +85,7 @@ def fano_error_lower_bound(models: Sequence[Distribution]) -> float:
 
 
 def fano_iid_error_lower_bound(models: Sequence[Distribution], samples: int) -> float:
+    """Fano lower bound using I(Theta;X^n) <= n I(Theta;X_1)."""
     if samples < 0:
         raise ValueError("samples must be nonnegative")
     model_count = len(models)
@@ -89,7 +96,17 @@ def fano_iid_error_lower_bound(models: Sequence[Distribution], samples: int) -> 
     return min(1.0, max(0.0, bound))
 
 
-def necessary_iid_samples_for_error(models: Sequence[Distribution], target_error: float) -> int | float:
+def necessary_iid_samples_for_error(
+    models: Sequence[Distribution],
+    target_error: float,
+) -> int | float:
+    """Necessary sample count from the same Fano relaxation.
+
+    Any method achieving error at most ``target_error`` must have at least the
+    returned number of conditionally IID observations, unless the result is
+    zero (the bound is vacuous) or infinity (the models are observationally
+    identical under this one-sample experiment).
+    """
     if target_error < 0.0 or target_error >= 1.0:
         raise ValueError("target_error must lie in [0,1)")
     model_count = len(models)
@@ -104,7 +121,18 @@ def necessary_iid_samples_for_error(models: Sequence[Distribution], target_error
     return ceil(numerator / information)
 
 
-def le_cam_absolute_risk_lower_bound(parameter_separation: float, p: Distribution, q: Distribution) -> float:
+def le_cam_absolute_risk_lower_bound(
+    parameter_separation: float,
+    p: Distribution,
+    q: Distribution,
+) -> float:
+    """Two-point lower bound for worst-case expected absolute estimation loss.
+
+    For two parameter values separated by ``Delta``, any estimator has
+    worst-case expected absolute loss at least
+
+        Delta * (1 - TV(P,Q)) / 4.
+    """
     if parameter_separation < 0.0:
         raise ValueError("parameter separation must be nonnegative")
     return 0.25 * parameter_separation * (1.0 - total_variation(p, q))

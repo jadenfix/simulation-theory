@@ -1,0 +1,189 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T01",
+      "title": "Unrestricted simulator indistinguishability",
+      "kind": "THEOREM",
+      "scope": "observable probability laws on one measurable experiment",
+      "assumptions": [
+        "the simulator class contains a member with the same observable law as the base model"
+      ],
+      "evidence": [
+        "docs/formal-results.md#unrestricted-indistinguishability",
+        "src/simtheory/inference.py"
+      ],
+      "nonclaims": [
+        "does not show that simulations exist",
+        "does not make restricted simulator architectures untestable"
+      ]
+    },
+    {
+      "id": "ST-T02",
+      "title": "Likelihood-ratio evidence ceiling",
+      "kind": "THEOREM",
+      "scope": "two mutually absolutely continuous observable models",
+      "assumptions": [
+        "the pointwise likelihood ratio lies between exp(-epsilon) and exp(epsilon)"
+      ],
+      "evidence": [
+        "docs/formal-results.md#evidence-ceiling-and-robust-posterior-bounds",
+        "src/simtheory/inference.py:evidence_ceiling"
+      ],
+      "nonclaims": [
+        "does not supply or verify the physical likelihood model"
+      ]
+    },
+    {
+      "id": "ST-T03",
+      "title": "Observer-measure Jensen gap",
+      "kind": "THEOREM",
+      "scope": "nonnegative uncertain simulated observer measure with finite expectation",
+      "assumptions": [
+        "base observer measure is fixed and positive",
+        "probability is defined by the stated observer-measure convention"
+      ],
+      "evidence": [
+        "docs/formal-results.md#observer-measure-and-the-jensen-gap",
+        "src/simtheory/observer_measure.py"
+      ],
+      "nonclaims": [
+        "does not establish the correct anthropic measure"
+      ]
+    },
+    {
+      "id": "ST-T04",
+      "title": "Adaptive approximate-rendering transcript bound",
+      "kind": "THEOREM",
+      "scope": "finite adaptive response transcripts",
+      "assumptions": [
+        "conditional total-variation error is bounded at each matched prefix"
+      ],
+      "evidence": [
+        "docs/formal-results.md#adaptive-approximate-rendering-transcript-bound",
+        "src/simtheory/lazy_rendering.py:sequential_total_variation_bound",
+        "tests/test_lazy_rendering.py"
+      ],
+      "nonclaims": [
+        "does not estimate the error of any real physical simulator"
+      ]
+    },
+    {
+      "id": "ST-T05",
+      "title": "Approximate predictive-state packing lower bound",
+      "kind": "THEOREM",
+      "scope": "finite families of future observable laws",
+      "assumptions": [
+        "one renderer state emits one approximating future law",
+        "each target law is approximated within epsilon in total variation"
+      ],
+      "evidence": [
+        "docs/formal-results.md#approximate-predictive-state-packing",
+        "src/simtheory/lazy_rendering.py:approximate_state_packing_lower_bound"
+      ],
+      "nonclaims": [
+        "finite packing checks do not prove an asymptotic physical lower bound"
+      ]
+    },
+    {
+      "id": "ST-T06",
+      "title": "Fano multi-architecture identification lower bound",
+      "kind": "THEOREM",
+      "scope": "finite restricted architecture families with a uniform prior",
+      "assumptions": [
+        "candidate observable distributions are correctly specified",
+        "IID relaxation is used only where explicitly stated"
+      ],
+      "evidence": [
+        "docs/formal-results.md#multi-architecture-fano-bound",
+        "src/simtheory/minimax.py"
+      ],
+      "nonclaims": [
+        "does not define the correct architecture family or prior"
+      ]
+    },
+    {
+      "id": "ST-T07",
+      "title": "Selection log-odds sensitivity identity",
+      "kind": "THEOREM",
+      "scope": "binary outcomes under outcome-dependent retention",
+      "assumptions": [
+        "both retention probabilities are positive"
+      ],
+      "evidence": [
+        "docs/formal-results.md#selection-and-intervention-identifiability",
+        "src/simtheory/causal.py"
+      ],
+      "nonclaims": [
+        "does not assert that a simulator uses outcome-dependent retention"
+      ]
+    },
+    {
+      "id": "ST-T08",
+      "title": "One-sided Bernoulli likelihood-ratio e-process",
+      "kind": "THEOREM",
+      "scope": "IID Bernoulli restricted-signature model",
+      "assumptions": [
+        "the observations satisfy the declared Bernoulli sampling model",
+        "the fixed alternative lies on the tested side of the null boundary"
+      ],
+      "evidence": [
+        "docs/formal-results.md#anytime-valid-restricted-signature-tests",
+        "src/simtheory/sequential.py",
+        "tests/test_sequential.py"
+      ],
+      "nonclaims": [
+        "an anomaly indicator is not generic evidence for simulation",
+        "the repository does not verify IID sampling for external data"
+      ]
+    },
+    {
+      "id": "ST-M01",
+      "title": "Local physical-computation envelope",
+      "kind": "MODEL_RESULT",
+      "scope": "devices obeying the physical assumptions behind Landauer, Margolus-Levitin, Bekenstein, and Schwarzschild formulas",
+      "assumptions": [
+        "SI-unit local physics applies",
+        "input energy, temperature, radius, or mass is externally justified"
+      ],
+      "evidence": [
+        "docs/formal-results.md#local-physics-versus-parent-physics",
+        "src/simtheory/physics.py"
+      ],
+      "nonclaims": [
+        "does not constrain unknown parent physics without a transfer assumption"
+      ]
+    },
+    {
+      "id": "ST-M02",
+      "title": "Hierarchical feasibility model averaging",
+      "kind": "MODEL_RESULT",
+      "scope": "finite explicit Bayesian scenario families",
+      "assumptions": [
+        "scenario priors, data likelihoods, and observer measures are supplied and correctly interpreted"
+      ],
+      "evidence": [
+        "docs/formal-results.md#hierarchical-bayesian-model-uncertainty",
+        "src/simtheory/bayesian.py",
+        "tests/test_bayesian.py"
+      ],
+      "nonclaims": [
+        "does not determine a uniquely correct prior or observer measure",
+        "does not reproduce an empirical probability that reality is simulated"
+      ]
+    },
+    {
+      "id": "ST-O01",
+      "title": "Quantum and relativistic predictive-state lower bounds",
+      "kind": "OPEN_PROBLEM",
+      "scope": "adaptive physically admissible query families",
+      "assumptions": [],
+      "evidence": [
+        "docs/research-program.md"
+      ],
+      "nonclaims": [
+        "no uniform quantum or relativistic lower bound is currently claimed"
+      ]
+    }
+  ]
+}

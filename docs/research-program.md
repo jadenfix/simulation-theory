@@ -4,42 +4,155 @@
 
 Turn simulation-theory discussion into explicit mathematical models whose assumptions, observable implications, and failure modes can be checked independently.
 
-## Workstreams
+The project is not trying to assign a dramatic single-number probability to “simulation.” It is building a hierarchy of restricted questions:
 
-### 1. Identification before estimation
+1. Is the model identifiable from internal observations?
+2. What observer measure converts world populations into credences?
+3. What computational or physical constraints follow from the specified architecture?
+4. What experiment distinguishes that architecture from serious alternatives?
+5. What exact evidence remains after selection, intervention, and optional stopping are modeled?
 
-Before estimating `P(simulated | data)`, ask whether the competing model classes induce different observable laws at all. If a simulator class contains a law identical to the base law, generic detection is impossible. Restricted architectures are the testable units.
+## Completed mathematical lanes
 
-### 2. Observer measure
+### Identification before estimation
 
-Keep civilization survival, deployment, simulated population, consciousness, evidence compatibility, and observer-moment weighting separate. Compare multiple conditioning conventions rather than hiding them in one scalar population ratio.
+- Generic simulator classes containing the base observable law are underidentified.
+- Bounded likelihood ratios impose exact Bayesian evidence ceilings.
+- Total variation, Le Cam, and Fano quantify finite two-model and multi-model limits.
+- Hierarchical Bayesian scenarios preserve technical-feasibility uncertainty instead of hiding it inside an expected observer count.
 
-### 3. Adaptive consistency and rendering
+### Observer measure
 
-Treat "rendering on demand" as an online conditional-sampling problem. Exact conditional sampling is observationally equivalent to full pre-generation. Research should therefore target predictive-state size, conditional-sampling complexity, approximation error, and how errors accumulate under adaptive queries.
+- Civilization and observer factors remain separate instead of collapsing into one count.
+- The Jensen gap prevents plug-in expected counts from masquerading as model-averaged probabilities.
+- Finite SSA/SIA/FNC-presence conventions expose duplication and saturation behavior.
 
-### 4. Physics without cross-level leakage
+### Adaptive consistency and rendering
 
-Do not equate internal mass/energy/information with parent-substrate cost. Physical bounds become relevant only after specifying which physical laws and implementation constraints are assumed to carry between levels.
+- Exact conditional lazy generation is transcript-equivalent to full pre-generation.
+- Per-step total-variation and conditional-KL errors now have transcript-level bounds.
+- Exact and approximate predictive-state lower bounds are implemented.
 
-### 5. Restricted empirical models
+### Causal selection
 
-Examples: cubic lattice, finite precision, bounded random source, specified intervention process, bounded causal horizon, or constrained compression architecture. Each model must provide a likelihood or falsifiable signature before statistical evidence is computed.
+- Outcome-dependent retention has an exact log-odds sensitivity identity.
+- Arbitrary finite reweighting is constructively demonstrated.
+- Unrestricted latent interventions have explicit minimum mixture mass.
 
-### 6. Algorithmic probability
+### Sequential inference
 
-Separate programs from observable laws. Study how priors change under duplicate implementations, compiler transformations, universal-machine choices, and equivalence-class aggregation.
+- Fixed and mixture Bernoulli e-processes are implemented in log space.
+- Simple and one-sided composite-null validity is proved.
+- Finite-horizon optional-stopping error is audited by exact dynamic programming.
 
-## Immediate mathematical targets
+### Physics and representation
 
-1. Prove a sequential approximation bound: if each exact conditional is approximated within uniformly bounded total variation, bound the transcript-level total variation under adaptive queries.
-2. Construct finite examples where reference sampling, observer-number weighting, and full-evidence conditioning yield sharply different posteriors from the same world models.
-3. Derive minimax lower bounds on predictive memory for families with many distinct future conditional laws.
-4. Model causal intervention by a latent external variable and identify conditions under which internal observational data cannot separate intervention from altered internal law.
-5. Build exact finite restricted-model tests and calibrate power/type-I error rather than reporting arbitrary "simulation probabilities."
+- Local Landauer, Margolus-Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented with explicit SI inputs.
+- Cross-level cost remains an input assumption rather than an inferred consequence.
+- Program multiplicity and Kraft diagnostics expose coding-language sensitivity.
+
+## Next research campaigns
+
+### Campaign A: physically meaningful predictive-state lower bounds
+
+The present packing theorem accepts an arbitrary finite family of future laws. The next step is to derive those families from explicit physical experiments.
+
+Candidate bounded programs:
+
+- finite Bell-type measurement schedules with adaptive basis selection;
+- reversible cellular-automaton or lattice-field toy worlds with delayed measurements;
+- distributed observers comparing authenticated historical records;
+- finite quantum-circuit families where future outcome laws depend on hidden stabilizer or phase state;
+- relativistic causal networks where spacelike-separated query choices constrain transcript consistency.
+
+Deliverables:
+
+1. A typed finite experiment definition.
+2. Exact future-law enumeration or certified approximation.
+3. Packing/covering numbers as a function of error tolerance.
+4. State, random-bit, and update-time lower bounds with bounded claim scope.
+
+### Campaign B: restricted physical signatures
+
+Select one architecture at a time—lattice, finite precision, constrained pseudorandomness, or approximation policy. For each:
+
+1. State the null and alternative observable laws.
+2. Identify nuisance parameters and ordinary-physics alternatives.
+3. Build a leakage-safe data pipeline.
+4. Pre-register a likelihood, e-process, or confidence sequence.
+5. Report power and calibration before interpreting data.
+
+No “anomaly score” is evidence without a null sampling model.
+
+### Campaign C: causal simulator-policy models
+
+Build structural causal models with nodes for:
+
+- internal physical state;
+- external intervention;
+- retention/continuation;
+- observer existence;
+- measurement choice;
+- recorded observation.
+
+Research targets:
+
+- graphical sufficient conditions for recoverability;
+- sensitivity regions when retention odds ratios are bounded;
+- negative identifiability results when policy is unrestricted;
+- multi-environment designs that can separate law change from selection.
+
+### Campaign D: observer-measure robustness
+
+Replace one toy scalar count with explicit distributions over:
+
+- civilization survival and capability;
+- deployment and ethical prohibition;
+- simulation multiplicity;
+- observer lifetime and observer moments;
+- consciousness uncertainty;
+- full-evidence rarity;
+- duplicate dependence and copy correlations.
+
+Compute posterior surfaces under several conditioning rules, robust prior sets, and dependence structures. Keep the output as a sensitivity map rather than a single unsupported percentage.
+
+### Campaign E: algorithmic-prior sensitivity
+
+The next algorithmic lane should compare:
+
+- alternative prefix languages;
+- compiler-equivalent implementations;
+- observational-law aggregation;
+- shortest-description and aggregate-program semimeasures;
+- finite universal-machine perturbations.
+
+The target is not a representation-free prior—which may be impossible—but a quantitative account of how conclusions move under admissible coding choices.
+
+## Quality gates
+
+A research result is ready for the main branch only when:
+
+1. The claim has an explicit finite, universal, asymptotic, or empirical scope.
+2. Assumptions and nonclaims are written next to the result.
+3. The derivation has a test, exact checker, or independently reproducible calculation where applicable.
+4. Numerical demonstrations use fixed seeds and are labeled illustrative when priors are invented.
+5. Sequential claims state their sampling model and stopping guarantee.
+6. Physical claims state which laws apply and avoid cross-level leakage.
+7. A finite experiment is never promoted into a generic simulation conclusion.
+
+## Tempera Math integration
+
+The repository's claim manifest is the source of truth. Tempera Math can later provide content-addressed claim registration, proof graphs, exact finite certificates, and external checker receipts. The adapter must preserve:
+
+- theorem versus model-result versus finite-check status;
+- all assumptions and nonclaims;
+- exact source revision and checker command;
+- the boundary between structural validation and mathematical execution.
+
+See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, or observer effects are evidence of simulation by themselves. It also does not assume digital physics, substrate-independent consciousness, finite parent resources, or that a parent universe obeys our constants.
+This project does not claim that quantum mechanics, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
-A negative result against one restricted implementation is not a negative result against every possible simulator. A positive anomaly is not evidence until its probability under alternative physical explanations is modeled.
+Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.

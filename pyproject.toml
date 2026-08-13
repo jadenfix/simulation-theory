@@ -1,8 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "simulation-theory"
-version = "0.1.0"
+version = "0.2.0"
 description = "First-principles mathematical and computational research on simulation hypotheses"
+readme = "README.md"
 requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Jaden Fix"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.scripts]
+simtheory-experiments = "simtheory.experiments:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

@@ -44,7 +44,12 @@ def validate_claim_manifest(manifest: Mapping[str, Any]) -> None:
 
 def canonical_claim_manifest_bytes(manifest: Mapping[str, Any]) -> bytes:
     validate_claim_manifest(manifest)
-    return json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return json.dumps(
+        manifest,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
 
 
 def canonical_claim_manifest_hash(manifest: Mapping[str, Any]) -> str:
@@ -76,7 +81,10 @@ def _markdown_heading_anchors(text: str) -> set[str]:
     return anchors
 
 
-def validate_local_evidence_paths(manifest: Mapping[str, Any], repository_root: str | Path) -> None:
+def validate_local_evidence_paths(
+    manifest: Mapping[str, Any],
+    repository_root: str | Path,
+) -> None:
     """Check that local evidence files and declared Markdown anchors exist."""
     validate_claim_manifest(manifest)
     root = Path(repository_root)
@@ -96,4 +104,6 @@ def validate_local_evidence_paths(manifest: Mapping[str, Any], repository_root: 
             if anchor is not None:
                 anchors = _markdown_heading_anchors(path.read_text(encoding="utf-8"))
                 if anchor not in anchors:
-                    raise ValueError(f"missing evidence anchor for {claim['id']}: {path_text}#{anchor}")
+                    raise ValueError(
+                        f"missing evidence anchor for {claim['id']}: {path_text}#{anchor}"
+                    )
