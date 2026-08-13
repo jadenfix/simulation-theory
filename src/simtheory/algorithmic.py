@@ -36,3 +36,34 @@ def multiplicity_inflation(programs: Iterable[tuple[int, Hashable]]) -> dict[Has
     summed = observational_class_mass(xs)
     shortest = shortest_description_mass(xs)
     return {law: summed[law] / shortest[law] for law in summed}
+
+
+def kraft_sum(program_lengths_bits: Iterable[int]) -> float:
+    """Kraft sum for a proposed binary prefix-code length multiset."""
+    lengths = list(program_lengths_bits)
+    if any(length < 0 for length in lengths):
+        raise ValueError("program lengths must be nonnegative")
+    return sum(prefix_weight(length) for length in lengths)
+
+
+def kraft_admissible(program_lengths_bits: Iterable[int], tolerance: float = 1e-12) -> bool:
+    """Necessary and sufficient length condition for some binary prefix code."""
+    if tolerance < 0.0:
+        raise ValueError("tolerance must be nonnegative")
+    return kraft_sum(program_lengths_bits) <= 1.0 + tolerance
+
+
+def normalized_observational_prior(
+    programs: Iterable[tuple[int, Hashable]],
+) -> dict[Hashable, float]:
+    """Normalize raw prefix weights after aggregating observational classes.
+
+    This still depends on the chosen coding language and program list. It only
+    prevents counting each implementation as a separate *observable law* in the
+    returned support.
+    """
+    masses = observational_class_mass(programs)
+    total = sum(masses.values())
+    if total <= 0.0:
+        raise ValueError("program set must have positive total mass")
+    return {law: mass / total for law, mass in masses.items()}
