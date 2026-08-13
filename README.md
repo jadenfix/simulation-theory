@@ -21,68 +21,37 @@ The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.
 
 ## Main results encoded
 
-### Statistical identifiability
-
 1. **Unrestricted indistinguishability.** If the simulator class contains a member with the same observable law as the base model, no test can distinguish that member better than its false-positive rate; its Bayes factor against base reality is one.
-2. **Evidence ceiling.** If the observable likelihood ratio stays in `[exp(-epsilon), exp(epsilon)]`, posterior log-odds can move by at most `epsilon`.
-3. **Total-variation ceiling.** Equal-prior optimal classification accuracy is `(1 + TV(P,Q))/2`. Better algorithms cannot recover information absent from the observation law.
-4. **Fano and Le Cam bounds.** Multi-architecture identification and parameter estimation have explicit minimax lower bounds when candidate observable laws overlap.
-5. **Hierarchical Bayesian model averaging.** Technical feasibility, data likelihood, and scenario-conditional observer measure remain separate; posterior simulation probability is an average of conditional ratios, not a ratio built from expected counts.
-
-### Observer measure and anthropic conditioning
-
-6. **Observer-measure factorization.** A population count becomes a probability only after a measure over observers or observer-moments is chosen.
-7. **Jensen expectation trap.** For uncertain simulated measure `X`, `E[X/(B+X)] <= E[X]/(B+E[X])`; plugging an expected count into the familiar ratio overstates the properly averaged result.
-8. **SSA/SIA/FNC-style divergence.** Finite weighting rules can produce sharply different posteriors from the same worlds. Duplicating a world leaves its SSA-style within-world fraction unchanged, scales its SIA-style weight linearly, and makes a Poisson full-evidence-presence weight saturate toward one.
-
-### Lazy rendering and predictive complexity
-
-9. **Exact lazy-rendering equivalence.** Sampling every next answer from the exact target conditional law produces the same transcript distribution as pre-sampling the full hidden world.
-10. **Adaptive approximate-rendering bound.** If step-`t` conditional total-variation error is at most `epsilon_t`, transcript error is at most `1 - product_t(1-epsilon_t)`, even under adaptive querying.
-11. **Conditional-KL bound.** The KL chain rule plus Pinsker bounds transcript total variation by `sqrt(sum_t kappa_t / 2)` when expected conditional KL terms are bounded by `kappa_t`.
-12. **Predictive-state lower bounds.** Exact renderers need at least one state per distinct future law. An `epsilon`-accurate renderer needs at least the maximum number of future laws separated pairwise by more than `2 epsilon` in total variation.
-
-### Causal selection and sequential testing
-
-13. **Selection-policy confounding.** Outcome-dependent retention shifts binary log-odds by exactly `log(r1/r0)`. A bounded retention odds ratio gives sharp raw-probability sensitivity intervals.
-14. **Latent-intervention ambiguity.** An observed anomaly-rate shift can be represented as a mixture of an ordinary law and an unconstrained intervention law; the code computes the minimum intervention mass required.
-15. **Anytime-valid restricted tests.** Fixed-alternative and mixture Bernoulli likelihood ratios form e-processes under their declared sampling assumptions, permitting optional-stopping-safe tests for a *specific binary signature*.
-
-### Physics and representation
-
-16. **Local physical envelopes.** Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented in SI units for devices obeying the relevant local physics.
-17. **Parent-resource non-transfer.** Internal mass, energy, or information does not constrain an unknown parent substrate without an explicit implementation or law-transfer coefficient.
-18. **Program multiplicity.** Many programs can implement one observable law. Raw algorithmic mass depends on the coding language and implementation multiplicity; the repo exposes that sensitivity rather than treating syntax as independent worlds.
+2. **Evidence ceiling.** A bounded observable likelihood ratio gives a matching bound on posterior log-odds movement.
+3. **Total-variation ceiling.** Equal-prior optimal classification accuracy is `(1 + TV(P,Q))/2`.
+4. **Fano and Le Cam bounds.** Multi-architecture identification and parameter estimation have explicit minimax lower bounds when candidate laws overlap.
+5. **Hierarchical Bayesian model averaging.** Technical feasibility, data likelihood, and scenario-conditional observer measure remain separate.
+6. **Observer-measure factorization.** Population counts become probabilities only after a measure over observers or observer-moments is chosen.
+7. **Jensen expectation trap.** Inserting an expected simulated count into the familiar ratio overstates the properly averaged result under uncertainty.
+8. **SSA/SIA/FNC-style divergence.** Explicit finite conditioning rules can produce sharply different posteriors from the same worlds.
+9. **Exact lazy-rendering equivalence.** Exact target-conditionals reproduce the same transcript law as pre-sampling the hidden world.
+10. **Adaptive approximate-rendering bound.** Per-step total-variation errors compose into a transcript error bound even under adaptive queries.
+11. **Conditional-KL bound.** The KL chain rule and Pinsker yield a transcript-level bound from conditional KL errors.
+12. **Predictive-state lower bounds.** Exact and approximate renderers require enough states to separate distinct future observable laws.
+13. **Selection-policy confounding.** Outcome-dependent retention shifts binary log-odds by an exact amount.
+14. **Latent-intervention ambiguity.** Observed rate shifts can be decomposed into ordinary and unconstrained intervention laws.
+15. **Anytime-valid restricted tests.** Bernoulli likelihood-ratio e-processes support optional-stopping-safe tests for specified signatures.
+16. **Local physical envelopes.** Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented for local physics.
+17. **Parent-resource non-transfer.** Internal physical quantities do not constrain an unknown parent substrate without an implementation map.
+18. **Program multiplicity.** Many programs can implement one observable law, so raw algorithmic mass depends on coding and implementation choices.
 
 Detailed statements and proofs are in [`docs/formal-results.md`](docs/formal-results.md).
 
 ## Layout
 
 ```text
-claims/
-  claims-v1.json        typed claim scopes, assumptions, evidence, and nonclaims
-
-docs/
-  formal-results.md     theorem statements and proofs
-  research-program.md   completed work, next campaigns, and quality gates
-  sources.md            primary research context
-  tempera-math-bridge.md optional external proof-harness boundary
-
-src/simtheory/
-  inference.py          Bayesian and total-variation evidence bounds
-  bayesian.py           hierarchical feasibility/model averaging
-  minimax.py            KL, Fano, and Le Cam lower bounds
-  anthropic.py          finite SSA/SIA/FNC-style conditioning models
-  observer_measure.py   observer measure, selection, and recursive budgets
-  lazy_rendering.py     adaptive transcript and predictive-state bounds
-  causal.py             retention and latent-intervention sensitivity
-  sequential.py         Bernoulli e-processes and exact finite calibration
-  physics.py            explicitly local physical-computation envelopes
-  algorithmic.py        program-multiplicity and Kraft diagnostics
-  claims.py             deterministic claim-manifest validation
-  experiments.py        deterministic research demonstrations
-
-tests/                  unit, exact-enumeration, and randomized property checks
+claims/claims-v1.json       typed claims, assumptions, evidence, and nonclaims
+docs/formal-results.md      theorem statements and proofs
+docs/research-program.md    completed lanes, next campaigns, and quality gates
+docs/sources.md             primary research context
+docs/tempera-math-bridge.md optional external proof-harness boundary
+src/simtheory/              mathematical models and deterministic experiments
+tests/                      exact, unit, and randomized property checks
 ```
 
 ## Run
@@ -93,12 +62,14 @@ python -m pytest
 python -m simtheory.experiments
 ```
 
-The mathematical core uses only the Python standard library. GitHub Actions runs the test suite across Python 3.11, 3.12, and 3.13.
+The mathematical core uses only the Python standard library. GitHub Actions runs editable installation, bytecode compilation, all tests, and the experiment smoke suite on Python 3.11, 3.12, and 3.13.
 
 ## What would count as evidence?
 
-Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature. Merely observing quantization, randomness, mathematical laws, finite signal speed, observer effects, or information bounds is not generic evidence for simulation: ordinary physical theories can contain those features too.
+Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
+
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
 
 ## Tempera Math boundary
 
-`tempera-math` may be used as an external certificate and proof-receipt harness. This repository remains the canonical research home. A script run, CI pass, or structural manifest validation never promotes a bounded result into an unbounded theorem. See [`docs/tempera-math-bridge.md`](docs/tempera-math-bridge.md).
+`tempera-math` may be used as an external certificate and proof-receipt harness. This repository remains the canonical research home. A script run, CI pass, manifest hash, or structural validation never promotes a bounded result into an unbounded theorem. See [`docs/tempera-math-bridge.md`](docs/tempera-math-bridge.md).
