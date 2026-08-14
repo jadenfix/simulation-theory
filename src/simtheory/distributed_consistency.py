@@ -1,47 +1,40 @@
 """Distributed causal-cut and reconciliation bounds for predictive state.
 
-The model is a one-way causal interface.  A hidden binary record
+A hidden binary record X=(X_1,...,X_m) is available in an earlier region.  A
+finite message or already-resident local state must cross a declared one-way
+causal cut before a later query index I is revealed.  The later region must
+answer X_I, or equivalently X_I xor Y_I when Y_I is locally known.
 
-    X = (X_1, ..., X_m) in {0,1}^m
+Exact zero-error answering is the one-way INDEX problem.  Every two distinct
+records differ on some future query, so the encoder must be injective and needs
+at least 2^m states, or m bits.
 
-is available in an earlier region.  Before a later query index I is revealed,
-all information that can influence the answering region must cross a declared
-causal cut as a finite message or already-resident local state.  The later
-region must answer X_I, or equivalently a reconciliation parity X_I xor Y_I
-when Y_I is locally known.
+For uniform X and uniform I, binary Fano plus entropy subadditivity gives
 
-The exact zero-error problem is the one-way INDEX problem: every pair of
-distinct records differs on some future query, so the encoding must be
-injective and needs at least 2^m states, or m bits.
+    I(X;M|R) >= m [1-H_2(epsilon)],
 
-For a uniform random record and bounded average error epsilon, binary Fano and
-entropy subadditivity give
-
-    I(X; M | R) >= m [1 - H_2(epsilon)],
-
-where R is shared randomness independent of X.  Shared randomness can
-coordinate a protocol but carries no information about X before the message.
+where R is shared randomness independent of X.  Shared randomness coordinates
+a protocol but carries no record information before communication.
 
 For a nonuniform query distribution w, the weakest information lower bound
-consistent with weighted average error epsilon is obtained by maximizing
-sum_i H_2(e_i) subject to sum_i w_i e_i <= epsilon.  At interior coordinates,
+consistent with weighted average error epsilon maximizes sum_i H_2(e_i) under
+sum_i w_i e_i <= epsilon.  Positive-weight coordinates satisfy
 
     e_i = 1 / (1 + 2^(lambda w_i)),
 
 with lambda chosen to meet the error budget.  Rarely queried coordinates are
 therefore forgotten first.
 
-These are internal communication/predictive-state bounds for the declared
-one-way interface.  They do not prove that reality is simulated, do not impose
-this architecture on a hypothetical simulator, and do not convert information
-bits into parent-universe hardware or energy.
+These are internal communication and predictive-state bounds for the declared
+one-way interface.  They do not prove simulation, impose this architecture on
+a simulator, or convert information bits into parent-universe hardware.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import product
-from math import ceil
+from math import ceil, log2
 from typing import Hashable, Mapping, Sequence
 
 from .stabilizer_relations import binary_entropy
@@ -87,29 +80,22 @@ def _validate_query_weights(weights: Sequence[float]) -> tuple[float, ...]:
 
 
 def all_binary_records(record_bits: int) -> tuple[BitRecord, ...]:
-    bits = _validate_record_bits(record_bits)
-    return tuple(product((0, 1), repeat=bits))
+    return tuple(product((0, 1), repeat=_validate_record_bits(record_bits)))
 
 
 def first_differing_coordinate(left: Sequence[int], right: Sequence[int]) -> int | None:
     first = _validate_record(left)
     second = _validate_record(right, len(first))
-    return next((index for index, (a, b) in enumerate(zip(first, second)) if a != b), None)
+    return next((index for index, pair in enumerate(zip(first, second)) if pair[0] != pair[1]), None)
 
 
 def encoder_collision_witness(
     encoder: Mapping[BitRecord, Hashable],
     record_bits: int,
 ) -> CollisionWitness | None:
-    """Return a collision and a query it necessarily answers incorrectly.
+    """Return a message collision and a query it cannot answer for both records."""
 
-    The mapping must specify a message for every binary record.  If two records
-    share one message, the first coordinate on which they differ is a future
-    query for which no deterministic decoder can answer both correctly.
-    """
-
-    bits = _validate_record_bits(record_bits)
-    records = all_binary_records(bits)
+    records = all_binary_records(record_bits)
     if set(encoder) != set(records):
         raise ValueError("encoder must define exactly one message for every record")
     seen: dict[Hashable, BitRecord] = {}
@@ -141,7 +127,7 @@ def exact_index_bits_lower_bound(record_bits: int) -> int:
 
 
 def uniform_index_information_lower_bound_bits(record_bits: int, error: float) -> float:
-    """m[1-H2(error)] for uniform X and a uniform post-message query index."""
+    """Return m[1-H2(error)] for uniform record bits and query index."""
 
     bits = _validate_record_bits(record_bits)
     epsilon = _validate_error(error)
@@ -149,8 +135,6 @@ def uniform_index_information_lower_bound_bits(record_bits: int, error: float) -
 
 
 def uniform_index_state_bits_lower_bound(record_bits: int, error: float) -> int:
-    """Integer finite-state consequence of the information lower bound."""
-
     information = uniform_index_information_lower_bound_bits(record_bits, error)
     return ceil(max(0.0, information - 1e-12))
 
@@ -160,13 +144,12 @@ def minimum_additional_communication_bits(
     resident_state_bits: int,
     error: float,
 ) -> int:
-    """Cut-set tradeoff: resident bits plus later message bits meet the bound."""
+    """Resident state plus later one-way communication must meet the cut bound."""
 
-    bits = _validate_record_bits(record_bits)
     resident = int(resident_state_bits)
     if resident < 0:
         raise ValueError("resident_state_bits must be nonnegative")
-    required = uniform_index_information_lower_bound_bits(bits, error)
+    required = uniform_index_information_lower_bound_bits(record_bits, error)
     return ceil(max(0.0, required - resident - 1e-12))
 
 
@@ -195,18 +178,17 @@ def weighted_optimal_error_allocation(
 ) -> tuple[float, ...]:
     """Entropy-maximizing coordinate errors under a weighted error budget.
 
-    This solves
+    Solves
 
         maximize sum_i H2(e_i)
         subject to sum_i w_i e_i <= epsilon, 0 <= e_i <= 1/2.
 
-    Positive-weight interior coordinates satisfy
+    The KKT equation on every positive-weight coordinate is
 
-        log2((1-e_i)/e_i) = lambda w_i.
+        log2((1-e_i)/e_i)=lambda w_i.
 
-    The returned allocation is the least-informative error profile compatible
-    with the declared weighted average error.  Zero-weight coordinates are set
-    to 1/2 because no future query tests them.
+    Zero-weight coordinates are assigned error 1/2 because the future query
+    distribution never tests them.
     """
 
     weights = _validate_query_weights(query_weights)
@@ -219,17 +201,16 @@ def weighted_optimal_error_allocation(
         return tuple(0.0 if weight > 0.0 else 0.5 for weight in weights)
 
     def achieved(lambda_value: float) -> float:
-        return sum(
-            weight * _logistic_error(lambda_value, weight)
-            for weight in weights
-        )
+        return sum(weight * _logistic_error(lambda_value, weight) for weight in weights)
 
+    positive_weights = tuple(weight for weight in weights if weight > 0.0)
+    minimum_positive = min(positive_weights)
+    # Since 1/(1+2^x) <= 2^-x, this analytic bracket guarantees
+    # achieved(high) <= epsilon without an overflow-prone doubling loop.
+    high = max(1.0, log2(1.0 / epsilon) / minimum_positive)
     low = 0.0
-    high = 1.0
-    while achieved(high) > epsilon:
-        high *= 2.0
-        if high >= 2.0**1024:
-            raise ArithmeticError("failed to bracket weighted KKT multiplier")
+    if achieved(high) > epsilon + 1e-15:
+        raise ArithmeticError("analytic KKT bracket failed")
 
     for _ in range(iterations):
         midpoint = 0.5 * (low + high)
@@ -238,16 +219,13 @@ def weighted_optimal_error_allocation(
         else:
             high = midpoint
 
-    allocation = tuple(_logistic_error(high, weight) for weight in weights)
-    return allocation
+    return tuple(_logistic_error(high, weight) for weight in weights)
 
 
 def weighted_index_information_lower_bound_bits(
     query_weights: Sequence[float],
     weighted_error: float,
 ) -> float:
-    """Weakest binary-Fano information bound under a weighted query error."""
-
     allocation = weighted_optimal_error_allocation(query_weights, weighted_error)
     return sum(1.0 - binary_entropy(error) for error in allocation)
 
@@ -277,12 +255,11 @@ def replicated_region_storage_lower_bound_bits(
     regions: int,
     query_weights: Sequence[float] | None = None,
 ) -> int:
-    """Sum of separate local storage lower bounds for isolated answer regions.
+    """Sum of separate local-state bounds for causally isolated answer regions.
 
-    Each region receives its own finite local state and must answer its future
-    query with no later communication and no shared accessible store.  If a
-    shared store remains causally accessible, this replication theorem does not
-    apply to the sum of local storage.
+    This assumes no later communication and no shared store accessible to all
+    regions.  With a shared accessible store, the replication conclusion does
+    not apply to the sum of local storage.
     """
 
     bits = _validate_record_bits(record_bits)
@@ -304,7 +281,7 @@ def parity_reconciliation_information_lower_bound_bits(
     error: float,
     query_weights: Sequence[float] | None = None,
 ) -> float:
-    """Same lower bound for answering A_i xor B_i when B_i is locally known."""
+    """Same lower bound for A_i xor B_i when B_i is locally known."""
 
     bits = _validate_record_bits(record_bits)
     if query_weights is None:
@@ -329,7 +306,7 @@ def parity_reconciliation_answer(
 
 
 def prefix_storage_average_error(record_bits: int, stored_prefix_bits: int) -> float:
-    """Average error of storing a prefix exactly and guessing zero elsewhere."""
+    """Average error when a prefix is exact and unstored bits are guessed zero."""
 
     bits = _validate_record_bits(record_bits)
     stored = int(stored_prefix_bits)
@@ -374,7 +351,7 @@ def causal_cut_capacity_deficit_bits(
     error: float,
     query_weights: Sequence[float] | None = None,
 ) -> float:
-    """Positive shortfall between an information lower bound and cut capacity."""
+    """Positive shortfall between the information lower bound and cut capacity."""
 
     bits = _validate_record_bits(record_bits)
     capacity = int(available_bits)
@@ -392,7 +369,7 @@ def causal_cut_capacity_deficit_bits(
 
 @dataclass(frozen=True)
 class CausalCutBudget:
-    """Bookkeeping object for resident state plus later one-way communication."""
+    """Bookkeeping for resident state plus later one-way communication."""
 
     resident_bits: int
     communication_bits: int
