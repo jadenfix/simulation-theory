@@ -1,0 +1,121 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T166",
+      "title": "Local hidden-law deviations compose into a finite-horizon sequential coupling bound",
+      "kind": "THEOREM",
+      "scope": "two finite hidden-law models connected by one detailed-to-abstract state map, common source-symbol and signal alphabets, action-independent transitions and observations, and finite horizon T",
+      "assumptions": [
+        "initial abstract-state laws differ by at most epsilon_0 in total variation",
+        "matched detailed and abstract states have observation-row TV at most epsilon_o",
+        "matched detailed states and abstract states have abstract next-state TV at most epsilon_K",
+        "maximal couplings are applied conditionally while histories remain matched"
+      ],
+      "evidence": [
+        "docs/approximate-hidden-law-quotient.md#2-sequential-maximal-coupling",
+        "src/simtheory/approximate_hidden_law.py:ApproximateHiddenLawCertificate",
+        "tests/test_approximate_hidden_law.py"
+      ],
+      "nonclaims": [
+        "the product coupling bound is sufficient and need not be tight",
+        "the theorem does not cover action-dependent hidden dynamics or observation channels"
+      ]
+    },
+    {
+      "id": "ST-T167",
+      "title": "Approximate hidden-law coupling bounds transfer uniformly to optimal no-signal and noisy-observation coding values",
+      "kind": "THEOREM",
+      "scope": "finite-horizon Bayesian zero-error prefix coding over one common complete bounded codebook universe and common signal-history policy interface",
+      "assumptions": [
+        "every matched-state codebook stage cost differs by at most epsilon_c",
+        "every cumulative policy cost lies between zero and the declared finite-horizon cost ceiling M_T",
+        "the same deterministic or exogenously randomized policy mapping is admissible in both models"
+      ],
+      "evidence": [
+        "docs/approximate-hidden-law-quotient.md#3-uniform-policy-cost-bound",
+        "docs/approximate-hidden-law-quotient.md#4-transfer-to-optimal-values",
+        "src/simtheory/approximate_hidden_law.py:exact_approximate_hidden_law_comparison",
+        "tests/test_approximate_hidden_law.py"
+      ],
+      "nonclaims": [
+        "the value theorem does not cover unrestricted policies observing detailed internal state identity",
+        "safe model-specific codebook pruning does not alter the common-universe optimum but is not itself the coupling theorem"
+      ]
+    },
+    {
+      "id": "ST-T168",
+      "title": "Expected clairvoyant path-oracle and Bayes-regret differences inherit approximate quotient bounds",
+      "kind": "THEOREM",
+      "scope": "the same finite code-sequence comparator class evaluated under detailed and abstract hidden-law paths",
+      "assumptions": [
+        "on matched abstract-state paths every fixed code sequence has stage-cost difference at most T epsilon_c and identical switch cost",
+        "transition-only coupling controls abstract path divergence",
+        "Bayes regret is policy value minus expected path-oracle value"
+      ],
+      "evidence": [
+        "docs/approximate-hidden-law-quotient.md#5-clairvoyant-path-oracle-bound",
+        "docs/approximate-hidden-law-quotient.md#6-bayes-regret-bounds",
+        "src/simtheory/approximate_hidden_law.py:ApproximateHiddenLawCertificate.oracle_value_bound",
+        "tests/test_approximate_hidden_law.py"
+      ],
+      "nonclaims": [
+        "the regret bound is a triangle-inequality upper bound and may exhibit cancellation in practice",
+        "the path oracle remains a retrospective benchmark rather than a causal policy"
+      ]
+    },
+    {
+      "id": "ST-T169",
+      "title": "The approximate quotient theorem collapses to zero value loss at exact bisimulation",
+      "kind": "THEOREM",
+      "scope": "an abstraction whose initial block law, codebook stage costs, observation rows, and abstract transition rows match exactly",
+      "assumptions": [
+        "all local deviations epsilon_0, epsilon_c, epsilon_o, and epsilon_K are zero"
+      ],
+      "evidence": [
+        "docs/approximate-hidden-law-quotient.md#7-exact-bisimulation-limit",
+        "src/simtheory/approximate_hidden_law.py:ApproximateHiddenLawCertificate.exact_limit",
+        "tests/test_approximate_hidden_law.py"
+      ],
+      "nonclaims": [
+        "zero local deviation is an exact model statement rather than a claim about empirical equality",
+        "the boundary result does not convert quotient-state count into physical memory"
+      ]
+    },
+    {
+      "id": "ST-M36",
+      "title": "Representative two-state abstraction has certified positive but bounded value loss",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared three-state rational example merging states zero and one while their source, observation, and abstract transition laws differ by at most 1/20 TV",
+      "assumptions": [
+        "the first state in each block supplies the representative abstract parameters",
+        "the complete K3 zero-error prefix-codebook family and declared finite horizon are used"
+      ],
+      "evidence": [
+        "docs/approximate-hidden-law-quotient.md#8-representative-abstraction",
+        "tests/test_approximate_hidden_law.py"
+      ],
+      "nonclaims": [
+        "the representative abstraction is not asserted to minimize the certified bound",
+        "the numerical deviations are instance specific"
+      ]
+    },
+    {
+      "id": "ST-F27",
+      "title": "Bounded exact approximate-hidden-law deviation and value audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational detailed and abstract models, codebooks, paths, values, regrets, and finite-horizon coupling expressions exercised by the repository tests",
+      "assumptions": [
+        "all configured hidden-path, codebook, partition, and prefix-shape caps complete without truncation",
+        "Python Fraction arithmetic is used for every finite deviation and cost calculation"
+      ],
+      "evidence": [
+        "tests/test_approximate_hidden_law.py"
+      ],
+      "nonclaims": [
+        "bounded exact checks are not a scalability theorem",
+        "a small internal value-loss bound is not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
