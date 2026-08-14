@@ -2,7 +2,7 @@
   "schema": "simulation-theory.claims/v1",
   "claims": [
     {
-      "id": "ST-T135",
+      "id": "ST-T146",
       "title": "Exact product observation channel and prefix Blackwell monotonicity",
       "kind": "THEOREM",
       "scope": "a finite rational observation channel repeated conditionally independently for a fixed hidden source-law scenario",
@@ -24,7 +24,7 @@
       ]
     },
     {
-      "id": "ST-T136",
+      "id": "ST-T147",
       "title": "Signed count is sufficient for symmetric binary repeated evidence",
       "kind": "THEOREM",
       "scope": "two fixed hidden scenarios and a binary symmetric observation channel with accuracy in [1/2,1)",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "id": "ST-T137",
+      "id": "ST-T148",
       "title": "Fair-tie symmetric majority has exact even-sample plateaus",
       "kind": "THEOREM",
       "scope": "binary symmetric repeated observations with majority decision and a fair public tie break",
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "id": "ST-T138",
+      "id": "ST-T149",
       "title": "Exact bounded sequential public-signal policy-tree coding game",
       "kind": "THEOREM",
       "scope": "finite rational source-law scenarios, a fixed public rational observation channel, finite horizon, deterministic zero-error prefix codebooks, and rational switching cost",
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "id": "ST-T139",
+      "id": "ST-T150",
       "title": "Exact sorted Pareto frontier for two-scenario policy costs",
       "kind": "THEOREM",
       "scope": "distinct exact rational two-scenario cost vectors produced after complete bounded policy-tree enumeration",
