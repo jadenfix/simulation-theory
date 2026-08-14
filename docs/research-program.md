@@ -2,343 +2,364 @@
 
 ## Goal
 
-Turn simulation-theory discussion into explicit mathematical models whose assumptions, observable implications, and failure modes can be checked independently.
+Turn simulation-theory discussion into explicit mathematical models whose assumptions, observable implications, computational requirements, and failure modes can be checked independently.
 
-The project is not trying to assign a dramatic single-number probability to “simulation.” It is building a hierarchy of restricted questions:
+The project is not trying to manufacture one dramatic probability that reality is simulated. It is building a hierarchy of restricted questions:
 
 1. Is the model identifiable from internal observations?
-2. What observer measure converts world populations into credences?
-3. What computational or physical constraints follow from a specified architecture?
-4. What experiment distinguishes that architecture from serious alternatives?
-5. What predictive information must an online generator retain to keep adaptive and distributed observations globally consistent?
-6. How do noise, approximation, query timing, network topology, error correction, and classical or quantum communication change the necessary predictive state?
-7. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
+2. Which observer measure turns populations into credences?
+3. Which future query family defines the required predictive state?
+4. How do approximation, noise, query timing, and selection change that state?
+5. What must cross each causal or communication cut?
+6. When do routing, replication, coding, or quantum assistance change feasibility?
+7. Which claims are lower bounds, which are constructions, and where is the gap?
+8. What experiment distinguishes one restricted architecture from ordinary alternatives?
 
-## Completed mathematical lanes
+## Completed foundations
 
 ### Identification before estimation
 
-- Generic simulator classes containing the base observable law are underidentified.
-- Bounded likelihood ratios impose exact Bayesian evidence ceilings.
-- Total variation, Le Cam, and Fano quantify finite two-model and multi-model limits.
-- Hierarchical Bayesian scenarios preserve technical-feasibility uncertainty instead of hiding it inside an expected observer count.
+Completed results include:
 
-### Observer measure
+- observational indistinguishability when the simulator class contains the base law;
+- Bayes-factor equality for identical observable laws;
+- bounded likelihood-ratio evidence ceilings;
+- total-variation classification limits;
+- Le Cam and Fano minimax bounds;
+- hierarchical Bayesian feasibility mixtures;
+- robust posterior intervals.
 
-- Civilization and observer factors remain separate instead of collapsing into one count.
-- The Jensen gap prevents plug-in expected counts from masquerading as model-averaged probabilities.
-- Finite SSA/SIA/FNC-presence conventions expose duplication and saturation behavior.
+The governing rule is: **do not estimate a parameter for a model that has not first been identified by the declared observation interface.**
 
-### Adaptive consistency and rendering
+### Observer measure and anthropic sensitivity
 
-- Exact conditional lazy generation is transcript-equivalent to full pre-generation.
-- Per-step total-variation and conditional-KL errors have transcript-level bounds.
-- Exact and approximate predictive-state packing lower bounds are implemented.
-- Finite phase-drift Bell processes support exact adaptive transcript enumeration.
+The observer-count argument is decomposed into survival, deployment, simulation count, observer count, consciousness, evidence compatibility, and duration factors. The repository keeps SSA-, SIA-, and FNC-style conditioning rules separate and proves the Jensen plug-in bias for uncertain observer measure.
 
-### Causal selection and sequential inference
+The goal is sensitivity analysis rather than an unjustified representation-independent prior.
 
-- Outcome-dependent retention has an exact log-odds sensitivity identity.
-- Arbitrary finite reweighting is constructively demonstrated.
-- Unrestricted latent interventions have explicit minimum mixture mass.
-- Fixed and mixture Bernoulli e-processes are implemented in log space.
-- Simple and one-sided composite-null validity is proved.
-- Finite-horizon optional-stopping error is audited by exact dynamic programming.
+### Adaptive rendering and predictive equivalence
 
-### Physics and representation
+Completed work includes:
 
-- Local Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented with explicit SI inputs.
-- Cross-level cost remains an input assumption rather than an inferred consequence.
-- Program multiplicity and Kraft diagnostics expose coding-language sensitivity.
+- exact lazy-rendering equivalence by conditional chain factorization;
+- adaptive transcript bounds from stepwise total variation;
+- conditional-KL chain bounds;
+- exact predictive-equivalence state counts;
+- approximate packing lower bounds;
+- target-centered and arbitrary-center constructive covers;
+- exact finite stochastic law tensors;
+- deterministic and stochastic network index certificates.
 
-### Physically derived predictive-state geometry
+The state object is always defined by allowed future laws, not raw hidden history.
 
-The project moves from arbitrary probability vectors to explicit bounded physical families:
+### Selection, intervention, and sequential testing
 
-- one-parameter Werner/singlet Bell visibility laws with exact total variation, Fisher information, and adaptive KL bounds;
-- two-parameter visibility-plus-phase laws with a full Fisher matrix and exact predictive geometry;
-- canonical CHSH correlation-disk geometry with `TV = ||q-q'||_infinity / (2 sqrt(2))`;
-- constructive two-dimensional packing with quadratic `1/epsilon` scaling;
-- exact n-qubit computational-basis lower bounds derived from allowed coordinate queries;
-- continuous d-qubit product-polarization geometry `TV = ||q-u||_1 / (2d)`;
-- q-ary product packings separating subsystem count from accessible precision.
+Completed work includes:
 
-See [`bell-predictive-bounds.md`](bell-predictive-bounds.md), [`quantum-phase-predictive-bounds.md`](quantum-phase-predictive-bounds.md), [`canonical-chsh-disk-geometry.md`](canonical-chsh-disk-geometry.md), [`quantum-sequential-bounds.md`](quantum-sequential-bounds.md), and [`manybody-predictive-bounds.md`](manybody-predictive-bounds.md).
+- exact selection log-odds shifts;
+- finite selection reweighting;
+- latent-intervention mixture sensitivity;
+- minimum intervention mass;
+- fixed and mixture e-processes;
+- optional-stopping-safe thresholds;
+- exact finite-horizon crossing probabilities.
 
-### Relational information and local blindness
+No anomaly score is interpreted without a null sampling model, selection process, and stopping guarantee.
 
-- graph-basis stabilizer queries have exact weighted-Hamming predictive geometry;
-- cycle graph states with at least five qubits have stabilizer distance three;
-- every one- and two-qubit reduction is maximally mixed across all `2^n` cycle graph-basis labels;
-- weight-three generators nevertheless reveal all label coordinates;
-- finite Gilbert bounds turn normalized-Hamming geometry into robust constant-tolerance memory lower bounds;
-- phase-labeled cat states have uniform proper local-X marginals and disjoint complete parity transcripts;
-- after `ell-1` outcomes in each of `m` cat blocks, exact online continuation has exactly `2^m` predictive-equivalence classes;
-- one parity bit per open block is both necessary and sufficient.
+### Local physics and parent-resource boundaries
 
-See [`stabilizer-relational-consistency.md`](stabilizer-relational-consistency.md).
+The repository implements local Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions while preserving the cross-level boundary:
 
-### Noisy relational consistency and predictive rate distortion
+\[
+\text{internal physical quantity}
+\not\Rightarrow
+\text{parent implementation cost}.
+\]
 
-- local flip probability `p` on an `ell`-qubit cat block induces effective parity crossover `q=[1-(1-2p)^ell]/2`;
-- complete noisy phase laws have exact TV `(1-2p)^ell`;
-- every proper noisy local marginal remains uniform and phase-independent;
-- parity is a sufficient statistic for phase inference;
-- block locality and robustness trade off because parity visibility decays exponentially with `ell` at fixed `p`;
-- repeated parity inference has exact finite binomial TV and Bayes error;
-- KL/Pinsker gives necessary repetition counts and Bhattacharyya gives sufficient counts;
-- noisy checkpoint signatures have exact geometry `TV=c*d_H/m` under uniform queries;
-- worst-query memory has a sharp threshold: `m` bits below error `c/2`, zero at or above `c/2` in the declared one-step model;
-- uniform signatures under average TV distortion obey `m[1-H_2(D/c)]`.
+A parent-resource claim requires a separate implementation map and law-transfer assumption.
 
-See [`noisy-relational-rate-distortion.md`](noisy-relational-rate-distortion.md).
+## Completed physical and quantum lanes
 
-### Stabilizer-code distance and logical locality
+### Bell and multidimensional predictive geometry
 
-- exact GF(2) rank, span, symplectic commutation, stabilizer, normalizer, and quotient calculations;
-- code distance `d=min wt(N(S)\S)` separated from minimum stabilizer weight;
-- projected Pauli trichotomy: detectable operators project to zero, stabilizers act as scalars, and normalizer elements outside the stabilizer act logically;
-- every encoded state has the same reduced density matrix on every subset of fewer than `d` qubits;
-- an entropy proof of the quantum Singleton bound `n-k>=2(d-1)`;
-- exact verification that the five-qubit code is `[[5,1,3]]` and saturates Singleton;
-- state-vector projector checks of logical basis states, stabilizer eigenvalues, logical mappings, and one-/two-qubit reduced-state equality;
-- demonstration that the three-qubit bit-flip repetition code has full quantum distance one despite detecting one-qubit X errors;
-- logical-coordinate query geometry and an `mk`-bit predictive lower bound for `m` blocks encoding `k` logical bits each.
+Completed work derives total variation, Fisher information, adaptive KL bounds, visibility-plus-phase geometry, the canonical CHSH disk norm, constructive physical packings, and exact finite phase-drift transcripts.
 
-See [`stabilizer-code-locality.md`](stabilizer-code-locality.md).
+The program deliberately derives lower bounds from explicit allowed measurements rather than Hilbert-space dimension alone.
 
-### Distributed classical causal-cut consistency
+### Many-body and relational information
 
-- exact one-way INDEX answering requires an injective message and therefore `m` bits for an unresolved `m`-coordinate future query;
-- shared randomness independent of the record cannot remove the exact collision witness;
-- uniform records and uniform post-message queries obey the information lower bound `m[1-H_2(epsilon)]`;
-- resident predictive state and later pre-query communication obey one combined cut-set tradeoff;
-- indexed parity reconciliation `A_i xor B_i`, with `B_i` local, has the same remote-record lower bound as INDEX;
-- weighted query distributions yield the KKT allocation `e_i=1/(1+2^(lambda w_i))`, exposing how rare coordinates are discarded first;
-- isolated answer regions with no shared record store require replicated local storage budgets;
-- an exact finite prefix-storage protocol supplies an explicit upper bound and keeps the gap from the information lower bound visible.
+Completed work includes:
 
-See [`distributed-causal-consistency.md`](distributed-causal-consistency.md).
+- exact computational-basis coordinate-query scaling;
+- continuous product-qubit \(L_1\) geometry;
+- graph-state weighted-Hamming geometry;
+- cycle-state two-local blindness with three-local access;
+- finite coding-theoretic relational packings;
+- cat-state proper-marginal blindness;
+- exact parity sufficient statistics for online continuation.
 
-### Quantum random-access causal cuts
+These constructions show that simple low-order marginals do not imply simple global predictive state.
 
-The causal-cut program permits quantum messages and cleanly separates unassisted from entanglement-assisted architectures:
+### Noise and predictive rate distortion
 
-- coordinatewise binary Fano plus quantum data processing gives `I(X;Q) >= sum_i [1-H_2(e_i)]`;
-- a `q`-qubit unassisted message obeys `I(X;Q)<=q`, yielding `q>=m[1-H_2(epsilon)]` under uniform average error;
-- receiver-side preshared entanglement independent of the record permits at most a `2q` information increase, yielding `q>=m[1-H_2(epsilon)]/2`;
-- exact unassisted transmission needs `m` qubits;
-- exact entanglement-assisted transmission needs `ceil(m/2)` qubits and is achieved by superdense coding;
-- revealing the query before the message reduces exact communication to one qubit;
-- inverse binary entropy converts fixed qubit budgets into minimum-error converses;
-- canonical two-to-one and three-to-one one-qubit random access codes are implemented and checked over every record-query pair;
-- nonuniform quantum queries inherit the classical KKT allocation, with a factor-two assisted capacity change.
+Independent local flips produce exact cat-parity visibility
 
-See [`quantum-causal-cut-random-access.md`](quantum-causal-cut-random-access.md).
+\[
+c_\ell(p)=(1-2p)^\ell.
+\]
+
+Completed results include exact noisy transcript laws, proper-marginal blindness, repeated-BSC inference, KL/Pinsker necessary counts, Bhattacharyya sufficient counts, sharp worst-query thresholds, finite Gilbert packings, and the average rate-distortion lower bound
+
+\[
+m[1-H_2(D/c)].
+\]
+
+### Stabilizer-code locality
+
+The binary-symplectic module implements stabilizers, normalizers, code distance, logical cosets, projectors, and reduced-state checks. It proves complete local indistinguishability below distance and independently verifies the five-qubit \([[5,1,3]]\) code.
+
+Code distance, stabilizer weight, logical weight, query weight, and selected-error protection remain distinct notions.
+
+## Completed causal and network lanes
+
+### Classical and quantum random-access cuts
+
+Completed results include:
+
+- exact one-way INDEX injectivity;
+- bounded-error information lower bounds;
+- weighted-query KKT allocation;
+- memory-communication cut tradeoffs;
+- parity-reconciliation equivalence;
+- isolated-region replication;
+- quantum random-access converses;
+- entanglement-assisted factor-two bounds;
+- exact dense-coding achievability;
+- finite two-to-one and three-to-one qubit random-access codes.
+
+Query timing is treated as a resource. A query known before encoding can reduce linear communication to one answer symbol.
 
 ### Progressive query revelation
 
-The first genuinely multistage causal interface reveals a coarse query cell between two communication stages:
+The two-stage program gives exact shared/branch capacity regions for partition hints, branch-aware bounded-error converses, unassisted and assisted quantum variants, constructive finite protocols, and predictive-class coarsening after each hint.
 
-- for partition-cell sizes `s_j`, exact classical feasibility is characterized by `a >= sum_j max(0,s_j-c_j)`;
-- the converse is matched by a constructive protocol that stores uncovered cell bits in the shared stage and sends the rest only in the selected branch;
-- complete finite enumeration verifies every record, hint cell, and later coordinate for bounded instances;
-- equal cells of residual size `s` require exactly `s` classical bits or unassisted qubits per execution when all record communication is deferred until after the hint;
-- query-hint information and record-value information are separated: the hint reduces the live future-query family but carries no record values;
-- bounded errors replace each exact cell size by `R_j=sum_{i in C_j}[1-H_2(e_i)]` and give the branch-aware converse `a >= sum_j max(0,R_j-c_j)`;
-- unassisted quantum messages obey the same one-bit-per-qubit information region;
-- receiver-side entanglement changes the capacity coefficient from one to two and yields exact equal-cell cost `ceil(s/2)` transmitted qubits;
-- predictive-equivalence classes coarsen from `2^m` before the hint to `2^s_j` after cell `j` and then to two after the exact coordinate is known.
+Design-wide branch budgets and one executed branch are kept separate.
 
-See [`progressive-query-revelation.md`](progressive-query-revelation.md).
+### Predictive network min-cuts
 
-### Predictive-equivalence network min-cuts
+For finite deterministic query families, exact class labels are routed through integer-capacity networks. Completed work includes exact max-flow/min-cut, route decomposition, parity-rank compression, approximate packing cuts, quantum payload accounting, and careful separation of one-sink sufficiency from multi-sink necessity.
 
-The causal program supports arbitrary finite deterministic future-query families and directed capacity networks:
+### Stochastic predictive covers
 
-- records are grouped by complete future-query signature rather than by raw hidden-state identity;
-- `K` exact predictive classes require and can be represented by exactly `K` finite states, or `ceil(log2 K)` fixed-length bits;
-- all coordinate queries on `m` bits give `K=2^m`, while a rank-`rho` parity family gives `K=2^rho`;
-- any source-sink cut must carry the predictive-class label;
-- for one sink and integer capacities, the cut lower bound is sufficient by integral max-flow routing;
-- exact single-sink feasibility is therefore equivalent to min-cut capacity at least `ceil(log2 K)` bits;
-- deterministic future-law TV is the weighted disagreement mass between query signatures;
-- exact finite maximum packings give approximate cut lower bounds without being mistaken for covering achievability;
-- classical and unassisted-qubit capacity units have multiplier one, while explicitly assisted dense-coded classical payloads use multiplier two;
-- per-sink cuts are implemented as necessary conditions without claiming general multicast sufficiency;
-- finite certificates include class counts, max flow, residual min cut, route decomposition, and bounded maximum packing.
+Finite stochastic future laws now have:
 
-See [`predictive-network-mincuts.md`](predictive-network-mincuts.md).
+- exact equivalence classes;
+- weighted TV and KL geometry;
+- strict packing lower bounds;
+- exact target-centered set-cover upper bounds;
+- arbitrary-center Bernoulli covering;
+- three-way network certificates: impossible, constructively feasible, or unresolved.
 
-### Stochastic predictive covers and approximate network sufficiency
+The gap between packing and unrestricted covering is not hidden.
 
-The latest lane replaces deterministic outcomes by finite categorical future laws and adds constructive upper bounds rather than stopping at converse packings:
+### Stochastic observation-channel contraction
 
-- exact stochastic predictive equivalence is equality of every conditional outcome law across every allowed future query;
-- a family with `K` distinct law tensors needs and can use exactly `K` exact predictive states, with fresh randomness used only to sample the selected law;
-- under a shared exogenous query schedule, joint TV and KL are exactly the query-weighted sums of conditional TV and KL;
-- weighted-query and worst-query distortion remain separate interfaces;
-- strict `2 epsilon` packings lower-bound the number of arbitrary predictor states;
-- exact finite target-centered set cover gives a constructive epsilon-renderer and an upper bound;
-- the resulting network certificate reports `impossible`, `constructively-feasible`, or `unresolved` according to min-cut position between packing and cover indices;
-- target-centered covers are not assumed optimal because interpolating predictor laws may be more efficient;
-- for one-query Bernoulli families, TV is absolute parameter distance, one-state minimax radius is half the parameter range, and greedy interval covering gives the exact arbitrary-center state count;
-- the endpoint example `p=0,1`, `epsilon=1/2` demonstrates that one interpolating state `p=1/2` can beat a two-state target-centered cover;
-- bounded exact checks cover categorical validation, deterministic embeddings, KL/Pinsker, maximum packings, minimum target covers, arbitrary Bernoulli centers, assignments, and routed center indices.
+For a shared record-independent channel \(K\), the repository proves
 
-See [`stochastic-predictive-covers.md`](stochastic-predictive-covers.md).
+\[
+\operatorname{TV}(\mu K,\nu K)
+\le
+\delta(K)\operatorname{TV}(\mu,
+u),
+\]
+
+with exact rational certificates, query-specific coefficients, serial submultiplicativity, BSC and erasure examples, and monotonicity of exact classes, strict packings, and target-centered covers.
+
+Observation loss can weaken evidence and reduce the required observable interface. It is not silently reinterpreted as microscopic exact-world compression.
+
+### Finite multicast network coding
+
+The newest completed lane extends one-sink predictive cuts to a bounded common-demand multicast model:
+
+- exact Gaussian elimination and solving over prime fields;
+- topological propagation of global encoding vectors;
+- sink recovery iff incoming global-vector rank equals source dimension;
+- per-sink cut necessity;
+- named unit-capacity DAGs and integer-capacity expansion;
+- routing-only classification;
+- bounded exhaustive scalar-code search;
+- analytic butterfly routing impossibility;
+- exact binary butterfly coding with \(x_1+x_2\) on the bottleneck;
+- exhaustive verification of all 4096 local binary scalar assignments;
+- predictive-class injection into \(\mathbb F_p^h\).
+
+The project does not yet claim the general multicast max-flow/min-cut theorem. It owns the finite theorems and certificates it proves.
 
 ## Current frontier campaigns
 
-### Campaign A: scalable CSS, concatenated, and topological code families
+### Campaign A: bounded general multicast construction
 
-The five-qubit code proves the local-blindness theorem on one exact block. The next target is a family whose physical size, logical rate, distance, and predictive interface can scale.
+The butterfly demonstrates that coding can resolve a routing conflict. The next step is a constructive bounded multicast program across arbitrary finite DAGs.
 
-Candidate programs:
+Targets:
 
-- CSS construction from pairs of classical binary codes;
-- the Steane `[[7,1,3]]` code as the first CSS checker;
-- concatenated five-qubit and Steane parameter recurrences;
-- small surface/toric-code patches with explicit logical string operators;
-- subsystem codes where gauge degrees of freedom alter the predictive interface;
-- approximate codes and finite-temperature logical observables.
+1. Implement algebraic multicast construction for one source and common-demand sinks.
+2. Derive explicit field-size sufficiency conditions.
+3. Distinguish scalar from vector codes and track block length.
+4. Produce exact failure certificates when a selected field is too small.
+5. Compare exhaustive search, randomized coefficient selection, and deterministic construction.
+6. Preserve receiver-wise cut necessity separately from constructive sufficiency.
+7. Add formal proof receipts for global-vector propagation and sink decoding.
 
-Deliverables:
+Quality boundary: do not cite a general theorem and then treat a finite implementation as verified. The constructor and checker must be independently testable.
 
-1. Typed CSS parity-check inputs and commutation validation.
-2. Exact logical X/Z basis extraction from quotient spaces.
-3. Code distance and degeneracy checks on bounded instances.
-4. Local reduced-state equality below distance.
-5. Predictive packing over multiple logical qubits.
-6. Parameter-level scaling theorems kept separate from bounded state-vector checks.
-7. Time and memory cost of syndrome updates and logical-query answering.
+### Campaign B: approximate stochastic multicast
 
-### Campaign B: correlated noise and syndrome-history memory
-
-Independent local flips are analytically clean but restrictive. The next noisy lane should include:
-
-- common-mode and finite-range correlated errors;
-- Markov noise along spatial blocks;
-- repeated syndrome measurements;
-- uncertain measurement-error rates;
-- adversarial contamination bounded in total variation;
-- erasures and delayed observations.
-
-Research targets:
-
-1. Determine when proper marginal blindness survives.
-2. Replace `(1-2p)^ell` with correlation-function or transfer-matrix expressions.
-3. Prove strong-data-processing bounds for relational information through noisy causal chains.
-4. Quantify the predictive state needed to filter a hidden syndrome process.
-5. Separate physical-error history, decoder belief state, and logical predictive memory.
-
-### Campaign C: arbitrary categorical centers, rate distortion, and multi-sink stochastic networks
-
-The finite stochastic lane now has a converse packing and a target-centered constructive cover, plus an exact arbitrary-center Bernoulli solution. The next program should close the higher-dimensional center gap and then introduce source priors and joint sink demands.
-
-Candidate extensions:
-
-- arbitrary-center covers in finite categorical simplices;
-- exact or certified convex feasibility of one center covering a candidate target cluster;
-- minimum set partition into jointly coverable clusters;
-- source-prior rate-distortion rather than worst-record covering;
-- Bayesian and minimax uncertainty sets around empirically estimated laws;
-- adaptive stochastic query policies conditioned on previous outcomes;
-- progressive query hints with cover refinement at each stage;
-- several sinks with shared upstream center indices and heterogeneous local laws;
-- noisy network edges and strong-data-processing contraction of KL and TV;
-- stochastic logical observables in distributed error-correcting code families.
+Current multicast uses exact deterministic class labels. Current stochastic networks use one sink. The next bridge should combine them.
 
 Research questions:
 
-1. Can exact arbitrary-center TV covering be reduced to linear programming for bounded categorical families?
-2. When do packing and unrestricted covering numbers determine the exact epsilon-predictive state count?
-3. How should finite-sample uncertainty in the target laws alter exact equivalence, distances, and covers?
-4. What is the correct source-prior predictive rate-distortion function for a finite query family?
-5. How do stochastic covers compose through query-revelation trees?
-6. When can multiple sinks share one upstream compressed predictive state?
-7. Which network instances require routing, replication, or coding of center indices?
-8. How do edge channels contract distinguishability before it reaches each sink?
-9. Which conclusions remain ordinary information and communication complexity rather than simulation-specific claims?
+1. Can several sinks share one upstream stochastic cover index?
+2. When do heterogeneous sink tolerances require different refinements?
+3. Which demands are common multicast, function computation, or multiple unicast?
+4. How should a source prior alter worst-record cover design?
+5. Can one code interpolating predictive centers rather than only target labels?
+6. What packing cuts remain necessary at each sink?
+7. What constructive cover or rate-distortion code is jointly feasible?
 
-### Campaign D: update-time and computational lower bounds
+Deliverables:
 
-Current theorems mostly lower-bound state cardinality or communicated information. Memory alone is not enough. Future work should measure:
+- typed sink-demand objects;
+- per-sink distortion metrics;
+- common-refinement and sink-specific cover solvers;
+- network lower/upper certificates;
+- bounded examples where coding strictly improves replication or routing.
 
-- update time after a new observation, syndrome, or remote record change;
-- query time for a future conditional law;
-- random-bit and qubit-operation complexity;
-- communication across a distributed renderer;
-- preprocessing versus online computation;
-- tensor-network contraction or stabilizer-tableau update cost;
-- cell-probe lower bounds for dynamic parity and relational queries;
-- work required when a dynamic target crosses predictive-cover cells.
+### Campaign C: noisy edges and robust channels
 
-The goal is a bounded time-space-communication tradeoff rather than an unsupported statement that “the universe is expensive to simulate.”
+Observation channels and communication edges are currently modeled separately. The next lane must preserve that distinction while composing them.
 
-### Campaign E: restricted physical signatures
+Targets:
 
-Select one architecture at a time—lattice, finite precision, constrained pseudorandomness, approximation policy, or distributed consistency mechanism. For each:
+1. Add finite noisy edge kernels.
+2. Separate source coding, channel coding, network coding, and observation post-processing.
+3. Compute Dobrushin and KL contraction along paths and cuts.
+4. Add uncertain channel sets and worst-case robust certificates.
+5. Distinguish record-independent noise from record-dependent intervention.
+6. Add erasures, correlated failures, and adversarial contamination.
+7. Prove when coding restores reliable class transmission and at what block length.
 
-1. State the null and alternative observable laws.
-2. Identify nuisance parameters and ordinary-physics alternatives.
-3. Build a leakage-safe data pipeline.
-4. Pre-register a likelihood, e-process, or confidence sequence.
-5. Report calibration and power before interpreting data.
+Noisy-edge capacity must not be inferred from one-shot total-variation contraction alone.
 
-No anomaly score is evidence without a null sampling model.
+### Campaign D: progressive causal networks
 
-### Campaign F: observer-measure and algorithmic-prior robustness
+The repository has progressive hints on one cut and exact multicast on one stage. The next target is a query-revelation tree embedded in a network.
 
-Continue the nonphysical-inference lanes in parallel:
+Research questions:
 
-- explicit distributions over civilization survival, deployment, consciousness, observer lifetime, and evidence rarity;
-- dependence and duplicate-copy sensitivity;
-- SSA/SIA/FNC robustness surfaces rather than single percentages;
-- alternative prefix languages and compiler-equivalent implementations;
-- observational-law aggregation and finite universal-machine perturbations.
+1. Which state must cross before each hint?
+2. Which branches can share upstream summaries?
+3. How do branch-specific covers refine after observations?
+4. When can later side information decode a coded bottleneck symbol?
+5. How do memory, communication, and delay trade off?
+6. Which branch capacities are design-wide versus per execution?
+7. How does quantum assistance change each stage without being double-counted?
 
-The target is sensitivity analysis, not a representation-free prior that has not been justified.
+### Campaign E: scalable quantum-code families
+
+The five-qubit code is a bounded checker, not a scaling theory. Next targets include:
+
+- CSS construction from classical parity-check matrices;
+- Steane \([[7,1,3]]\) validation;
+- concatenation recurrences;
+- surface/toric-code patches;
+- logical predictive packings over several encoded qubits;
+- noisy syndrome-history state;
+- distributed logical queries across causal regions.
+
+Every result must distinguish code distance, stabilizer weight, degeneracy, logical operator weight, and query locality.
+
+### Campaign F: dynamic update-time lower bounds
+
+State cardinality does not determine update cost. Future work should measure:
+
+- update time after one observation or syndrome change;
+- query time;
+- random-bit and field-operation complexity;
+- preprocessing versus online work;
+- dynamic parity cell-probe bounds;
+- stabilizer-tableau update cost;
+- network recoding after edge failure;
+- cover-cell changes under drifting stochastic laws.
+
+The goal is a bounded time-space-communication tradeoff, not an unsupported claim that the universe is computationally expensive.
+
+### Campaign G: restricted empirical architectures
+
+For each candidate physical architecture—lattice, finite precision, constrained randomness, approximate rendering, or limited communication—require:
+
+1. a declared null and alternative law;
+2. nuisance parameters and ordinary alternatives;
+3. a leakage-safe data pipeline;
+4. a pre-registered likelihood, e-process, or confidence sequence;
+5. calibration and power;
+6. explicit model-selection and stopping rules;
+7. a statement of which broader simulator classes remain untouched.
+
+No anomaly becomes simulation evidence merely because it is surprising.
+
+### Campaign H: observer-measure and algorithmic-prior robustness
+
+Continue in parallel:
+
+- dependence among civilization factors;
+- duplicate-copy sensitivity;
+- SSA/SIA/FNC robustness surfaces;
+- uncertain consciousness instantiation;
+- complete-evidence rarity;
+- alternative prefix machines;
+- compiler-equivalent program aggregation;
+- observational-law versus implementation priors.
+
+The target is transparent sensitivity, not a universal prior assumed into existence.
 
 ## Quality gates
 
-A research result is ready for the main branch only when:
+A result is ready for `main` only when:
 
 1. The claim has an explicit finite, universal, asymptotic, or empirical scope.
-2. Assumptions and nonclaims are written next to the result.
-3. The derivation has a test, exact checker, or independently reproducible calculation where applicable.
-4. Closed-form identities are checked against brute-force enumeration on bounded instances when possible.
-5. Numerical demonstrations use fixed seeds and are labeled illustrative when priors are invented.
-6. Sequential claims state their sampling model, retained transcript, and stopping guarantee.
-7. Locality claims distinguish one-shot local marginals from adaptive protocols that aggregate a higher-weight observable.
-8. Code claims distinguish stabilizer weight, code distance, degeneracy, logical weight, and query weight.
-9. Noise claims specify independence, stationarity, and parameter-knowledge assumptions.
-10. Distributed claims specify query timing, communication rounds, query-hint support, shared stores, source distribution, and local versus global storage accounting.
-11. Quantum-communication claims distinguish transmitted qubits, preshared entanglement, receiver memory, and accessible classical information.
-12. Multiround claims distinguish design-wide branch capacity from the one branch executed in a particular run.
-13. Network claims distinguish one-sink sufficiency from per-sink necessity and explicit multicast achievability.
-14. Approximate claims distinguish packings, target-centered covers, arbitrary-center covers, converses, and constructive renderers.
-15. Stochastic claims distinguish weighted-query distortion from worst-query distortion and exact declared tables from empirically estimated laws.
-16. A certificate must say `unresolved` rather than infer feasibility or impossibility when implemented lower and upper bounds do not meet.
-17. Physical claims state which laws apply and avoid cross-level leakage.
-18. A finite experiment is never promoted into a generic simulation conclusion.
-19. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
-20. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
+2. Assumptions and nonclaims appear next to the claim.
+3. A derivation has an exact checker or independently reproducible calculation where applicable.
+4. Closed forms are checked against bounded enumeration when possible.
+5. Numerical examples label invented priors and fixed seeds.
+6. Sequential results state their sampling and stopping models.
+7. Locality results distinguish local marginals from aggregated higher-weight protocols.
+8. Noise results state independence, correlation, and parameter-knowledge assumptions.
+9. Quantum results separate qubits, classical payload, receiver memory, and preshared entanglement.
+10. Progressive results separate shared-stage capacity, branch budgets, and executed paths.
+11. Network results separate one-sink sufficiency, per-sink necessity, routing, replication, coding, and multicast demand type.
+12. Search-based impossibility claims require exhaustion of the declared finite domain; capped searches remain incomplete.
+13. Packing lower bounds, target-centered covers, arbitrary-center covers, rate-distortion results, and constructions remain distinct.
+14. Physical results avoid cross-level resource leakage.
+15. A finite result is never promoted into a generic simulation conclusion.
+16. Internal bits, symbols, qubits, operations, and capacities are not silently converted into parent hardware.
 
 ## Tempera Math integration
 
-The repository claim manifests remain the source of truth. Tempera Math can later provide content-addressed claim registration, proof graphs, exact finite certificates, and external checker receipts. The adapter must preserve:
+The claim manifests in this repository remain the source of truth. Tempera Math may later provide content-addressed registration, proof graphs, exact finite certificates, and independent checker receipts.
+
+Any bridge must preserve:
 
 - theorem versus model-result versus finite-check status;
-- all assumptions and nonclaims;
+- every assumption and nonclaim;
 - exact source revision and checker command;
-- bounded code size, graph size, horizon, locality, tolerance, stochastic law table, query schedule, cover-center restriction, communication interface, hint partition, network topology, sink demand, and assistance model;
-- the boundary between structural validation and mathematical execution.
+- graph size, field, horizon, locality, tolerance, block length, noise law, assistance model, and search domain;
+- the difference between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, progressive query revelation, predictive equivalence, stochastic covering, interpolation, max flow, min cuts, parity compression, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, entanglement, graph states, quantum codes, error correction, random-access coding, network coding, max flow, min cuts, predictive equivalence, stochastic covers, information bounds, Planck scales, mathematical elegance, observer effects, or finite signal speed are evidence of simulation by themselves.
 
-Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.
+Rejecting one restricted implementation does not reject every possible simulator. Finding one anomaly does not favor simulation until it is more likely under a specified simulator model than under serious physical, measurement, selection, and intervention alternatives.
