@@ -14,11 +14,11 @@ def test_ternary_predictive_claim_manifest_is_valid_and_evidence_bound():
     digest = canonical_claim_manifest_hash(manifest)
     assert len(digest) == 64
     assert {claim["id"] for claim in manifest["claims"]} == {
-        "ST-T58",
-        "ST-T59",
-        "ST-T60",
-        "ST-T61",
-        "ST-T62",
-        "ST-M14",
-        "ST-F06",
+        "ST-T67",
+        "ST-T68",
+        "ST-T69",
+        "ST-T70",
+        "ST-T71",
+        "ST-M16",
+        "ST-F09",
     }

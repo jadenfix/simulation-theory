@@ -120,7 +120,7 @@ The binary-symplectic module implements stabilizers, normalizers, code distance,
 
 Code distance, stabilizer weight, logical weight, query weight, and selected-error protection remain distinct notions.
 
-## Completed causal and network lanes
+## Completed causal, approximation, and network lanes
 
 ### Classical and quantum random-access cuts
 
@@ -162,6 +162,28 @@ Finite stochastic future laws now have:
 
 The gap between packing and unrestricted covering is not hidden.
 
+### Exact ternary arbitrary centers
+
+For one query with exactly three outcomes, the unrestricted arbitrary-center gap is now closed for bounded finite target families.
+
+Completed results include:
+
+- the exact identity
+
+  \[
+  \operatorname{TV}(p,u)=\max_j|p_j-u_j|;
+  \]
+
+- a necessary-and-sufficient common-center criterion from coordinate intervals and simplex mass;
+- a constructive common center;
+- a closed one-state minimax radius from coordinate half-ranges and two water-filling thresholds;
+- an exact finite reduction of arbitrary-center covering to feasible-subset enumeration plus minimum set cover;
+- an independent subset-partition dynamic-program checker;
+- the exact three-vertex phase diagram: three states below \(1/2\), two states from \(1/2\) to \(2/3\), and one uniform state at or above \(2/3\);
+- exact one-sink network capacity for the resulting optimal center index.
+
+This geometry is special to the three-outcome simplex. It is not generalized by analogy to four or more outcomes.
+
 ### Stochastic observation-channel contraction
 
 For a shared record-independent channel \(K\), the repository proves
@@ -179,7 +201,7 @@ Observation loss can weaken evidence and reduce the required observable interfac
 
 ### Finite multicast network coding
 
-The newest completed lane extends one-sink predictive cuts to a bounded common-demand multicast model:
+The completed multicast lane extends one-sink predictive cuts to a bounded common-demand model:
 
 - exact Gaussian elimination and solving over prime fields;
 - topological propagation of global encoding vectors;
@@ -193,11 +215,29 @@ The newest completed lane extends one-sink predictive cuts to a bounded common-d
 - exhaustive verification of all 4096 local binary scalar assignments;
 - predictive-class injection into \(\mathbb F_p^h\).
 
-The project does not yet claim the general multicast max-flow/min-cut theorem. It owns the finite theorems and certificates it proves.
+The project does not claim the general multicast max-flow/min-cut theorem. It owns the finite theorems and certificates it proves.
 
 ## Current frontier campaigns
 
-### Campaign A: bounded general multicast construction
+### Campaign A: higher-dimensional categorical arbitrary centers
+
+The ternary simplex is exactly solvable because ternary TV equals an infinity norm on the zero-sum plane. That identity fails for four or more outcomes.
+
+The next approximation program should derive the geometry rather than extrapolate it.
+
+Targets:
+
+1. Formulate common-center feasibility for \(d\)-outcome laws as an exact finite linear program with auxiliary absolute-deviation variables.
+2. Develop a standard-library rational certificate for bounded dimensions.
+3. Distinguish feasibility certificates, minimax centers, and exact finite set covers.
+4. Produce a four-outcome counterexample showing why the ternary box criterion fails.
+5. Compare target-centered, arbitrary-center, packing, and rate-distortion counts.
+6. Preserve admissibility constraints when a physical model permits only a subset of the simplex.
+7. Turn exact cover indices into one-sink and multicast network requirements.
+
+Quality boundary: an approximate numerical optimizer is not an exact theorem receipt unless primal feasibility, dual bounds, and discretization error are certified.
+
+### Campaign B: bounded general multicast construction
 
 The butterfly demonstrates that coding can resolve a routing conflict. The next step is a constructive bounded multicast program across arbitrary finite DAGs.
 
@@ -213,17 +253,17 @@ Targets:
 
 Quality boundary: do not cite a general theorem and then treat a finite implementation as verified. The constructor and checker must be independently testable.
 
-### Campaign B: approximate stochastic multicast
+### Campaign C: approximate stochastic multicast and sink-specific functions
 
-Current multicast uses exact deterministic class labels. Current stochastic networks use one sink. The next bridge should combine them.
+Current multicast uses one exact common class label. Current stochastic approximation is strongest at one sink. The next bridge should combine them.
 
 Research questions:
 
 1. Can several sinks share one upstream stochastic cover index?
 2. When do heterogeneous sink tolerances require different refinements?
-3. Which demands are common multicast, function computation, or multiple unicast?
+3. Which demands are common multicast, linear function computation, or multiple unicast?
 4. How should a source prior alter worst-record cover design?
-5. Can one code interpolating predictive centers rather than only target labels?
+5. Can a code carry interpolating predictive centers rather than only target labels?
 6. What packing cuts remain necessary at each sink?
 7. What constructive cover or rate-distortion code is jointly feasible?
 
@@ -232,10 +272,11 @@ Deliverables:
 - typed sink-demand objects;
 - per-sink distortion metrics;
 - common-refinement and sink-specific cover solvers;
+- exact row-space criteria for linear sink functions;
 - network lower/upper certificates;
 - bounded examples where coding strictly improves replication or routing.
 
-### Campaign C: noisy edges and robust channels
+### Campaign D: noisy edges and robust channels
 
 Observation channels and communication edges are currently modeled separately. The next lane must preserve that distinction while composing them.
 
@@ -251,7 +292,7 @@ Targets:
 
 Noisy-edge capacity must not be inferred from one-shot total-variation contraction alone.
 
-### Campaign D: progressive causal networks
+### Campaign E: progressive causal networks
 
 The repository has progressive hints on one cut and exact multicast on one stage. The next target is a query-revelation tree embedded in a network.
 
@@ -265,7 +306,7 @@ Research questions:
 6. Which branch capacities are design-wide versus per execution?
 7. How does quantum assistance change each stage without being double-counted?
 
-### Campaign E: scalable quantum-code families
+### Campaign F: scalable quantum-code families
 
 The five-qubit code is a bounded checker, not a scaling theory. Next targets include:
 
@@ -279,7 +320,7 @@ The five-qubit code is a bounded checker, not a scaling theory. Next targets inc
 
 Every result must distinguish code distance, stabilizer weight, degeneracy, logical operator weight, and query locality.
 
-### Campaign F: dynamic update-time lower bounds
+### Campaign G: dynamic update-time lower bounds
 
 State cardinality does not determine update cost. Future work should measure:
 
@@ -294,7 +335,7 @@ State cardinality does not determine update cost. Future work should measure:
 
 The goal is a bounded time-space-communication tradeoff, not an unsupported claim that the universe is computationally expensive.
 
-### Campaign G: restricted empirical architectures
+### Campaign H: restricted empirical architectures
 
 For each candidate physical architecture—lattice, finite precision, constrained randomness, approximate rendering, or limited communication—require:
 
@@ -308,7 +349,7 @@ For each candidate physical architecture—lattice, finite precision, constraine
 
 No anomaly becomes simulation evidence merely because it is surprising.
 
-### Campaign H: observer-measure and algorithmic-prior robustness
+### Campaign I: observer-measure and algorithmic-prior robustness
 
 Continue in parallel:
 
@@ -340,9 +381,10 @@ A result is ready for `main` only when:
 11. Network results separate one-sink sufficiency, per-sink necessity, routing, replication, coding, and multicast demand type.
 12. Search-based impossibility claims require exhaustion of the declared finite domain; capped searches remain incomplete.
 13. Packing lower bounds, target-centered covers, arbitrary-center covers, rate-distortion results, and constructions remain distinct.
-14. Physical results avoid cross-level resource leakage.
-15. A finite result is never promoted into a generic simulation conclusion.
-16. Internal bits, symbols, qubits, operations, and capacities are not silently converted into parent hardware.
+14. Higher-dimensional center claims require certified feasibility and optimality rather than an unchecked numerical solution.
+15. Physical results avoid cross-level resource leakage.
+16. A finite result is never promoted into a generic simulation conclusion.
+17. Internal bits, symbols, qubits, operations, and capacities are not silently converted into parent hardware.
 
 ## Tempera Math integration
 
@@ -360,6 +402,6 @@ See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, graph states, quantum codes, error correction, random-access coding, network coding, max flow, min cuts, predictive equivalence, stochastic covers, information bounds, Planck scales, mathematical elegance, observer effects, or finite signal speed are evidence of simulation by themselves.
+This project does not claim that quantum mechanics, Bell violation, entanglement, graph states, quantum codes, error correction, random-access coding, network coding, max flow, min cuts, predictive equivalence, stochastic covers, arbitrary predictive centers, information bounds, Planck scales, mathematical elegance, observer effects, or finite signal speed are evidence of simulation by themselves.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding one anomaly does not favor simulation until it is more likely under a specified simulator model than under serious physical, measurement, selection, and intervention alternatives.

@@ -8,8 +8,7 @@ This repository does **not** assume that reality is simulated. It asks a narrowe
 
 The central boundary is simple:
 
-
-a generic claim that “some external process generates our observations” is not internally identifiable when that process is permitted to reproduce the same observable probability law as ordinary physics. Scientific progress therefore requires a **restricted simulator model** with a declared observable law, approximation mechanism, architecture, intervention policy, query interface, or physical implementation assumption.
+A generic claim that “some external process generates our observations” is not internally identifiable when that process is permitted to reproduce the same observable probability law as ordinary physics. Scientific progress therefore requires a **restricted simulator model** with a declared observable law, approximation mechanism, architecture, intervention policy, query interface, or physical implementation assumption.
 
 ## Core conclusion
 
@@ -133,11 +132,45 @@ fixed-length predictive bits.
 
 For approximation, strict \(2\epsilon\)-packings give state lower bounds, while target-centered and arbitrary-center covers give constructive upper bounds. The gap between converse and construction remains explicit.
 
-### 4. Stochastic future laws and channel contraction
+### 4. Stochastic future laws, arbitrary centers, and channel contraction
 
 Future queries need not be deterministic. A finite stochastic family assigns a full conditional probability law to every record-query pair.
 
 Under an exogenous query schedule, joint total variation and KL are the query-weighted sums of their conditional counterparts.
+
+For one query with exactly three outcomes, the repository solves the unrestricted arbitrary-center problem exactly. For ternary probability laws \(p,u\),
+
+\[
+\boxed{
+\operatorname{TV}(p,u)
+=
+\max_j|p_j-u_j|.
+}
+\]
+
+A finite target cluster has one \(\epsilon\)-accurate center exactly when
+
+\[
+L_j=\max\{0,\max_i p_{ij}-\epsilon\},
+\qquad
+U_j=\min\{1,\min_i p_{ij}+\epsilon\}
+\]
+
+satisfy
+
+\[
+L_j\le U_j\quad\forall j,
+\qquad
+\sum_jL_j\le1\le\sum_jU_j.
+\]
+
+Enumerating every feasible target subset, constructing a canonical center, and solving exact finite set cover gives the true arbitrary-center optimum—not merely a target-centered upper bound. For the three simplex vertices the exact phase diagram is:
+
+- three states for \(\epsilon<1/2\);
+- two states for \(1/2\le\epsilon<2/3\);
+- one uniform state for \(\epsilon\ge2/3\).
+
+This max-coordinate identity is special to exactly three outcomes; higher categorical dimensions require a different geometry.
 
 For a shared record-independent finite outcome channel \(K\), the exact Dobrushin coefficient is
 
@@ -343,6 +376,8 @@ Approximate stochastic families have a three-way certificate:
 - above a constructive cover-index upper bound: feasible;
 - between them: unresolved by the current certificate.
 
+The exact ternary arbitrary-center solver closes that gap for bounded one-query three-outcome families and turns the optimal center index directly into an exact one-sink capacity requirement.
+
 For several sinks, separate min-cuts are necessary but routing plans may conflict. The finite multicast module implements exact scalar linear coding over prime fields.
 
 For the declared binary butterfly network:
@@ -383,6 +418,7 @@ claims/predictive-network-claims.json
 claims/stochastic-predictive-claims.json
 claims/stochastic-channel-claims.json
 claims/multicast-network-coding-claims.json
+claims/ternary-predictive-claims.json
 ```
 
 Each entry records a stable ID, claim type, exact scope, assumptions, evidence paths, and explicit nonclaims.
@@ -406,6 +442,7 @@ docs/predictive-network-mincuts.md
 docs/stochastic-predictive-covers.md
 docs/stochastic-channel-contraction.md
 docs/multicast-network-coding.md
+docs/ternary-predictive-centers.md
 docs/research-program.md
 docs/sources.md
 docs/tempera-math-bridge.md
@@ -445,12 +482,13 @@ Evidence must favor one **restricted simulator model** over serious alternative 
 6. calibration and power;
 7. how ordinary-physics alternatives are excluded.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, max flow, min cuts, network coding, predictive equivalence, or information bounds are not generic evidence for simulation. Ordinary physical theories and ordinary distributed systems can contain all of those features.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, max flow, min cuts, network coding, predictive equivalence, arbitrary predictive centers, or information bounds are not generic evidence for simulation. Ordinary physical theories and ordinary distributed systems can contain all of those features.
 
 ## Current frontier
 
 The highest-value next campaigns are:
 
+- higher-dimensional categorical arbitrary-center geometry beyond three outcomes;
 - general bounded multicast construction and field-size sensitivity;
 - noisy network coding with source, channel, and network coding kept separate;
 - sink-specific predictive functions rather than common-demand multicast;
