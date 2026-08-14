@@ -1,0 +1,181 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T146",
+      "title": "Deterministic source-law information patterns obey an exact regret hierarchy",
+      "kind": "THEOREM",
+      "scope": "finite rational source-law grids, exact TV transition graphs, deterministic zero-error prefix-codebook policies, finite horizon, and one declared rational switching charge",
+      "assumptions": [
+        "open-loop, delayed-feedback, current-law, and clairvoyant move orders are exactly those declared in the model",
+        "the same path-specific clairvoyant code-sequence oracle defines regret for every policy class",
+        "all bounded law, path, codebook, and Bellman enumerations complete"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#2-deterministic-regret-hierarchy",
+        "src/simtheory/feedback_regret_solver.py:exact_drift_information_regret",
+        "tests/test_feedback_regret.py"
+      ],
+      "nonclaims": [
+        "the clairvoyant benchmark is not an implementable causal policy",
+        "the hierarchy does not compare shared randomization with deterministic feedback"
+      ]
+    },
+    {
+      "id": "ST-T147",
+      "title": "Current-law feedback has zero pathwise regret when switching is free",
+      "kind": "THEOREM",
+      "scope": "the declared finite-grid zero-error prefix-codebook game with exact current-law observation and zero switching charge",
+      "assumptions": [
+        "the path oracle uses the same finite codebook family",
+        "without switching cost the oracle objective decomposes period by period",
+        "the current source law is observed before the current codebook is selected"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#3-why-current-law-feedback-has-zero-regret-when-switching-is-free",
+        "tests/test_feedback_regret.py"
+      ],
+      "nonclaims": [
+        "zero regret need not hold with positive switching cost",
+        "observing samples from the current law is not the same as observing the law exactly"
+      ]
+    },
+    {
+      "id": "ST-T148",
+      "title": "The comparator cost frontier is an exact sufficient state for feedback regret",
+      "kind": "THEOREM",
+      "scope": "the declared finite codebook family with additive expected code length and a constant per-switch charge",
+      "assumptions": [
+        "frontier coordinate j is the minimum comparator prefix cost among sequences ending in codebook j",
+        "the comparator can switch among the same finite codebook family at every period",
+        "source-law and switching costs are additive across periods"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#6-the-comparator-frontier-is-an-exact-sufficient-statistic",
+        "src/simtheory/oracle_frontier.py:advance_comparator_frontier",
+        "src/simtheory/oracle_frontier.py:exact_frontier_feedback_regret",
+        "tests/test_oracle_frontier.py"
+      ],
+      "nonclaims": [
+        "the frontier is not proved minimal for every codebook family",
+        "frontier coordinates are not parent-substrate memory units"
+      ]
+    },
+    {
+      "id": "ST-T149",
+      "title": "Comparator-frontier updates are translation equivariant",
+      "kind": "THEOREM",
+      "scope": "the exact switching-cost frontier update over one finite codebook family",
+      "assumptions": [
+        "one common scalar is added to every incoming frontier coordinate",
+        "switching and stage costs are unchanged"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#translation-equivariance",
+        "src/simtheory/oracle_frontier.py:normalized_comparator_frontier",
+        "tests/test_oracle_frontier.py"
+      ],
+      "nonclaims": [
+        "translation equivariance alone does not prove that the normalized frontier is the unique minimal state",
+        "the scalar baseline remains necessary to reconstruct the absolute oracle cost"
+      ]
+    },
+    {
+      "id": "ST-T150",
+      "title": "Pointwise dominance pruning preserves a finite rational zero-sum game",
+      "kind": "THEOREM",
+      "scope": "finite rational games where the row player maximizes and the column player minimizes",
+      "assumptions": [
+        "a removed row is pointwise no larger than one retained row on all retained columns",
+        "a removed column is pointwise no smaller than one retained column on all retained rows",
+        "the reduced exact support-basis solver completes"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#8-exact-game-pruning-without-weakening-the-certificate",
+        "src/simtheory/exact_game_pruning.py:solve_dominance_pruned_zero_sum_game",
+        "tests/test_exact_game_pruning.py"
+      ],
+      "nonclaims": [
+        "the implementation does not remove a row or column using an uncertified convex-combination dominance test",
+        "pruning is a search acceleration rather than a substitute for the lifted full-matrix certificate"
+      ]
+    },
+    {
+      "id": "ST-T151",
+      "title": "Deterministic feedback-regret information value has an exact nonnegative telescope",
+      "kind": "THEOREM",
+      "scope": "any valid certificate satisfying the deterministic hierarchy zero <= current <= delayed <= open",
+      "assumptions": [
+        "all four deterministic regret values use the same source-path and comparator model"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#9-exact-decomposition-of-deterministic-information-value",
+        "src/simtheory/feedback_regret_decomposition.py:decompose_feedback_regret",
+        "tests/test_feedback_regret_decomposition.py"
+      ],
+      "nonclaims": [
+        "the public-randomization gain is not inserted into the deterministic information telescope",
+        "a hybrid information-plus-randomness value requires a separately specified game"
+      ]
+    },
+    {
+      "id": "ST-T152",
+      "title": "Source-independent shared open-loop feedback regret is an exact finite rational game",
+      "kind": "THEOREM",
+      "scope": "finite-grid source paths and complete bounded open-loop code-sequence decisions with a public source-independent seed",
+      "assumptions": [
+        "the source path is chosen independently of the realized shared seed",
+        "all required decoders know the realized code sequence",
+        "the lifted full regret matrix has an exact zero primal-dual game gap"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#7-shared-open-loop-randomization",
+        "src/simtheory/feedback_regret_solver.py:exact_drift_information_regret",
+        "tests/test_feedback_regret.py"
+      ],
+      "nonclaims": [
+        "shared open-loop randomization is not generally ordered relative to deterministic delayed or current-law feedback",
+        "the exact random-bit cost of sampling the shared mixture is not priced"
+      ]
+    },
+    {
+      "id": "ST-M33",
+      "title": "Positive switching cost can create strict regret under exact current-law feedback",
+      "kind": "MODEL_RESULT",
+      "scope": "the bounded K3 finite-grid instances exercised by the feedback-regret tests",
+      "assumptions": [
+        "the designer sees the current law exactly but not future laws",
+        "the path oracle sees the complete law sequence",
+        "a positive rational codebook switching charge couples periods"
+      ],
+      "evidence": [
+        "docs/feedback-information-regret.md#4-switching-cost-creates-a-value-of-future-foresight",
+        "tests/test_feedback_regret.py"
+      ],
+      "nonclaims": [
+        "strictness is instance dependent",
+        "the switching charge is a declared accounting parameter rather than a measured physical cost"
+      ]
+    },
+    {
+      "id": "ST-F24",
+      "title": "Bounded exact feedback-regret, game-pruning, and frontier audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational source grids, paths, policy tables, codebook sequences, game matrices, and frontier states exercised by the repository tests",
+      "assumptions": [
+        "all configured law, path, sequence, candidate, support-basis, and dominance caps complete without truncation",
+        "Python Fraction arithmetic is used for every finite payoff and feasibility calculation"
+      ],
+      "evidence": [
+        "tests/test_feedback_regret.py",
+        "tests/test_exact_game_pruning.py",
+        "tests/test_oracle_frontier.py",
+        "tests/test_feedback_regret_decomposition.py"
+      ],
+      "nonclaims": [
+        "bounded test completion is not a polynomial-time scalability theorem",
+        "finite feedback-regret agreement is not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
