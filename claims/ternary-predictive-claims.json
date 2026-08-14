@@ -1,0 +1,144 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T58",
+      "title": "Ternary total variation infinity-norm identity",
+      "kind": "THEOREM",
+      "scope": "two probability laws on exactly three outcomes",
+      "assumptions": [
+        "both probability vectors are nonnegative and sum to one",
+        "total variation is one half of their L1 distance"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#2-ternary-total-variation-is-an-infinity-norm",
+        "src/simtheory/ternary_predictive.py:ternary_total_variation",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "the max-coordinate identity is not asserted for four or more outcomes",
+        "probability-simplex geometry is not parent-hardware geometry"
+      ]
+    },
+    {
+      "id": "ST-T59",
+      "title": "Exact common-center feasibility for ternary target laws",
+      "kind": "THEOREM",
+      "scope": "one finite nonempty cluster of three-outcome target laws under total-variation tolerance epsilon",
+      "assumptions": [
+        "predictor centers may be arbitrary probability laws in the ternary simplex",
+        "epsilon is finite and nonnegative"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#3-one-common-epsilon-center",
+        "src/simtheory/ternary_predictive.py:ternary_cover_bounds",
+        "src/simtheory/ternary_predictive.py:ternary_common_center",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "the coordinate-box criterion depends on the ternary TV identity",
+        "a physical model that forbids interpolating laws has a different feasible-center set"
+      ]
+    },
+    {
+      "id": "ST-T60",
+      "title": "Closed one-state ternary minimax predictive radius",
+      "kind": "THEOREM",
+      "scope": "one finite nonempty family of ternary target laws approximated by one arbitrary ternary predictor",
+      "assumptions": [
+        "distortion is worst-target total variation",
+        "the water-filling thresholds use the target coordinate extrema"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#4-exact-one-state-minimax-radius",
+        "src/simtheory/ternary_predictive.py:ternary_minimax_center",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "the formula is not a source-prior average rate-distortion result",
+        "the water-filling form is not promoted to arbitrary categorical dimension"
+      ]
+    },
+    {
+      "id": "ST-T61",
+      "title": "Exact minimum arbitrary-center cover for finite ternary laws",
+      "kind": "THEOREM",
+      "scope": "a bounded finite one-query ternary target family under total-variation tolerance epsilon",
+      "assumptions": [
+        "every predictor state may use any ternary probability center",
+        "the finite search enumerates every nonempty target subset below the declared cap",
+        "the state objective counts predictor centers without unequal state costs"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#5-exact-arbitrary-center-covering",
+        "src/simtheory/ternary_predictive.py:minimum_ternary_arbitrary_cover",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "the exponential finite algorithm is not presented as a scalable polynomial-time method",
+        "the exact theorem concerns one query with exactly three outcomes"
+      ]
+    },
+    {
+      "id": "ST-T62",
+      "title": "Exact one-sink network capacity for finite ternary approximation",
+      "kind": "THEOREM",
+      "scope": "one source, one sink, one bounded finite ternary target family, and one directed integer-capacity network carrying a center index",
+      "assumptions": [
+        "the source computes the exact arbitrary-center cover assignment",
+        "the sink can sample from the recovered center after the query",
+        "integral max flow routes the fixed-length center index"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#9-exact-one-sink-network-capacity",
+        "src/simtheory/ternary_predictive.py:ternary_network_certificate",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "the network theorem carries a classical center index rather than an arbitrary coherent quantum law",
+        "single-sink sufficiency is not a simultaneous multi-sink theorem"
+      ]
+    },
+    {
+      "id": "ST-M14",
+      "title": "Three-vertex ternary predictive-state phase diagram",
+      "kind": "MODEL_RESULT",
+      "scope": "the three deterministic simplex-vertex laws under total-variation tolerance epsilon",
+      "assumptions": [
+        "arbitrary ternary predictor centers are admissible",
+        "fixed-length state bits are the ceiling of the logarithm of the exact state count"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#8-the-three-simplex-vertices",
+        "src/simtheory/ternary_predictive.py:ternary_minimax_center",
+        "src/simtheory/ternary_predictive.py:minimum_ternary_arbitrary_cover",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "the target-centered cover remains conservative because it forbids the uniform interpolating center",
+        "the finite phase diagram is not a statement about arbitrary physical measurements"
+      ]
+    },
+    {
+      "id": "ST-F06",
+      "title": "Finite ternary center, cover, and routed-network certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite ternary families and integer-capacity one-sink networks checked by the repository",
+      "assumptions": [
+        "target count remains below the declared exhaustive-search cap",
+        "floating-point comparisons use the declared analytic tolerance",
+        "the supplied probability tables are treated as exact model inputs"
+      ],
+      "evidence": [
+        "docs/ternary-predictive-centers.md#10-finite-certificate-contents",
+        "src/simtheory/ternary_predictive.py:minimum_ternary_arbitrary_cover",
+        "src/simtheory/ternary_predictive.py:ternary_network_certificate",
+        "tests/test_ternary_predictive.py"
+      ],
+      "nonclaims": [
+        "finite enumeration does not certify unrelated higher-dimensional categorical instances",
+        "successful routing is not empirical evidence for simulation"
+      ]
+    }
+  ]
+}
