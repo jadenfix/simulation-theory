@@ -10,15 +10,15 @@ where v in [0,1] is the Werner visibility.  v=1 is the ideal singlet
 correlation law for the chosen plane and v=0 is uniform white noise.
 
 The purpose is not to claim that our universe is a simulator.  It is to derive
-predictive-state packing bounds from an explicit physical experiment family
-rather than from arbitrary probability vectors.
+predictive-state packing and query-complexity bounds from an explicit physical
+experiment family rather than from arbitrary probability vectors.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import product
-from math import ceil, cos, log2, pi, sqrt
+from math import ceil, cos, inf, log, log2, pi, sqrt
 from typing import Iterable, Mapping, Sequence
 
 Outcome = tuple[int, int]
@@ -188,7 +188,7 @@ def maximum_epsilon_packing(
     """Return a maximum 2*epsilon-separated packing on a finite visibility grid.
 
     Because the TV metric is a positive constant times |v-u|, the problem is
-    one-dimensional interval packing.  Sorting and greedily choosing the
+    one-dimensional interval packing. Sorting and greedily choosing the
     smallest feasible next point is optimal for maximum cardinality.
     """
 
@@ -213,12 +213,7 @@ def predictive_memory_lower_bound_bits(
     epsilon: float,
     schedule: BellSchedule = CANONICAL_CHSH,
 ) -> int:
-    """Bits required by any epsilon-accurate state representation on the grid.
-
-    If K candidate future laws are pairwise more than 2*epsilon apart in TV,
-    no one internal renderer state can approximate two of them within epsilon.
-    Hence at least K states, or ceil(log2 K) bits, are necessary.
-    """
+    """Bits required by any epsilon-accurate state representation on the grid."""
 
     k = len(maximum_epsilon_packing(visibilities, epsilon, schedule))
     if k <= 1:
@@ -230,3 +225,134 @@ def uniform_visibility_grid(points: int) -> tuple[float, ...]:
     if points < 2:
         raise ValueError("points must be at least two")
     return tuple(i / (points - 1) for i in range(points))
+
+
+def setting_correlation_magnitude(alice_angle: float, bob_angle: float) -> float:
+    """Return |cos(alpha-beta)|, the visibility sensitivity of one query."""
+
+    return abs(cos(float(alice_angle) - float(bob_angle)))
+
+
+def single_setting_fisher_information(
+    visibility: float,
+    alice_angle: float,
+    bob_angle: float,
+) -> float:
+    """Fisher information in one Bell trial about the visibility v.
+
+    For c = cos(alpha-beta), direct evaluation of
+    E[(d/dv log P(A,B|v))^2] gives
+
+        I_v(c) = c^2 / (1 - v^2 c^2).
+
+    At deterministic boundary points where the denominator is zero the regular
+    interior Fisher-information formula diverges; ``inf`` is returned.
+    """
+
+    v = _check_visibility(visibility)
+    c = cos(float(alice_angle) - float(bob_angle))
+    denominator = 1.0 - (v * c) ** 2
+    if denominator <= 1e-15:
+        return inf
+    return c * c / denominator
+
+
+def schedule_fisher_information(
+    visibility: float,
+    schedule: BellSchedule = CANONICAL_CHSH,
+) -> float:
+    """Expected per-trial Fisher information under a randomized schedule."""
+
+    return sum(
+        schedule.setting_weights[x][y]
+        * single_setting_fisher_information(visibility, alpha, beta)
+        for x, alpha in enumerate(schedule.alice_angles)
+        for y, beta in enumerate(schedule.bob_angles)
+    )
+
+
+def cramer_rao_variance_lower_bound(
+    visibility: float,
+    trials: int,
+    schedule: BellSchedule = CANONICAL_CHSH,
+) -> float:
+    """Regular unbiased-estimator Cramer-Rao variance lower bound, 1/(n I)."""
+
+    if trials <= 0:
+        raise ValueError("trials must be positive")
+    information = schedule_fisher_information(visibility, schedule)
+    if information == inf:
+        return 0.0
+    if information == 0.0:
+        return inf
+    return 1.0 / (trials * information)
+
+
+def single_setting_kl(
+    visibility_p: float,
+    visibility_q: float,
+    alice_angle: float,
+    bob_angle: float,
+) -> float:
+    """KL(P_vp || P_vq) for one selected setting pair, in nats."""
+
+    vp = _check_visibility(visibility_p)
+    vq = _check_visibility(visibility_q)
+    p = conditional_outcome_law(vp, alice_angle, bob_angle)
+    q = conditional_outcome_law(vq, alice_angle, bob_angle)
+    total = 0.0
+    for outcome, probability in p.items():
+        if probability == 0.0:
+            continue
+        reference = q[outcome]
+        if reference == 0.0:
+            return inf
+        total += probability * log(probability / reference)
+    return total
+
+
+def maximum_query_kl(
+    visibility_p: float,
+    visibility_q: float,
+    schedule: BellSchedule = CANONICAL_CHSH,
+) -> tuple[float, Setting]:
+    """Largest one-step KL available from the schedule's allowed setting pairs."""
+
+    best_value = -1.0
+    best_setting = (0, 0)
+    for x, alpha in enumerate(schedule.alice_angles):
+        for y, beta in enumerate(schedule.bob_angles):
+            value = single_setting_kl(visibility_p, visibility_q, alpha, beta)
+            if value > best_value:
+                best_value = value
+                best_setting = (x, y)
+    return best_value, best_setting
+
+
+def adaptive_trials_necessary_for_tv(
+    visibility_p: float,
+    visibility_q: float,
+    target_tv: float,
+    schedule: BellSchedule = CANONICAL_CHSH,
+) -> int:
+    """Necessary trials for an adaptive query policy to reach target transcript TV.
+
+    For any adaptive policy whose next setting must come from ``schedule``, the
+    KL chain rule gives transcript KL <= n * D_max, where D_max is the largest
+    one-step conditional KL over allowed settings. Pinsker then gives
+
+        TV(transcript_P, transcript_Q) <= sqrt(n D_max / 2).
+
+    Therefore TV >= delta requires n >= 2 delta^2 / D_max.  This is a
+    necessary, not sufficient, sample count and is specific to this physical
+    visibility family and allowed query set.
+    """
+
+    if not 0.0 < target_tv < 1.0:
+        raise ValueError("target_tv must lie strictly between zero and one")
+    d_max, _ = maximum_query_kl(visibility_p, visibility_q, schedule)
+    if d_max == 0.0:
+        return 2**63 - 1
+    if d_max == inf:
+        return 1
+    return ceil(2.0 * target_tv * target_tv / d_max)
