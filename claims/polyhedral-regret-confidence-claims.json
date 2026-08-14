@@ -1,0 +1,180 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T111",
+      "title": "Exact rational vertex reduction for finite prior polytopes",
+      "kind": "THEOREM",
+      "scope": "nonempty compact rational subsets of a finite probability simplex represented by linear inequalities",
+      "assumptions": [
+        "the ambiguity set is U={q in simplex:Aq<=b} with rational A and b",
+        "the simplex equality is eliminated exactly",
+        "every active basis below the configured cap is exhausted"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#1-arbitrary-rational-ambiguity-polytopes",
+        "docs/polyhedral-regret-confidence.md#2-linear-objectives-need-only-the-vertices",
+        "src/simtheory/polyhedral_priors.py:enumerate_prior_polytope",
+        "src/simtheory/polyhedral_priors.py:extremal_expectation",
+        "tests/test_polyhedral_priors.py"
+      ],
+      "nonclaims": [
+        "active-basis enumeration is not a polynomial-time large-instance guarantee",
+        "an ambiguity polytope is not automatically a statistical confidence set"
+      ]
+    },
+    {
+      "id": "ST-T112",
+      "title": "Continuous polyhedral minimax regret reduces to ambiguity vertices",
+      "kind": "THEOREM",
+      "scope": "finite one-shot zero-error binary-prefix codebooks and a compact rational prior polytope",
+      "assumptions": [
+        "the law-specific oracle is L*(q)=min_d q dot ell_d over the declared deterministic code universe",
+        "regret is measured in expected binary-prefix length",
+        "the ambiguity set is convex and compact"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#4-regret-is-a-different-robust-objective",
+        "src/simtheory/polyhedral_priors.py:exact_polyhedral_robust_prefix_code",
+        "tests/test_polyhedral_priors.py"
+      ],
+      "nonclaims": [
+        "the theorem does not identify minimax absolute loss with minimax regret",
+        "the result is one-shot and does not establish an asymptotic graph-entropy theorem"
+      ]
+    },
+    {
+      "id": "ST-T113",
+      "title": "Shared-randomness polyhedral length and regret games are finite vertex games",
+      "kind": "THEOREM",
+      "scope": "source-independent shared codebook randomness against a compact rational prior polytope",
+      "assumptions": [
+        "the source law is chosen independently of the realized shared codebook seed",
+        "all decoders know the realized codebook",
+        "the deterministic bounded code universe is complete below configured caps"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#5-shared-codebook-randomness-under-polyhedral-ambiguity",
+        "src/simtheory/polyhedral_priors.py:exact_polyhedral_robust_prefix_code",
+        "tests/test_polyhedral_priors.py"
+      ],
+      "nonclaims": [
+        "the exact random-bit cost of sampling a codebook mixture is not priced",
+        "private encoder randomness is not substituted for common randomness"
+      ]
+    },
+    {
+      "id": "ST-T114",
+      "title": "Huber contamination is an exact rational simplex polytope",
+      "kind": "THEOREM",
+      "scope": "finite rational nominal source laws and rational contamination fraction in [0,1]",
+      "assumptions": [
+        "q=(1-epsilon)p+epsilon r with r an arbitrary probability vector"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#7-huber-contamination-as-a-polytope",
+        "src/simtheory/polyhedral_priors.py:huber_contamination_polytope",
+        "tests/test_polyhedral_priors.py"
+      ],
+      "nonclaims": [
+        "Huber contamination is not identical to a same-radius TV ball",
+        "epsilon is a model parameter unless separately calibrated from data"
+      ]
+    },
+    {
+      "id": "ST-T115",
+      "title": "Finite-sample multinomial TV confidence radius from L1 concentration",
+      "kind": "THEOREM",
+      "scope": "i.i.d. samples from one stationary categorical law on a fixed finite alphabet",
+      "assumptions": [
+        "the Weissman-Ordentlich-Seroussi-Verdu-Weinberger finite-sample L1 inequality applies",
+        "the alphabet is fixed before sampling",
+        "samples are independent and identically distributed"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#8-statistical-calibration-is-not-geometry",
+        "src/simtheory/statistical_prior_uncertainty.py:weissman_tv_confidence_radius",
+        "tests/test_statistical_prior_uncertainty.py"
+      ],
+      "nonclaims": [
+        "the confidence guarantee does not cover arbitrary dependence, drift, adaptive censoring, or covariate shift",
+        "the transcendental radius calculation is numerically evaluated and outward-rounded rather than labeled exact rational arithmetic"
+      ]
+    },
+    {
+      "id": "ST-T116",
+      "title": "Data-calibrated robust code gives a high-probability expected-length upper bound",
+      "kind": "THEOREM",
+      "scope": "the selected deterministic TV-robust prefix code under the i.i.d. categorical sampling model",
+      "assumptions": [
+        "the confidence event that the true source law lies in the calibrated TV ball holds",
+        "the exact TV robust code certificate is valid for the outward-rounded rational radius"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#8-statistical-calibration-is-not-geometry",
+        "src/simtheory/statistical_prior_uncertainty.py:exact_data_calibrated_tv_prefix_code",
+        "tests/test_statistical_prior_uncertainty.py"
+      ],
+      "nonclaims": [
+        "the result is an upper confidence guarantee for expected one-shot code length, not evidence for a simulator",
+        "coverage is inherited from the stated sampling model rather than from robust optimization itself"
+      ]
+    },
+    {
+      "id": "ST-T117",
+      "title": "Complete-confusion i.i.d. block prefix redundancy vanishes as at most one bit per block",
+      "kind": "THEOREM",
+      "scope": "positive-support finite i.i.d. sources whose every source symbol is mutually confusable and therefore requires a distinct zero-error message",
+      "assumptions": [
+        "block sequence probabilities are the exact product law",
+        "binary Huffman coding is applied to complete block messages",
+        "the source has positive support for the strict upper entropy inequality"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#10-one-shot-prefix-length-versus-block-rate",
+        "src/simtheory/block_source_coding.py:exact_iid_block_prefix_code",
+        "tests/test_block_source_coding.py"
+      ],
+      "nonclaims": [
+        "the theorem is not generalized to arbitrary confusion graphs without specifying the multi-letter graph product",
+        "amortized source-coding rate is not queueing delay, peak bandwidth, or parent-substrate resource cost"
+      ]
+    },
+    {
+      "id": "ST-M28",
+      "title": "Symmetric K3 interval ambiguity separates deterministic and shared minimax values",
+      "kind": "MODEL_RESULT",
+      "scope": "K3 with coordinate bounds 1/10 <= q_i <= 4/5",
+      "assumptions": [
+        "binary-prefix zero-error coding",
+        "shared codebook seed is source independent"
+      ],
+      "evidence": [
+        "docs/polyhedral-regret-confidence.md#6-symmetric-k3-interval-example",
+        "tests/test_polyhedral_priors.py"
+      ],
+      "nonclaims": [
+        "the numerical values are specific to the declared ambiguity set"
+      ]
+    },
+    {
+      "id": "ST-F16",
+      "title": "Bounded exact polyhedral ambiguity, regret, calibration, and block-coding audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the bounded rational and finite numerical instances exercised by the repository test suite",
+      "assumptions": [
+        "all configured active-basis, code-universe, game, and block-sequence caps complete without truncation",
+        "the statistical transcendental calculation uses the declared Decimal precision and outward rational rounding"
+      ],
+      "evidence": [
+        "tests/test_polyhedral_priors.py",
+        "tests/test_statistical_prior_uncertainty.py",
+        "tests/test_block_source_coding.py"
+      ],
+      "nonclaims": [
+        "bounded test agreement is not a scalability theorem",
+        "CI success does not upgrade a finite check into a physical claim"
+      ]
+    }
+  ]
+}
