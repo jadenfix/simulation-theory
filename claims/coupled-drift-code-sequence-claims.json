@@ -1,0 +1,119 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T123",
+      "title": "Exact rational finite-horizon TV path polytope",
+      "kind": "THEOREM",
+      "scope": "finite categorical source laws with exact rational initial law, finite horizon, and a uniform total-variation step bound",
+      "assumptions": [
+        "q_0 is fixed and every future law is a probability vector on the same finite alphabet",
+        "TV(q_t,q_{t-1}) is bounded by the declared rational eta",
+        "active-basis enumeration completes below the configured cap"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#1-exact-rational-path-polytope",
+        "src/simtheory/coupled_drift_sequences.py:enumerate_drift_path_polytope",
+        "tests/test_coupled_drift_sequences.py"
+      ],
+      "nonclaims": [
+        "bounded active-basis enumeration is not a polynomial-time scalability theorem",
+        "the path set is not a statistical confidence region without a separate calibration argument"
+      ]
+    },
+    {
+      "id": "ST-T124",
+      "title": "Exact primal-dual coupled drift cost certificate",
+      "kind": "THEOREM",
+      "scope": "finite time-varying rational state-cost vectors optimized over the declared bounded-TV path polytope",
+      "assumptions": [
+        "the path objective is linear in each period law",
+        "both primal vertex and dual support enumeration complete below their caps"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#2-exact-primal-dual-certificate",
+        "src/simtheory/coupled_drift_sequences.py:exact_coupled_drift_cost",
+        "tests/test_coupled_drift_sequences.py"
+      ],
+      "nonclaims": [
+        "the dual multipliers certify the internal finite model rather than parent-substrate resources",
+        "the theorem does not cover nonlinear path objectives without a separate reduction"
+      ]
+    },
+    {
+      "id": "ST-T125",
+      "title": "Periodwise marginal TV extrema can strictly overstate a coupled path adversary",
+      "kind": "THEOREM",
+      "scope": "finite-horizon time-varying linear costs under a common initial law and bounded TV transitions",
+      "assumptions": [
+        "the marginal relaxation uses only TV(q_t,p)<=min(t eta,1)",
+        "the exact path retains every adjacent transition constraint"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#3-marginal-ball-optimization-is-only-a-relaxation",
+        "src/simtheory/coupled_drift_sequences.py:CoupledDriftCostCertificate",
+        "tests/test_coupled_drift_sequences.py"
+      ],
+      "nonclaims": [
+        "the relaxation is exact for a fixed repeated cost vector under the nested transport assumptions",
+        "one strict example does not quantify the maximum possible gap for all dimensions and horizons"
+      ]
+    },
+    {
+      "id": "ST-T126",
+      "title": "Exact bounded precommitted code-sequence optimization with switching costs",
+      "kind": "THEOREM",
+      "scope": "a complete bounded deterministic zero-error prefix-code universe, an open-loop finite codebook sequence, bounded TV source drift, and rational per-switch cost",
+      "assumptions": [
+        "the whole codebook sequence is chosen before and visible to the source-law adversary",
+        "the switch penalty depends only on adjacent codebook identity changes",
+        "code, path, and sequence enumerations complete below configured caps"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#5-precommitted-codebook-sequences",
+        "src/simtheory/coupled_drift_sequences.py:exact_precommitted_code_sequence",
+        "tests/test_coupled_drift_sequences.py"
+      ],
+      "nonclaims": [
+        "no feedback-adaptive or learned code policy is optimized",
+        "the rational switching penalty is a design input rather than an inferred physical cost"
+      ]
+    },
+    {
+      "id": "ST-M30",
+      "title": "K3 rotating short-word code has an exact one-sixth reconfiguration threshold",
+      "kind": "MODEL_RESULT",
+      "scope": "complete three-state confusion graph, uniform initial law, eta=1/6, two periods, and binary zero-error prefix codes",
+      "assumptions": [
+        "the nondominated code vectors are the permutations of (1,2,2)",
+        "ties are resolved in favor of fewer switches"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#6-exact-rotating-code-gain-on-k_3",
+        "docs/coupled-drift-code-sequences.md#7-exact-switching-cost-phase-transition",
+        "tests/test_coupled_drift_sequences.py"
+      ],
+      "nonclaims": [
+        "the one-sixth threshold is specific to the declared K3 instance",
+        "temporal diversification is open-loop and is not evidence of source learning"
+      ]
+    },
+    {
+      "id": "ST-F19",
+      "title": "Bounded exact coupled-drift and code-sequence audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the finite rational path, dual, code-universe, and sequence instances exercised by the repository test suite",
+      "assumptions": [
+        "all configured enumeration caps complete without truncation",
+        "Python Fraction arithmetic is used for all finite objective and feasibility calculations"
+      ],
+      "evidence": [
+        "tests/test_coupled_drift_sequences.py"
+      ],
+      "nonclaims": [
+        "CI success is not a scalability theorem",
+        "finite internal coding checks are not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
