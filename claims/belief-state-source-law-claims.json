@@ -138,6 +138,44 @@
       ]
     },
     {
+      "id": "ST-T160",
+      "title": "Finite-horizon hidden-law coding value is a piecewise-linear concave lower envelope in belief",
+      "kind": "THEOREM",
+      "scope": "finite hidden states, finite signal alphabet, finite prefix-codebook actions, finite horizon, rational transition and observation channels, and linear expected stage cost",
+      "assumptions": [
+        "every deterministic policy tree is represented by its hidden-state conditional expected-cost alpha vector",
+        "the optimal cost is the minimum over the complete finite policy-tree alpha family"
+      ],
+      "evidence": [
+        "docs/belief-alpha-vector-geometry.md#4-value-function-is-a-lower-envelope",
+        "src/simtheory/belief_alpha_vectors.py:exact_belief_alpha_vector_certificate",
+        "tests/test_belief_alpha_vectors.py"
+      ],
+      "nonclaims": [
+        "the exact alpha family is not asserted to be a minimal representation",
+        "policy-tree enumeration is bounded rather than a scalability result"
+      ]
+    },
+    {
+      "id": "ST-T161",
+      "title": "Posterior hidden-state belief and its one-step prediction satisfy exact martingale identities",
+      "kind": "THEOREM",
+      "scope": "one correctly specified finite observation channel and hidden-state transition applied to a rational prior belief",
+      "assumptions": [
+        "conditioning is performed only on positive-probability signals",
+        "observation rows and transition rows are normalized"
+      ],
+      "evidence": [
+        "docs/belief-alpha-vector-geometry.md#7-posterior-belief-is-a-martingale",
+        "src/simtheory/belief_alpha_vectors.py:posterior_martingale_identity",
+        "tests/test_belief_alpha_vectors.py"
+      ],
+      "nonclaims": [
+        "the martingale identity assumes the observation model is correctly specified",
+        "mean preservation does not imply that information has zero decision value"
+      ]
+    },
+    {
       "id": "ST-M34",
       "title": "Positive switching cost creates strict future-foresight value in a two-state K3 hidden-law model",
       "kind": "MODEL_RESULT",
@@ -157,16 +195,17 @@
     },
     {
       "id": "ST-F25",
-      "title": "Bounded exact belief filtering, dynamic Blackwell, and hidden-path oracle audit",
+      "title": "Bounded exact belief filtering, alpha-vector, dynamic Blackwell, and hidden-path oracle audit",
       "kind": "FINITE_CHECK",
-      "scope": "the finite rational hidden-law models, reachable beliefs, positive-probability paths, codebook candidates, and channel garblings exercised by the repository tests",
+      "scope": "the finite rational hidden-law models, reachable beliefs, policy-tree alpha vectors, positive-probability paths, codebook candidates, and channel garblings exercised by the repository tests",
       "assumptions": [
-        "all configured hidden-path, candidate, partition, and prefix-shape caps complete without truncation",
+        "all configured hidden-path, alpha-vector, candidate, partition, and prefix-shape caps complete without truncation",
         "Python Fraction arithmetic is used for every finite probability and cost calculation"
       ],
       "evidence": [
         "tests/test_belief_state_coding.py",
-        "tests/test_dynamic_blackwell.py"
+        "tests/test_dynamic_blackwell.py",
+        "tests/test_belief_alpha_vectors.py"
       ],
       "nonclaims": [
         "bounded exact agreement is not an infinite-horizon or scalability theorem",
