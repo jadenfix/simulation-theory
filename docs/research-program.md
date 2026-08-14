@@ -11,7 +11,7 @@ The project is not trying to assign a dramatic single-number probability to “s
 3. What computational or physical constraints follow from a specified architecture?
 4. What experiment distinguishes that architecture from serious alternatives?
 5. What predictive information must an online generator retain to keep adaptive and distributed observations globally consistent?
-6. How do noise, error correction, query-revelation timing, classical or quantum communication, and tolerated approximation change the necessary predictive state?
+6. How do noise, error correction, query-revelation timing, network topology, classical or quantum communication, and tolerated approximation change the necessary predictive state?
 7. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
 
 ## Completed mathematical lanes
@@ -138,21 +138,37 @@ See [`quantum-causal-cut-random-access.md`](quantum-causal-cut-random-access.md)
 
 ### Progressive query revelation
 
-The first genuinely multistage causal interface now reveals a coarse query cell between two communication stages:
+The first genuinely multistage causal interface reveals a coarse query cell between two communication stages:
 
-- for partition-cell sizes `s_j`, exact classical feasibility is characterized by
-  `a >= sum_j max(0,s_j-c_j)`;
+- for partition-cell sizes `s_j`, exact classical feasibility is characterized by `a >= sum_j max(0,s_j-c_j)`;
 - the converse is matched by a constructive protocol that stores uncovered cell bits in the shared stage and sends the rest only in the selected branch;
 - complete finite enumeration verifies every record, hint cell, and later coordinate for bounded instances;
 - equal cells of residual size `s` require exactly `s` classical bits or unassisted qubits per execution when all record communication is deferred until after the hint;
 - query-hint information and record-value information are separated: the hint reduces the live future-query family but carries no record values;
-- bounded errors replace each exact cell size by `R_j=sum_{i in C_j}[1-H_2(e_i)]` and give the branch-aware converse
-  `a >= sum_j max(0,R_j-c_j)`;
+- bounded errors replace each exact cell size by `R_j=sum_{i in C_j}[1-H_2(e_i)]` and give the branch-aware converse `a >= sum_j max(0,R_j-c_j)`;
 - unassisted quantum messages obey the same one-bit-per-qubit information region;
 - receiver-side entanglement changes the capacity coefficient from one to two and yields exact equal-cell cost `ceil(s/2)` transmitted qubits;
 - predictive-equivalence classes coarsen from `2^m` before the hint to `2^s_j` after cell `j` and then to two after the exact coordinate is known.
 
 See [`progressive-query-revelation.md`](progressive-query-revelation.md).
+
+### Predictive-equivalence network min-cuts
+
+The causal program now supports arbitrary finite deterministic future-query families and directed capacity networks:
+
+- records are grouped by complete future-query signature rather than by raw hidden-state identity;
+- `K` exact predictive classes require and can be represented by exactly `K` finite states, or `ceil(log2 K)` fixed-length bits;
+- all coordinate queries on `m` bits give `K=2^m`, while a rank-`rho` parity family gives `K=2^rho`;
+- any source-sink cut must carry the predictive-class label;
+- for one sink and integer capacities, the cut lower bound is sufficient by integral max-flow routing;
+- exact single-sink feasibility is therefore equivalent to min-cut capacity at least `ceil(log2 K)` bits;
+- deterministic future-law TV is the weighted disagreement mass between query signatures;
+- exact finite maximum packings give approximate cut lower bounds without being mistaken for covering achievability;
+- classical and unassisted-qubit capacity units have multiplier one, while explicitly assisted dense-coded classical payloads use multiplier two;
+- per-sink cuts are implemented as necessary conditions without claiming general multicast sufficiency;
+- finite certificates include class counts, max flow, residual min cut, route decomposition, and bounded maximum packing.
+
+See [`predictive-network-mincuts.md`](predictive-network-mincuts.md).
 
 ## Current frontier campaigns
 
@@ -198,31 +214,33 @@ Research targets:
 4. Quantify the predictive state needed to filter a hidden syndrome process.
 5. Separate physical-error history, decoder belief state, and logical predictive memory.
 
-### Campaign C: predictive min-cuts and general causal networks
+### Campaign C: stochastic predictive laws, covers, and multicast coding
 
-One-way and two-stage partition-hint cuts are explicit. The next program should replace the hand-written stage topology by a directed capacity network.
+Exact deterministic classes and one-sink min-cuts are now explicit. The next network lane should close the approximate upper/lower gap and then move beyond one sink.
 
 Candidate extensions:
 
-- arbitrary finite function families rather than coordinate queries;
-- predictive-equivalence class counts attached to sink query interfaces;
-- exact classical min-cut lower bounds and matching routable constructions where available;
-- unassisted and entanglement-assisted quantum edge capacities;
-- multiple sinks with shared upstream information and local downstream branches;
-- overlapping query-hint sets and fractional-cover capacity regions;
-- several successive hints represented as a query-revelation tree;
-- noisy or uncertain hints and robust optimization over possible query families;
-- authenticated transcript comparison under adversarial scheduling.
+- finite stochastic query laws rather than deterministic outcomes;
+- exact equivalence by equality of full conditional distributions;
+- weighted total-variation and KL geometry across stochastic query schedules;
+- exact finite packing and minimum-cover computations;
+- constructive approximate network sufficiency by routing a cover index;
+- metric-entropy and rate-distortion limits for larger families;
+- explicit multicast and multiple-unicast demand models;
+- linear network-coding certificates over finite fields;
+- several successive query hints represented as a tree;
+- overlapping hint sets and submodular capacity regions;
+- noisy edges and strong-data-processing contraction along causal paths.
 
 Research questions:
 
-1. Is `ceil(log2 K)` the correct exact cut requirement when a sink has `K` future predictive-equivalence classes?
-2. How does that requirement compose across every source-sink cut in a directed acyclic graph?
-3. Which network instances admit matching routing or network-coding upper bounds?
-4. How should shared upstream capacity be accounted for across several answer regions?
-5. What changes for quantum edges and preshared entanglement?
-6. Can a recursive tree theorem characterize arbitrary progressive query revelation?
-7. How do overlapping hint sets replace the partition sum by a cover or polymatroid region?
+1. Can finite packing and covering numbers bracket the exact number of epsilon-predictive states?
+2. When does a routed cover index attain the optimal approximate network capacity?
+3. How do stochastic query laws change exact equivalence and observable geometry?
+4. Which multi-sink instances are solved by routing, replication, or linear network coding?
+5. How should common upstream predictive information be shared across heterogeneous sinks?
+6. How do query-revelation trees compose with network cuts at every stage?
+7. What changes for quantum edges when the payload itself is quantum rather than an exact classical class label?
 8. Which conclusions remain ordinary communication complexity rather than simulation-specific claims?
 
 ### Campaign D: update-time and computational lower bounds
@@ -279,10 +297,12 @@ A research result is ready for the main branch only when:
 10. Distributed claims specify query timing, communication rounds, query-hint support, shared stores, source distribution, and local versus global storage accounting.
 11. Quantum-communication claims distinguish transmitted qubits, preshared entanglement, receiver memory, and accessible classical information.
 12. Multiround claims distinguish design-wide branch capacity from the one branch executed in a particular run.
-13. Physical claims state which laws apply and avoid cross-level leakage.
-14. A finite experiment is never promoted into a generic simulation conclusion.
-15. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
-16. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
+13. Network claims distinguish one-sink sufficiency from per-sink necessity and explicit multicast achievability.
+14. Approximate claims distinguish packings, coverings, converses, and constructive renderers.
+15. Physical claims state which laws apply and avoid cross-level leakage.
+16. A finite experiment is never promoted into a generic simulation conclusion.
+17. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
+18. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
 
 ## Tempera Math integration
 
@@ -291,13 +311,13 @@ The repository claim manifests remain the source of truth. Tempera Math can late
 - theorem versus model-result versus finite-check status;
 - all assumptions and nonclaims;
 - exact source revision and checker command;
-- bounded code size, graph size, horizon, locality, tolerance, noise parameters, communication interface, hint partition, and assistance model;
+- bounded code size, graph size, horizon, locality, tolerance, noise parameters, communication interface, hint partition, network topology, sink demand, and assistance model;
 - the boundary between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, progressive query revelation, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, progressive query revelation, predictive equivalence, max flow, min cuts, parity compression, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.
