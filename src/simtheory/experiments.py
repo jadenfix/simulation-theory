@@ -70,6 +70,16 @@ from .quantum_phase_geometry import (
     constructive_memory_lower_bound_bits,
     constructive_packing_size_lower_bound,
 )
+from .quantum_random_access import (
+    brute_force_canonical_qrac_average_success,
+    canonical_qrac_success_probability,
+    entanglement_assisted_qrac_integer_qubits_lower_bound,
+    exact_entanglement_assisted_qubits,
+    exact_unassisted_qubits,
+    unassisted_qrac_integer_qubits_lower_bound,
+    uniform_qrac_error_lower_bound,
+    weighted_entanglement_assisted_qrac_qubits_lower_bound,
+)
 from .quantum_sequence import (
     parity_adaptive_policy,
     phase_hypothesis_processes,
@@ -200,6 +210,19 @@ def main() -> None:
     print("three_isolated_regions_bits", replicated_region_storage_lower_bound_bits(100, 0.1, 3))
     print("parity_reconciliation_information", parity_reconciliation_information_lower_bound_bits(100, 0.1))
     print("prefix_protocol_error_s80", prefix_storage_average_error(100, 80))
+
+    print("\n== quantum random-access causal cuts ==")
+    print("exact_unassisted_qubits_m101", exact_unassisted_qubits(101))
+    print("exact_assisted_qubits_m101", exact_entanglement_assisted_qubits(101))
+    print("unassisted_qubits_m100_eps0.1", unassisted_qrac_integer_qubits_lower_bound(100, 0.1))
+    print("assisted_qubits_m100_eps0.1", entanglement_assisted_qrac_integer_qubits_lower_bound(100, 0.1))
+    print("one_qubit_converse_m2", uniform_qrac_error_lower_bound(2, 1))
+    print("one_qubit_converse_m3", uniform_qrac_error_lower_bound(3, 1))
+    print("canonical_2_to_1_success", canonical_qrac_success_probability(2))
+    print("canonical_2_to_1_enumerated", brute_force_canonical_qrac_average_success(2))
+    print("canonical_3_to_1_success", canonical_qrac_success_probability(3))
+    print("canonical_3_to_1_enumerated", brute_force_canonical_qrac_average_success(3))
+    print("weighted_assisted_qubits", weighted_entanglement_assisted_qrac_qubits_lower_bound(skewed_weights, 0.1))
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]
