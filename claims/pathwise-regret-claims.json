@@ -1,0 +1,160 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T139",
+      "title": "Pathwise affine regret attains its maximum at a bounded-TV path vertex",
+      "kind": "THEOREM",
+      "scope": "finite affine path-decision and comparator families over one finite-horizon rational bounded-TV source-law path polytope",
+      "assumptions": [
+        "each decision cost is affine in the complete source-law path",
+        "the comparator family is finite",
+        "the path polytope is compact and its bounded vertex enumeration completes"
+      ],
+      "evidence": [
+        "docs/pathwise-dynamic-regret.md#1-regret-is-convex-piecewise-linear-in-the-complete-path",
+        "src/simtheory/pathwise_regret.py:exact_pathwise_regret_game",
+        "tests/test_pathwise_regret.py"
+      ],
+      "nonclaims": [
+        "the result does not cover an arbitrary nonlinear path cost without another convexity or finite reduction argument",
+        "bounded vertex enumeration is not a large-scale complexity guarantee"
+      ]
+    },
+    {
+      "id": "ST-T140",
+      "title": "Shared-randomness pathwise regret reduces to an exact finite zero-sum game",
+      "kind": "THEOREM",
+      "scope": "source-independent common mixtures of finite affine open-loop decisions against a finite comparator family over the bounded-TV path polytope",
+      "assumptions": [
+        "the source path is selected independently of the realized shared seed",
+        "all required decoders know the realized decision",
+        "exact rational game support enumeration completes"
+      ],
+      "evidence": [
+        "docs/pathwise-dynamic-regret.md#2-shared-randomness-regret-also-reduces-to-path-vertices",
+        "src/simtheory/pathwise_regret.py:PathwiseRegretCertificate",
+        "tests/test_pathwise_regret.py"
+      ],
+      "nonclaims": [
+        "private encoder randomness is not substituted for common randomness",
+        "the exact random-bit cost of sampling the rational mixture is not priced"
+      ]
+    },
+    {
+      "id": "ST-T141",
+      "title": "Comparator-class expansion monotonically increases pathwise regret",
+      "kind": "THEOREM",
+      "scope": "one fixed decision family and nested finite comparator families under the same path and cost model",
+      "assumptions": [
+        "the larger comparator class contains the smaller comparator class",
+        "decision and comparator accounting use the same declared cost units"
+      ],
+      "evidence": [
+        "docs/pathwise-dynamic-regret.md#3-comparator-classes-are-part-of-the-theorem",
+        "tests/test_pathwise_regret.py"
+      ],
+      "nonclaims": [
+        "a stronger comparator is not itself an implementable causal policy",
+        "monotonicity does not imply a strict increase on every instance"
+      ]
+    },
+    {
+      "id": "ST-T142",
+      "title": "Robust value differences only bound pathwise regret",
+      "kind": "THEOREM",
+      "scope": "deterministic and source-independent shared mixtures of finite affine decisions over one compact path set",
+      "assumptions": [
+        "the path-specific oracle minimum is finite on the path set",
+        "robust absolute costs and oracle extrema are computed under the same path set"
+      ],
+      "evidence": [
+        "docs/pathwise-dynamic-regret.md#4-regret-is-not-the-difference-of-robust-values",
+        "src/simtheory/pathwise_regret_bounds.py:exact_regret_value_bounds",
+        "tests/test_pathwise_regret_bounds.py"
+      ],
+      "nonclaims": [
+        "the lower robust-value gap is not generally equal to regret",
+        "separately optimized maxima need not occur at the same path"
+      ]
+    },
+    {
+      "id": "ST-T143",
+      "title": "Exact zero-error code-sequence regret with distinct decision and comparator switch budgets",
+      "kind": "THEOREM",
+      "scope": "complete bounded deterministic zero-error binary-prefix codebooks, finite open-loop sequences, bounded TV source drift, and rational common switch cost",
+      "assumptions": [
+        "the decision switch budget does not exceed the comparator switch budget",
+        "the decision family is contained in the comparator family",
+        "codebook, sequence, path, and game enumerations complete below their configured caps"
+      ],
+      "evidence": [
+        "docs/pathwise-dynamic-regret.md#6-zero-error-code-sequence-regret",
+        "src/simtheory/pathwise_regret.py:exact_code_sequence_regret",
+        "tests/test_pathwise_regret.py"
+      ],
+      "nonclaims": [
+        "the selected sequence is open-loop rather than feedback adaptive",
+        "the switch penalty is a declared design input rather than an inferred physical cost"
+      ]
+    },
+    {
+      "id": "ST-T144",
+      "title": "Full-drift binary prediction has deterministic regret T and shared regret T over two",
+      "kind": "THEOREM",
+      "scope": "binary source states, horizon T, eta=1, all binary action sequences, mismatch loss, and the same class used as the clairvoyant comparator",
+      "assumptions": [
+        "the source path is chosen after the deterministic action sequence or source-independent shared mixture",
+        "each period source law may range over the full binary simplex"
+      ],
+      "evidence": [
+        "docs/pathwise-dynamic-regret.md#5-full-drift-binary-prediction-has-a-closed-solution",
+        "tests/test_pathwise_regret.py",
+        "tests/test_pathwise_regret_bounds.py"
+      ],
+      "nonclaims": [
+        "the closed values are specific to the declared mismatch-loss game",
+        "the result does not state the regret of a causal learning algorithm"
+      ]
+    },
+    {
+      "id": "ST-T145",
+      "title": "The path-specific oracle maximum is an exact maximin game and may be attained only in the interior",
+      "kind": "THEOREM",
+      "scope": "finite affine comparator families over one compact finite-horizon path polytope with an exact finite vertex representation",
+      "assumptions": [
+        "each comparator cost is affine in the complete path",
+        "the path polytope equals the convex hull of its enumerated vertices",
+        "exact rational zero-sum game support enumeration completes"
+      ],
+      "evidence": [
+        "docs/oracle-maximin-interior.md#2-exact-finite-game-reduction-of-the-oracle-maximum",
+        "docs/oracle-maximin-interior.md#3-strict-interior-example",
+        "src/simtheory/pathwise_regret_bounds.py:exact_regret_value_bounds",
+        "tests/test_pathwise_regret_bounds.py"
+      ],
+      "nonclaims": [
+        "the maximizing vertex mixture is a proof representation of a feasible barycenter and need not describe physical randomization among paths",
+        "a concave oracle maximum is not generally obtained by taking the largest oracle value at a path vertex"
+      ]
+    },
+    {
+      "id": "ST-F23",
+      "title": "Bounded exact pathwise regret and value-gap audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the finite rational path, decision, comparator, code-sequence, and zero-sum game instances exercised by the repository tests",
+      "assumptions": [
+        "all configured active-basis, sequence, candidate, and game support caps complete without truncation",
+        "Python Fraction arithmetic is used for every finite objective and feasibility calculation"
+      ],
+      "evidence": [
+        "tests/test_pathwise_regret.py",
+        "tests/test_pathwise_regret_bounds.py"
+      ],
+      "nonclaims": [
+        "CI success is not a scalability theorem",
+        "finite regret calculations are not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
