@@ -1,3 +1,5 @@
+from itertools import product
+
 import pytest
 
 from simtheory.network_coding import (
@@ -67,6 +69,41 @@ def test_explicit_butterfly_linear_code_decodes_at_both_sinks():
     for decoder in certificate.decoders:
         assert decoder.decodes_all
         assert len(decoder.source_coordinate_coefficients) == 2
+
+
+def test_every_binary_source_vector_round_trips_through_every_sink_decoder():
+    certificate = evaluate_scalar_linear_code(
+        butterfly_network(),
+        butterfly_linear_code(),
+    )
+    global_vectors = certificate.global_vector_map()
+
+    for source_vector in product((0, 1), repeat=2):
+        edge_symbols = {
+            edge_id: sum(
+                coefficient * source_coordinate
+                for coefficient, source_coordinate in zip(
+                    global_vector,
+                    source_vector,
+                )
+            )
+            % 2
+            for edge_id, global_vector in global_vectors.items()
+        }
+        for decoder in certificate.decoders:
+            incoming = tuple(
+                edge_symbols[edge_id]
+                for edge_id in decoder.incoming_edges
+            )
+            recovered = tuple(
+                sum(
+                    coefficient * symbol
+                    for coefficient, symbol in zip(decoder_row, incoming)
+                )
+                % 2
+                for decoder_row in decoder.source_coordinate_coefficients
+            )
+            assert recovered == source_vector
 
 
 def test_exhaustive_search_finds_linear_code_and_rules_out_routing():
