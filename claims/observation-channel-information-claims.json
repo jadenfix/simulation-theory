@@ -1,0 +1,121 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T131",
+      "title": "Exact finite rational observation-channel coding game",
+      "kind": "THEOREM",
+      "scope": "finite rational source-law scenarios, a finite public rational observation channel, and a complete bounded deterministic zero-error prefix-code universe",
+      "assumptions": [
+        "nature selects one declared source-law scenario",
+        "the public signal follows the declared row-stochastic channel conditional on that scenario",
+        "policy, code, dominance, and game support enumerations complete below configured caps"
+      ],
+      "evidence": [
+        "docs/observation-channel-information-value.md#3-five-distinct-benchmark-values",
+        "docs/observation-channel-information-value.md#4-value-hierarchy",
+        "src/simtheory/observation_channel_value.py:exact_observation_channel_value",
+        "tests/test_observation_channel_value.py"
+      ],
+      "nonclaims": [
+        "the finite scenario set is not a continuum or statistical coverage theorem",
+        "the observation channel is assumed known rather than estimated"
+      ]
+    },
+    {
+      "id": "ST-T132",
+      "title": "Public randomization value is distinct from source-law information value",
+      "kind": "THEOREM",
+      "scope": "the declared deterministic and shared-randomness no-signal and signal-policy minimax values",
+      "assumptions": [
+        "the public signal and any shared seed are known to every decoder",
+        "shared randomization is independent of the source-law scenario",
+        "cost is expected zero-error prefix length"
+      ],
+      "evidence": [
+        "docs/observation-channel-information-value.md#5-separating-randomization-value-from-information-value",
+        "docs/observation-channel-information-value.md#7-uninformative-public-signal-example",
+        "src/simtheory/observation_channel_value.py:ObservationValueCertificate",
+        "tests/test_observation_channel_value.py"
+      ],
+      "nonclaims": [
+        "an uninformative random signal can coordinate actions without revealing the scenario",
+        "deterministic observation and shared no-signal resources are not generally totally ordered"
+      ]
+    },
+    {
+      "id": "ST-T133",
+      "title": "Blackwell garbling monotonicity for shared-randomness coding value",
+      "kind": "THEOREM",
+      "scope": "two finite rational observation channels where the second equals the first composed with a declared row-stochastic garbling kernel",
+      "assumptions": [
+        "the designer may use public shared randomness independent of the source scenario",
+        "both channels are evaluated on the same source-law scenarios, code universe, and loss"
+      ],
+      "evidence": [
+        "docs/observation-channel-information-value.md#10-blackwell-garbling-order",
+        "src/simtheory/observation_channel_value.py:exact_blackwell_comparison",
+        "tests/test_observation_channel_value.py"
+      ],
+      "nonclaims": [
+        "the theorem is stated for the shared-randomness value because simulating a stochastic garbling requires admitted randomness",
+        "Blackwell order is a partial order and is not replaced by one scalar information score"
+      ]
+    },
+    {
+      "id": "ST-T134",
+      "title": "Exact sensing-cost threshold equals incremental information value",
+      "kind": "THEOREM",
+      "scope": "one optional observation-channel use compared with the shared-randomness no-signal baseline",
+      "assumptions": [
+        "the sensing charge is a nonnegative declared additive cost",
+        "the channel-assisted and baseline coding games use the same source scenarios and code universe"
+      ],
+      "evidence": [
+        "docs/observation-channel-information-value.md#9-exact-sensing-cost-threshold",
+        "src/simtheory/observation_channel_value.py:exact_sensing_decision",
+        "tests/test_observation_channel_value.py"
+      ],
+      "nonclaims": [
+        "the sensing charge is not inferred from physical measurement cost",
+        "the tie-breaking convention declines sensing at exact equality"
+      ]
+    },
+    {
+      "id": "ST-M32",
+      "title": "Half-accurate symmetric K3 observation has exact seven-over-sixty information value",
+      "kind": "MODEL_RESULT",
+      "scope": "complete three-state confusion graph, three heavy-state source scenarios with mass 4/5, and symmetric signal accuracy 1/2",
+      "assumptions": [
+        "binary deterministic zero-error prefix codebooks",
+        "public shared-randomness comparison baseline",
+        "equal wrong-label signal probabilities 1/4"
+      ],
+      "evidence": [
+        "docs/observation-channel-information-value.md#8-symmetric-half-accurate-observation",
+        "tests/test_observation_channel_value.py"
+      ],
+      "nonclaims": [
+        "the exact fractions are specific to the declared K3 instance",
+        "classification accuracy alone is not asserted sufficient to rank arbitrary channels"
+      ]
+    },
+    {
+      "id": "ST-F21",
+      "title": "Bounded exact observation-policy and Blackwell audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational channels, deterministic policies, game supports, garblings, and sensing decisions exercised by the repository tests",
+      "assumptions": [
+        "all configured policy, dominance, code, and game support caps complete without truncation",
+        "Python Fraction arithmetic is used for all channel and payoff calculations"
+      ],
+      "evidence": [
+        "tests/test_observation_channel_value.py"
+      ],
+      "nonclaims": [
+        "CI success is not a large-instance or continuous-observation theorem",
+        "finite decision-value calculations are not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
