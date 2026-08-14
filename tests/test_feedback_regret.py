@@ -3,7 +3,7 @@ from fractions import Fraction
 import pytest
 
 from simtheory.confusion_graphs import ConfusionGraph
-from simtheory.feedback_regret import exact_drift_information_regret
+from simtheory.feedback_regret_solver import exact_drift_information_regret
 
 
 def _complete_graph(vertex_count: int) -> ConfusionGraph:
