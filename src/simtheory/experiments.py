@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from math import pi
 from random import Random
 
 from .algorithmic import multiplicity_inflation
@@ -42,6 +43,18 @@ from .physics import (
     mass_limited_operation_rate,
     schwarzschild_radius_meters,
 )
+from .quantum_phase import fisher_eigenvalues, schedule_fisher, state_total_variation
+from .quantum_phase_geometry import (
+    canonical_chsh_cartesian_tv,
+    constructive_memory_lower_bound_bits,
+    constructive_packing_size_lower_bound,
+)
+from .quantum_sequence import (
+    parity_adaptive_policy,
+    phase_hypothesis_processes,
+    transcript_memory_lower_bound_bits,
+    transcript_total_variation as quantum_transcript_tv,
+)
 from .sequential import (
     exact_anytime_mixture_rejection_probability,
     exact_expected_mixture_e_value,
@@ -52,7 +65,6 @@ def observer_uncertainty_demo(seed: int = 7, draws: int = 20_000) -> tuple[float
     rng = Random(seed)
     values: list[float] = []
     for _ in range(draws):
-        # Illustrative uncertainty only; these are not empirical priors.
         measure = 1.0
         for _ in range(6):
             measure *= 10.0 ** rng.uniform(-2.0, 2.0)
@@ -110,6 +122,24 @@ def main() -> None:
     print("packing_bits_eps0.02", predictive_memory_lower_bound_bits(grid, 0.02))
     print("Fisher_v0.6", schedule_fisher_information(0.6))
     print("adaptive_trials_for_TV0.8_v0.4_v0.6", adaptive_trials_necessary_for_tv(0.4, 0.6, 0.8))
+
+    print("\n== multidimensional quantum predictive geometry ==")
+    left, right = (0.7, -0.8), (0.9, 0.6)
+    print("phase_TV", state_total_variation(left, right))
+    print("phase_TV_closed_form", canonical_chsh_cartesian_tv(left, right))
+    info = schedule_fisher(0.7, 0.3)
+    print("phase_Fisher", info)
+    print("phase_Fisher_eigenvalues", fisher_eigenvalues(info))
+    print("constructive_states_eps0.04", constructive_packing_size_lower_bound(0.04))
+    print("constructive_bits_eps0.04", constructive_memory_lower_bound_bits(0.04))
+
+    print("\n== adaptive quantum phase transcripts ==")
+    phases = tuple(-pi + 2 * pi * j / 12 for j in range(12))
+    processes = phase_hypothesis_processes(0.85, phases, 0.17)
+    policy = parity_adaptive_policy()
+    print("pair_TV_h1", quantum_transcript_tv(processes[0], processes[3], 1, policy))
+    print("pair_TV_h3", quantum_transcript_tv(processes[0], processes[3], 3, policy))
+    print("transcript_bits_h3_eps0.04", transcript_memory_lower_bound_bits(processes, 3, 0.04, policy))
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]

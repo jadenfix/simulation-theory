@@ -1,0 +1,138 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T11",
+      "title": "Visibility-phase Bell predictive-law geometry",
+      "kind": "THEOREM",
+      "scope": "the declared two-parameter coplanar Bell correlation family under a fixed finite setting schedule",
+      "assumptions": [
+        "P(a,b|x,y,v,phi)=1/4[1-ab v cos(alpha_x-beta_y-phi)]",
+        "setting weights are identical under the compared states"
+      ],
+      "evidence": [
+        "docs/quantum-phase-predictive-bounds.md#exact-predictive-law-distance",
+        "src/simtheory/quantum_phase.py:state_total_variation",
+        "tests/test_quantum_phase.py"
+      ],
+      "nonclaims": [
+        "does not establish generic evidence for simulation",
+        "does not establish a predictive metric for arbitrary quantum states"
+      ]
+    },
+    {
+      "id": "ST-T12",
+      "title": "Canonical CHSH visibility-phase L-infinity metric",
+      "kind": "THEOREM",
+      "scope": "canonical equal-weight CHSH settings in the declared visibility-phase family",
+      "assumptions": [
+        "the state is represented by q=(v cos phi,v sin phi) in the unit disk",
+        "the four canonical CHSH setting pairs are used with equal weights"
+      ],
+      "evidence": [
+        "docs/canonical-chsh-disk-geometry.md#exact-norm-identity",
+        "src/simtheory/quantum_phase_geometry.py:canonical_chsh_cartesian_tv",
+        "tests/test_quantum_phase_geometry.py"
+      ],
+      "nonclaims": [
+        "does not imply a parent substrate uses Euclidean, L-infinity, or classical bit geometry"
+      ]
+    },
+    {
+      "id": "ST-T13",
+      "title": "Constructive quadratic predictive packing",
+      "kind": "THEOREM",
+      "scope": "canonical CHSH visibility-phase unit disk for 0<epsilon<1/4",
+      "assumptions": [
+        "epsilon-accurate predictive representation is measured in one-trial total variation",
+        "the approximate predictive-state packing theorem applies"
+      ],
+      "evidence": [
+        "docs/canonical-chsh-disk-geometry.md#constructive-quadratic-packing",
+        "src/simtheory/quantum_phase_geometry.py:constructive_square_packing",
+        "tests/test_quantum_phase_geometry.py"
+      ],
+      "nonclaims": [
+        "the bound is for the declared bounded physical family, not the full universe",
+        "internal predictive bits are not parent-hardware bits"
+      ]
+    },
+    {
+      "id": "ST-T14",
+      "title": "Adaptive transcript refinement monotonicity",
+      "kind": "THEOREM",
+      "scope": "finite deterministic adaptive policies applied to the declared phase-drift Bell process",
+      "assumptions": [
+        "the complete outcome transcript is retained",
+        "the length-T transcript is the prefix projection of the length-(T+1) transcript"
+      ],
+      "evidence": [
+        "docs/quantum-sequential-bounds.md#transcript-refinement-monotonicity",
+        "src/simtheory/quantum_sequence.py:transcript_total_variation",
+        "tests/test_quantum_sequence.py"
+      ],
+      "nonclaims": [
+        "does not prove strict information growth at every horizon",
+        "does not identify an optimal adaptive policy"
+      ]
+    },
+    {
+      "id": "ST-T15",
+      "title": "Bell schedule projection seminorm criterion",
+      "kind": "THEOREM",
+      "scope": "finite coplanar setting schedules in correlation-disk coordinates",
+      "assumptions": [
+        "the declared visibility-phase Bell law holds",
+        "positive-weight setting directions are treated as vectors in R^2"
+      ],
+      "evidence": [
+        "src/simtheory/quantum_phase_geometry.py:schedule_cartesian_tv",
+        "src/simtheory/quantum_phase_geometry.py:schedule_direction_rank",
+        "tests/test_quantum_phase_geometry.py"
+      ],
+      "nonclaims": [
+        "the criterion concerns identifiability inside this two-dimensional observable family",
+        "it does not characterize arbitrary quantum tomography"
+      ]
+    },
+    {
+      "id": "ST-M04",
+      "title": "Two-parameter Fisher-rank identifiability",
+      "kind": "MODEL_RESULT",
+      "scope": "regular interior points of the declared visibility-phase Bell family",
+      "assumptions": [
+        "standard Fisher information regularity conditions hold",
+        "the declared schedule and two-parameter model are correctly specified"
+      ],
+      "evidence": [
+        "docs/quantum-phase-predictive-bounds.md#fisher-geometry",
+        "src/simtheory/quantum_phase.py:schedule_fisher",
+        "tests/test_quantum_phase.py"
+      ],
+      "nonclaims": [
+        "local Fisher rank alone does not prove global identifiability",
+        "phase is degenerate at zero visibility"
+      ]
+    },
+    {
+      "id": "ST-M05",
+      "title": "Finite adaptive phase-process predictive packing",
+      "kind": "MODEL_RESULT",
+      "scope": "finite phase-hypothesis families, finite horizon, and one declared deterministic adaptive policy",
+      "assumptions": [
+        "phase follows the declared deterministic drift law",
+        "outcomes follow the declared Bell law",
+        "renderer approximation is measured in horizon-transcript total variation"
+      ],
+      "evidence": [
+        "docs/quantum-sequential-bounds.md#adaptive-predictive-state-packing",
+        "src/simtheory/quantum_sequence.py:greedy_transcript_packing",
+        "tests/test_quantum_sequence.py"
+      ],
+      "nonclaims": [
+        "finite-horizon packing is not a universal many-body quantum lower bound",
+        "the example parity policy is not claimed optimal"
+      ]
+    }
+  ]
+}

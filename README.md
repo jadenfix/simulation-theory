@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Its purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.json); phase-specific claims are additionally registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -42,20 +42,29 @@ The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.
 19. **Bell predictive-law geometry.** For a finite Werner/singlet Bell schedule, total variation between visibility states has an exact closed form derived from the physical measurement family.
 20. **Physically derived renderer-memory bound.** A finite visibility grid induces an explicit Bell-law packing number and therefore a lower bound on the number of renderer states and internal memory bits required for epsilon-accurate prediction.
 21. **Adaptive Bell-query lower bound.** KL chain rules plus Pinsker give a necessary number of allowed Bell measurements before two visibility states can reach a target transcript distinguishability, even with adaptive setting choice.
+22. **Visibility-phase predictive geometry.** A two-parameter Bell family gives an exact predictive-law metric over physical states `(visibility, phase)` and a full 2x2 Fisher geometry.
+23. **Canonical CHSH disk norm.** In correlation-disk coordinates `q=(v cos(phi), v sin(phi))`, canonical CHSH predictive TV is exactly `||q-q'||_infinity/(2*sqrt(2))`.
+24. **Quadratic physical packing.** The canonical visibility-phase family contains an explicit epsilon-packing of size at least `ceil(1/(4 epsilon))^2`, producing a memory lower bound that scales as `2 log2(1/epsilon)` up to constants.
+25. **Fisher-rank identifiability.** One Bell setting has rank at most one for the two-parameter state, while a sufficiently rich schedule can locally identify both dimensions; phase becomes unidentifiable at zero visibility.
+26. **Adaptive phase-drift transcripts.** Exact finite transcript laws are computed under history-dependent Bell queries, and transcript TV is monotone under retained-history refinement.
 
-General proofs are in [`docs/formal-results.md`](docs/formal-results.md). The first physically derived predictive-state program is in [`docs/bell-predictive-bounds.md`](docs/bell-predictive-bounds.md).
+General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical derivations are developed in [`docs/bell-predictive-bounds.md`](docs/bell-predictive-bounds.md), [`docs/quantum-phase-predictive-bounds.md`](docs/quantum-phase-predictive-bounds.md), [`docs/canonical-chsh-disk-geometry.md`](docs/canonical-chsh-disk-geometry.md), and [`docs/quantum-sequential-bounds.md`](docs/quantum-sequential-bounds.md).
 
 ## Layout
 
 ```text
-claims/claims-v1.json          typed claims, assumptions, evidence, and nonclaims
-docs/formal-results.md         general theorem statements and proofs
-docs/bell-predictive-bounds.md physical Bell-family derivations
-docs/research-program.md       completed lanes, next campaigns, and quality gates
-docs/sources.md                primary research context
-docs/tempera-math-bridge.md    optional external proof-harness boundary
-src/simtheory/                 mathematical models and deterministic experiments
-tests/                         exact, unit, and randomized property checks
+claims/claims-v1.json                 core typed claims, assumptions, evidence, and nonclaims
+claims/quantum-phase-claims.json      multidimensional quantum claim registry
+docs/formal-results.md                general theorem statements and proofs
+docs/bell-predictive-bounds.md        one-parameter physical Bell derivations
+docs/quantum-phase-predictive-bounds.md two-parameter geometry and Fisher analysis
+docs/canonical-chsh-disk-geometry.md exact disk norm and constructive scaling bound
+docs/quantum-sequential-bounds.md     adaptive phase-drift transcript model
+docs/research-program.md              completed lanes, next campaigns, and quality gates
+docs/sources.md                       primary research context
+docs/tempera-math-bridge.md           optional external proof-harness boundary
+src/simtheory/                        mathematical models and deterministic experiments
+tests/                                exact, unit, and randomized property checks
 ```
 
 ## Run
