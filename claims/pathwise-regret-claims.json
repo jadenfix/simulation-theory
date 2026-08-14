@@ -2,7 +2,7 @@
   "schema": "simulation-theory.claims/v1",
   "claims": [
     {
-      "id": "ST-T127",
+      "id": "ST-T131",
       "title": "Pathwise affine regret attains its maximum at a bounded-TV path vertex",
       "kind": "THEOREM",
       "scope": "finite affine path-decision and comparator families over one finite-horizon rational bounded-TV source-law path polytope",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "id": "ST-T128",
+      "id": "ST-T132",
       "title": "Shared-randomness pathwise regret reduces to an exact finite zero-sum game",
       "kind": "THEOREM",
       "scope": "source-independent common mixtures of finite affine open-loop decisions against a finite comparator family over the bounded-TV path polytope",
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "id": "ST-T129",
+      "id": "ST-T133",
       "title": "Comparator-class expansion monotonically increases pathwise regret",
       "kind": "THEOREM",
       "scope": "one fixed decision family and nested finite comparator families under the same path and cost model",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "id": "ST-T130",
+      "id": "ST-T134",
       "title": "Robust value differences only bound pathwise regret",
       "kind": "THEOREM",
       "scope": "deterministic and source-independent shared mixtures of finite affine decisions over one compact path set",
@@ -79,7 +79,7 @@
       ]
     },
     {
-      "id": "ST-T131",
+      "id": "ST-T135",
       "title": "Exact zero-error code-sequence regret with distinct decision and comparator switch budgets",
       "kind": "THEOREM",
       "scope": "complete bounded deterministic zero-error binary-prefix codebooks, finite open-loop sequences, bounded TV source drift, and rational common switch cost",
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "id": "ST-T132",
+      "id": "ST-T136",
       "title": "Full-drift binary prediction has deterministic regret T and shared regret T over two",
       "kind": "THEOREM",
       "scope": "binary source states, horizon T, eta=1, all binary action sequences, mismatch loss, and the same class used as the clairvoyant comparator",
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "id": "ST-T133",
+      "id": "ST-T137",
       "title": "The path-specific oracle maximum is an exact maximin game and may be attained only in the interior",
       "kind": "THEOREM",
       "scope": "finite affine comparator families over one compact finite-horizon path polytope with an exact finite vertex representation",
@@ -139,7 +139,7 @@
       ]
     },
     {
-      "id": "ST-F20",
+      "id": "ST-F21",
       "title": "Bounded exact pathwise regret and value-gap audit",
       "kind": "FINITE_CHECK",
       "scope": "the finite rational path, decision, comparator, code-sequence, and zero-sum game instances exercised by the repository tests",
