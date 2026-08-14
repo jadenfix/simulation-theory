@@ -7,6 +7,15 @@ from random import Random
 from .algorithmic import multiplicity_inflation
 from .anthropic import WorldModel, two_world_scale_sensitivity
 from .bayesian import feasibility_mixture, plug_in_across_scenarios, posterior_simulated_probability
+from .bell_predictive import (
+    adaptive_trials_necessary_for_tv,
+    analytic_visibility_tv,
+    chsh_value,
+    maximum_epsilon_packing,
+    predictive_memory_lower_bound_bits,
+    schedule_fisher_information,
+    uniform_visibility_grid,
+)
 from .causal import (
     minimum_selection_gamma,
     minimum_unrestricted_intervention_rate,
@@ -91,6 +100,16 @@ def main() -> None:
     }
     print("packing_states", approximate_state_packing_lower_bound(laws, 0.1))
     print("packing_bits", approximate_memory_bits_lower_bound(laws, 0.1))
+
+    print("\n== physically derived Bell predictive bounds ==")
+    grid = uniform_visibility_grid(101)
+    packing = maximum_epsilon_packing(grid, 0.02)
+    print("TV_v0.2_v0.8", analytic_visibility_tv(0.2, 0.8))
+    print("CHSH_v0.8", chsh_value(0.8))
+    print("packing_states_eps0.02", len(packing))
+    print("packing_bits_eps0.02", predictive_memory_lower_bound_bits(grid, 0.02))
+    print("Fisher_v0.6", schedule_fisher_information(0.6))
+    print("adaptive_trials_for_TV0.8_v0.4_v0.6", adaptive_trials_necessary_for_tv(0.4, 0.6, 0.8))
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]
