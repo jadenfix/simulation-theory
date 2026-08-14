@@ -1,58 +1,93 @@
-# Research Program
+# Research program
 
 ## Goal
 
-Turn simulation-theory discussion into explicit mathematical models whose assumptions, observable implications, computational requirements, and failure modes can be checked independently.
+Turn simulation-theory discussion into explicit mathematical models whose
+assumptions, observable implications, inferential limits, state requirements,
+communication costs, and failure modes can be checked independently.
 
-The project is not trying to manufacture one dramatic probability that reality is simulated. It is building a hierarchy of restricted questions:
+The project is not trying to manufacture a single dramatic probability that
+reality is simulated. It builds a hierarchy of restricted questions:
 
-1. Is the model identifiable from internal observations?
-2. Which observer measure turns populations into credences?
-3. Which future query family defines the required predictive state?
-4. How do approximation, noise, query timing, and selection change that state?
-5. What must cross each causal or communication cut?
-6. When do routing, replication, coding, side information, or quantum assistance change feasibility?
-7. Which claims are lower bounds, which are constructions, and where is the gap?
-8. What experiment distinguishes one restricted architecture from ordinary alternatives?
+1. Is the proposed model identifiable from the declared observations?
+2. Which observer measure turns world populations into credences?
+3. Which future-query family defines the required predictive state?
+4. How do approximation, noise, selection, and query timing change that state?
+5. What information must cross each causal or communication cut?
+6. When do routing, replication, coding, side information, or quantum
+   assistance change feasibility?
+7. How do source priors, prior uncertainty, mean length, peak length, and
+   robustness alter a zero-error message design?
+8. Which claims are converses, which are constructions, and where is the gap?
+9. What experiment distinguishes one restricted architecture from ordinary
+   alternatives?
 
-## Completed foundations
+The research discipline is deliberately conservative:
 
-### Identification before estimation
+- identification before estimation;
+- observable interface before hidden-state counting;
+- exact scope before theorem labels;
+- lower bounds separated from achievability;
+- finite checks never promoted into universal claims;
+- internal resources never converted into parent resources without a map.
+
+# Completed foundations
+
+## 1. Statistical identification and evidence ceilings
 
 Completed results include:
 
-- observational indistinguishability when the simulator class contains the base law;
-- Bayes-factor equality for identical observable laws;
+- indistinguishability when the simulator class contains the base observable
+  law;
+- Bayes-factor equality for identical laws;
 - bounded likelihood-ratio evidence ceilings;
 - total-variation classification limits;
-- Le Cam and Fano minimax bounds;
+- Le Cam and Fano minimax lower bounds;
+- finite sample-size necessities for restricted candidate families;
 - hierarchical Bayesian feasibility mixtures;
-- robust posterior intervals.
+- robust posterior intervals;
+- likelihood-ratio e-processes and finite optional-stopping audits.
 
-The governing rule is: **do not estimate a parameter for a model that has not first been identified by the declared observation interface.**
+The governing rule is:
 
-### Observer measure and anthropic sensitivity
+> Do not estimate a parameter for a model that has not first been identified by
+> the declared observation interface.
 
-The observer-count argument is decomposed into survival, deployment, simulation count, observer count, consciousness, evidence compatibility, and duration factors. The repository keeps SSA-, SIA-, and FNC-style conditioning rules separate and proves the Jensen plug-in bias for uncertain observer measure.
+## 2. Observer measure and anthropic sensitivity
 
-The goal is sensitivity analysis rather than an unjustified representation-independent prior.
+The observer-count argument is decomposed into:
 
-### Adaptive rendering and predictive equivalence
+- survival and technical feasibility;
+- deployment policy;
+- environment and observer count;
+- observers versus observer-moments;
+- consciousness assumptions;
+- complete-evidence compatibility;
+- duration and duplication conventions.
+
+Finite SSA-, SIA-, and FNC-style conditioning rules remain separate. The Jensen
+plug-in theorem shows why substituting an expected simulated count into a
+nonlinear fraction can overstate the model-averaged result.
+
+The target is transparent sensitivity, not a representation-independent prior
+assumed into existence.
+
+## 3. Adaptive rendering and predictive equivalence
 
 Completed work includes:
 
-- exact lazy-rendering equivalence by conditional chain factorization;
-- adaptive transcript bounds from stepwise total variation;
+- exact lazy-rendering equivalence;
+- adaptive transcript TV bounds;
 - conditional-KL chain bounds;
-- exact predictive-equivalence state counts;
-- approximate packing lower bounds;
-- target-centered and arbitrary-center constructive covers;
-- exact finite stochastic law tensors;
+- exact future-law equivalence classes;
+- approximate predictive packings;
+- target-centered and arbitrary-center covers;
 - deterministic and stochastic network index certificates.
 
-The state object is always defined by allowed future laws, not raw hidden history.
+Predictive state is always defined by allowed future laws, not raw hidden
+history.
 
-### Selection, intervention, and sequential testing
+## 4. Selection, intervention, and sequential testing
 
 Completed work includes:
 
@@ -64,11 +99,14 @@ Completed work includes:
 - optional-stopping-safe thresholds;
 - exact finite-horizon crossing probabilities.
 
-No anomaly score is interpreted without a null sampling model, selection process, and stopping guarantee.
+No anomaly score is interpreted without a null sampling model, selection
+process, nuisance structure, and stopping guarantee.
 
-### Local physics and parent-resource boundaries
+## 5. Local physics and cross-level resource boundaries
 
-The repository implements local Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions while preserving the cross-level boundary:
+The repository implements local Landauer, Margolus-Levitin, Bekenstein,
+mass-energy, Schwarzschild, and mass-limited operation expressions while
+preserving
 
 \[
 \text{internal physical quantity}
@@ -76,31 +114,41 @@ The repository implements local Landauer, Margolus–Levitin, Bekenstein, mass-e
 \text{parent implementation cost}.
 \]
 
-A parent-resource claim requires a separate implementation map and law-transfer assumption.
+A parent-resource claim needs a separate implementation map and law-transfer
+assumption.
 
-## Completed physical and quantum lanes
+# Completed physical and quantum lanes
 
-### Bell and multidimensional predictive geometry
+## 6. Bell and multidimensional predictive geometry
 
-Completed work derives total variation, Fisher information, adaptive KL bounds, visibility-plus-phase geometry, the canonical CHSH disk norm, constructive physical packings, and exact finite phase-drift transcripts.
+Completed work derives:
 
-The program deliberately derives lower bounds from explicit allowed measurements rather than Hilbert-space dimension alone.
+- one-parameter Bell visibility TV and Fisher information;
+- adaptive Bell-query KL and sample lower bounds;
+- visibility-plus-phase geometry;
+- the canonical CHSH disk norm;
+- constructive physical packings;
+- exact finite adaptive phase-drift transcripts.
 
-### Many-body and relational information
+The program derives lower bounds from explicit allowed measurements rather than
+Hilbert-space dimension alone.
+
+## 7. Many-body and relational information
 
 Completed work includes:
 
 - exact computational-basis coordinate-query scaling;
-- continuous product-qubit \(L_1\) geometry;
+- continuous product-qubit L1 geometry;
 - graph-state weighted-Hamming geometry;
 - cycle-state two-local blindness with three-local access;
 - finite coding-theoretic relational packings;
 - cat-state proper-marginal blindness;
-- exact parity sufficient statistics for online continuation.
+- parity sufficient statistics for online continuation.
 
-These constructions show that simple low-order marginals do not imply simple global predictive state.
+These constructions show that simple low-order marginals do not imply a simple
+global predictive state.
 
-### Noise and predictive rate distortion
+## 8. Noise and predictive rate distortion
 
 Independent local flips produce exact cat-parity visibility
 
@@ -108,21 +156,28 @@ Independent local flips produce exact cat-parity visibility
 c_\ell(p)=(1-2p)^\ell.
 \]
 
-Completed results include exact noisy transcript laws, proper-marginal blindness, repeated-BSC inference, KL/Pinsker necessary counts, Bhattacharyya sufficient counts, sharp worst-query thresholds, finite Gilbert packings, and the average rate-distortion lower bound
+Completed results include noisy transcript laws, proper-marginal blindness,
+repeated-BSC inference, KL/Pinsker necessary counts, Bhattacharyya sufficient
+counts, sharp worst-query thresholds, finite Gilbert packings, and the average
+rate-distortion lower bound
 
 \[
 m[1-H_2(D/c)].
 \]
 
-### Stabilizer-code locality
+## 9. Stabilizer-code locality
 
-The binary-symplectic module implements stabilizers, normalizers, code distance, logical cosets, projectors, and reduced-state checks. It proves complete local indistinguishability below distance and independently verifies the five-qubit \([[5,1,3]]\) code.
+The binary-symplectic module implements stabilizers, normalizers, code distance,
+logical cosets, projectors, and reduced-state checks. It proves complete local
+indistinguishability below distance and independently verifies the five-qubit
+\([[5,1,3]]\) code.
 
-Code distance, stabilizer weight, logical weight, query weight, and selected-error protection remain distinct notions.
+Code distance, stabilizer weight, logical weight, query locality, degeneracy,
+and selected-error protection remain separate notions.
 
-## Completed causal, approximation, and network lanes
+# Completed causal and network lanes
 
-### Classical and quantum random-access cuts
+## 10. Classical and quantum random-access cuts
 
 Completed results include:
 
@@ -135,92 +190,84 @@ Completed results include:
 - quantum random-access converses;
 - entanglement-assisted factor-two bounds;
 - exact dense-coding achievability;
-- finite two-to-one and three-to-one qubit random-access codes.
+- finite two-to-one and three-to-one one-qubit random-access codes.
 
-Query timing is treated as a resource. A query known before encoding can reduce linear communication to one answer symbol.
+Query timing is treated as a resource. A query revealed before encoding can
+reduce linear record communication to one answer symbol.
 
-### Progressive query revelation
+## 11. Progressive query revelation
 
-The two-stage program gives exact shared/branch capacity regions for partition hints, branch-aware bounded-error converses, unassisted and assisted quantum variants, constructive finite protocols, and predictive-class coarsening after each hint.
+The two-stage program gives exact shared/branch capacity regions for partition
+hints, branch-aware bounded-error converses, unassisted and assisted quantum
+variants, constructive finite protocols, and predictive-class coarsening after
+each hint.
 
-Design-wide branch budgets and one executed branch are kept separate.
+Design-wide branch budgets and the one branch executed in a run remain distinct.
 
-### Predictive network min-cuts
+## 12. Predictive network min-cuts
 
-For finite deterministic query families, exact class labels are routed through integer-capacity networks. Completed work includes exact max-flow/min-cut, route decomposition, parity-rank compression, approximate packing cuts, quantum payload accounting, and careful separation of one-sink sufficiency from multi-sink necessity.
+For finite deterministic query families, exact class labels are routed through
+integer-capacity networks. Completed work includes exact max-flow/min-cut,
+route decomposition, parity-rank compression, approximate packing cuts, quantum
+payload accounting, and separation of one-sink sufficiency from multi-sink
+necessity.
 
-### Stochastic predictive covers
+## 13. Stochastic predictive covers and arbitrary centers
 
-Finite stochastic future laws now have:
+Finite stochastic future laws have:
 
 - exact equivalence classes;
 - weighted TV and KL geometry;
 - strict packing lower bounds;
 - exact target-centered set-cover upper bounds;
 - arbitrary-center Bernoulli covering;
-- three-way network certificates: impossible, constructively feasible, or unresolved.
+- three-way network certificates: impossible, constructively feasible, or
+  unresolved.
 
-The gap between packing and unrestricted covering is not hidden.
+For one-query ternary laws, TV becomes a max-coordinate norm. The repository
+then closes the arbitrary-center gap exactly by interval-simplex feasibility,
+water filling, feasible-subset enumeration, and exact set cover.
 
-### Exact ternary arbitrary centers
+## 14. Stochastic observation-channel contraction
 
-For one query with exactly three outcomes, the unrestricted arbitrary-center gap is now closed for bounded finite target families.
-
-Completed results include:
-
-- the exact identity
-
-  \[
-  \operatorname{TV}(p,u)=\max_j|p_j-u_j|;
-  \]
-
-- a necessary-and-sufficient common-center criterion from coordinate intervals and simplex mass;
-- a constructive common center;
-- a closed one-state minimax radius from coordinate half-ranges and two water-filling thresholds;
-- an exact finite reduction of arbitrary-center covering to feasible-subset enumeration plus minimum set cover;
-- an independent subset-partition dynamic-program checker;
-- the exact three-vertex phase diagram: three states below \(1/2\), two states from \(1/2\) to \(2/3\), and one uniform state at or above \(2/3\);
-- exact one-sink network capacity for the resulting optimal center index.
-
-This geometry is special to the three-outcome simplex. It is not generalized by analogy to four or more outcomes.
-
-### Stochastic observation-channel contraction
-
-For a shared record-independent channel \(K\), the repository proves
+For a shared record-independent channel \(K\),
 
 \[
 \operatorname{TV}(\mu K,\nu K)
 \le
-\delta(K)\operatorname{TV}(\mu,\nu),
+\delta(K)\operatorname{TV}(\mu,
+u).
 \]
 
-with exact rational certificates, query-specific coefficients, serial submultiplicativity, BSC and erasure examples, and monotonicity of exact classes, strict packings, and target-centered covers.
+Completed work includes exact rational certificates, query-specific
+coefficients, serial submultiplicativity, BSC and erasure examples, and
+monotonicity of exact classes, strict packings, and target-centered covers.
 
-Observation loss can weaken evidence and reduce the required observable interface. It is not silently reinterpreted as microscopic exact-world compression.
+Observation loss can weaken evidence. It is not silently reinterpreted as
+microscopic exact-world compression.
 
-### Finite multicast network coding
+## 15. Finite multicast network coding
 
-The completed multicast lane extends one-sink predictive cuts to a bounded common-demand model:
+The common-demand multicast lane includes:
 
 - exact Gaussian elimination and solving over prime fields;
-- topological propagation of global encoding vectors;
-- sink recovery iff incoming global-vector rank equals source dimension;
+- propagation of global encoding vectors;
+- sink recovery by incoming-row rank;
 - per-sink cut necessity;
 - named unit-capacity DAGs and integer-capacity expansion;
 - routing-only classification;
 - bounded exhaustive scalar-code search;
 - analytic butterfly routing impossibility;
-- exact binary butterfly coding with \(x_1+x_2\) on the bottleneck;
-- exhaustive verification of all 4096 local binary scalar assignments;
-- predictive-class injection into \(\mathbb F_p^h\).
+- exact binary butterfly coding with an XOR bottleneck;
+- exhaustive verification of all 4096 local binary assignments.
 
-The project does not claim the general multicast max-flow/min-cut theorem. It owns the finite theorems and certificates it proves.
+The project owns these finite theorems and does not claim the full general
+multicast theorem from the checker alone.
 
-### Sink-specific linear function computation
+## 16. Sink-specific linear functions
 
-The newest completed lane removes the requirement that every sink reconstruct the full source vector.
-
-For sink target rows \(B_t\), incoming network rows \(G_t\), and local side-information rows \(S_t\), exact recovery is equivalent to
+For a sink with incoming rows \(G_t\), local rows \(S_t\), and target rows
+\(B_t\), exact recovery is characterized by
 
 \[
 \operatorname{rowspan}(B_t)
@@ -229,165 +276,327 @@ For sink target rows \(B_t\), incoming network rows \(G_t\), and local side-info
 \begin{pmatrix}G_t\\S_t\end{pmatrix}.
 \]
 
+The new dimension required across a cut is
+
+\[
+\operatorname{rank}
+\begin{pmatrix}S_t\\B_t\end{pmatrix}
+-
+\operatorname{rank}(S_t).
+\]
+
+Receiver-wise cut adequacy is necessary but not jointly sufficient. Complementary
+side information can make one XOR symbol satisfy two heterogeneous demands.
+
+## 17. Arbitrary nonlinear functions and confusion graphs
+
+For finite state \(x\), target \(f_t(x)\), and local side information \(s_t(x)\),
+define
+
+\[
+x\sim y
+\iff
+\exists t:
+s_t(x)=s_t(y),
+f_t(x)\ne f_t(y).
+\]
+
+Zero-error common-message encoders are exactly graph colorings, so the minimum
+message alphabet is \(\chi(G)\).
+
+Completed work includes exact bounded DSATUR, chromatic, clique, independent-
+set, decoder, realization, monotonicity, and randomized-support certificates.
+Every finite simple graph can arise as a confusion graph. All 64 labeled
+four-vertex graphs are independently audited.
+
+# Completed source-coding and robustness lanes
+
+## 18. Exact prior-weighted prefix coding
+
+For rational source prior \(\pi\), each proper independent-set partition induces
+message probabilities. Huffman coding is exact for one partition, and complete
+bounded partition enumeration gives
+
+\[
+L^*(G,\pi)
+=
+\min_{\mathcal P}
+L_H(p(\mathcal P)).
+\]
+
 Completed results include:
 
-- exact finite-field row-space and decoder certificates;
-- conditional new-information rank
+- exact proper-partition enumeration;
+- exact rational class masses and Huffman receipts;
+- exact message-count and at-most-message frontiers;
+- rational ordering of coloring entropies;
+- corrected entropy sandwich
 
   \[
-  r_t
-  =
-  \operatorname{rank}
-  \begin{pmatrix}S_t\\B_t\end{pmatrix}
-  -
-  \operatorname{rank}(S_t);
+  H_{\mathrm{col}}
+  \le L^*\le H_{\mathrm{col}}+1,
   \]
 
-- the necessary source-to-sink cut bound \(\operatorname{mincut}(s,t)\ge r_t\);
-- a counterexample showing all individual cut bounds can hold while one shared bottleneck remains jointly infeasible;
-- exact bounded enumeration of common linear-summary subspaces;
-- complementary side information reducing a two-dimensional common requirement to one XOR symbol;
-- exhaustive checking of all 16 binary scalar broadcast assignments;
-- a routing-versus-coding separation;
-- a restricted bridge from finite predictive-class embeddings to sink-specific linear future signatures.
+  with strict upper inequality under full support;
+- separation of mean, fixed, and peak lengths;
+- edge-deletion monotonicity;
+- declared-state versus support-only zero error;
+- a finite example where the mean-optimal code uses more classes than
+  \(\chi(G)\).
 
-Side information is treated as an explicit resource and causal assumption, not free compression.
+## 19. Finite-prior deterministic and shared-randomness robustness
 
-## Current frontier campaigns
+For a finite prior scenario set, completed work includes:
 
-### Campaign A: higher-dimensional categorical arbitrary centers
+- the complete bounded deterministic code universe;
+- exact Pareto pruning by scenario-cost vectors;
+- scenario-specific oracle costs;
+- deterministic minimax expected length;
+- deterministic minimax regret;
+- proof that these objectives can select different codebooks;
+- convex-hull control by the finite scenarios;
+- shared codebook randomness as an explicit assistance model;
+- exact rational primal and dual finite-game support enumeration;
+- zero rational duality gaps;
+- sparse codebook support bounded by the number of scenarios;
+- least-favorable barycenter priors.
 
-The ternary simplex is exactly solvable because ternary TV equals an infinity norm on the zero-sum plane. That identity fails for four or more outcomes.
+The key identity is
 
-The next approximation program should derive the geometry rather than extrapolate it.
+\[
+V_{\mathrm{mix}}
+=
+\max_{\bar\pi\in\operatorname{conv}(\Pi)}L^*(G,\bar\pi).
+\]
+
+Shared randomness can strictly reduce worst-prior expected length while leaving
+the zero-error message alphabet unchanged.
+
+## 20. Continuous total-variation prior balls
+
+For nominal prior \(p\) and TV radius \(\rho\), completed work includes:
+
+- exact rational mass transport for worst and best expectation;
+- saturation radii;
+- exact range-bound tightness windows;
+- continuous piecewise-linear radius profiles;
+- exact fractional-knapsack dual thresholds;
+- complementary-slackness and zero-gap receipts;
+- exact distinction between TV balls and Huber contamination;
+- exhaustive bounded deterministic TV-robust code design;
+- price-of-robustness and uncertainty-uplift decomposition;
+- monotonicity in radius;
+- radius-zero reduction to nominal coding;
+- radius-one reduction to minimum peak length
+
+  \[
+  \left\lceil\log_2\chi(G)\right\rceil;
+  \]
+
+- an exact skew-K4 code switch at radius \(1/4\).
+
+The fixed-code robust profile is concave in radius. The minimum across several
+codes is continuous and nondecreasing but need not be concave because code
+switches can increase the active slope.
+
+# Current frontier campaigns
+
+## Campaign A: shared-randomness games against continuous TV balls
+
+The finite-prior game and deterministic TV-ball lanes are complete separately.
+The next bridge should permit a shared codebook mixture \(q\) and a continuous
+TV adversary:
+
+\[
+\min_{q\in\Delta(\mathcal C)}
+\sup_{p':\operatorname{TV}(p',p)\le\rho}
+E_{c\sim q}E_{p'}[\ell_c].
+\]
 
 Targets:
 
-1. Formulate common-center feasibility for \(d\)-outcome laws as an exact finite linear program with auxiliary absolute-deviation variables.
-2. Develop a standard-library rational certificate for bounded dimensions.
-3. Distinguish feasibility certificates, minimax centers, and exact finite set covers.
-4. Produce a four-outcome counterexample showing why the ternary box criterion fails.
-5. Compare target-centered, arbitrary-center, packing, and rate-distortion counts.
-6. Preserve admissibility constraints when a physical model permits only a subset of the simplex.
-7. Turn exact cover indices into one-sink and multicast network requirements.
+1. Collapse a codebook mixture to its expected state-length vector.
+2. Solve the TV adversary by exact mass transport on that vector.
+3. Characterize whether the outer mixture remains a finite LP or requires a
+   cutting-plane oracle.
+4. Return matching primal and adversarial dual certificates.
+5. Count shared random support and preserve seed cost as a separate resource.
+6. Compare deterministic and randomized robustness phase diagrams.
 
-Quality boundary: an approximate numerical optimizer is not an exact theorem receipt unless primal feasibility, dual bounds, and discretization error are certified.
+Quality boundary: a sampled radius grid is not a continuous robustness proof.
 
-### Campaign B: bounded general multicast construction
+## Campaign B: rational polyhedral ambiguity sets
 
-The butterfly demonstrates that coding can resolve a routing conflict. The next step is a constructive bounded multicast program across arbitrary finite DAGs.
+Generalize from one TV ball to
 
-Targets:
+\[
+\mathcal U
+=
+\{p:Ap\le b,\ p\ge0,\ \mathbf1^Tp=1\}
+\]
 
-1. Implement algebraic multicast construction for one source and common-demand sinks.
-2. Derive explicit field-size sufficiency conditions.
-3. Distinguish scalar from vector codes and track block length.
-4. Produce exact failure certificates when a selected field is too small.
-5. Compare exhaustive search, randomized coefficient selection, and deterministic construction.
-6. Preserve receiver-wise cut necessity separately from constructive sufficiency.
-7. Add formal proof receipts for global-vector propagation and sink decoding.
-
-Quality boundary: do not cite a general theorem and then treat a finite implementation as verified. The constructor and checker must be independently testable.
-
-### Campaign C: approximate and nonlinear sink functions
-
-Current function computation is exact and linear. Current stochastic approximation is strongest at one sink. The next bridge should combine them without blurring demand type.
-
-Research questions:
-
-1. How should a sink-specific stochastic distortion be defined over future laws?
-2. When do heterogeneous sink tolerances share one upstream cover or require refinements?
-3. Can interpolating predictive centers be coded as functions rather than class labels?
-4. Which packing cuts remain necessary at each sink?
-5. What common-summary analogue replaces row space for nonlinear finite functions?
-6. How do source priors alter worst-record versus average-distortion designs?
-7. When does interaction reduce common-summary size?
-
-Deliverables:
-
-- typed approximate sink-demand objects;
-- per-sink distortion metrics;
-- common-refinement and sink-specific cover solvers;
-- bounded nonlinear truth-table function checks;
-- network lower/upper certificates;
-- examples that separate multicast, index coding, function computation, and multiple unicast.
-
-### Campaign D: noisy side information, edges, and robust channels
-
-Observation channels, side information, and communication edges are currently modeled separately. The next lane must preserve that distinction while composing them.
+with rational \(A,b\).
 
 Targets:
 
-1. Add finite noisy side-information kernels.
-2. Add finite noisy edge kernels.
-3. Separate source coding, channel coding, network coding, and observation post-processing.
-4. Compute Dobrushin and KL contraction along paths and cuts.
-5. Add uncertain channel sets and worst-case robust certificates.
-6. Distinguish record-independent noise from record-dependent intervention.
-7. Add erasures, correlated failures, and adversarial contamination.
-8. Prove when coding restores reliable function transmission and at what block length.
+1. Exact rational primal and dual robust expectation certificates.
+2. Sparse active-constraint receipts.
+3. Deterministic and shared-randomness outer code optimization.
+4. Convex-hull, interval, moment, and contamination constructors.
+5. Explicit infeasibility certificates for empty ambiguity sets.
+6. Independent vertex enumeration on bounded dimensions.
 
-Noisy-edge capacity must not be inferred from one-shot total-variation contraction alone.
+Quality boundary: floating LP status is not an exact theorem receipt.
 
-### Campaign E: progressive causal networks
+## Campaign C: finite-sample uncertainty feeding robust design
 
-The repository has progressive hints on one cut, exact multicast on one stage, and static sink side information. The next target is a query-revelation tree embedded in a network.
+The current ambiguity sets are model inputs. The next statistical layer should
+construct them from data without confusing estimation and robustness.
 
-Research questions:
+Targets:
 
-1. Which state must cross before each hint?
-2. Which branches can share upstream summaries?
-3. How do branch-specific covers and function demands refine after observations?
-4. When can later side information decode a coded bottleneck symbol?
-5. How do memory, communication, and delay trade off?
-6. Which branch capacities are design-wide versus per execution?
-7. How does quantum assistance change each stage without being double-counted?
+1. Fixed-sample multinomial confidence regions.
+2. Exact or outward-rounded rational TV radii.
+3. Simultaneous coverage allocation across records or contexts.
+4. Time-uniform confidence sequences for optional stopping.
+5. Separation of sampling uncertainty, model misspecification, and adversarial
+   contamination.
+6. Coverage-ledger composition into robust coding and predictive covers.
 
-### Campaign F: scalable quantum-code families
+Quality boundary: an empirical confidence set needs a coverage theorem under a
+stated sampling process.
 
-The five-qubit code is a bounded checker, not a scaling theory. Next targets include:
+## Campaign D: KL and other divergence balls
 
-- CSS construction from classical parity-check matrices;
+KL-ball robustness is attractive but introduces logarithms and exponentials.
+
+Targets:
+
+1. Derive the exponential-tilting inner optimum.
+2. Bound the dual scalar root with certified rational intervals.
+3. Handle zero nominal probabilities and support mismatch explicitly.
+4. Compare forward KL, reverse KL, chi-square, and Hellinger geometry.
+5. Avoid treating a floating root finder as a proof of optimality.
+6. Quantify how divergence choice changes code switching.
+
+## Campaign E: allowed-error nonlinear function computation
+
+The unweighted confusion graph is sufficient for zero error but generally loses
+risk information when errors are allowed.
+
+Targets:
+
+1. Typed source priors, side information, targets, and loss functions.
+2. Exact one-shot Bayes-risk partitions.
+3. Pairwise and higher-order ambiguity structures beyond an unweighted graph.
+4. Rate-distortion and random-access converses.
+5. Deterministic versus randomized encoder distinctions.
+6. Robust risk under uncertain priors.
+7. Explicit examples where equal confusion graphs have different optimal
+   allowed-error codes.
+
+## Campaign F: block coding and graph products
+
+One-shot prefix coding is not an asymptotic rate theorem.
+
+Targets:
+
+1. Strong and OR graph products for repeated source blocks.
+2. Exact bounded chromatic and entropy calculations for small block lengths.
+3. Subadditivity and superadditivity checks.
+4. Convergence bounds rather than unsupported limiting claims.
+5. Dependence and Markov source extensions.
+6. Universal coding regret under declared source classes.
+
+## Campaign G: traffic, buffering, and delay
+
+Expected length is not hard network capacity.
+
+Targets:
+
+1. Prefix-message arrival processes.
+2. Queue stability from mean load.
+3. Tail bounds for backlog and delay.
+4. Peak-size and deadline constraints.
+5. Buffering versus fixed-length crossover points.
+6. Network coding with variable-length upstream messages.
+7. Robust traffic under prior drift.
+
+## Campaign H: progressive causal networks
+
+The repository has progressive hints on one cut and exact multicast on one
+stage. Next targets:
+
+1. Query-revelation trees embedded in a network.
+2. Shared upstream summaries and branch refinements.
+3. Side-information-assisted coded bottlenecks.
+4. Memory, communication, and delay tradeoffs.
+5. Design-wide versus per-execution branch resources.
+6. Quantum assistance without double counting.
+
+## Campaign I: noisy edges and robust channels
+
+Observation channels and communication edges remain distinct.
+
+Targets:
+
+1. Finite noisy edge kernels.
+2. Source, channel, and network coding kept separate.
+3. Dobrushin and KL contraction along paths and cuts.
+4. Uncertain edge-channel sets.
+5. Erasures, correlated failures, and adversarial contamination.
+6. Reliable coding block lengths with exact finite certificates.
+
+A one-shot TV contraction coefficient is not a noisy-channel capacity theorem.
+
+## Campaign J: scalable quantum-code families
+
+The five-qubit code is a bounded checker, not a scaling theory.
+
+Targets:
+
+- CSS construction from classical parity checks;
 - Steane \([[7,1,3]]\) validation;
 - concatenation recurrences;
-- surface/toric-code patches;
-- logical predictive packings over several encoded qubits;
+- small surface and toric-code patches;
+- several logical qubits and predictive packings;
 - noisy syndrome-history state;
-- distributed logical function queries across causal regions.
+- distributed logical queries.
 
-Every result must distinguish code distance, stabilizer weight, degeneracy, logical operator weight, and query locality.
+Every result must separate code distance, stabilizer weight, degeneracy, logical
+operator weight, and query locality.
 
-### Campaign G: dynamic update-time lower bounds
+## Campaign K: dynamic update-time lower bounds
 
-State cardinality does not determine update cost. Future work should measure:
+State cardinality does not determine update cost.
 
-- update time after one observation or syndrome change;
+Targets:
+
+- update time after an observation, syndrome, or prior change;
 - query time;
-- random-bit and field-operation complexity;
 - preprocessing versus online work;
 - dynamic parity cell-probe bounds;
 - stabilizer-tableau update cost;
 - network recoding after edge failure;
-- common-summary changes under drifting sink demands;
-- cover-cell changes under drifting stochastic laws.
+- robust-code switching under drifting laws;
+- time-space-communication tradeoffs.
 
-The goal is a bounded time-space-communication tradeoff, not an unsupported claim that the universe is computationally expensive.
+## Campaign L: restricted empirical architectures
 
-### Campaign H: restricted empirical architectures
+For each proposed physical architecture—lattice, finite precision, constrained
+randomness, approximate rendering, or limited communication—require:
 
-For each candidate physical architecture—lattice, finite precision, constrained randomness, approximate rendering, or limited communication—require:
-
-1. a declared null and alternative law;
+1. declared null and alternative laws;
 2. nuisance parameters and ordinary alternatives;
 3. a leakage-safe data pipeline;
-4. a pre-registered likelihood, e-process, or confidence sequence;
-5. calibration and power;
-6. explicit model-selection and stopping rules;
+4. a preregistered likelihood, e-process, or confidence procedure;
+5. calibration, power, and stopping rules;
+6. explicit selection and intervention models;
 7. a statement of which broader simulator classes remain untouched.
 
 No anomaly becomes simulation evidence merely because it is surprising.
 
-### Campaign I: observer-measure and algorithmic-prior robustness
+## Campaign M: observer-measure and algorithmic-prior robustness
 
 Continue in parallel:
 
@@ -400,47 +609,70 @@ Continue in parallel:
 - compiler-equivalent program aggregation;
 - observational-law versus implementation priors.
 
-The target is transparent sensitivity, not a universal prior assumed into existence.
+The target remains transparent sensitivity, not a universal prior assumed into
+existence.
 
-## Quality gates
+# Quality gates
 
 A result is ready for `main` only when:
 
-1. The claim has an explicit finite, universal, asymptotic, or empirical scope.
+1. Its scope is explicitly finite, universal, asymptotic, or empirical.
 2. Assumptions and nonclaims appear next to the claim.
-3. A derivation has an exact checker or independently reproducible calculation where applicable.
-4. Closed forms are checked against bounded enumeration when possible.
-5. Numerical examples label invented priors and fixed seeds.
-6. Sequential results state their sampling and stopping models.
-7. Locality results distinguish local marginals from aggregated higher-weight protocols.
-8. Noise results state independence, correlation, and parameter-knowledge assumptions.
-9. Quantum results separate qubits, classical payload, receiver memory, and preshared entanglement.
-10. Progressive results separate shared-stage capacity, branch budgets, and executed paths.
-11. Network results separate one-sink sufficiency, per-sink necessity, routing, replication, coding, common-demand multicast, and sink-specific functions.
-12. Side-information results state how side information is created, stored, accessed, and accounted for.
-13. Search-based impossibility claims require exhaustion of the declared finite domain; capped searches remain incomplete.
-14. Packing lower bounds, target-centered covers, arbitrary-center covers, rate-distortion results, and constructions remain distinct.
-15. Higher-dimensional center claims require certified feasibility and optimality rather than an unchecked numerical solution.
-16. Physical results avoid cross-level resource leakage.
-17. A finite result is never promoted into a generic simulation conclusion.
-18. Internal bits, symbols, qubits, ranks, operations, and capacities are not silently converted into parent hardware.
+3. The observable, query, side-information, and intervention interfaces are
+   stated.
+4. Lower bounds and constructions are not conflated.
+5. Exact closed forms are checked against bounded enumeration when possible.
+6. Search-based impossibility or optimality requires complete exhaustion of the
+   declared domain.
+7. A cap exceedance fails closed and is never reported as an optimum.
+8. Rational claims use exact arithmetic or certified outward bounds.
+9. Floating optimization does not stand alone as a theorem receipt.
+10. Sequential results state sampling and stopping models.
+11. Noise results state independence, correlation, and parameter-knowledge
+    assumptions.
+12. Quantum results separate transmitted qubits, classical payload, receiver
+    memory, and preshared entanglement.
+13. Network results separate one-sink sufficiency, per-sink necessity, routing,
+    replication, coding, and demand type.
+14. Source-coding results separate message count, mean length, peak length,
+    framing, buffering, and queueing.
+15. Prior-robust results state the ambiguity set and distinguish deterministic,
+    private-randomized, and shared-randomized designs.
+16. Confidence regions include a coverage theorem under a declared data process.
+17. Physical results avoid cross-level resource leakage.
+18. A finite result is never promoted into a generic simulation conclusion.
+19. Internal bits, symbols, qubits, operations, and capacities are not silently
+    converted into parent hardware.
+20. Claim manifests, evidence paths, tests, and documentation agree on IDs and
+    scope.
 
-## Tempera Math integration
+# Tempera Math integration
 
-The claim manifests in this repository remain the source of truth. Tempera Math may later provide content-addressed registration, proof graphs, exact finite certificates, and independent checker receipts.
+The claim manifests in this repository remain the source of truth.
+`tempera-math` may provide content-addressed registration, proof graphs, exact
+finite certificates, and independent checker receipts.
 
 Any bridge must preserve:
 
 - theorem versus model-result versus finite-check status;
 - every assumption and nonclaim;
 - exact source revision and checker command;
-- graph size, field, horizon, locality, tolerance, block length, noise law, side-information model, assistance model, and search domain;
+- graph size, field, horizon, locality, tolerance, radius, block length, noise
+  law, prior set, assistance model, and search domain;
 - the difference between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
-## Nonclaims
+# Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, graph states, quantum codes, error correction, random-access coding, network coding, XOR side-information coding, max flow, min cuts, predictive equivalence, stochastic covers, arbitrary predictive centers, information bounds, Planck scales, mathematical elegance, observer effects, or finite signal speed are evidence of simulation by themselves.
+This project does not claim that quantum mechanics, Bell violation,
+entanglement, graph states, quantum codes, error correction, random-access
+coding, graph coloring, Huffman coding, robust optimization, network coding,
+max flow, min cuts, predictive equivalence, information bounds, Planck scales,
+mathematical elegance, observer effects, or finite signal speed are evidence of
+simulation by themselves.
 
-Rejecting one restricted implementation does not reject every possible simulator. Finding one anomaly does not favor simulation until it is more likely under a specified simulator model than under serious physical, measurement, selection, and intervention alternatives.
+Rejecting one restricted implementation does not reject every possible
+simulator. Finding one anomaly does not favor simulation until it is more likely
+under a specified simulator model than under serious physical, measurement,
+selection, and intervention alternatives.
