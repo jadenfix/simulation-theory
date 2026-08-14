@@ -39,19 +39,23 @@ The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.
 16. **Local physical envelopes.** Landauer, Margolus–Levitin, Bekenstein, mass-energy, and Schwarzschild expressions are implemented for local physics.
 17. **Parent-resource non-transfer.** Internal physical quantities do not constrain an unknown parent substrate without an implementation map.
 18. **Program multiplicity.** Many programs can implement one observable law, so raw algorithmic mass depends on coding and implementation choices.
+19. **Bell predictive-law geometry.** For a finite Werner/singlet Bell schedule, total variation between visibility states has an exact closed form derived from the physical measurement family.
+20. **Physically derived renderer-memory bound.** A finite visibility grid induces an explicit Bell-law packing number and therefore a lower bound on the number of renderer states and internal memory bits required for epsilon-accurate prediction.
+21. **Adaptive Bell-query lower bound.** KL chain rules plus Pinsker give a necessary number of allowed Bell measurements before two visibility states can reach a target transcript distinguishability, even with adaptive setting choice.
 
-Detailed statements and proofs are in [`docs/formal-results.md`](docs/formal-results.md).
+General proofs are in [`docs/formal-results.md`](docs/formal-results.md). The first physically derived predictive-state program is in [`docs/bell-predictive-bounds.md`](docs/bell-predictive-bounds.md).
 
 ## Layout
 
 ```text
-claims/claims-v1.json       typed claims, assumptions, evidence, and nonclaims
-docs/formal-results.md      theorem statements and proofs
-docs/research-program.md    completed lanes, next campaigns, and quality gates
-docs/sources.md             primary research context
-docs/tempera-math-bridge.md optional external proof-harness boundary
-src/simtheory/              mathematical models and deterministic experiments
-tests/                      exact, unit, and randomized property checks
+claims/claims-v1.json          typed claims, assumptions, evidence, and nonclaims
+docs/formal-results.md         general theorem statements and proofs
+docs/bell-predictive-bounds.md physical Bell-family derivations
+docs/research-program.md       completed lanes, next campaigns, and quality gates
+docs/sources.md                primary research context
+docs/tempera-math-bridge.md    optional external proof-harness boundary
+src/simtheory/                 mathematical models and deterministic experiments
+tests/                         exact, unit, and randomized property checks
 ```
 
 ## Run
@@ -68,7 +72,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
 
 ## Tempera Math boundary
 

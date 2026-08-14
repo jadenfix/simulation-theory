@@ -51,26 +51,38 @@ The project is not trying to assign a dramatic single-number probability to “s
 - Cross-level cost remains an input assumption rather than an inferred consequence.
 - Program multiplicity and Kraft diagnostics expose coding-language sensitivity.
 
+### Physically derived predictive-state geometry
+
+- A finite two-qubit Werner/singlet Bell family now provides an explicit physical future-law family instead of arbitrary probability vectors.
+- Its exact total-variation metric is derived analytically and checked against enumeration.
+- Finite visibility grids induce certified `2*epsilon` packing numbers and renderer-state/memory lower bounds.
+- The same family has a closed-form Fisher-information geometry and Cramer-Rao variance lower bound.
+- Adaptive setting choice is bounded by the per-query KL maximum and Pinsker, yielding a necessary trial count for target transcript distinguishability.
+- See [`bell-predictive-bounds.md`](bell-predictive-bounds.md).
+
 ## Next research campaigns
 
-### Campaign A: physically meaningful predictive-state lower bounds
+### Campaign A: multidimensional physically meaningful predictive-state lower bounds
 
-The present packing theorem accepts an arbitrary finite family of future laws. The next step is to derive those families from explicit physical experiments.
+The first bounded physical program is complete for a one-parameter Bell visibility family. The next step is to move from one-dimensional visibility geometry to physically admissible families with multiple hidden predictive degrees of freedom.
 
 Candidate bounded programs:
 
-- finite Bell-type measurement schedules with adaptive basis selection;
+- Bell states with unknown phase and visibility under adaptive basis selection;
+- finite stabilizer-state families with adaptive Pauli queries;
 - reversible cellular-automaton or lattice-field toy worlds with delayed measurements;
 - distributed observers comparing authenticated historical records;
-- finite quantum-circuit families where future outcome laws depend on hidden stabilizer or phase state;
+- finite quantum-circuit families where future outcome laws depend on hidden stabilizer, phase, or coherent-control state;
 - relativistic causal networks where spacelike-separated query choices constrain transcript consistency.
 
 Deliverables:
 
 1. A typed finite experiment definition.
 2. Exact future-law enumeration or certified approximation.
-3. Packing/covering numbers as a function of error tolerance.
-4. State, random-bit, and update-time lower bounds with bounded claim scope.
+3. Packing and covering numbers as functions of error tolerance.
+4. State, random-bit, query, and update-time lower bounds with bounded claim scope.
+5. Where possible, analytic geometry that agrees with exact finite enumeration.
+6. Separation of internal predictive-state complexity from any claim about parent-substrate hardware cost.
 
 ### Campaign B: restricted physical signatures
 
@@ -153,6 +165,6 @@ See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.
