@@ -2,43 +2,41 @@
 
 ## Scope
 
-The confusion-graph result answers an exact one-shot **worst-case alphabet**
-question. If a finite hidden state is mapped to one common message and every
-sink must recover its declared target from that message and its local side
-information, then the minimum number of message values is
+The confusion-graph theorem answers a worst-case one-shot alphabet question. If
+one common message must let every sink recover its declared target from that
+message and its local side information, then the exact minimum number of
+message values is the chromatic number
 
 \[
-\chi(G),
+\chi(G).
 \]
 
-where \(G\) is the problem's confusion graph. A fixed-length binary label then
-uses
+A fixed binary label for those values needs
 
 \[
-\left\lceil \log_2 \chi(G) \right\rceil
+\left\lceil\log_2\chi(G)\right\rceil
 \]
 
-bits.
+bits in every execution.
 
-That theorem deliberately does not answer several different questions:
+That does **not** determine average communication under a nonuniform source
+prior. This lane adds a different, explicitly declared interface:
 
-1. What if source states have a nonuniform prior?
-2. What if messages use a variable-length binary prefix code?
-3. Is the average-optimal coloring always a minimum-coloring?
-4. How does average length differ from peak length and cut capacity?
-5. Do zero-probability states still require exact codewords?
-6. How does more informative side information affect average code length?
+- a finite confusion graph \(G\);
+- an exact rational source prior \(\pi\);
+- zero error on either every declared state or only the positive support;
+- one binary prefix-coded message;
+- a codebook known to encoder and decoder;
+- expected bit length as the optimization objective.
 
-This note solves the finite rational-prior, one-shot, binary-prefix, zero-error
-problem exactly below explicit enumeration caps.
-
-The result is an internal source-coding theorem for a declared predictive
-interface. It does not provide evidence that reality is simulated and does not
-identify a message bit with parent-universe storage, energy, mass, or spacetime.
+The result is an exact bounded one-shot source-coding theorem. It is not an
+asymptotic graph-entropy theorem, a queueing theorem, a hard network-capacity
+theorem, or evidence for simulation. Message bits are internal model resources,
+not parent-substrate energy, mass, memory, or spacetime.
 
 ---
 
-## 1. Finite source, graph, and prior
+## 1. From future demands to independent message classes
 
 Let
 
@@ -52,10 +50,24 @@ be the finite source-state set and let
 G=(V,E)
 \]
 
-be its confusion graph. Vertices joined by an edge cannot share a zero-error
-message.
+be its confusion graph. An edge \(\{x,y\}\) means that some sink receives the
+same local side information under \(x\) and \(y\) but requires different target
+answers. Those two states cannot share a zero-error message.
 
-Let the declared source prior be rational:
+A deterministic zero-error encoder therefore induces a partition
+
+\[
+\mathcal P=\{C_1,\ldots,C_k\}
+\]
+
+of \(V\) into independent sets. Conversely, every independent-set partition is
+a valid common-message encoder: the earlier confusion-graph theorem synthesizes
+an unambiguous decoder from the message class and each sink's side information.
+
+Thus the source-coding decision is not merely a choice of color labels. It is a
+choice of an **unlabeled proper partition** of the source states.
+
+Let the exact rational prior be
 
 \[
 \pi=(\pi_0,\ldots,\pi_{n-1}),
@@ -65,125 +77,106 @@ Let the declared source prior be rational:
 \sum_i\pi_i=1.
 \]
 
-The rational restriction is computational rather than conceptual. It allows
-all feasibility, class-mass, expected-length, and ordering calculations in the
-bounded checker to remain exact.
-
-A deterministic zero-error encoder induces a partition
+The probability of message class \(C_j\) is
 
 \[
-\mathcal P=\{C_1,\ldots,C_k\}
+p_j(\mathcal P)=\sum_{i\in C_j}\pi_i.
 \]
 
-of \(V\), where every \(C_j\) is an independent set of \(G\). Conversely,
-every partition into independent sets is a valid zero-error message encoder.
+The optimization has two nested layers:
 
-The probability of message class \(j\) is
+1. choose a proper independent-set partition \(\mathcal P\);
+2. choose a binary prefix tree for the resulting class probabilities.
 
-\[
-p_j(\mathcal P)
-=
-\sum_{i\in C_j}\pi_i.
-\]
-
-The source-coding problem therefore has two nested decisions:
-
-1. choose a proper independent-set partition;
-2. choose a binary prefix code for the resulting class probabilities.
+This separation matters because chromatic number minimizes \(k\), while the new
+objective weights the depths of the classes by \(p_j(\mathcal P)\).
 
 ---
 
-## 2. Prefix framing is an explicit resource assumption
+## 2. Prefix framing is an assumption, not a free convention
 
 A binary prefix code assigns a finite bit string \(w_j\) to every message class
-such that no codeword is a prefix of another. This lets a receiver determine
-where one message ends without an external message-length side channel.
+such that no codeword is a prefix of another. The receiver can then identify the
+message boundary without a separate length channel.
 
-The codeword lengths
+Writing
 
 \[
-\ell_j=|w_j|
+\ell_j=|w_j|,
 \]
 
-obey Kraft's inequality
+prefix feasibility implies Kraft's inequality
 
 \[
-\sum_j 2^{-\ell_j}\le1.
+\sum_j2^{-\ell_j}\le1.
 \]
 
-For one message class, the empty codeword is allowed and has length zero. For
-more than one class, every codeword has positive length.
+For a one-class source, the empty codeword is admissible and has length zero. If
+there are multiple classes, every codeword has positive length.
 
-This assumption must not be hidden. A protocol with externally framed packet
-boundaries, a separate length channel, interaction, or amortized block coding
-is a different communication model.
-
-For a fixed proper partition, the expected binary prefix length is
+For one fixed partition, the expected length is
 
 \[
-L(\mathcal P,\ell)
+L(\mathcal P,w)
 =
-\sum_j p_j(\mathcal P)\ell_j.
+\sum_jp_j(\mathcal P)\ell_j.
 \]
+
+A protocol with packet boundaries supplied externally, a separate length
+field, interaction, feedback, buffering across executions, or block coding has
+a different admissible code family. None of those resources is silently
+included here.
 
 ---
 
-## 3. Exact Huffman optimum for one partition
+## 3. Exact Huffman optimum for one proper partition
 
-For one fixed probability vector
+For a fixed rational probability vector
 
 \[
 p=(p_1,\ldots,p_k),
 \]
 
-Huffman's merge procedure repeatedly combines the two least-probable current
-symbols. The resulting full binary tree gives a prefix code.
+Huffman's algorithm repeatedly merges the two least-probable current nodes.
+The resulting full binary tree is an optimal prefix tree.
 
 ### Merge-cost identity
 
-Whenever two leaves of probabilities \(a\) and \(b\) are merged, every source
-occurrence in either subtree gains one additional code bit. That merge adds
+When nodes of weights \(a\) and \(b\) are merged, every source occurrence in
+either subtree gains one bit. The merge contributes exactly
 
 \[
 a+b
 \]
 
-to expected length.
-
-Summing the weights of all internal merges therefore gives exactly
+to expected length. Summing all internal merge weights gives
 
 \[
-L_H(p)
-=
-\sum_j p_j\ell_j.
+L_H(p)=\sum_jp_j\ell_j.
 \]
 
-The implementation checks this equality independently from the constructed
-codewords.
+The implementation constructs the actual bit strings and independently checks:
 
-### Why the greedy merge is optimal
+- prefix-freeness;
+- Kraft's inequality;
+- the expected-length sum;
+- equality between expected length and total merge cost.
 
-Take any optimal full binary prefix tree. Two leaves of maximum depth can be
-chosen as siblings. If those sibling leaves do not carry two least-probable
-symbols, exchanging labels so that the least-probable symbols occupy the
-maximum-depth sibling positions cannot increase expected length.
+### Greedy optimality
 
-Contract the two sibling leaves into one pseudo-symbol of probability \(a+b\).
-The remaining tree must be optimal for the reduced probability list; otherwise
-replacing it by a cheaper reduced tree and expanding the contracted sibling
-pair would improve the original tree.
+In an optimal full binary tree, two leaves at maximum depth can be chosen as
+siblings. Swapping labels can place two least-probable symbols at those deepest
+sibling leaves without increasing expected length. Contracting the pair into a
+pseudo-symbol of probability \(a+b\) leaves an optimal tree for the reduced
+problem; otherwise replacing the reduced tree would improve the original.
+Induction yields Huffman's algorithm.
 
-This gives the standard induction:
+Zero-probability symbols are retained when zero error is required on every
+declared state. They receive finite codewords, usually in the deepest part of
+the tree. Their own contribution to expectation is zero, but their required
+leaves can still increase the lengths of positive-probability symbols.
 
-1. an optimal tree can place two least-probable symbols as deepest siblings;
-2. contracting them reduces the problem by one symbol;
-3. recursively solving the reduced problem and expanding the pair is optimal.
-
-Zero-probability symbols cause no problem. They are assigned to deepest leaves
-first, but they still require codewords if zero error is demanded on every
-declared source state.
-
-Thus, for a fixed proper partition,
+Therefore, for a fixed proper partition,
 
 \[
 \boxed{
@@ -196,10 +189,10 @@ L_H\bigl(p(\mathcal P)\bigr)
 
 ---
 
-## 4. Exact global prior-weighted optimum
+## 4. Exact global one-shot optimum
 
 Let \(\operatorname{IndPart}(G)\) denote all partitions of \(V\) into
-independent sets. The exact one-shot prior-weighted zero-error prefix cost is
+independent sets. The exact prior-weighted zero-error prefix cost is
 
 \[
 \boxed{
@@ -210,39 +203,32 @@ L_H\bigl(p(\mathcal P)\bigr).
 }
 \]
 
-This is not necessarily obtained by first finding a \(\chi(G)\)-coloring.
-Chromatic number minimizes the **number** of messages. The new objective
-minimizes a prior-weighted average of binary codeword depths.
+This objective cannot in general be solved by first restricting to
+\(\chi(G)\)-colorings. Fewer message classes reduce alphabet size, but splitting
+a low-probability region can make it possible to isolate a high-probability
+class at a shorter codeword.
 
-### Finite reduction
+### Complete bounded enumeration
 
-For a bounded graph, every proper partition can be generated once in
-restricted-growth order:
+The checker enumerates unlabeled proper partitions in restricted-growth order.
+Vertices are processed in a fixed order. The next vertex may:
 
-- process vertices in a fixed order;
-- place the next vertex into any existing block with which it has no edge;
-- or open exactly one new final block.
+- join any existing block with which it has no edge; or
+- open exactly one new final block.
 
 Opening only one new final block removes all global color-label permutations.
 Every unlabeled independent-set partition appears exactly once.
 
-For each partition the checker:
-
-1. computes exact rational class probabilities;
-2. constructs a deterministic Huffman tree;
-3. checks prefix-freeness and Kraft's inequality;
-4. checks expected length against the exact merge cost;
-5. records message count and maximum codeword length;
-6. retains the exact minimum expected-length certificate.
-
-If either the vertex cap or partition cap is exceeded, the solver raises. It
-does not return a partial search result and call it an optimum.
+For every partition, the solver computes exact class masses, builds an exact
+Huffman certificate, and records mean, peak, and message count. If the declared
+vertex or partition cap is exceeded, the solver raises and reports no optimum.
+A truncated search is never relabeled as a theorem certificate.
 
 ---
 
 ## 5. Exact message-count frontier
 
-For every feasible exact message count \(k\), define
+For each feasible exact message count \(k\), define
 
 \[
 L_k(G,\pi)
@@ -254,7 +240,7 @@ L_k(G,\pi)
 L_H\bigl(p(\mathcal P)\bigr).
 \]
 
-The feasible values are
+The feasible range is
 
 \[
 \chi(G)\le k\le n.
@@ -268,30 +254,30 @@ The at-most-\(k\) frontier is
 \min_{\chi(G)\le j\le k}L_j.
 \]
 
-The sequence \(\overline L_k\) is nonincreasing because allowing additional
-message classes never removes an earlier code. The exact-count sequence
-\(L_k\), however, need not be monotone. Requiring an extra nonempty message can
-split a useful high-probability class and make the best code worse.
+The sequence \(\overline L_k\) is nonincreasing because allowing more classes
+never removes an earlier code. The exact-count sequence \(L_k\) need not be
+monotone: requiring another nonempty message can split a useful class and make
+the best exact-\(k\) code worse.
 
-This frontier prevents three different questions from being conflated:
+The certificate therefore reports separately:
 
-- the minimum number of zero-error messages;
-- the best expected length using exactly \(k\) messages;
-- the globally best expected length with no message-count penalty.
+- \(\chi(G)\), the minimum message alphabet;
+- \(L_k\), the best mean length at exactly \(k\) messages;
+- \(\overline L_k\), the best mean length using at most \(k\) messages;
+- the globally optimal message count.
 
 ---
 
-## 6. Minimum coloring entropy and exact rational ordering
+## 6. Exact rational ordering of coloring entropies
 
-For a proper partition \(\mathcal P\), define the message entropy
+For a proper partition, define
 
 \[
 H(\mathcal P)
-=
--\sum_jp_j(\mathcal P)\log_2p_j(\mathcal P).
+=-\sum_jp_j(\mathcal P)\log_2p_j(\mathcal P).
 \]
 
-The minimum coloring entropy under prior \(\pi\) is
+The minimum coloring entropy under the declared prior is
 
 \[
 H_{\mathrm{col}}(G,\pi)
@@ -299,17 +285,9 @@ H_{\mathrm{col}}(G,\pi)
 \min_{\mathcal P\in\operatorname{IndPart}(G)}H(\mathcal P).
 \]
 
-Naively comparing floating logarithms would weaken an otherwise exact bounded
-certificate. Rational priors permit an exact ordering.
-
-Let \(D\) clear every denominator in the state prior. Every class mass then
-satisfies
-
-\[
-Dp_j\in\mathbb Z_{\ge0}.
-\]
-
-Define
+Floating logarithms are unnecessary for selecting the exact minimizing
+partition. Let \(D\) clear every denominator in the state prior. Then
+\(Dp_j\) is an integer for every class mass. Define
 
 \[
 Q_D(p)
@@ -317,16 +295,14 @@ Q_D(p)
 \prod_{j:p_j>0}p_j^{Dp_j}.
 \]
 
-Then
+Since
 
 \[
 \log_2Q_D(p)
-=
-\sum_jDp_j\log_2p_j
-=-D H(p).
+=-D H(p),
 \]
 
-Therefore
+we have the exact rational ordering
 
 \[
 \boxed{
@@ -336,80 +312,95 @@ Q_D(p)>Q_D(q).
 }
 \]
 
-Every exponent is an integer and every base is rational, so \(Q_D\) is a
-rational number that can be compared exactly. Floating point is used only to
-print the entropy after the minimizing partition has already been selected.
+The implementation compares the rational products exactly. A decimal entropy
+is calculated only after the minimizing partition has already been identified.
 
 ---
 
-## 7. Entropy sandwich for the global optimum
+## 7. Entropy sandwich, including the zero-mass boundary
 
-For every prefix code on message distribution \(p\), Shannon's lower bound
-gives
+Every binary prefix code satisfies Shannon's lower bound
 
 \[
 H(p)\le L(p).
 \]
 
-Huffman coding also satisfies
+For a distribution whose message classes all have positive mass, Huffman coding
+satisfies the familiar strict upper bound
 
 \[
 L_H(p)<H(p)+1.
 \]
 
-Let \(\mathcal P_L\) minimize expected prefix length and let \(\mathcal P_H\)
-minimize coloring entropy. Then
+Declared-state zero error introduces a subtle boundary: a proper partition may
+contain classes made entirely of zero-probability states. Those classes still
+need codewords. The universal statement is then the weak bound
+
+\[
+L_H(p)\le H(p)+1.
+\]
+
+One way to see this is to perturb every zero mass by a positive rational amount,
+renormalize, apply the strict positive-mass theorem, and take a limit through a
+subsequence with a fixed finite tree shape. Huffman optimality at the limiting
+distribution cannot be worse than that limiting tree.
+
+Equality is real, not merely technical. For three pairwise-confusable declared
+states with prior \((1,0,0)\), the positive state needs a one-bit codeword while
+the two zero-mass states occupy the other subtree. Thus
+
+\[
+H=0,
+\qquad
+L_H=1=H+1.
+\]
+
+Let \(\mathcal P_L\) minimize exact expected prefix length and
+\(\mathcal P_H\) minimize coloring entropy. The lower direction is
 
 \[
 L^*(G,\pi)
-=L_H\bigl(p(\mathcal P_L)\bigr)
 \ge
 H\bigl(p(\mathcal P_L)\bigr)
 \ge
 H_{\mathrm{col}}(G,\pi).
 \]
 
-For the other direction, use a Huffman code on the entropy-minimizing
-partition:
-
-\[
-L^*(G,\pi)
-\le
-L_H\bigl(p(\mathcal P_H)\bigr)
-<
-H\bigl(p(\mathcal P_H)\bigr)+1.
-\]
-
-Hence
+Using a Huffman code on \(\mathcal P_H\) gives the upper direction. Therefore
 
 \[
 \boxed{
 H_{\mathrm{col}}(G,\pi)
 \le
 L^*(G,\pi)
-<
+\le
 H_{\mathrm{col}}(G,\pi)+1.
 }
 \]
 
-The partition minimizing entropy and the partition minimizing exact Huffman
-length need not be assumed identical; both are enumerated and certified
-separately.
+If the source prior has full support, every nonempty color class has positive
+mass and the upper inequality is strict:
+
+\[
+L^*(G,\pi)<H_{\mathrm{col}}(G,\pi)+1.
+\]
+
+The entropy-minimizing and Huffman-length-minimizing partitions are not assumed
+to coincide; the solver certifies them independently.
 
 ---
 
-## 8. Fixed length, mean length, and peak length are different
+## 8. Fixed length, mean length, and peak length
 
-A minimum coloring with \(\chi(G)\) message values can always be transmitted
-with
+A minimum coloring can always be encoded by fixed-length labels of size
 
 \[
 b_{\mathrm{fix}}
 =
-\left\lceil\log_2\chi(G)\right\rceil
+\left\lceil\log_2\chi(G)\right\rceil.
 \]
 
-fixed bits. Therefore
+Those labels form a prefix code, so
 
 \[
 \boxed{
@@ -419,44 +410,34 @@ L^*(G,\pi)
 }
 \]
 
-But a variable-length code has a separate peak cost
+A variable-length code has a separate peak length
 
 \[
-\ell_{\max}
-=
-\max_j\ell_j.
+\ell_{\max}=\max_j\ell_j.
 \]
 
-It is entirely possible that
+It is possible that
 
 \[
 L^*<b_{\mathrm{fix}}<\ell_{\max}.
 \]
 
-Average-length improvement therefore does not by itself lower a hard one-shot
-network cut, a strict deadline, or a fixed-size register requirement. A system
-must separately specify:
+Thus a mean-traffic improvement does not automatically lower:
 
-- whether messages are externally framed;
-- whether buffering across executions is allowed;
-- whether only expected traffic or every execution must fit;
-- whether codebooks and priors are common knowledge;
-- whether the source process is IID, adversarial, or drifting.
+- a hard one-shot network cut;
+- a fixed-size register;
+- a strict latency deadline;
+- worst-case packet size;
+- buffer or queueing requirements.
+
+Any systems claim must state whether the relevant resource is expected bits,
+maximum bits, amortized bits, or a tail probability for backlog or delay.
 
 ---
 
 ## 9. Skew complete-graph example
 
-Take \(G=K_4\). Every source state is pairwise confusable, so every state must
-have a distinct message and
-
-\[
-\chi(G)=4,
-\qquad
-b_{\mathrm{fix}}=2.
-\]
-
-Use prior
+Take \(G=K_4\) and
 
 \[
 \pi
@@ -469,39 +450,35 @@ Use prior
 \right).
 \]
 
-One Huffman tree has lengths
+Every state needs a distinct message, so
 
 \[
-(1,2,3,3)
+\chi(G)=4,
+\qquad
+b_{\mathrm{fix}}=2.
 \]
 
-up to permutation among equal-probability states. Its expected length is
+A Huffman tree has lengths \((1,2,3,3)\), up to permutations among equal-mass
+states. Its expected length is
 
 \[
-\frac7{10}\cdot1
-+
-\frac1{10}\cdot2
-+
-\frac1{10}\cdot3
-+
-\frac1{10}\cdot3
-=
-\boxed{\frac32}.
+\boxed{L^*=\frac32}.
 \]
 
-But the maximum length is three:
+Its peak is three bits:
 
 \[
 \boxed{
-E[L]=\frac32<2<3=L_{\max}.
+E[L]=\frac32<2<3=\ell_{\max}.
 }
 \]
 
-This is an average-traffic gain, not a two-bit hard-capacity construction.
+The construction saves average traffic but does not fit every message through
+a two-bit hard cut.
 
 ---
 
-## 10. Average-optimal coding can use more than \(\chi(G)\) messages
+## 10. The mean-optimal code can use more than \(\chi(G)\) messages
 
 Consider five vertices with edges
 
@@ -509,50 +486,36 @@ Consider five vertices with edges
 \{01,02,03,04,12,23,34\}.
 \]
 
-Vertex \(0\) is universal and vertices \(1,2,3,4\) form a path. The graph is
-3-chromatic.
-
-Use prior weights
+Vertex zero is universal and vertices one through four form a path. The graph is
+3-chromatic. Use prior
 
 \[
-\pi
-=
-\frac1{50}(12,19,1,5,13).
+\pi=\frac1{50}(12,19,1,5,13).
 \]
 
-### Best three-message code
-
-The unique relevant 3-color structure is
-
-\[
-\{0\},\quad\{1,3\},\quad\{2,4\},
-\]
-
-with class probabilities
+The best three-message structure has class masses
 
 \[
 \left(
 \frac6{25},
 \frac{12}{25},
 \frac7{25}
-\right).
+\right)
 \]
 
-The exact best three-message expected length is
+and exact expected cost
 
 \[
-\boxed{L_3=\frac{38}{25}.}
+\boxed{L_3=\frac{38}{25}}.
 \]
 
-### Better four-message code
-
-Use the valid partition
+The four-message partition
 
 \[
-\{0\},\quad\{1,4\},\quad\{2\},\quad\{3\}.
+\{0\},\quad\{1,4\},\quad\{2\},\quad\{3\}
 \]
 
-Its class probabilities are
+has masses
 
 \[
 \left(
@@ -560,23 +523,13 @@ Its class probabilities are
 \frac{16}{25},
 \frac1{50},
 \frac1{10}
-\right).
+\right)
 \]
 
-Huffman lengths \((2,1,3,3)\) give
+and exact Huffman cost
 
 \[
-\boxed{L_4=\frac{37}{25}.}
-\]
-
-Therefore
-
-\[
-\boxed{
-L_4<L_3
-\quad\text{even though}\quad
-4>\chi(G)=3.
-}
+\boxed{L_4=\frac{37}{25}}.
 \]
 
 Using all five singleton messages is worse:
@@ -585,59 +538,57 @@ Using all five singleton messages is worse:
 L_5=\frac{21}{10}.
 \]
 
-This finite example disproves the tempting shortcut
+Therefore
 
-> first minimize the color count, then optimize codeword lengths.
+\[
+\boxed{
+L_4<L_3
+\quad\text{while}\quad
+4>\chi(G)=3.
+}
+\]
 
-The correct exact objective must search the space of proper partitions, not
-only minimum-colorings.
+The exact objective must search proper partitions, not merely minimum-colorings.
 
 ---
 
 ## 11. Uniform five-cycle example
 
-For the cycle \(C_5\),
+For \(C_5\),
 
 \[
 \chi(C_5)=3.
 \]
 
-Under the uniform prior, an optimal proper partition has class sizes
-
-\[
-2,2,1,
-\]
-
-and probabilities
+Under the uniform prior, an optimal partition has class sizes \(2,2,1\), hence
+message probabilities
 
 \[
 \frac25,\frac25,\frac15.
 \]
 
-Binary Huffman lengths \((1,2,2)\) give
+Huffman lengths \((1,2,2)\) give
 
 \[
-\boxed{
-L^*(C_5)=\frac85.
-}
+\boxed{L^*(C_5)=\frac85}.
 \]
 
-The clique number is only two, so the example simultaneously preserves the
-previous lesson that pairwise clique bounds can miss the exact message
-alphabet.
+The clique number is only two. The example preserves the earlier distinction
+between pairwise clique lower bounds and exact chromatic complexity while also
+showing the additional prior-weighted layer.
 
 ---
 
-## 12. Edge-deletion and side-information monotonicity
+## 12. Monotonicity under deleted confusion edges
 
-Suppose \(G'\) has the same vertices as \(G\) and
+Suppose \(G'\) has the same ordered vertices as \(G\) and
 
 \[
 E(G')\subseteq E(G).
 \]
 
-Every independent-set partition of \(G\) remains a valid independent-set
-partition of \(G'\). Therefore the feasible code set can only expand:
+Every proper partition of \(G\) remains proper for \(G'\). The feasible code set
+can only expand, so
 
 \[
 \boxed{
@@ -647,52 +598,47 @@ L^*(G,\pi).
 }
 \]
 
-The same argument gives
+Likewise,
 
 \[
 \chi(G')\le\chi(G).
 \]
 
-More informative side information and coarser target functions delete
-confusion edges under the earlier theorems. Consequently they cannot increase
-the exact prior-weighted optimum when the source prior and communication model
-are held fixed.
+More informative side information and coarser required targets delete confusion
+edges under the earlier theorems. Holding the prior and communication interface
+fixed, they cannot increase the exact expected prefix optimum.
 
-The inequality can be strict or equal. Removing an ambiguity does not imply a
-bit reduction if the deleted edge was not active in any optimal partition.
+The inequality need not be strict. An edge can disappear without participating
+in any optimal partition.
 
 ---
 
-## 13. Zero-mass states expose two different zero-error conventions
+## 13. Zero-mass states and two correctness conventions
 
-Suppose a declared state has prior probability zero. Two legitimate but
-different requirements are possible.
+A state with \(\pi_i=0\) exposes two distinct guarantees.
 
 ### Declared-state zero error
 
 Every state in the declared model must decode correctly, including zero-mass
-states. Such states still appear as graph vertices and still require
-codewords. They can increase positive-state codeword lengths because the
-prefix tree must contain leaves for them.
+states. Those vertices remain in the graph and need finite codewords. They can
+increase positive-state lengths even though their direct expected contribution
+is zero.
 
 ### Positive-support-only zero error
 
-Only states with
+Correctness is required only on
 
 \[
-\pi_i>0
+\operatorname{supp}(\pi)=\{i:\pi_i>0\}.
 \]
 
-must decode correctly. The exact problem is then the induced confusion graph
-on the positive support.
-
-Let
+The exact problem becomes the induced graph
 
 \[
-G[\operatorname{supp}\pi]
+G[\operatorname{supp}(\pi)].
 \]
 
-be that induced graph. Its optimum satisfies
+Its optimum satisfies
 
 \[
 \boxed{
@@ -702,70 +648,93 @@ L^*_{\mathrm{declared}}.
 }
 \]
 
-### Discontinuity example
-
-For \(K_3\) with prior
+For \(K_3\) with prior \((1,0,0)\), declared-state zero error yields
 
 \[
-(1,0,0),
+L^*_{\mathrm{declared}}=1,
 \]
 
-declared-state zero error still requires three codewords. The positive state
-can receive a one-bit codeword, giving
-
-\[
-L^*_{\mathrm{declared}}=1.
-\]
-
-The positive-support graph has one vertex and permits the empty codeword:
+whereas the one-vertex positive-support problem permits the empty codeword:
 
 \[
 L^*_{\mathrm{support}}=0.
 \]
 
-This is not a contradiction. It is a change in the quantified state set.
-Empirical estimates that round tiny probabilities to zero can therefore change
-an almost-sure coding claim discontinuously unless the convention is declared.
+This is a change in the quantified state set, not a contradiction. Rounding a
+small empirical probability to zero can therefore change a support-only claim
+discontinuously.
 
 ---
 
-## 14. Bounded certificate contents
+## 14. Prior mismatch is a separate robustness problem
+
+The optimizer in this lane assumes one declared prior is known to both encoder
+and decoder. It does not prove robustness when the actual distribution is
+\(q\ne\pi\).
+
+For any fixed state-length vector \(\ell\), total variation gives the elementary
+sensitivity bound
+
+\[
+\left|E_q[\ell]-E_\pi[\ell]\right|
+\le
+\operatorname{TV}(q,\pi)
+\left(\max_i\ell_i-\min_i\ell_i\right).
+\]
+
+This bound already shows why a highly skew-optimized tree may be fragile: a
+small amount of probability moved from short-code states to long-code states
+can increase expected traffic. It is only a bound for a **fixed code**, not a
+solution of the robust code-design problem.
+
+The next lane should solve, exactly and separately:
+
+- finite-scenario deterministic minimax coding;
+- minimax regret relative to prior-specific oracle codes;
+- shared-randomness mixtures of codebooks, counting the random seed;
+- continuous total-variation prior balls by exact mass transport;
+- peak-constrained or queue-aware variants.
+
+---
+
+## 15. Bounded certificate contents and independent audits
 
 The implementation returns:
 
-- the exact rational source prior;
-- every search cap;
-- the number of proper partitions examined;
+- the exact rational state prior;
 - an exact chromatic certificate;
-- the expected-optimal independent-set partition;
-- its class probabilities;
+- the number of proper partitions examined;
+- explicit vertex and partition caps;
+- the expected-optimal proper partition;
+- its exact class probabilities;
 - exact binary codewords and lengths;
-- exact expected and merge costs;
+- exact expected and Huffman merge costs;
 - Kraft sum and prefix-free checks;
 - maximum codeword length;
-- the exact-count and at-most message frontier;
+- the exact-count and at-most message frontiers;
 - the entropy-minimizing partition;
 - its exact rational entropy-order product;
-- a displayed Shannon entropy;
-- the entropy sandwich;
+- the displayed coloring entropy;
+- the corrected weak one-bit entropy sandwich;
 - the fixed-length upper bound;
 - optional edge-deletion and support-restriction certificates.
 
 The tests independently:
 
 1. enumerate Kraft-feasible length vectors for small message alphabets and
-   compare them with Huffman;
-2. enumerate every deterministic coloring and prefix-length assignment on all
-   64 labeled four-vertex graphs;
-3. verify the richer-than-chromatic example;
+   compare their optima with Huffman;
+2. enumerate deterministic colorings and prefix-length assignments on every one
+   of the 64 labeled four-vertex simple graphs;
+3. verify the richer-than-chromatic five-vertex example;
 4. verify the \(K_4\), \(C_5\), edge-deletion, and zero-support examples;
-5. fail closed when a bounded search cap is exceeded.
+5. reject inexact floating priors in the exact API;
+6. fail closed when a search cap is exceeded.
 
 ---
 
-## 15. What this changes in the simulation-theory program
+## 16. Research boundary
 
-The predictive-state lower-bound program now has another explicit layer:
+The predictive pipeline now has an additional explicit layer:
 
 \[
 \text{future demand}
@@ -779,44 +748,30 @@ The predictive-state lower-bound program now has another explicit layer:
 \text{mean and peak communication}.
 \]
 
-Each arrow depends on assumptions that should not be silently collapsed:
+Each arrow changes when its assumptions change:
 
-- changing side information changes the graph;
-- changing the source prior changes the average objective but not the graph;
-- changing from fixed to variable length changes the coding interface;
-- changing from declared-state to support-only zero error changes the domain;
-- changing from one shot to blocks changes the admissible code family;
-- changing from expected traffic to hard cut capacity changes the resource
-  being bounded.
+- side information and targets change the graph;
+- the source prior changes average cost but not zero-error adjacency;
+- prefix framing changes the admissible bit strings;
+- support-only correctness changes the vertex set;
+- block coding changes the graph object and may change rates;
+- expected traffic is not hard cut capacity;
+- prior uncertainty changes the optimization game.
 
-The new result therefore makes the project more conservative, not more
-speculative. It identifies exactly which compression gains follow from a
-prior and a framing model, and which do not.
+This lane therefore narrows claims rather than broadening them. It identifies
+exactly which compression follows from a declared prior and framing model, and
+which stronger physical or network conclusion does not follow.
 
----
+## Nonclaims
 
-## 16. Nonclaims and next questions
+This work does not establish:
 
-This lane does **not** establish:
-
-- a universal prior over physical states;
-- an asymptotic graph-entropy or graph-power theorem;
-- robustness to an uncertain or drifting prior;
+- a universal prior over physical states or observers;
+- an asymptotic graph-entropy formula;
+- robustness to uncertain, drifting, or adversarial priors;
 - allowed-error or lossy function computation;
-- interactive or feedback coding;
+- interaction, feedback, or online universal coding;
 - quantum variable-length coding;
-- network feasibility from expected length alone;
-- a parent-substrate memory or energy cost;
+- hard network feasibility from expected length alone;
+- parent-substrate memory or energy cost;
 - evidence that reality is simulated.
-
-The highest-value next extensions are:
-
-1. finite-scenario minimax and minimax-regret prefix codes;
-2. exact total-variation prior balls via probability-mass transport;
-3. shared-randomness mixtures of codebooks, with the random seed counted;
-4. one-shot allowed-error Bayes-risk frontiers;
-5. a proof that the unweighted confusion graph is sufficient for zero error but
-   generally insufficient for allowed-error risk;
-6. block coding through bounded graph products;
-7. online universal coding under a declared source-process class;
-8. expected-traffic versus queueing-delay and peak-cut tradeoffs.
