@@ -84,6 +84,27 @@
       ]
     },
     {
+      "id": "ST-T139",
+      "title": "Exact sorted Pareto frontier for two-scenario policy costs",
+      "kind": "THEOREM",
+      "scope": "distinct exact rational two-scenario cost vectors produced after complete bounded policy-tree enumeration",
+      "assumptions": [
+        "cost pairs are sorted by increasing first coordinate and then increasing second coordinate",
+        "componentwise dominance is the pruning relation",
+        "all raw policies complete below the declared policy cap"
+      ],
+      "evidence": [
+        "docs/two-scenario-policy-frontier.md#1-two-dimensional-dominance-order",
+        "docs/two-scenario-policy-frontier.md#2-complexity",
+        "src/simtheory/two_scenario_policy_frontier.py:enumerate_two_scenario_sequential_policies",
+        "tests/test_repeated_observation_policies.py"
+      ],
+      "nonclaims": [
+        "the O(N log N) frontier step does not remove exponential complete policy-tree enumeration",
+        "three or more source scenarios require a different multidimensional frontier method"
+      ]
+    },
+    {
       "id": "ST-M33",
       "title": "Two-scenario K3 repeated observations have exact terminal and sequential values",
       "kind": "MODEL_RESULT",
