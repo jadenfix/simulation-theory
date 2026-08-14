@@ -1,39 +1,32 @@
 """Exact arbitrary-center prediction for one-query ternary laws.
 
-For probability vectors p,u in the three-outcome simplex, the difference
-coordinates sum to zero.  Among three zero-sum real numbers, the largest
-absolute coordinate equals half their L1 norm.  Therefore
+For probability vectors p and u in the three-outcome simplex, their coordinate
+differences sum to zero.  For three zero-sum real numbers, half the L1 norm is
+the largest absolute coordinate.  Therefore
 
-    TV(p,u) = max_j |p_j-u_j|.
+    TV(p, u) = max_j |p_j-u_j|.
 
-This special identity turns a total-variation ball into an axis-aligned box
-intersected with the probability simplex.  A collection of ternary target laws
-has one common epsilon-accurate predictor exactly when the coordinate intervals
+A set of ternary target laws has a common epsilon-accurate predictor exactly
+when the coordinate intervals
 
     L_j = max(0, max_i p_ij - epsilon),
     U_j = min(1, min_i p_ij + epsilon)
 
-satisfy L_j <= U_j and
+satisfy L_j <= U_j and sum L_j <= 1 <= sum U_j.  Starting at L and
+distributing the remaining mass within U constructs a center.
 
-    sum_j L_j <= 1 <= sum_j U_j.
+Enumerating all feasible target subsets and solving the resulting finite set
+cover gives the exact minimum arbitrary-center predictive-state count.  This is
+stronger than a target-centered cover: predictor centers may interpolate
+between all supplied target laws.
 
-A center is constructed by starting at the lower bounds and distributing the
-remaining probability mass within the upper capacities.
+The one-state minimax radius is also explicit.  It is the maximum of coordinate
+half-ranges and two water-filling thresholds enforcing that the common box
+intersects the simplex.
 
-Enumerating all target subsets gives an exact finite arbitrary-center cover:
-every possible predictor state covers a feasible subset, and the canonical
-center constructed for that subset covers at least the same targets.  An exact
-set-cover search therefore returns the minimum number of ternary predictor
-states, not merely a target-centered upper bound.
-
-The one-state minimax radius also has a closed form.  It is the maximum of
-coordinate half-ranges and two water-filling thresholds enforcing that the
-intersection box contains a point whose coordinates sum to one.
-
-These are internal predictive-state and one-sink network results for declared
-finite ternary laws.  They are not evidence for simulation and do not turn
-model bits, qubits, centers, or network capacities into parent-universe
-hardware, energy, or spacetime.
+All results concern declared finite internal probability laws.  They are not
+evidence for simulation and do not convert model bits, qubits, centers, or
+network units into parent-universe hardware, energy, or spacetime.
 """
 
 from __future__ import annotations
@@ -110,11 +103,15 @@ class FiniteTernaryFamily:
             raise ValueError("records must be unique and hashable")
         if len(self.laws) != len(self.records):
             raise ValueError("one ternary law is required per record")
-        canonical = tuple(_normalize_ternary_law(law) for law in self.laws)
-        object.__setattr__(self, "laws", canonical)
-        if not str(self.query_name):
+        object.__setattr__(
+            self,
+            "laws",
+            tuple(_normalize_ternary_law(law) for law in self.laws),
+        )
+        name = str(self.query_name)
+        if not name:
             raise ValueError("query_name cannot be empty")
-        object.__setattr__(self, "query_name", str(self.query_name))
+        object.__setattr__(self, "query_name", name)
 
     @classmethod
     def from_probabilities(
@@ -127,10 +124,8 @@ class FiniteTernaryFamily:
         laws = tuple(_normalize_ternary_law(law) for law in probabilities)
         if not laws:
             raise ValueError("at least one ternary law is required")
-        records = (
-            tuple(range(len(laws)))
-            if labels is None
-            else tuple(labels)
+        records: tuple[Record, ...] = (
+            tuple(range(len(laws))) if labels is None else tuple(labels)
         )
         if len(records) != len(laws):
             raise ValueError("one label is required per ternary law")
@@ -162,7 +157,7 @@ class FiniteTernaryFamily:
             self.records,
             (self.query_name,),
             ((0, 1, 2),),
-            tuple(((law,),) for law in self.laws),
+            tuple((law,) for law in self.laws),
         )
 
 
@@ -170,7 +165,7 @@ def ternary_total_variation(
     left: Sequence[float],
     right: Sequence[float],
 ) -> float:
-    """Exact three-outcome TV identity: max coordinate difference."""
+    """Exact three-outcome identity: TV is the maximum coordinate difference."""
 
     first = _normalize_ternary_law(left)
     second = _normalize_ternary_law(right)
@@ -181,7 +176,7 @@ def ternary_cover_bounds(
     laws: Sequence[Sequence[float]],
     epsilon: float,
 ) -> tuple[TernaryLaw, TernaryLaw] | None:
-    """Return the coordinate box intersecting every epsilon-ball, if nonempty."""
+    """Return the box intersecting every epsilon-ball, or None if infeasible."""
 
     points = tuple(_normalize_ternary_law(law) for law in laws)
     if not points:
@@ -198,25 +193,24 @@ def ternary_cover_bounds(
     return lower, upper  # type: ignore[return-value]
 
 
-def _center_from_bounds(
-    lower: TernaryLaw,
-    upper: TernaryLaw,
-) -> TernaryLaw:
+def _center_from_bounds(lower: TernaryLaw, upper: TernaryLaw) -> TernaryLaw:
     center = list(lower)
     remaining = 1.0 - sum(center)
     if remaining < -1e-10:
         raise ValueError("lower bounds exceed simplex mass")
     remaining = max(0.0, remaining)
     for index in range(3):
-        capacity = max(0.0, upper[index] - center[index])
-        addition = min(remaining, capacity)
+        addition = min(
+            remaining,
+            max(0.0, upper[index] - center[index]),
+        )
         center[index] += addition
         remaining -= addition
     if remaining > 1e-10:
         raise ValueError("upper bounds cannot supply simplex mass")
     total = sum(center)
     if total <= 0.0:
-        raise AssertionError("constructed ternary center has zero mass")
+        raise AssertionError("constructed center has zero mass")
     normalized = tuple(value / total for value in center)
     if any(
         value < lower[index] - 1e-9 or value > upper[index] + 1e-9
@@ -253,11 +247,8 @@ def ternary_cluster_is_coverable(
     return ternary_common_center(laws, epsilon) is not None
 
 
-def _water_filling_threshold(
-    values: Sequence[float],
-    budget: float,
-) -> float:
-    """Minimum r with sum_j max(0, values_j-r) <= budget."""
+def _water_filling_threshold(values: Sequence[float], budget: float) -> float:
+    """Minimum r satisfying sum_j max(0, values_j-r) <= budget."""
 
     supplied = tuple(float(value) for value in values)
     if not supplied or any(not isfinite(value) or value < 0.0 for value in supplied):
@@ -292,20 +283,22 @@ def ternary_minimax_center(
         0.5 * (maximum - minimum)
         for maximum, minimum in zip(maxima, minima)
     )
-    lower_mass_radius = _water_filling_threshold(maxima, 1.0)
-    upper_mass_radius = _water_filling_threshold(
-        tuple(1.0 - minimum for minimum in minima),
-        2.0,
+    radius = max(
+        range_radius,
+        _water_filling_threshold(maxima, 1.0),
+        _water_filling_threshold(
+            tuple(1.0 - minimum for minimum in minima),
+            2.0,
+        ),
     )
-    radius = max(range_radius, lower_mass_radius, upper_mass_radius)
     center = ternary_common_center(points, radius)
     if center is None:
         center = ternary_common_center(points, radius + 1e-12)
     if center is None:
-        raise AssertionError("closed-form minimax radius is not feasible")
+        raise AssertionError("closed-form minimax radius is infeasible")
     achieved = max(ternary_total_variation(point, center) for point in points)
     if achieved > radius + 1e-9:
-        raise AssertionError("constructed minimax center exceeds closed-form radius")
+        raise AssertionError("constructed minimax center exceeds its radius")
     return center, radius
 
 
@@ -337,9 +330,12 @@ def _candidate_cover_masks_and_centers(
             if ternary_total_variation(law, center) <= tolerance + 1e-12:
                 coverage |= 1 << index
         if coverage & subset != subset:
-            raise AssertionError("canonical center failed to cover defining subset")
+            raise AssertionError("canonical center failed to cover its defining subset")
         by_coverage.setdefault(coverage, center)
 
+    # Remove every candidate whose covered set is a strict subset of another
+    # candidate.  A superset center is never worse in an unweighted state-count
+    # objective.  The SOS transform counts candidate supersets of every mask.
     present = [0] * (1 << count)
     for coverage in by_coverage:
         present[coverage] = 1
@@ -355,7 +351,7 @@ def _candidate_cover_masks_and_centers(
         if superset_count[mask] == 1
     )
     if not maximal:
-        raise AssertionError("singletons must always yield ternary cover candidates")
+        raise AssertionError("singletons must yield ternary cover candidates")
     return maximal
 
 
@@ -366,8 +362,11 @@ def _minimum_cover_candidate_indices(
     full = (1 << point_count) - 1
     masks = tuple(int(mask) for mask in coverage_masks)
     if not masks or any(mask <= 0 or mask & ~full for mask in masks):
-        raise ValueError("coverage masks must be nonempty subsets of the universe")
-    if any(not any(mask & (1 << point) for mask in masks) for point in range(point_count)):
+        raise ValueError("coverage masks must be nonempty subsets")
+    if any(
+        not any(mask & (1 << point) for mask in masks)
+        for point in range(point_count)
+    ):
         raise ValueError("candidate covers do not cover every point")
 
     uncovered = full
@@ -377,8 +376,7 @@ def _minimum_cover_candidate_indices(
             range(len(masks)),
             key=lambda candidate: (masks[candidate] & uncovered).bit_count(),
         )
-        new = masks[index] & uncovered
-        if not new:
+        if not masks[index] & uncovered:
             raise AssertionError("greedy cover stalled")
         greedy.append(index)
         uncovered &= ~masks[index]
@@ -412,8 +410,7 @@ def _minimum_cover_candidate_indices(
         )
         if max_new == 0:
             return
-        optimistic = ceil(uncovered_mask.bit_count() / max_new)
-        if len(chosen) + optimistic >= len(best):
+        if len(chosen) + ceil(uncovered_mask.bit_count() / max_new) >= len(best):
             return
         uncovered_points = tuple(
             point
@@ -440,8 +437,7 @@ def _minimum_cover_candidate_indices(
         )
         removed = 0
         for index in ordered_options:
-            bit = 1 << index
-            removed |= bit
+            removed |= 1 << index
             search(
                 (*chosen, index),
                 uncovered_mask & ~masks[index],
@@ -472,7 +468,7 @@ def minimum_ternary_arbitrary_cover(
     *,
     max_records: int = 14,
 ) -> TernaryCoverCertificate:
-    """Exact minimum arbitrary-center epsilon-cover for one-query ternary laws."""
+    """Exact minimum arbitrary-center epsilon-cover for one ternary query."""
 
     candidates = _candidate_cover_masks_and_centers(
         family,
@@ -492,7 +488,7 @@ def minimum_ternary_arbitrary_cover(
                 assignment[record] = center_index
                 break
         else:
-            raise AssertionError("minimum-cover centers do not cover every target")
+            raise AssertionError("minimum-cover centers miss a target")
     return TernaryCoverCertificate(centers, assignment)
 
 
@@ -502,12 +498,13 @@ def target_centered_ternary_cover_size(
     *,
     max_records: int = 14,
 ) -> int:
-    centers = minimum_target_centered_cover(
-        family.to_stochastic_family(),
-        epsilon,
-        max_records=max_records,
+    return len(
+        minimum_target_centered_cover(
+            family.to_stochastic_family(),
+            epsilon,
+            max_records=max_records,
+        )
     )
-    return len(centers)
 
 
 def ternary_packing_size_lower_bound(
@@ -516,12 +513,13 @@ def ternary_packing_size_lower_bound(
     *,
     max_records: int = 14,
 ) -> int:
-    packing = maximum_stochastic_predictive_packing(
-        family.to_stochastic_family(),
-        epsilon,
-        max_records=max_records,
+    return len(
+        maximum_stochastic_predictive_packing(
+            family.to_stochastic_family(),
+            epsilon,
+            max_records=max_records,
+        )
     )
-    return len(packing)
 
 
 def ternary_network_units_required(
