@@ -1,29 +1,30 @@
 """Exact finite-prior robust zero-error prefix coding.
 
-A prior-weighted Huffman code is optimal only for one declared source prior.
-When several source priors are plausible, three distinct design objectives
-appear:
+A code that is Huffman-optimal for one source prior can be fragile when several
+priors remain plausible.  This module separates three finite one-shot design
+objectives:
 
 * deterministic minimax expected length;
 * deterministic minimax regret relative to a prior-specific oracle;
-* shared-randomness mixtures of complete deterministic codebooks.
+* minimax mixtures of complete deterministic codebooks selected by shared
+  randomness independent of the source state.
 
-The robust decision is richer than selecting one Huffman tree for each prior.
-A deterministic minimax tree need not be Huffman-optimal under any individual
-scenario.  The implementation therefore enumerates every bounded proper
-independent-set partition and every bounded complete binary prefix-length
-assignment, not merely scenario-specific Huffman codes.
+The deterministic robust optimum need not be Huffman-optimal under any one
+scenario.  The checker therefore enumerates every bounded proper independent-
+set partition and every bounded complete binary prefix-length assignment.  It
+deduplicates equal scenario-cost vectors, removes Pareto-dominated candidates,
+and then solves the remaining finite decisions exactly over rational numbers.
 
-For shared randomness, the encoder and every decoder receive an independent
-common seed selecting one deterministic codebook before the source state is
-seen.  This produces a finite zero-sum game between codebook mixtures and prior
-scenarios.  Exact rational support enumeration returns matching primal and dual
-certificates; the assistance resource is never treated as free or as private
-encoder randomness.
+Shared codebook randomness produces a finite zero-sum game.  Exact support
+enumeration solves both the encoder's primal mixture problem and the
+adversary's dual least-favorable-scenario problem, returning a zero rational
+duality gap.  The seed is an explicit assistance resource known to every
+receiver; private encoder randomness is not silently substituted for it.
 
-All results are finite, one-shot, exact-rational, common-message, prefix-coded,
+All results are finite, one-shot, exact-rational, common-message, binary-prefix,
 and zero-error.  They are not evidence for simulation and do not translate
-message bits or shared random seeds into parent-universe hardware or energy.
+message lengths or shared random seeds into parent-universe hardware, energy,
+mass, or spacetime.
 """
 
 from __future__ import annotations
@@ -35,7 +36,11 @@ from itertools import combinations, product
 from math import comb
 from typing import Mapping, Sequence
 
-from .confusion_graphs import ConfusionGraph
+from .confusion_graphs import (
+    ChromaticCertificate,
+    ConfusionGraph,
+    exact_chromatic_certificate,
+)
 from .prior_weighted_codes import (
     Partition,
     RationalInput,
@@ -88,8 +93,10 @@ class CompletePrefixShape:
         )
 
 
-def canonical_codewords_from_lengths(lengths: Sequence[int]) -> tuple[str, ...]:
-    """Construct a canonical binary prefix code for a Kraft-feasible vector."""
+def canonical_codewords_from_lengths(
+    lengths: Sequence[int],
+) -> tuple[str, ...]:
+    """Construct one canonical binary prefix code for a Kraft-feasible vector."""
 
     supplied = tuple(int(length) for length in lengths)
     if not supplied:
@@ -106,7 +113,12 @@ def canonical_codewords_from_lengths(lengths: Sequence[int]) -> tuple[str, ...]:
     ) > 1:
         raise ValueError("prefix lengths violate Kraft's inequality")
 
-    order = tuple(sorted(range(len(supplied)), key=lambda index: (supplied[index], index)))
+    order = tuple(
+        sorted(
+            range(len(supplied)),
+            key=lambda index: (supplied[index], index),
+        )
+    )
     words = [""] * len(supplied)
     code = 0
     previous_length = supplied[order[0]]
@@ -165,7 +177,7 @@ def _complete_prefix_shapes_cached(
                 "complete prefix-shape enumeration exceeded the configured cap"
             )
     if not shapes:
-        raise AssertionError("every positive message count has a complete binary tree")
+        raise AssertionError("every positive message count has a complete tree")
     return tuple(shapes)
 
 
@@ -177,11 +189,11 @@ def complete_prefix_shapes(
 ) -> tuple[CompletePrefixShape, ...]:
     """Enumerate every labeled complete binary prefix-length vector.
 
-    Any prefix tree with a unary internal node can contract that node and
-    weakly shorten every affected codeword.  Hence every vector of nonnegative
-    scenario probabilities has an optimal complete tree.  A full binary tree
-    with ``k`` leaves has maximum leaf depth at most ``k-1``; the finite search
-    over lengths ``1..k-1`` is therefore complete.
+    Every robust objective implemented here is coordinatewise nondecreasing in
+    the state lengths.  Contracting a unary internal node weakly shortens all
+    leaves below it, so some optimum is a full binary tree.  A full tree with
+    ``k`` leaves has maximum leaf depth at most ``k-1``; enumerating lengths
+    ``1..k-1`` with Kraft equality is therefore complete.
     """
 
     return _complete_prefix_shapes_cached(
@@ -212,7 +224,8 @@ class RobustCodeCandidate:
     def valid(self) -> bool:
         return (
             partition_is_proper(self.graph, self.partition)
-            and self.coloring == coloring_from_partition(self.graph, self.partition)
+            and self.coloring
+            == coloring_from_partition(self.graph, self.partition)
             and self.prefix_shape.valid
             and self.prefix_shape.message_count == self.message_count
             and self.state_lengths
@@ -224,7 +237,9 @@ class RobustCodeCandidate:
         )
 
 
-def _candidate_tie_key(candidate: RobustCodeCandidate) -> tuple[object, ...]:
+def _candidate_tie_key(
+    candidate: RobustCodeCandidate,
+) -> tuple[object, ...]:
     return (
         candidate.maximum_length,
         candidate.message_count,
@@ -238,14 +253,43 @@ def _dominates(
     left: RobustCodeCandidate,
     right: RobustCodeCandidate,
 ) -> bool:
-    no_worse = all(a <= b for a, b in zip(left.scenario_costs, right.scenario_costs))
-    strictly_better = any(a < b for a, b in zip(left.scenario_costs, right.scenario_costs))
+    no_worse = all(
+        left_cost <= right_cost
+        for left_cost, right_cost in zip(
+            left.scenario_costs,
+            right.scenario_costs,
+        )
+    )
+    strictly_better = any(
+        left_cost < right_cost
+        for left_cost, right_cost in zip(
+            left.scenario_costs,
+            right.scenario_costs,
+        )
+    )
     return no_worse and strictly_better
+
+
+def _scenario_costs(
+    priors: Sequence[Sequence[Fraction]],
+    state_lengths: Sequence[int],
+) -> tuple[Fraction, ...]:
+    return tuple(
+        sum(
+            (
+                probability * length
+                for probability, length in zip(prior, state_lengths)
+            ),
+            Fraction(0),
+        )
+        for prior in priors
+    )
 
 
 @dataclass(frozen=True)
 class RobustCandidateEnumeration:
     graph: ConfusionGraph
+    chromatic_certificate: ChromaticCertificate
     priors: tuple[tuple[Fraction, ...], ...]
     candidates: tuple[RobustCodeCandidate, ...]
     raw_candidate_count: int
@@ -262,16 +306,32 @@ class RobustCandidateEnumeration:
         return len(self.priors)
 
     @property
+    def fixed_length_upper_bound(self) -> int:
+        return self.chromatic_certificate.fixed_length_bits
+
+    @property
     def valid(self) -> bool:
         return (
-            bool(self.priors)
+            self.chromatic_certificate.valid
+            and self.chromatic_certificate.graph == self.graph
+            and bool(self.priors)
             and bool(self.candidates)
-            and all(sum(prior, Fraction(0)) == 1 for prior in self.priors)
-            and all(candidate.valid for candidate in self.candidates)
             and all(
-                len(candidate.scenario_costs) == self.scenario_count
+                len(prior) == self.graph.vertex_count
+                and all(probability >= 0 for probability in prior)
+                and sum(prior, Fraction(0)) == 1
+                for prior in self.priors
+            )
+            and all(
+                candidate.graph == self.graph
+                and candidate.valid
+                and len(candidate.scenario_costs) == self.scenario_count
+                and candidate.scenario_costs
+                == _scenario_costs(self.priors, candidate.state_lengths)
                 for candidate in self.candidates
             )
+            and len({candidate.scenario_costs for candidate in self.candidates})
+            == len(self.candidates)
             and self.raw_candidate_count >= self.distinct_cost_count
             and self.distinct_cost_count
             == len(self.candidates) + self.dominated_count
@@ -297,7 +357,7 @@ def enumerate_robust_code_candidates(
     max_prefix_shapes: int = 100_000,
     max_dominance_pairs: int = 4_000_000,
 ) -> RobustCandidateEnumeration:
-    """Enumerate every bounded deterministic robust prefix-code candidate."""
+    """Enumerate the complete bounded deterministic robust code universe."""
 
     supplied_scenarios = tuple(prior_scenarios)
     if not supplied_scenarios:
@@ -311,6 +371,10 @@ def enumerate_robust_code_candidates(
     if candidate_cap < 1 or pair_cap < 1:
         raise ValueError("candidate and dominance caps must be positive")
 
+    chromatic = exact_chromatic_certificate(
+        graph,
+        max_vertices=max_vertices,
+    )
     by_cost: dict[tuple[Fraction, ...], RobustCodeCandidate] = {}
     raw_count = 0
     partitions_examined = 0
@@ -330,23 +394,14 @@ def enumerate_robust_code_candidates(
             raw_count += 1
             if raw_count > candidate_cap:
                 raise ValueError(
-                    "robust code enumeration exceeded the configured candidate cap; "
-                    "no exact optimum was certified"
+                    "robust code enumeration exceeded the configured candidate "
+                    "cap; no exact optimum was certified"
                 )
             state_lengths = tuple(
                 shape.lengths[coloring[index]]
                 for index in range(graph.vertex_count)
             )
-            costs = tuple(
-                sum(
-                    (
-                        probability * length
-                        for probability, length in zip(prior, state_lengths)
-                    ),
-                    Fraction(0),
-                )
-                for prior in priors
-            )
+            costs = _scenario_costs(priors, state_lengths)
             candidate = RobustCodeCandidate(
                 graph,
                 canonical,
@@ -358,8 +413,9 @@ def enumerate_robust_code_candidates(
             if not candidate.valid:
                 raise AssertionError("robust code candidate failed validation")
             incumbent = by_cost.get(costs)
-            if incumbent is None or _candidate_tie_key(candidate) < _candidate_tie_key(
-                incumbent
+            if (
+                incumbent is None
+                or _candidate_tie_key(candidate) < _candidate_tie_key(incumbent)
             ):
                 by_cost[costs] = candidate
 
@@ -388,6 +444,7 @@ def enumerate_robust_code_candidates(
     )
     certificate = RobustCandidateEnumeration(
         graph,
+        chromatic,
         priors,
         nondominated,
         raw_count,
@@ -434,7 +491,9 @@ def _solve_square_rational_system(
             augmented[column],
         )
         pivot_value = augmented[column][column]
-        augmented[column] = [value / pivot_value for value in augmented[column]]
+        augmented[column] = [
+            value / pivot_value for value in augmented[column]
+        ]
         for row in range(width):
             if row == column:
                 continue
@@ -452,6 +511,8 @@ def _solve_square_rational_system(
 
 @dataclass(frozen=True)
 class ExactZeroSumGameCertificate:
+    """Matching primal and dual certificates for a finite rational cost game."""
+
     cost_matrix: tuple[tuple[Fraction, ...], ...]
     code_mixture: tuple[Fraction, ...]
     scenario_mixture: tuple[Fraction, ...]
@@ -473,7 +534,9 @@ class ExactZeroSumGameCertificate:
     @property
     def code_support(self) -> tuple[int, ...]:
         return tuple(
-            index for index, weight in enumerate(self.code_mixture) if weight > 0
+            index
+            for index, weight in enumerate(self.code_mixture)
+            if weight > 0
         )
 
     @property
@@ -500,6 +563,7 @@ class ExactZeroSumGameCertificate:
     def valid(self) -> bool:
         return (
             bool(self.cost_matrix)
+            and bool(self.cost_matrix[0])
             and all(len(row) == self.code_count for row in self.cost_matrix)
             and len(self.code_mixture) == self.code_count
             and len(self.scenario_mixture) == self.scenario_count
@@ -507,6 +571,8 @@ class ExactZeroSumGameCertificate:
             and all(weight >= 0 for weight in self.scenario_mixture)
             and sum(self.code_mixture, Fraction(0)) == 1
             and sum(self.scenario_mixture, Fraction(0)) == 1
+            and len(self.code_support) <= self.scenario_count
+            and len(self.scenario_support) <= self.code_count
             and self.scenario_costs
             == tuple(
                 sum(
@@ -523,7 +589,9 @@ class ExactZeroSumGameCertificate:
                 sum(
                     (
                         weight * self.cost_matrix[scenario][code]
-                        for scenario, weight in enumerate(self.scenario_mixture)
+                        for scenario, weight in enumerate(
+                            self.scenario_mixture
+                        )
                     ),
                     Fraction(0),
                 )
@@ -547,7 +615,14 @@ def solve_exact_zero_sum_game(
     *,
     max_bases: int = 2_000_000,
 ) -> ExactZeroSumGameCertificate:
-    """Solve ``min_q max_r E_q[cost(r, code)]`` by exact support enumeration."""
+    """Solve ``min_q max_r E_q[cost(r, code)]`` exactly.
+
+    The primal LP mixes code columns; the dual LP mixes scenario rows.  At a
+    vertex with ``s`` positive mixture weights, normalization plus ``s`` active
+    opponent constraints determines the support values and game value.  The
+    bounded checker enumerates every such square support system on both sides
+    and verifies all omitted inequalities exactly.
+    """
 
     matrix = tuple(
         tuple(Fraction(value) for value in row)
@@ -642,8 +717,12 @@ def solve_exact_zero_sum_game(
     ] | None = None
     dual_examined = 0
     for support_size in range(1, min(row_count, column_count) + 1):
-        for scenario_support in combinations(range(row_count), support_size):
-            for active_codes in combinations(range(column_count), support_size):
+        for scenario_support in combinations(
+            range(row_count), support_size
+        ):
+            for active_codes in combinations(
+                range(column_count), support_size
+            ):
                 dual_examined += 1
                 equations = [
                     [Fraction(1)] * support_size + [Fraction(0)]
@@ -701,10 +780,13 @@ def solve_exact_zero_sum_game(
                     dual_best = candidate
 
     if primal_best is None or dual_best is None:
-        raise AssertionError("finite zero-sum game has no support-enumerated optimum")
+        raise AssertionError(
+            "finite zero-sum game has no support-enumerated optimum"
+        )
     if primal_best[0] != dual_best[0]:
         raise AssertionError(
-            "exact primal and dual game values disagree; support enumeration is incomplete"
+            "exact primal and dual game values disagree; support enumeration "
+            "is incomplete"
         )
     certificate = ExactZeroSumGameCertificate(
         matrix,
@@ -720,6 +802,46 @@ def solve_exact_zero_sum_game(
     if not certificate.valid:
         raise AssertionError("exact zero-sum game certificate failed validation")
     return certificate
+
+
+def convex_combination_prior(
+    priors: Sequence[Sequence[Fraction]],
+    weights: Sequence[Fraction],
+) -> tuple[Fraction, ...]:
+    supplied_priors = tuple(
+        tuple(Fraction(probability) for probability in prior)
+        for prior in priors
+    )
+    supplied_weights = tuple(Fraction(weight) for weight in weights)
+    if not supplied_priors:
+        raise ValueError("at least one prior is required")
+    if len(supplied_weights) != len(supplied_priors):
+        raise ValueError("one mixture weight is required per prior")
+    width = len(supplied_priors[0])
+    if any(len(prior) != width for prior in supplied_priors):
+        raise ValueError("prior vectors must have equal dimension")
+    if any(weight < 0 for weight in supplied_weights):
+        raise ValueError("prior mixture weights must be nonnegative")
+    if sum(supplied_weights, Fraction(0)) != 1:
+        raise ValueError("prior mixture weights must sum to one")
+    result = tuple(
+        sum(
+            (
+                weight * prior[index]
+                for weight, prior in zip(
+                    supplied_weights,
+                    supplied_priors,
+                )
+            ),
+            Fraction(0),
+        )
+        for index in range(width)
+    )
+    if any(probability < 0 for probability in result):
+        raise AssertionError("convex prior mixture became negative")
+    if sum(result, Fraction(0)) != 1:
+        raise AssertionError("convex prior mixture lost normalization")
+    return result
 
 
 @dataclass(frozen=True)
@@ -763,7 +885,24 @@ class FinitePriorRobustCodeCertificate:
 
     @property
     def fixed_length_upper_bound(self) -> int:
-        return self.enumeration.graph.fixed_length_bits
+        return self.enumeration.fixed_length_upper_bound
+
+    @property
+    def least_favorable_prior(self) -> tuple[Fraction, ...]:
+        """Dual barycenter prior for the shared-randomness minimax game."""
+
+        return convex_combination_prior(
+            self.enumeration.priors,
+            self.mixed_minimax.scenario_mixture,
+        )
+
+    @property
+    def mixed_code_support(self) -> tuple[int, ...]:
+        return self.mixed_minimax.code_support
+
+    @property
+    def mixed_scenario_support(self) -> tuple[int, ...]:
+        return self.mixed_minimax.scenario_support
 
     @property
     def valid(self) -> bool:
@@ -778,10 +917,24 @@ class FinitePriorRobustCodeCertificate:
         )
         regret_matrix = tuple(
             tuple(
-                candidate.scenario_costs[scenario] - self.oracle_costs[scenario]
+                candidate.scenario_costs[scenario]
+                - self.oracle_costs[scenario]
                 for candidate in self.candidates
             )
             for scenario in range(scenario_count)
+        )
+        least_favorable_costs = tuple(
+            sum(
+                (
+                    probability * length
+                    for probability, length in zip(
+                        self.least_favorable_prior,
+                        candidate.state_lengths,
+                    )
+                ),
+                Fraction(0),
+            )
+            for candidate in self.candidates
         )
         return (
             self.enumeration.valid
@@ -810,10 +963,15 @@ class FinitePriorRobustCodeCertificate:
             and self.mixed_regret.cost_matrix == regret_matrix
             and self.mixed_minimax.valid
             and self.mixed_regret.valid
+            and least_favorable_costs == self.mixed_minimax.code_costs
+            and len(self.mixed_code_support) <= scenario_count
             and max(self.oracle_costs) <= self.mixed_minimax_value
-            and self.mixed_minimax_value <= self.deterministic_minimax_value
-            and self.deterministic_minimax_value <= self.fixed_length_upper_bound
-            and 0 <= self.mixed_regret_value <= self.deterministic_regret_value
+            and self.mixed_minimax_value
+            <= self.deterministic_minimax_value
+            and self.deterministic_minimax_value
+            <= self.fixed_length_upper_bound
+            and 0 <= self.mixed_regret_value
+            <= self.deterministic_regret_value
         )
 
 
@@ -831,7 +989,7 @@ def exact_finite_prior_robust_code(
     max_dominance_pairs: int = 4_000_000,
     max_game_bases: int = 2_000_000,
 ) -> FinitePriorRobustCodeCertificate:
-    """Exact deterministic and shared-randomness robust coding certificate."""
+    """Return exact deterministic and shared-randomness robust certificates."""
 
     enumeration = enumerate_robust_code_candidates(
         graph,
@@ -906,11 +1064,19 @@ def exact_finite_prior_robust_code(
         deterministic_minimax_value,
         deterministic_regret_index,
         deterministic_regret_value,
-        solve_exact_zero_sum_game(length_matrix, max_bases=max_game_bases),
-        solve_exact_zero_sum_game(regret_matrix, max_bases=max_game_bases),
+        solve_exact_zero_sum_game(
+            length_matrix,
+            max_bases=max_game_bases,
+        ),
+        solve_exact_zero_sum_game(
+            regret_matrix,
+            max_bases=max_game_bases,
+        ),
     )
     if not certificate.valid:
-        raise AssertionError("finite-prior robust code certificate failed validation")
+        raise AssertionError(
+            "finite-prior robust code certificate failed validation"
+        )
     return certificate
 
 
@@ -922,7 +1088,10 @@ def expected_length_under_prior(
     return sum(
         (
             probability * length
-            for probability, length in zip(probabilities, candidate.state_lengths)
+            for probability, length in zip(
+                probabilities,
+                candidate.state_lengths,
+            )
         ),
         Fraction(0),
     )
@@ -935,9 +1104,11 @@ def mixed_expected_length_under_prior(
 ) -> Fraction:
     weights = tuple(Fraction(weight) for weight in code_mixture)
     if len(weights) != len(certificate.candidates):
-        raise ValueError("one mixture weight is required per robust code candidate")
-    if any(weight < 0 for weight in weights) or sum(weights, Fraction(0)) != 1:
-        raise ValueError("code mixture must be a probability distribution")
+        raise ValueError("one mixture weight is required per robust candidate")
+    if any(weight < 0 for weight in weights):
+        raise ValueError("code mixture weights must be nonnegative")
+    if sum(weights, Fraction(0)) != 1:
+        raise ValueError("code mixture weights must sum to one")
     return sum(
         (
             weight * expected_length_under_prior(candidate, prior)
@@ -969,7 +1140,17 @@ def k4_nonoracle_minimax_example() -> FinitePriorRobustCodeCertificate:
     return exact_finite_prior_robust_code(
         graph,
         (
-            (Fraction(1, 10), Fraction(1, 10), Fraction(1, 10), Fraction(7, 10)),
-            (Fraction(1, 10), Fraction(1, 10), Fraction(7, 10), Fraction(1, 10)),
+            (
+                Fraction(1, 10),
+                Fraction(1, 10),
+                Fraction(1, 10),
+                Fraction(7, 10),
+            ),
+            (
+                Fraction(1, 10),
+                Fraction(1, 10),
+                Fraction(7, 10),
+                Fraction(1, 10),
+            ),
         ),
     )
