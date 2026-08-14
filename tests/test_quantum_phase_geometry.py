@@ -1,11 +1,15 @@
 from math import isclose, pi
 
+from simtheory.bell_predictive import BellSchedule, CANONICAL_CHSH
 from simtheory.quantum_phase import state_total_variation
 from simtheory.quantum_phase_geometry import (
     asymptotic_memory_lower_bound_bits,
     canonical_chsh_cartesian_tv,
     constructive_memory_lower_bound_bits,
     constructive_square_packing,
+    schedule_cartesian_tv,
+    schedule_direction_rank,
+    schedule_metric_is_norm,
     verify_canonical_metric,
 )
 
@@ -21,6 +25,31 @@ def test_closed_form_metric_matches_probability_law():
                 rel_tol=1e-12,
                 abs_tol=1e-12,
             )
+            assert isclose(
+                schedule_cartesian_tv(left, right, CANONICAL_CHSH),
+                state_total_variation(left, right, CANONICAL_CHSH),
+                rel_tol=1e-12,
+                abs_tol=1e-12,
+            )
+
+
+def test_schedule_metric_is_norm_exactly_when_directions_span_two_dimensions():
+    one_direction = BellSchedule.uniform((0.0,), (pi / 4,))
+    two_directions = BellSchedule.uniform((0.0, pi / 2), (0.0,))
+    assert schedule_direction_rank(one_direction) == 1
+    assert not schedule_metric_is_norm(one_direction)
+    assert schedule_direction_rank(two_directions) == 2
+    assert schedule_metric_is_norm(two_directions)
+    assert schedule_direction_rank(CANONICAL_CHSH) == 2
+
+
+def test_rank_one_schedule_has_nontrivial_zero_distance_direction():
+    schedule = BellSchedule.uniform((0.0,), (0.0,))
+    # q=(0,1) differs from q=(0,0) only in the unmeasured y direction.
+    left = (0.0, 0.0)
+    right = (1.0, pi / 2)
+    assert isclose(schedule_cartesian_tv(left, right, schedule), 0.0, abs_tol=1e-12)
+    assert isclose(state_total_variation(left, right, schedule), 0.0, abs_tol=1e-12)
 
 
 def test_constructive_square_is_strictly_separated():
