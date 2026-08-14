@@ -24,6 +24,7 @@ from typing import Iterable, Mapping, Sequence
 Outcome = tuple[int, int]
 Setting = tuple[int, int]
 TranscriptAtom = tuple[int, int, int, int]
+_NUMERICAL_ZERO = 1e-15
 
 
 @dataclass(frozen=True)
@@ -72,6 +73,13 @@ def _check_visibility(visibility: float) -> float:
     return v
 
 
+def _correlation_cosine(alice_angle: float, bob_angle: float) -> float:
+    """Cosine with exact physical zeros stabilized against floating roundoff."""
+
+    value = cos(float(alice_angle) - float(bob_angle))
+    return 0.0 if abs(value) < _NUMERICAL_ZERO else value
+
+
 def outcome_probability(
     visibility: float,
     alice_angle: float,
@@ -89,7 +97,7 @@ def outcome_probability(
         - alice_outcome
         * bob_outcome
         * v
-        * cos(float(alice_angle) - float(bob_angle))
+        * _correlation_cosine(alice_angle, bob_angle)
     )
 
 
@@ -137,7 +145,7 @@ def schedule_geometry(schedule: BellSchedule = CANONICAL_CHSH) -> float:
 
     return sum(
         schedule.setting_weights[x][y]
-        * abs(cos(alpha - beta))
+        * abs(_correlation_cosine(alpha, beta))
         for x, alpha in enumerate(schedule.alice_angles)
         for y, beta in enumerate(schedule.bob_angles)
     )
@@ -167,11 +175,7 @@ def brute_force_visibility_tv(
 
 
 def chsh_value(visibility: float) -> float:
-    """Absolute CHSH value for the canonical angle convention.
-
-    The canonical settings attain |S| = 2*sqrt(2)*v.  A value above 2 violates
-    the local-hidden-variable CHSH bound within this model.
-    """
+    """Absolute CHSH value for the canonical angle convention."""
 
     return 2.0 * sqrt(2.0) * _check_visibility(visibility)
 
@@ -185,12 +189,7 @@ def maximum_epsilon_packing(
     epsilon: float,
     schedule: BellSchedule = CANONICAL_CHSH,
 ) -> tuple[float, ...]:
-    """Return a maximum 2*epsilon-separated packing on a finite visibility grid.
-
-    Because the TV metric is a positive constant times |v-u|, the problem is
-    one-dimensional interval packing. Sorting and greedily choosing the
-    smallest feasible next point is optimal for maximum cardinality.
-    """
+    """Return a maximum 2*epsilon-separated packing on a finite visibility grid."""
 
     if epsilon < 0:
         raise ValueError("epsilon must be nonnegative")
@@ -198,7 +197,7 @@ def maximum_epsilon_packing(
     if not values:
         return ()
     geometry = schedule_geometry(schedule)
-    if geometry == 0.0:
+    if geometry <= _NUMERICAL_ZERO:
         return (values[0],)
 
     chosen = [values[0]]
@@ -230,7 +229,7 @@ def uniform_visibility_grid(points: int) -> tuple[float, ...]:
 def setting_correlation_magnitude(alice_angle: float, bob_angle: float) -> float:
     """Return |cos(alpha-beta)|, the visibility sensitivity of one query."""
 
-    return abs(cos(float(alice_angle) - float(bob_angle)))
+    return abs(_correlation_cosine(alice_angle, bob_angle))
 
 
 def single_setting_fisher_information(
@@ -238,21 +237,14 @@ def single_setting_fisher_information(
     alice_angle: float,
     bob_angle: float,
 ) -> float:
-    """Fisher information in one Bell trial about the visibility v.
-
-    For c = cos(alpha-beta), direct evaluation of
-    E[(d/dv log P(A,B|v))^2] gives
-
-        I_v(c) = c^2 / (1 - v^2 c^2).
-
-    At deterministic boundary points where the denominator is zero the regular
-    interior Fisher-information formula diverges; ``inf`` is returned.
-    """
+    """Fisher information in one Bell trial about the visibility v."""
 
     v = _check_visibility(visibility)
-    c = cos(float(alice_angle) - float(bob_angle))
+    c = _correlation_cosine(alice_angle, bob_angle)
+    if c == 0.0:
+        return 0.0
     denominator = 1.0 - (v * c) ** 2
-    if denominator <= 1e-15:
+    if denominator <= _NUMERICAL_ZERO:
         return inf
     return c * c / denominator
 
@@ -283,7 +275,7 @@ def cramer_rao_variance_lower_bound(
     information = schedule_fisher_information(visibility, schedule)
     if information == inf:
         return 0.0
-    if information == 0.0:
+    if information <= _NUMERICAL_ZERO:
         return inf
     return 1.0 / (trials * information)
 
@@ -298,6 +290,8 @@ def single_setting_kl(
 
     vp = _check_visibility(visibility_p)
     vq = _check_visibility(visibility_q)
+    if _correlation_cosine(alice_angle, bob_angle) == 0.0:
+        return 0.0
     p = conditional_outcome_law(vp, alice_angle, bob_angle)
     q = conditional_outcome_law(vq, alice_angle, bob_angle)
     total = 0.0
@@ -335,23 +329,12 @@ def adaptive_trials_necessary_for_tv(
     target_tv: float,
     schedule: BellSchedule = CANONICAL_CHSH,
 ) -> int:
-    """Necessary trials for an adaptive query policy to reach target transcript TV.
-
-    For any adaptive policy whose next setting must come from ``schedule``, the
-    KL chain rule gives transcript KL <= n * D_max, where D_max is the largest
-    one-step conditional KL over allowed settings. Pinsker then gives
-
-        TV(transcript_P, transcript_Q) <= sqrt(n D_max / 2).
-
-    Therefore TV >= delta requires n >= 2 delta^2 / D_max.  This is a
-    necessary, not sufficient, sample count and is specific to this physical
-    visibility family and allowed query set.
-    """
+    """Necessary trials for an adaptive query policy to reach target transcript TV."""
 
     if not 0.0 < target_tv < 1.0:
         raise ValueError("target_tv must lie strictly between zero and one")
     d_max, _ = maximum_query_kl(visibility_p, visibility_q, schedule)
-    if d_max == 0.0:
+    if d_max <= _NUMERICAL_ZERO:
         return 2**63 - 1
     if d_max == inf:
         return 1
