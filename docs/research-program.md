@@ -11,7 +11,7 @@ The project is not trying to assign a dramatic single-number probability to “s
 3. What computational or physical constraints follow from a specified architecture?
 4. What experiment distinguishes that architecture from serious alternatives?
 5. What predictive information must an online generator retain to keep adaptive and distributed observations globally consistent?
-6. How do noise, error correction, query-revelation timing, network topology, classical or quantum communication, and tolerated approximation change the necessary predictive state?
+6. How do noise, approximation, query timing, network topology, error correction, and classical or quantum communication change the necessary predictive state?
 7. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
 
 ## Completed mathematical lanes
@@ -154,7 +154,7 @@ See [`progressive-query-revelation.md`](progressive-query-revelation.md).
 
 ### Predictive-equivalence network min-cuts
 
-The causal program now supports arbitrary finite deterministic future-query families and directed capacity networks:
+The causal program supports arbitrary finite deterministic future-query families and directed capacity networks:
 
 - records are grouped by complete future-query signature rather than by raw hidden-state identity;
 - `K` exact predictive classes require and can be represented by exactly `K` finite states, or `ceil(log2 K)` fixed-length bits;
@@ -169,6 +169,24 @@ The causal program now supports arbitrary finite deterministic future-query fami
 - finite certificates include class counts, max flow, residual min cut, route decomposition, and bounded maximum packing.
 
 See [`predictive-network-mincuts.md`](predictive-network-mincuts.md).
+
+### Stochastic predictive covers and approximate network sufficiency
+
+The latest lane replaces deterministic outcomes by finite categorical future laws and adds constructive upper bounds rather than stopping at converse packings:
+
+- exact stochastic predictive equivalence is equality of every conditional outcome law across every allowed future query;
+- a family with `K` distinct law tensors needs and can use exactly `K` exact predictive states, with fresh randomness used only to sample the selected law;
+- under a shared exogenous query schedule, joint TV and KL are exactly the query-weighted sums of conditional TV and KL;
+- weighted-query and worst-query distortion remain separate interfaces;
+- strict `2 epsilon` packings lower-bound the number of arbitrary predictor states;
+- exact finite target-centered set cover gives a constructive epsilon-renderer and an upper bound;
+- the resulting network certificate reports `impossible`, `constructively-feasible`, or `unresolved` according to min-cut position between packing and cover indices;
+- target-centered covers are not assumed optimal because interpolating predictor laws may be more efficient;
+- for one-query Bernoulli families, TV is absolute parameter distance, one-state minimax radius is half the parameter range, and greedy interval covering gives the exact arbitrary-center state count;
+- the endpoint example `p=0,1`, `epsilon=1/2` demonstrates that one interpolating state `p=1/2` can beat a two-state target-centered cover;
+- bounded exact checks cover categorical validation, deterministic embeddings, KL/Pinsker, maximum packings, minimum target covers, arbitrary Bernoulli centers, assignments, and routed center indices.
+
+See [`stochastic-predictive-covers.md`](stochastic-predictive-covers.md).
 
 ## Current frontier campaigns
 
@@ -214,34 +232,34 @@ Research targets:
 4. Quantify the predictive state needed to filter a hidden syndrome process.
 5. Separate physical-error history, decoder belief state, and logical predictive memory.
 
-### Campaign C: stochastic predictive laws, covers, and multicast coding
+### Campaign C: arbitrary categorical centers, rate distortion, and multi-sink stochastic networks
 
-Exact deterministic classes and one-sink min-cuts are now explicit. The next network lane should close the approximate upper/lower gap and then move beyond one sink.
+The finite stochastic lane now has a converse packing and a target-centered constructive cover, plus an exact arbitrary-center Bernoulli solution. The next program should close the higher-dimensional center gap and then introduce source priors and joint sink demands.
 
 Candidate extensions:
 
-- finite stochastic query laws rather than deterministic outcomes;
-- exact equivalence by equality of full conditional distributions;
-- weighted total-variation and KL geometry across stochastic query schedules;
-- exact finite packing and minimum-cover computations;
-- constructive approximate network sufficiency by routing a cover index;
-- metric-entropy and rate-distortion limits for larger families;
-- explicit multicast and multiple-unicast demand models;
-- linear network-coding certificates over finite fields;
-- several successive query hints represented as a tree;
-- overlapping hint sets and submodular capacity regions;
-- noisy edges and strong-data-processing contraction along causal paths.
+- arbitrary-center covers in finite categorical simplices;
+- exact or certified convex feasibility of one center covering a candidate target cluster;
+- minimum set partition into jointly coverable clusters;
+- source-prior rate-distortion rather than worst-record covering;
+- Bayesian and minimax uncertainty sets around empirically estimated laws;
+- adaptive stochastic query policies conditioned on previous outcomes;
+- progressive query hints with cover refinement at each stage;
+- several sinks with shared upstream center indices and heterogeneous local laws;
+- noisy network edges and strong-data-processing contraction of KL and TV;
+- stochastic logical observables in distributed error-correcting code families.
 
 Research questions:
 
-1. Can finite packing and covering numbers bracket the exact number of epsilon-predictive states?
-2. When does a routed cover index attain the optimal approximate network capacity?
-3. How do stochastic query laws change exact equivalence and observable geometry?
-4. Which multi-sink instances are solved by routing, replication, or linear network coding?
-5. How should common upstream predictive information be shared across heterogeneous sinks?
-6. How do query-revelation trees compose with network cuts at every stage?
-7. What changes for quantum edges when the payload itself is quantum rather than an exact classical class label?
-8. Which conclusions remain ordinary communication complexity rather than simulation-specific claims?
+1. Can exact arbitrary-center TV covering be reduced to linear programming for bounded categorical families?
+2. When do packing and unrestricted covering numbers determine the exact epsilon-predictive state count?
+3. How should finite-sample uncertainty in the target laws alter exact equivalence, distances, and covers?
+4. What is the correct source-prior predictive rate-distortion function for a finite query family?
+5. How do stochastic covers compose through query-revelation trees?
+6. When can multiple sinks share one upstream compressed predictive state?
+7. Which network instances require routing, replication, or coding of center indices?
+8. How do edge channels contract distinguishability before it reaches each sink?
+9. Which conclusions remain ordinary information and communication complexity rather than simulation-specific claims?
 
 ### Campaign D: update-time and computational lower bounds
 
@@ -253,7 +271,8 @@ Current theorems mostly lower-bound state cardinality or communicated informatio
 - communication across a distributed renderer;
 - preprocessing versus online computation;
 - tensor-network contraction or stabilizer-tableau update cost;
-- cell-probe lower bounds for dynamic parity and relational queries.
+- cell-probe lower bounds for dynamic parity and relational queries;
+- work required when a dynamic target crosses predictive-cover cells.
 
 The goal is a bounded time-space-communication tradeoff rather than an unsupported statement that “the universe is expensive to simulate.”
 
@@ -298,11 +317,13 @@ A research result is ready for the main branch only when:
 11. Quantum-communication claims distinguish transmitted qubits, preshared entanglement, receiver memory, and accessible classical information.
 12. Multiround claims distinguish design-wide branch capacity from the one branch executed in a particular run.
 13. Network claims distinguish one-sink sufficiency from per-sink necessity and explicit multicast achievability.
-14. Approximate claims distinguish packings, coverings, converses, and constructive renderers.
-15. Physical claims state which laws apply and avoid cross-level leakage.
-16. A finite experiment is never promoted into a generic simulation conclusion.
-17. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
-18. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
+14. Approximate claims distinguish packings, target-centered covers, arbitrary-center covers, converses, and constructive renderers.
+15. Stochastic claims distinguish weighted-query distortion from worst-query distortion and exact declared tables from empirically estimated laws.
+16. A certificate must say `unresolved` rather than infer feasibility or impossibility when implemented lower and upper bounds do not meet.
+17. Physical claims state which laws apply and avoid cross-level leakage.
+18. A finite experiment is never promoted into a generic simulation conclusion.
+19. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
+20. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
 
 ## Tempera Math integration
 
@@ -311,13 +332,13 @@ The repository claim manifests remain the source of truth. Tempera Math can late
 - theorem versus model-result versus finite-check status;
 - all assumptions and nonclaims;
 - exact source revision and checker command;
-- bounded code size, graph size, horizon, locality, tolerance, noise parameters, communication interface, hint partition, network topology, sink demand, and assistance model;
+- bounded code size, graph size, horizon, locality, tolerance, stochastic law table, query schedule, cover-center restriction, communication interface, hint partition, network topology, sink demand, and assistance model;
 - the boundary between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, progressive query revelation, predictive equivalence, max flow, min cuts, parity compression, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, progressive query revelation, predictive equivalence, stochastic covering, interpolation, max flow, min cuts, parity compression, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.
