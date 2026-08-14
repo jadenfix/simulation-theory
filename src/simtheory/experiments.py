@@ -17,6 +17,12 @@ from .bell_predictive import (
     schedule_fisher_information,
     uniform_visibility_grid,
 )
+from .cat_consistency import (
+    block_cat_marginal_tv,
+    checkpoint_average_query_memory_lower_bound_bits,
+    checkpoint_exact_memory_bits,
+    checkpoint_total_variation,
+)
 from .causal import (
     minimum_selection_gamma,
     minimum_unrestricted_intervention_rate,
@@ -30,6 +36,11 @@ from .lazy_rendering import (
     conditional_tv_profile,
     sequential_total_variation_bound,
     transcript_total_variation,
+)
+from .manybody import (
+    exact_basis_renderer_bits_lower_bound,
+    product_z_total_variation,
+    qary_product_memory_lower_bound_bits,
 )
 from .minimax import fano_iid_error_lower_bound, necessary_iid_samples_for_error
 from .observer_measure import (
@@ -58,6 +69,14 @@ from .quantum_sequence import (
 from .sequential import (
     exact_anytime_mixture_rejection_probability,
     exact_expected_mixture_e_value,
+)
+from .stabilizer_relations import (
+    SimpleGraph,
+    all_reductions_up_to_size_are_maximally_mixed,
+    asymptotic_gilbert_rate_for_tv,
+    gilbert_predictive_memory_lower_bound_bits,
+    graph_generator_total_variation,
+    stabilizer_distance,
 )
 
 
@@ -140,6 +159,26 @@ def main() -> None:
     print("pair_TV_h1", quantum_transcript_tv(processes[0], processes[3], 1, policy))
     print("pair_TV_h3", quantum_transcript_tv(processes[0], processes[3], 3, policy))
     print("transcript_bits_h3_eps0.04", transcript_memory_lower_bound_bits(processes, 3, 0.04, policy))
+
+    print("\n== explicit many-body scaling ==")
+    print("basis_bits_n12", exact_basis_renderer_bits_lower_bound(12))
+    print("product_L1_TV", product_z_total_variation((-0.8, 0.2, 0.7), (0.4, 0.2, -0.1)))
+    print("qary_bits_d8_L4", qary_product_memory_lower_bound_bits(8, 4, 0.005))
+
+    print("\n== graph-state relational information ==")
+    cycle = SimpleGraph.cycle(8)
+    print("cycle_stabilizer_distance", stabilizer_distance(cycle))
+    print("cycle_all_two_local_mixed", all_reductions_up_to_size_are_maximally_mixed(cycle, 2))
+    print("graph_label_TV", graph_generator_total_variation((0, 0, 1, 0, 1, 1, 0, 0), (1, 0, 1, 1, 1, 0, 0, 0)))
+    print("gilbert_bits_n100_eps0.05", gilbert_predictive_memory_lower_bound_bits(100, 0.05))
+    print("gilbert_rate_eps0.05", asymptotic_gilbert_rate_for_tv(0.05))
+
+    print("\n== distributed cat-state consistency ==")
+    print("proper_partial_TV", block_cat_marginal_tv((0, 0), (1, 1), 3, (0, 1, 3, 4)))
+    print("completed_block_TV", block_cat_marginal_tv((0, 0), (1, 1), 3, (0, 1, 2, 3, 4)))
+    print("checkpoint_TV", checkpoint_total_variation((0, 1, 0, 1), (1, 1, -1, -1), (0, 1, 0, 1), (-1, 1, 1, -1)))
+    print("checkpoint_exact_bits_m20", checkpoint_exact_memory_bits(20))
+    print("checkpoint_average_bits_m100_eps0.05", checkpoint_average_query_memory_lower_bound_bits(100, 0.05))
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]

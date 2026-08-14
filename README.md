@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.json); phase-specific claims are additionally registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum and relational extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json) and [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -47,24 +47,42 @@ The machine-readable claim ledger is [`claims/claims-v1.json`](claims/claims-v1.
 24. **Quadratic physical packing.** The canonical visibility-phase family contains an explicit epsilon-packing of size at least `ceil(1/(4 epsilon))^2`, producing a memory lower bound that scales as `2 log2(1/epsilon)` up to constants.
 25. **Fisher-rank identifiability.** One Bell setting has rank at most one for the two-parameter state, while a sufficiently rich schedule can locally identify both dimensions; phase becomes unidentifiable at zero visibility.
 26. **Adaptive phase-drift transcripts.** Exact finite transcript laws are computed under history-dependent Bell queries, and transcript TV is monotone under retained-history refinement.
+27. **Exact n-qubit basis scaling.** Coordinate-Z queries separate all `2^n` computational-basis states, forcing `n` internal predictive bits without inferring anything from Hilbert-space dimension alone.
+28. **Many-body L1 geometry.** A `d`-qubit product-polarization family has exact randomized-query distance `||q-u||_1/(2d)`.
+29. **Dimension-resolution factorization.** Explicit q-ary product packings yield memory scaling `ceil(d log2 L)`, separating subsystem count from accessible precision.
+30. **Graph-basis weighted-Hamming geometry.** Stabilizer-generator queries on `|G,z>` give exact predictive TV equal to weighted Hamming distance between graph-basis labels.
+31. **Two-local blindness with three-local access.** For cycle graph states `C_n`, `n>=5`, every one- and two-qubit reduction is maximally mixed for all `2^n` labels, while weight-three stabilizer queries reveal the label coordinates.
+32. **Constant-tolerance relational coding.** Finite Gilbert bounds and the rate `1-H_2(2 epsilon)` preserve a linear number of predictive bits under constant uniform-query tolerance below one quarter.
+33. **Cat-state proper-marginal blindness.** Every incomplete local-X transcript of a phase-labeled cat block is uniform and phase-independent, while the complete parity transcript separates the phases perfectly.
+34. **Exact streaming consistency memory.** After `ell-1` local outcomes in each of `m` cat blocks, an exact online renderer has exactly `2^m` predictive-equivalence classes and needs exactly `m` parity bits; the lower bound survives worst-query error below one half.
 
-General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical derivations are developed in [`docs/bell-predictive-bounds.md`](docs/bell-predictive-bounds.md), [`docs/quantum-phase-predictive-bounds.md`](docs/quantum-phase-predictive-bounds.md), [`docs/canonical-chsh-disk-geometry.md`](docs/canonical-chsh-disk-geometry.md), and [`docs/quantum-sequential-bounds.md`](docs/quantum-sequential-bounds.md).
+General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical and relational derivations are developed in:
+
+- [`docs/bell-predictive-bounds.md`](docs/bell-predictive-bounds.md)
+- [`docs/quantum-phase-predictive-bounds.md`](docs/quantum-phase-predictive-bounds.md)
+- [`docs/canonical-chsh-disk-geometry.md`](docs/canonical-chsh-disk-geometry.md)
+- [`docs/quantum-sequential-bounds.md`](docs/quantum-sequential-bounds.md)
+- [`docs/manybody-predictive-bounds.md`](docs/manybody-predictive-bounds.md)
+- [`docs/stabilizer-relational-consistency.md`](docs/stabilizer-relational-consistency.md)
 
 ## Layout
 
 ```text
-claims/claims-v1.json                 core typed claims, assumptions, evidence, and nonclaims
-claims/quantum-phase-claims.json      multidimensional quantum claim registry
-docs/formal-results.md                general theorem statements and proofs
-docs/bell-predictive-bounds.md        one-parameter physical Bell derivations
-docs/quantum-phase-predictive-bounds.md two-parameter geometry and Fisher analysis
-docs/canonical-chsh-disk-geometry.md exact disk norm and constructive scaling bound
-docs/quantum-sequential-bounds.md     adaptive phase-drift transcript model
-docs/research-program.md              completed lanes, next campaigns, and quality gates
-docs/sources.md                       primary research context
-docs/tempera-math-bridge.md           optional external proof-harness boundary
-src/simtheory/                        mathematical models and deterministic experiments
-tests/                                exact, unit, and randomized property checks
+claims/claims-v1.json                    core typed claims, assumptions, evidence, and nonclaims
+claims/quantum-phase-claims.json         multidimensional quantum claim registry
+claims/stabilizer-relational-claims.json relational and online-consistency claim registry
+docs/formal-results.md                   general theorem statements and proofs
+docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
+docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
+docs/canonical-chsh-disk-geometry.md     exact disk norm and constructive scaling bound
+docs/quantum-sequential-bounds.md        adaptive phase-drift transcript model
+docs/manybody-predictive-bounds.md       subsystem-count and precision scaling
+docs/stabilizer-relational-consistency.md local blindness and streaming parity memory
+docs/research-program.md                 completed lanes, next campaigns, and quality gates
+docs/sources.md                          primary research context
+docs/tempera-math-bridge.md              optional external proof-harness boundary
+src/simtheory/                           mathematical models and deterministic experiments
+tests/                                   exact, unit, and randomized property checks
 ```
 
 ## Run
@@ -81,7 +99,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
 
 ## Tempera Math boundary
 
