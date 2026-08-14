@@ -360,7 +360,7 @@ Superdense coding exactly attains the assisted zero-error rate for full-record t
 
 Preshared entanglement, transmitted qubits, receiver memory, and classical payload are kept as separate resources.
 
-### 11. Predictive networks and multicast coding
+### 11. Predictive networks, multicast, and function computation
 
 A deterministic future-query family with \(K\) exact classes requires a class label of
 
@@ -388,7 +388,41 @@ For the declared binary butterfly network:
 - transmitting \(x_1+x_2\) through the shared bottleneck lets both sinks decode;
 - exact predictive classes embed into \(\mathbb F_p^h\) whenever \(K\le p^h\).
 
-The repo does not silently claim the full general multicast theorem; it proves and checks the bounded statements it owns.
+The sink-specific function lane removes the unnecessary assumption that every receiver must reconstruct the full source. If sink \(t\) receives network rows \(G_t\), already knows side-information rows \(S_t\), and only needs target rows \(B_t\), exact recovery is equivalent to
+
+\[
+\boxed{
+\operatorname{rowspan}(B_t)
+\subseteq
+\operatorname{rowspan}
+\begin{pmatrix}G_t\\S_t\end{pmatrix}.
+}
+\]
+
+The new dimension that must cross every cut to that sink is
+
+\[
+\boxed{
+r_t
+=
+\operatorname{rank}
+\begin{pmatrix}S_t\\B_t\end{pmatrix}
+-
+\operatorname{rank}(S_t).
+}
+\]
+
+These receiver-wise cut bounds are necessary but not jointly sufficient. In a one-symbol broadcast network, one sink demanding \(x_1\) and another demanding \(x_2\) each individually need one dimension, yet no common one-dimensional summary serves both without side information.
+
+With complementary side information, however, one XOR symbol is enough:
+
+- \(t_1\) knows \(x_1\) and wants \(x_2\);
+- \(t_2\) knows \(x_2\) and wants \(x_1\);
+- broadcasting \(x_1+x_2\) serves both.
+
+The bounded checker exhausts all 16 binary scalar assignments, finds the XOR code, rules out routing-only assignments, and proves the common summary dimension falls from two without side information to one with it.
+
+The repo does not silently claim the full general multicast, index-coding, or nonlinear function-computation theorem; it proves and checks the bounded statements it owns.
 
 ### 12. Algorithmic priors and multiplicity
 
@@ -419,6 +453,7 @@ claims/stochastic-predictive-claims.json
 claims/stochastic-channel-claims.json
 claims/multicast-network-coding-claims.json
 claims/ternary-predictive-claims.json
+claims/functional-network-claims.json
 ```
 
 Each entry records a stable ID, claim type, exact scope, assumptions, evidence paths, and explicit nonclaims.
@@ -443,6 +478,7 @@ docs/stochastic-predictive-covers.md
 docs/stochastic-channel-contraction.md
 docs/multicast-network-coding.md
 docs/ternary-predictive-centers.md
+docs/functional-network-computation.md
 docs/research-program.md
 docs/sources.md
 docs/tempera-math-bridge.md
@@ -482,7 +518,7 @@ Evidence must favor one **restricted simulator model** over serious alternative 
 6. calibration and power;
 7. how ordinary-physics alternatives are excluded.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, max flow, min cuts, network coding, predictive equivalence, arbitrary predictive centers, or information bounds are not generic evidence for simulation. Ordinary physical theories and ordinary distributed systems can contain all of those features.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, max flow, min cuts, network coding, XOR side-information codes, predictive equivalence, arbitrary predictive centers, or information bounds are not generic evidence for simulation. Ordinary physical theories and ordinary distributed systems can contain all of those features.
 
 ## Current frontier
 
@@ -490,8 +526,8 @@ The highest-value next campaigns are:
 
 - higher-dimensional categorical arbitrary-center geometry beyond three outcomes;
 - general bounded multicast construction and field-size sensitivity;
-- noisy network coding with source, channel, and network coding kept separate;
-- sink-specific predictive functions rather than common-demand multicast;
+- nonlinear and approximate sink-specific predictive functions;
+- noisy side information and noisy network coding with source, channel, and network coding kept separate;
 - robust observation channels drawn from uncertainty sets;
 - progressive query revelation across a causal network;
 - online update-time and cell-probe lower bounds for overlapping relational constraints;
