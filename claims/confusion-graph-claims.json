@@ -1,0 +1,200 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T77",
+      "title": "Zero-error encoder and confusion-graph coloring equivalence",
+      "kind": "THEOREM",
+      "scope": "one finite source-state set, one common deterministic one-shot message, finitely many sinks, exact finite target functions, and exact local side-information functions",
+      "assumptions": [
+        "the encoder message is fixed before each sink decodes",
+        "sink t decodes only from the common message and its declared side-information value",
+        "every demanded target must be recovered with zero error for every source state"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#2-encoder-coloring-equivalence-theorem",
+        "src/simtheory/confusion_graphs.py:coloring_equivalence_certificate",
+        "src/simtheory/confusion_graphs.py:deterministic_code_from_coloring",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "the theorem does not cover interaction, allowed error, quantum messages, or asymptotic block coding",
+        "graph colors are message labels rather than physical states of an unknown parent substrate"
+      ]
+    },
+    {
+      "id": "ST-T78",
+      "title": "Exact one-shot message alphabet equals chromatic number",
+      "kind": "THEOREM",
+      "scope": "the finite deterministic zero-error common-message function problem represented by its confusion graph G",
+      "assumptions": [
+        "one message value is used per source state in one execution",
+        "fixed-length bits use an injective binary representation of the message alphabet"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#3-exact-message-states-and-fixed-length-bits",
+        "src/simtheory/confusion_graphs.py:optimal_function_code",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "chromatic number is not asserted to equal an expected variable-length rate under a source prior",
+        "one-shot fixed-length cost is not an asymptotic graph-entropy theorem"
+      ]
+    },
+    {
+      "id": "ST-T79",
+      "title": "Clique and independence lower bounds for predictive messages",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph with maximum clique size omega and maximum independent-set size alpha",
+      "assumptions": [
+        "each message class is an independent vertex set",
+        "the source-state set is finite and nonempty"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#4-lower-and-upper-certificates",
+        "src/simtheory/confusion_graphs.py:exact_chromatic_certificate",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "either lower bound can be loose for a selected graph",
+        "the bounded exact clique and independent-set algorithms are not claimed efficient on arbitrary large graphs"
+      ]
+    },
+    {
+      "id": "ST-T80",
+      "title": "Universal finite graph realization by side-information demands",
+      "kind": "THEOREM",
+      "scope": "every finite simple graph, realized as a finite zero-error common-message function problem with one constructed sink per graph edge",
+      "assumptions": [
+        "constructed side-information values may be arbitrary finite hashable labels",
+        "every non-endpoint vertex receives a unique side-information value at the edge sink"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#5-any-finite-graph-can-occur",
+        "src/simtheory/confusion_graphs.py:problem_from_graph",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "the construction is not asserted to be a natural physical realization of every graph",
+        "the theorem does not imply every structured physical query family has arbitrary graph complexity"
+      ]
+    },
+    {
+      "id": "ST-T81",
+      "title": "Zero-error private randomization does not reduce one-shot message alphabet",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph with a private randomized encoder represented by a nonempty support of messages for every source state",
+      "assumptions": [
+        "adjacent source states must have disjoint message supports for zero error",
+        "the decoder does not receive an additional source-dependent variable beyond the sampled message and declared side information"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#10-zero-error-randomization-does-not-reduce-message-alphabet",
+        "src/simtheory/confusion_graphs.py:randomization_no_benefit_certificate",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "the theorem does not cover allowed error, shared source-dependent randomness, variable expected length, or quantum encodings",
+        "selecting one support element proves an alphabet lower bound rather than an equality of all randomized performance criteria"
+      ]
+    },
+    {
+      "id": "ST-T82",
+      "title": "Side-information refinement contracts confusion",
+      "kind": "THEOREM",
+      "scope": "two finite function problems with identical states, sinks, and targets, where equality of refined side values implies equality of coarse side values",
+      "assumptions": [
+        "side-information refinement is checked for every sink and source-state pair",
+        "both problems use the same one-shot deterministic zero-error interface"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#8-side-information-refinement-monotonicity",
+        "src/simtheory/confusion_graphs.py:side_information_refinement_certificate",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "more informative side information is an explicit resource and is not declared free",
+        "edge deletion can leave chromatic number unchanged even when some ambiguity is removed"
+      ]
+    },
+    {
+      "id": "ST-T83",
+      "title": "Target coarsening contracts confusion",
+      "kind": "THEOREM",
+      "scope": "two finite function problems with identical states, sinks, and side information, where each new target is a function of the corresponding original target",
+      "assumptions": [
+        "target coarsening is checked on every finite source-state pair",
+        "the decoder is only required to recover the coarsened target in the transformed problem"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#9-target-coarsening-monotonicity",
+        "src/simtheory/confusion_graphs.py:target_coarsening_certificate",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "a cheaper coarsened target does not establish the same cost for the original detailed target",
+        "the theorem does not compare unrelated target recodings that fail the finite functional-coarsening condition"
+      ]
+    },
+    {
+      "id": "ST-T84",
+      "title": "Confusion-color multicast bridge",
+      "kind": "THEOREM",
+      "scope": "one finite confusion-graph function problem with chi colors and one already certified exact h-symbol common-demand multicast code over F_p satisfying chi at most p^h",
+      "assumptions": [
+        "every function sink recovers the complete finite-field source vector",
+        "color labels are injected into distinct field vectors",
+        "each sink retains its declared exact local side information"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#11-common-message-multicast-bridge",
+        "src/simtheory/confusion_graphs.py:confusion_graph_multicast_certificate",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "multicasting the full color is not claimed optimal among all sink-specific network function codes",
+        "the field embedding is a coding convention rather than physical ontology"
+      ]
+    },
+    {
+      "id": "ST-M18",
+      "title": "Two-bit side-information chromatic phase change",
+      "kind": "MODEL_RESULT",
+      "scope": "two binary source coordinates with t1 demanding x1 and t2 demanding x2, first with no side information and then with each sink knowing the other coordinate",
+      "assumptions": [
+        "the common encoder is one-shot, deterministic, and zero error",
+        "complementary side information is exact and causally available at decoding time"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#6-two-bit-source-without-side-information",
+        "docs/nonlinear-confusion-graphs.md#7-complementary-side-information",
+        "src/simtheory/confusion_graphs.py:binary_pair_problem",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "the one-bit parity gain is conditional on complementary side information",
+        "the example is not a general nonlinear index-coding capacity theorem"
+      ]
+    },
+    {
+      "id": "ST-F11",
+      "title": "Bounded exact confusion-graph algorithm certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite graphs below the declared vertex cap, including exhaustive comparison on every labeled four-vertex simple graph",
+      "assumptions": [
+        "exact k-colorability search exhausts every smaller color limit before returning the optimum",
+        "maximum clique and independent-set searches remain within the configured finite cap",
+        "direct brute-force tests enumerate all 64 labeled four-vertex graphs"
+      ],
+      "evidence": [
+        "docs/nonlinear-confusion-graphs.md#12-bounded-computational-certificates",
+        "src/simtheory/confusion_graphs.py:exact_chromatic_certificate",
+        "tests/test_confusion_graphs.py"
+      ],
+      "nonclaims": [
+        "bounded exhaustive agreement is not a scalability claim for large graphs",
+        "a configured vertex-cap rejection is not an impossibility or optimum result"
+      ]
+    }
+  ]
+}
