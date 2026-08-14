@@ -1,0 +1,141 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T58",
+      "title": "Finite Dobrushin total-variation contraction",
+      "kind": "THEOREM",
+      "scope": "two finite input probability distributions passed through one common finite row-stochastic outcome channel",
+      "assumptions": [
+        "the same record-independent channel is applied under both compared input laws",
+        "distance is measured in total variation"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#3-dobrushin-total-variation-contraction-theorem",
+        "src/simtheory/stochastic_channels.py:channel_contraction_certificate",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "a record-dependent intervention channel can insert new record information and is outside this theorem",
+        "the coefficient is not asserted to contract every statistical divergence by the same factor"
+      ]
+    },
+    {
+      "id": "ST-T59",
+      "title": "Query-specific predictive-law channel contraction",
+      "kind": "THEOREM",
+      "scope": "a finite stochastic future-query family with one common post-processing channel per query and one exogenous query distribution",
+      "assumptions": [
+        "query weights are identical under the compared records",
+        "each query channel is record independent",
+        "the observed joint law records query identity and post-channel outcome"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#7-query-specific-post-processing",
+        "src/simtheory/stochastic_channels.py:query_channel_contraction_certificate",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "the global maximum-coefficient bound can be looser than the querywise bound",
+        "the result does not cover hidden-record-dependent query scheduling without a new derivation"
+      ]
+    },
+    {
+      "id": "ST-T60",
+      "title": "Serial Dobrushin coefficient product bound",
+      "kind": "THEOREM",
+      "scope": "a finite serial chain of composable row-stochastic outcome channels",
+      "assumptions": [
+        "adjacent channel output and input alphabets match",
+        "every stage is shared by the compared laws"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#8-serial-channels",
+        "src/simtheory/stochastic_channels.py:channel_chain_certificate",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "the product is an upper bound and can be strict",
+        "serial observation-channel contraction is not a noisy-network coding capacity theorem"
+      ]
+    },
+    {
+      "id": "ST-T61",
+      "title": "Predictive equivalence coarsening under shared channels",
+      "kind": "THEOREM",
+      "scope": "finite stochastic query-law tensors transformed by one common record-independent channel per query",
+      "assumptions": [
+        "exact equivalence is equality of all pre-channel conditional laws",
+        "the transformed family retains the same hidden-record labels and query names"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#9-exact-predictive-equivalence-can-only-coarsen",
+        "src/simtheory/stochastic_channels.py:apply_query_outcome_channels",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "fewer observable classes do not imply fewer microscopic physical states",
+        "changing the observation interface is not free exact-world compression"
+      ]
+    },
+    {
+      "id": "ST-T62",
+      "title": "Predictive packing and target-cover monotonicity",
+      "kind": "THEOREM",
+      "scope": "finite stochastic future-law families before and after shared record-independent outcome channels at one fixed total-variation tolerance",
+      "assumptions": [
+        "packing uses strict pairwise distance greater than twice epsilon",
+        "the constructive cover centers are target records from the same family"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#10-packing-monotonicity",
+        "docs/stochastic-channel-contraction.md#11-target-centered-cover-monotonicity",
+        "src/simtheory/stochastic_channels.py:predictive_complexity_contraction_certificate",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "packing monotonicity supplies a converse rather than an optimal renderer",
+        "target-centered cover monotonicity is not an arbitrary-center covering theorem"
+      ]
+    },
+    {
+      "id": "ST-M14",
+      "title": "Binary symmetric and erasure channel contraction coefficients",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared finite binary symmetric and finite-alphabet erasure kernels",
+      "assumptions": [
+        "binary crossover q lies in [0,1/2]",
+        "erasure probability e lies in [0,1] and the erasure symbol is distinct from input outcomes"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#5-binary-symmetric-channel",
+        "docs/stochastic-channel-contraction.md#6-erasure-channel",
+        "src/simtheory/stochastic_channels.py:FiniteOutcomeChannel",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "these kernels are examples and are not asserted to describe all physical measurement noise",
+        "the coefficients do not identify a parent simulator implementation"
+      ]
+    },
+    {
+      "id": "ST-F06",
+      "title": "Exact rational finite-channel contraction certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite alphabets, exact rational channel rows, and exhaustively enumerated rational probability grids",
+      "assumptions": [
+        "supplied decimals are canonicalized to their finite rational string values",
+        "the exhaustive grid denominator and alphabet sizes are the declared bounded test inputs"
+      ],
+      "evidence": [
+        "docs/stochastic-channel-contraction.md#13-computational-certificates",
+        "src/simtheory/stochastic_channels.py:exhaustive_distribution_grid",
+        "tests/test_stochastic_channels.py"
+      ],
+      "nonclaims": [
+        "bounded exhaustive checks are not substitutes for the universal algebraic proof",
+        "exact arithmetic for a selected model does not make the empirical model exact"
+      ]
+    }
+  ]
+}
