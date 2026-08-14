@@ -29,6 +29,16 @@ from .causal import (
     raw_probability_bounds_from_selected,
     selected_binary_probability,
 )
+from .distributed_consistency import (
+    exact_index_bits_lower_bound,
+    minimum_additional_communication_bits,
+    parity_reconciliation_information_lower_bound_bits,
+    prefix_storage_average_error,
+    replicated_region_storage_lower_bound_bits,
+    uniform_index_information_lower_bound_bits,
+    weighted_index_information_lower_bound_bits,
+    weighted_optimal_error_allocation,
+)
 from .inference import evidence_ceiling, optimal_equal_prior_accuracy, robust_posterior_interval
 from .lazy_rendering import (
     approximate_memory_bits_lower_bound,
@@ -179,6 +189,17 @@ def main() -> None:
     print("checkpoint_TV", checkpoint_total_variation((0, 1, 0, 1), (1, 1, -1, -1), (0, 1, 0, 1), (-1, 1, 1, -1)))
     print("checkpoint_exact_bits_m20", checkpoint_exact_memory_bits(20))
     print("checkpoint_average_bits_m100_eps0.05", checkpoint_average_query_memory_lower_bound_bits(100, 0.05))
+
+    print("\n== distributed causal-cut consistency ==")
+    print("exact_INDEX_bits_m100", exact_index_bits_lower_bound(100))
+    print("uniform_INDEX_information_m100_eps0.1", uniform_index_information_lower_bound_bits(100, 0.1))
+    skewed_weights = (0.7, 0.1, 0.1, 0.1)
+    print("weighted_error_allocation", weighted_optimal_error_allocation(skewed_weights, 0.1))
+    print("weighted_information_bound", weighted_index_information_lower_bound_bits(skewed_weights, 0.1))
+    print("additional_communication_resident20", minimum_additional_communication_bits(100, 20, 0.1))
+    print("three_isolated_regions_bits", replicated_region_storage_lower_bound_bits(100, 0.1, 3))
+    print("parity_reconciliation_information", parity_reconciliation_information_lower_bound_bits(100, 0.1))
+    print("prefix_protocol_error_s80", prefix_storage_average_error(100, 80))
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]
