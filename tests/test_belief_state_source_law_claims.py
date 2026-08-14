@@ -21,6 +21,8 @@ def test_belief_state_source_law_claim_manifest_is_valid_and_evidence_bound():
         "ST-T157",
         "ST-T158",
         "ST-T159",
+        "ST-T160",
+        "ST-T161",
         "ST-M34",
         "ST-F25",
     }
