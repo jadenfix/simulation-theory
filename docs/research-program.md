@@ -11,7 +11,7 @@ The project is not trying to assign a dramatic single-number probability to “s
 3. What computational or physical constraints follow from a specified architecture?
 4. What experiment distinguishes that architecture from serious alternatives?
 5. What predictive information must an online generator retain to keep adaptive and distributed observations globally consistent?
-6. How do noise, error correction, classical or quantum communication, and tolerated approximation change the necessary predictive state?
+6. How do noise, error correction, query-revelation timing, classical or quantum communication, and tolerated approximation change the necessary predictive state?
 7. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
 
 ## Completed mathematical lanes
@@ -122,14 +122,11 @@ See [`distributed-causal-consistency.md`](distributed-causal-consistency.md).
 
 ### Quantum random-access causal cuts
 
-The causal-cut program now permits quantum messages and cleanly separates unassisted from entanglement-assisted architectures:
+The causal-cut program permits quantum messages and cleanly separates unassisted from entanglement-assisted architectures:
 
-- coordinatewise binary Fano plus quantum data processing gives
-  `I(X;Q) >= sum_i [1-H_2(e_i)]`;
-- a `q`-qubit unassisted message obeys `I(X;Q)<=q`, yielding
-  `q>=m[1-H_2(epsilon)]` under uniform average error;
-- receiver-side preshared entanglement independent of the record permits at most a `2q` information increase, yielding the factor-two lower bound
-  `q>=m[1-H_2(epsilon)]/2`;
+- coordinatewise binary Fano plus quantum data processing gives `I(X;Q) >= sum_i [1-H_2(e_i)]`;
+- a `q`-qubit unassisted message obeys `I(X;Q)<=q`, yielding `q>=m[1-H_2(epsilon)]` under uniform average error;
+- receiver-side preshared entanglement independent of the record permits at most a `2q` information increase, yielding `q>=m[1-H_2(epsilon)]/2`;
 - exact unassisted transmission needs `m` qubits;
 - exact entanglement-assisted transmission needs `ceil(m/2)` qubits and is achieved by superdense coding;
 - revealing the query before the message reduces exact communication to one qubit;
@@ -138,6 +135,24 @@ The causal-cut program now permits quantum messages and cleanly separates unassi
 - nonuniform quantum queries inherit the classical KKT allocation, with a factor-two assisted capacity change.
 
 See [`quantum-causal-cut-random-access.md`](quantum-causal-cut-random-access.md).
+
+### Progressive query revelation
+
+The first genuinely multistage causal interface now reveals a coarse query cell between two communication stages:
+
+- for partition-cell sizes `s_j`, exact classical feasibility is characterized by
+  `a >= sum_j max(0,s_j-c_j)`;
+- the converse is matched by a constructive protocol that stores uncovered cell bits in the shared stage and sends the rest only in the selected branch;
+- complete finite enumeration verifies every record, hint cell, and later coordinate for bounded instances;
+- equal cells of residual size `s` require exactly `s` classical bits or unassisted qubits per execution when all record communication is deferred until after the hint;
+- query-hint information and record-value information are separated: the hint reduces the live future-query family but carries no record values;
+- bounded errors replace each exact cell size by `R_j=sum_{i in C_j}[1-H_2(e_i)]` and give the branch-aware converse
+  `a >= sum_j max(0,R_j-c_j)`;
+- unassisted quantum messages obey the same one-bit-per-qubit information region;
+- receiver-side entanglement changes the capacity coefficient from one to two and yields exact equal-cell cost `ceil(s/2)` transmitted qubits;
+- predictive-equivalence classes coarsen from `2^m` before the hint to `2^s_j` after cell `j` and then to two after the exact coordinate is known.
+
+See [`progressive-query-revelation.md`](progressive-query-revelation.md).
 
 ## Current frontier campaigns
 
@@ -183,31 +198,32 @@ Research targets:
 4. Quantify the predictive state needed to filter a hidden syndrome process.
 5. Separate physical-error history, decoder belief state, and logical predictive memory.
 
-### Campaign C: multiround classical/quantum causal networks
+### Campaign C: predictive min-cuts and general causal networks
 
-One-way classical and quantum cuts are now explicit. The next distributed program should vary the causal interface rather than extrapolating those one-round theorems.
+One-way and two-stage partition-hint cuts are explicit. The next program should replace the hand-written stage topology by a directed capacity network.
 
 Candidate extensions:
 
-- two-way and multiround record reconciliation;
-- reveal the query between communication rounds and characterize the resulting phase changes;
-- a directed acyclic network of causal regions rather than one cut;
-- quantum memory plus quantum communication tradeoffs;
-- entanglement-assisted protocols with the entanglement-storage cost tracked separately;
-- multiple answer regions, shared caches, no-cloning constraints, and explicit access topology;
-- authenticated transcript comparison under adversarial scheduling;
-- robust query-weight sets rather than one known distribution.
+- arbitrary finite function families rather than coordinate queries;
+- predictive-equivalence class counts attached to sink query interfaces;
+- exact classical min-cut lower bounds and matching routable constructions where available;
+- unassisted and entanglement-assisted quantum edge capacities;
+- multiple sinks with shared upstream information and local downstream branches;
+- overlapping query-hint sets and fractional-cover capacity regions;
+- several successive hints represented as a query-revelation tree;
+- noisy or uncertain hints and robust optimization over possible query families;
+- authenticated transcript comparison under adversarial scheduling.
 
 Research questions:
 
-1. Which one-way lower bounds survive interaction?
-2. Which memory-communication tradeoffs are tight rather than only converses?
-3. How does a min-cut constraint compose across a network?
-4. When does preshared entanglement reduce communication, and what remains linear?
-5. How much local-state replication is necessary when some shared stores remain accessible?
-6. Can causal commitment be postponed without increasing later communication?
-7. How do quantum random-access codes compose across multiple rounds or answer regions?
-8. Which statements are ordinary communication complexity and which rely on the physical query family?
+1. Is `ceil(log2 K)` the correct exact cut requirement when a sink has `K` future predictive-equivalence classes?
+2. How does that requirement compose across every source-sink cut in a directed acyclic graph?
+3. Which network instances admit matching routing or network-coding upper bounds?
+4. How should shared upstream capacity be accounted for across several answer regions?
+5. What changes for quantum edges and preshared entanglement?
+6. Can a recursive tree theorem characterize arbitrary progressive query revelation?
+7. How do overlapping hint sets replace the partition sum by a cover or polymatroid region?
+8. Which conclusions remain ordinary communication complexity rather than simulation-specific claims?
 
 ### Campaign D: update-time and computational lower bounds
 
@@ -260,12 +276,13 @@ A research result is ready for the main branch only when:
 7. Locality claims distinguish one-shot local marginals from adaptive protocols that aggregate a higher-weight observable.
 8. Code claims distinguish stabilizer weight, code distance, degeneracy, logical weight, and query weight.
 9. Noise claims specify independence, stationarity, and parameter-knowledge assumptions.
-10. Distributed claims specify query timing, communication rounds, shared stores, source distribution, and local versus global storage accounting.
+10. Distributed claims specify query timing, communication rounds, query-hint support, shared stores, source distribution, and local versus global storage accounting.
 11. Quantum-communication claims distinguish transmitted qubits, preshared entanglement, receiver memory, and accessible classical information.
-12. Physical claims state which laws apply and avoid cross-level leakage.
-13. A finite experiment is never promoted into a generic simulation conclusion.
-14. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
-15. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
+12. Multiround claims distinguish design-wide branch capacity from the one branch executed in a particular run.
+13. Physical claims state which laws apply and avoid cross-level leakage.
+14. A finite experiment is never promoted into a generic simulation conclusion.
+15. A memory or communication lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
+16. Average-case, worst-case, necessary, sufficient, exact, converse, achievable, and asymptotic statements remain explicitly separated.
 
 ## Tempera Math integration
 
@@ -274,13 +291,13 @@ The repository claim manifests remain the source of truth. Tempera Math can late
 - theorem versus model-result versus finite-check status;
 - all assumptions and nonclaims;
 - exact source revision and checker command;
-- bounded code size, graph size, horizon, locality, tolerance, noise parameters, communication interface, and assistance model;
+- bounded code size, graph size, horizon, locality, tolerance, noise parameters, communication interface, hint partition, and assistance model;
 - the boundary between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, random access coding, superdense coding, progressive query revelation, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.

@@ -1,0 +1,146 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T41",
+      "title": "Exact progressive classical query-revelation tradeoff",
+      "kind": "THEOREM",
+      "scope": "binary records partitioned into nonempty query-hint cells, one finite shared message before the hint, one finite selected branch message after the cell hint, and an exact coordinate query afterward",
+      "assumptions": [
+        "the partition cells are disjoint and cover every record coordinate",
+        "the shared message has at most 2^a values and branch j has at most 2^c_j values",
+        "every record and every later coordinate in the revealed cell must be answered with zero error"
+      ],
+      "evidence": [
+        "docs/progressive-query-revelation.md#2-exact-classical-tradeoff",
+        "src/simtheory/progressive_queries.py:exact_shared_bits_required",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "the theorem does not cover overlapping hint sets or noisy hints",
+        "message bits in the internal interface are not parent-universe hardware bits"
+      ]
+    },
+    {
+      "id": "ST-T42",
+      "title": "Branch-aware bounded-error progressive information converse",
+      "kind": "THEOREM",
+      "scope": "independent uniform binary record coordinates with declared coordinate errors under one shared and one hint-selected branch message",
+      "assumptions": [
+        "coordinate decoders use the shared message and the selected cell message",
+        "binary Fano, data processing, and conditional entropy subadditivity apply",
+        "the source blocks induced by partition cells are independent"
+      ],
+      "evidence": [
+        "docs/progressive-query-revelation.md#4-bounded-error-branch-aware-converse",
+        "src/simtheory/progressive_queries.py:classical_progressive_information_deficit_bits",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "the information inequality is necessary and is not asserted to be finite-block achievable for every error profile",
+        "correlated or nonuniform source records require a different entropy calculation"
+      ]
+    },
+    {
+      "id": "ST-T43",
+      "title": "Unassisted quantum progressive-query tradeoff",
+      "kind": "THEOREM",
+      "scope": "the same progressive coordinate-query interface with unassisted transmitted quantum systems in the shared and branch stages",
+      "assumptions": [
+        "the receiver has no preshared system correlated with the encoder",
+        "a q-qubit message has classical mutual-information contribution at most q bits",
+        "later coordinate answers are obtained by measurements after the selected branch system arrives"
+      ],
+      "evidence": [
+        "docs/progressive-query-revelation.md#6-unassisted-quantum-messages",
+        "src/simtheory/progressive_queries.py:exact_quantum_progressive_feasible",
+        "src/simtheory/progressive_queries.py:quantum_progressive_information_deficit_bits",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "the continuum of quantum state vectors is not treated as unbounded retrievable classical capacity",
+        "internal qubits are not identified with parent-substrate qubits"
+      ]
+    },
+    {
+      "id": "ST-T44",
+      "title": "Entanglement-assisted progressive-query factor-two tradeoff",
+      "kind": "THEOREM",
+      "scope": "progressive quantum messages with receiver-side preshared entanglement independent of the later binary record",
+      "assumptions": [
+        "each transmitted qubit can increase receiver classical mutual information by at most two bits",
+        "dense coding is available for the exact achievability construction",
+        "the storage and distribution of preshared entanglement are outside the transmitted-qubit count"
+      ],
+      "evidence": [
+        "docs/progressive-query-revelation.md#7-entanglement-assisted-quantum-messages",
+        "src/simtheory/progressive_queries.py:exact_quantum_shared_qubits_required",
+        "src/simtheory/progressive_queries.py:equal_cell_exact_per_run_qubits_lower_bound",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "preshared entanglement is not claimed to be physically free",
+        "the factor-two capacity does not remove linear dependence on residual query-cell size"
+      ]
+    },
+    {
+      "id": "ST-T45",
+      "title": "Residual query-cell communication law",
+      "kind": "THEOREM",
+      "scope": "equal-size query-hint cells with communication permitted after the cell hint but before the exact coordinate query",
+      "assumptions": [
+        "one selected branch is executed per run",
+        "the per-run objective counts the common message plus the selected branch message",
+        "all cells have the same size s"
+      ],
+      "evidence": [
+        "docs/progressive-query-revelation.md#3-equal-cell-phase-diagram",
+        "src/simtheory/progressive_queries.py:equal_cell_exact_per_run_bits_lower_bound",
+        "src/simtheory/progressive_queries.py:equal_cell_bounded_error_per_run_lower_bound_bits",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "the result depends on the query-hint timing and does not apply when no later branch communication is possible",
+        "the residual requirement scales with cell size rather than the logarithm of cell size"
+      ]
+    },
+    {
+      "id": "ST-M11",
+      "title": "Progressive query-timing phase diagram",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared partition-hint model ranging from one unresolved cell to singleton cells",
+      "assumptions": [
+        "the hint reveals exactly one partition cell",
+        "the exact coordinate is revealed only after the branch message"
+      ],
+      "evidence": [
+        "docs/progressive-query-revelation.md#3-equal-cell-phase-diagram",
+        "src/simtheory/progressive_queries.py:query_hint_reduction_factor",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "query-hint entropy and record-value information are distinct resources",
+        "the phase diagram is not a model of actual cosmological observation scheduling"
+      ]
+    },
+    {
+      "id": "ST-F03",
+      "title": "Finite exact progressive-protocol certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "explicit bounded binary records under the canonical uncovered-bit allocation constructed by the repository",
+      "assumptions": [
+        "complete enumeration is capped at the declared maximum record length",
+        "shared and branch coordinate allocations are disjoint and cover every cell"
+      ],
+      "evidence": [
+        "src/simtheory/progressive_queries.py:construct_exact_progressive_allocation",
+        "src/simtheory/progressive_queries.py:verify_exact_progressive_allocation",
+        "tests/test_progressive_queries.py"
+      ],
+      "nonclaims": [
+        "finite enumeration does not establish unrelated multiround protocols",
+        "the checker validates the declared construction rather than an empirical physical system"
+      ]
+    }
+  ]
+}
