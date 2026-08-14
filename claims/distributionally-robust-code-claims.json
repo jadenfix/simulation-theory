@@ -1,0 +1,194 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T98",
+      "title": "Exact total-variation mass-transport expectation theorem",
+      "kind": "THEOREM",
+      "scope": "one finite rational nominal probability vector, one rational state-value vector, and one rational total-variation radius in the unit interval",
+      "assumptions": [
+        "total variation is one half of L1 distance on the finite simplex",
+        "the objective is the expectation of a fixed state-value vector",
+        "probability may be reallocated to any state in the declared finite support"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#1-total-variation-as-moved-probability-mass",
+        "docs/distributionally-robust-tv-coding.md#2-exact-extremal-expectation-theorem",
+        "src/simtheory/distributionally_robust_codes.py:maximize_expectation_tv_ball",
+        "src/simtheory/distributionally_robust_codes.py:minimize_expectation_tv_ball",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the theorem concerns a linear expectation and does not solve arbitrary nonlinear risk functionals",
+        "a TV ambiguity set is a declared uncertainty model rather than an empirically justified confidence region by itself"
+      ]
+    },
+    {
+      "id": "ST-T99",
+      "title": "Exact primal-dual threshold certificate for TV transport",
+      "kind": "THEOREM",
+      "scope": "the finite rational TV-ball expectation problem reduced to a bounded fractional-knapsack donor problem",
+      "assumptions": [
+        "maximizing mass may be placed on a maximum-value state and minimizing mass on a minimum-value state",
+        "removed mass from each donor is bounded by its nominal probability",
+        "the TV budget is an upper bound and may be slack after saturation"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#2-exact-extremal-expectation-theorem",
+        "src/simtheory/tv_transport_duals.py:TVKnapsackDualCertificate",
+        "src/simtheory/tv_transport_duals.py:tv_knapsack_dual_certificate",
+        "tests/test_tv_transport_duals.py"
+      ],
+      "nonclaims": [
+        "the threshold dual is not asserted for nonlinear objectives without a separate reduction",
+        "a zero rational gap certifies the declared finite optimization problem rather than a physical implementation claim"
+      ]
+    },
+    {
+      "id": "ST-T100",
+      "title": "Piecewise-linear TV expectation profile with saturation and exact range window",
+      "kind": "THEOREM",
+      "scope": "one finite rational nominal law and fixed rational value vector as the TV radius varies from zero to one",
+      "assumptions": [
+        "donor states are exhausted in increasing value order for maximization and decreasing value order for minimization",
+        "adjacent equal-slope transport intervals may be merged",
+        "the uncertainty set is a TV ball with inequality radius"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#3-saturation-radius",
+        "docs/distributionally-robust-tv-coding.md#4-range-bound-and-its-exact-tightness-window",
+        "docs/distributionally-robust-tv-coding.md#5-piecewise-linear-robust-expectation-profile",
+        "src/simtheory/distributionally_robust_codes.py:tv_expectation_profile",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the lower envelope across several codes need not itself be concave",
+        "unused TV radius after saturation is not treated as an error in the certificate"
+      ]
+    },
+    {
+      "id": "ST-T101",
+      "title": "Huber contamination inclusion and exact extremal expectation",
+      "kind": "THEOREM",
+      "scope": "one finite nominal probability law, one fixed value vector, and a Huber contamination fraction in the unit interval",
+      "assumptions": [
+        "the contaminated law is (1-epsilon) times the nominal law plus epsilon times an arbitrary replacement law",
+        "the replacement law may concentrate on an extreme-value state"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#6-total-variation-balls-versus-huber-contamination",
+        "src/simtheory/distributionally_robust_codes.py:huber_extremal_expectation",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "Huber contamination and a TV ball with the same numerical radius are not identical uncertainty sets",
+        "the result does not assign a contamination fraction to empirical data without a sampling model"
+      ]
+    },
+    {
+      "id": "ST-T102",
+      "title": "Exact bounded deterministic TV-robust zero-error prefix code",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph, one exact rational nominal prior, one rational TV radius, and all deterministic complete binary zero-error prefix codes below explicit caps",
+      "assumptions": [
+        "every proper independent-set partition and every complete binary prefix shape is exhausted",
+        "codebooks inducing the same state-length vector are equivalent for every source prior",
+        "the continuous worst-prior inner problem is solved exactly by the mass-transport theorem"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#7-outer-zero-error-coding-problem",
+        "docs/distributionally-robust-tv-coding.md#8-price-of-robustness-decomposition",
+        "src/simtheory/distributionally_robust_codes.py:exact_tv_robust_prefix_code",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the bounded exponential search is not a large-instance runtime guarantee",
+        "the deterministic code does not include shared codebook randomness unless that resource is added separately"
+      ]
+    },
+    {
+      "id": "ST-T103",
+      "title": "TV-robust coding monotonicity and exact endpoint laws",
+      "kind": "THEOREM",
+      "scope": "the deterministic finite TV-robust prefix-code value as the radius ranges from zero to one",
+      "assumptions": [
+        "larger TV balls contain smaller TV balls",
+        "at radius zero the ambiguity set contains only the nominal law",
+        "at radius one the ambiguity set is the entire finite probability simplex",
+        "a maximum-depth d binary prefix tree has at most two to the d leaves"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#9-radius-monotonicity",
+        "docs/distributionally-robust-tv-coding.md#10-radius-zero-endpoint",
+        "docs/distributionally-robust-tv-coding.md#11-radius-one-endpoint-and-peak-coding",
+        "src/simtheory/distributionally_robust_codes.py:TVRobustCodeCertificate",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the robust value is not asserted concave in radius because optimal code switches can change slopes",
+        "minimum peak prefix length is not the same resource as average traffic or queueing delay"
+      ]
+    },
+    {
+      "id": "ST-M24",
+      "title": "Skew K4 exact TV transport and Huber separation",
+      "kind": "MODEL_RESULT",
+      "scope": "K4 with nominal prior (7/10,1/10,1/10,1/10), state lengths (1,2,3,3), and radius or contamination fraction 1/10",
+      "assumptions": [
+        "the length-one codeword is assigned to the state of nominal probability seven tenths",
+        "the full TV ball and Huber contamination set use their declared definitions"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#12-skew-k4-exact-fixed-code-transport",
+        "docs/distributionally-robust-tv-coding.md#13-huber-and-tv-separation-on-skew-k4",
+        "src/simtheory/distributionally_robust_codes.py:skew_k4_tv_robust_example",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the numerical separation is not asserted for every prior and value vector",
+        "equal uncertainty parameters do not make Huber and TV sets interchangeable"
+      ]
+    },
+    {
+      "id": "ST-M25",
+      "title": "Skew K4 robust-code phase change at TV radius one quarter",
+      "kind": "MODEL_RESULT",
+      "scope": "K4 with nominal prior (7/10,1/10,1/10,1/10) under deterministic zero-error binary-prefix TV-robust coding",
+      "assumptions": [
+        "all proper partitions and complete prefix shapes are included",
+        "ties in robust value are resolved by lower nominal expected length before later canonical criteria"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#14-skew-k4-robust-code-phase-change",
+        "src/simtheory/distributionally_robust_codes.py:skew_k4_tv_robust_example",
+        "tests/test_distributionally_robust_codes.py"
+      ],
+      "nonclaims": [
+        "one quarter is specific to the declared prior and code alternatives",
+        "the phase change concerns expected prefix length rather than a physical phase transition"
+      ]
+    },
+    {
+      "id": "ST-F14",
+      "title": "Bounded exact TV-robust transport and coding audit",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded rational finite-state TV transport and deterministic robust coding instances checked by the repository",
+      "assumptions": [
+        "seeded denominator-ten simplex grids exhaust every compared adversarial distribution",
+        "all sixty-four labeled four-vertex graphs are independently checked over every coloring, complete tree, and feasible grid law",
+        "all configured partition, prefix-shape, candidate, and dual checks complete without truncation"
+      ],
+      "evidence": [
+        "docs/distributionally-robust-tv-coding.md#15-bounded-certificate-and-independent-checks",
+        "src/simtheory/distributionally_robust_codes.py:exact_tv_robust_prefix_code",
+        "src/simtheory/tv_transport_duals.py:tv_knapsack_dual_certificate",
+        "tests/test_distributionally_robust_codes.py",
+        "tests/test_tv_transport_duals.py"
+      ],
+      "nonclaims": [
+        "bounded exact agreement is not a scalability theorem",
+        "a search cap failure is not an optimum, impossibility, or empirical confidence certificate"
+      ]
+    }
+  ]
+}
