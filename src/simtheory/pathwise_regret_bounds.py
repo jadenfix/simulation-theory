@@ -20,9 +20,11 @@ combination of them. Because every comparator cost is affine,
       = max_{lambda in simplex} min_b sum_j lambda_j C_b(v_j).
 
 This is exactly the dual side of the finite rational zero-sum game whose rows
-are path vertices and whose columns are comparators. The repository therefore
-certifies the oracle maximum with a full primal-dual game receipt rather than
-incorrectly taking the largest vertex oracle value.
+are path vertices and whose columns are comparators. The dual scenario mixture
+also reconstructs an explicit feasible barycenter path attaining the oracle
+maximum. The repository therefore certifies the oracle maximum with a full
+primal-dual game receipt rather than incorrectly taking the largest vertex
+oracle value.
 
 If
 
@@ -45,7 +47,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 
-from .pathwise_regret import PathwiseRegretCertificate
+from .distributionally_robust_codes import total_variation_distance
+from .pathwise_regret import PathwiseRegretCertificate, path_decision_cost
 from .robust_prior_codes import ExactZeroSumGameCertificate, solve_exact_zero_sum_game
 
 
@@ -69,6 +72,38 @@ class RegretValueBoundsCertificate:
     @property
     def oracle_interior_gain(self) -> Fraction:
         return self.oracle_maximum - self.oracle_vertex_maximum
+
+    @property
+    def oracle_maximizing_path(self):
+        """Feasible barycenter path induced by the game-dual vertex mixture."""
+
+        weights = self.oracle_max_game.scenario_mixture
+        paths = self.regret.polytope.paths
+        return tuple(
+            tuple(
+                sum(
+                    (
+                        weights[vertex] * paths[vertex][period][state]
+                        for vertex in range(len(paths))
+                    ),
+                    Fraction(0),
+                )
+                for state in range(self.regret.polytope.state_count)
+            )
+            for period in range(self.regret.polytope.horizon)
+        )
+
+    @property
+    def oracle_barycenter_comparator_costs(self) -> tuple[Fraction, ...]:
+        path = self.oracle_maximizing_path
+        return tuple(
+            path_decision_cost(comparator, path)
+            for comparator in self.regret.comparators
+        )
+
+    @property
+    def oracle_barycenter_is_vertex(self) -> bool:
+        return self.oracle_maximizing_path in self.regret.polytope.paths
 
     @property
     def deterministic_lower_bound(self) -> Fraction:
@@ -129,12 +164,29 @@ class RegretValueBoundsCertificate:
             for row in self.regret.comparator_cost_matrix
             for value in row
         )
+        path = self.oracle_maximizing_path
+        previous = self.regret.polytope.nominal_prior
+        path_feasible = True
+        for distribution in path:
+            if (
+                len(distribution) != self.regret.polytope.state_count
+                or any(value < 0 for value in distribution)
+                or sum(distribution, Fraction(0)) != 1
+                or total_variation_distance(previous, distribution)
+                > self.regret.polytope.drift_per_step
+            ):
+                path_feasible = False
+                break
+            previous = distribution
         return (
             self.deterministic_absolute_decision_index == expected_index
             and self.deterministic_absolute_value == worst_absolute[expected_index]
             and self.oracle_minimum == expected_oracle_minimum
             and self.oracle_maximum >= self.oracle_vertex_maximum
             and self.oracle_interior_gain >= 0
+            and path_feasible
+            and min(self.oracle_barycenter_comparator_costs)
+            == self.oracle_maximum
             and self.deterministic_lower_bound
             <= self.regret.deterministic_value
             <= self.deterministic_upper_bound
