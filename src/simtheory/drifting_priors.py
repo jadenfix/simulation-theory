@@ -43,7 +43,7 @@ from .distributionally_robust_codes import (
     maximize_expectation_tv_ball,
     total_variation_distance,
 )
-from .prior_weighted_codes import RationalInput, validate_rational_prior
+from .prior_weighted_codes import RationalInput
 from .robust_prior_codes import (
     RobustCandidateEnumeration,
     RobustCodeCandidate,
@@ -59,6 +59,19 @@ def _fraction(value: RationalInput | Fraction | int, *, name: str) -> Fraction:
         return value if isinstance(value, Fraction) else Fraction(value)
     except (TypeError, ValueError, ZeroDivisionError) as error:
         raise ValueError(f"invalid exact rational {name}") from error
+
+
+def _validate_probability_vector(
+    probabilities: Sequence[RationalInput],
+) -> tuple[Fraction, ...]:
+    supplied = tuple(_fraction(value, name="prior probability") for value in probabilities)
+    if not supplied:
+        raise ValueError("at least one prior probability is required")
+    if any(probability < 0 for probability in supplied):
+        raise ValueError("prior probabilities must be nonnegative")
+    if sum(supplied, Fraction(0)) != 1:
+        raise ValueError("prior probabilities must sum exactly to one")
+    return supplied
 
 
 def _simplex_vertices(state_count: int) -> tuple[tuple[Fraction, ...], ...]:
@@ -131,7 +144,7 @@ def exact_drift_path_cost(
 ) -> DriftPathCostCertificate:
     """Return the exact worst cumulative cost for one fixed code under TV drift."""
 
-    prior = validate_rational_prior(nominal_prior)
+    prior = _validate_probability_vector(nominal_prior)
     lengths = tuple(_fraction(value, name="state length") for value in state_lengths)
     if len(lengths) != len(prior):
         raise ValueError("one state length is required per source state")
@@ -248,7 +261,7 @@ def exact_static_drift_robust_prefix_code(
 ) -> StaticDriftRobustCodeCertificate:
     """Choose one deterministic zero-error prefix code for a bounded-drift path."""
 
-    prior = validate_rational_prior(nominal_prior)
+    prior = _validate_probability_vector(nominal_prior)
     if graph.vertex_count != len(prior):
         raise ValueError("graph and nominal prior dimensions differ")
     eta = _fraction(drift_per_step, name="drift_per_step")
