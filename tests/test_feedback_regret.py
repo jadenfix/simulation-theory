@@ -23,8 +23,8 @@ def test_zero_switch_current_information_matches_the_path_oracle():
     certificate = exact_drift_information_regret(
         _complete_graph(3),
         (Fraction(1, 3),) * 3,
-        6,
-        Fraction(1, 6),
+        3,
+        Fraction(1, 3),
         2,
         switching_penalty=0,
     )
@@ -40,8 +40,8 @@ def test_positive_switching_cost_makes_current_information_imperfect():
     certificate = exact_drift_information_regret(
         _complete_graph(3),
         (Fraction(1, 3),) * 3,
-        6,
-        Fraction(1, 6),
+        3,
+        Fraction(1, 3),
         2,
         switching_penalty=Fraction(1, 4),
     )
@@ -72,8 +72,8 @@ def test_regret_certificate_keeps_absolute_and_regret_values_distinct():
     certificate = exact_drift_information_regret(
         _complete_graph(3),
         (Fraction(1, 3),) * 3,
-        6,
-        Fraction(1, 6),
+        3,
+        Fraction(1, 3),
         2,
         switching_penalty=Fraction(1, 4),
     )
@@ -97,7 +97,7 @@ def test_invalid_inputs_are_rejected_by_the_underlying_exact_model():
         exact_drift_information_regret(
             _complete_graph(3),
             (Fraction(1, 3),) * 3,
-            6,
-            Fraction(1, 6),
+            3,
+            Fraction(1, 3),
             0,
         )
