@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, and noisy extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), and [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, and code-locality extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), and [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -61,6 +61,12 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 38. **Sharp noisy checkpoint threshold.** With parity visibility `c`, worst-query predictive memory is exactly `m` bits for error below `c/2` and collapses to zero at or above `c/2` in the declared one-step model.
 39. **Exact predictive rate distortion.** For a uniform `m`-bit noisy checkpoint signature and average TV distortion `D`, internal predictive information is at least `m[1-H_2(D/c)]` for `D<c/2`.
 40. **Noisy codeword recovery.** Exact binomial TV, KL/Pinsker necessary counts, and Bhattacharyya sufficient counts quantify repeated parity recovery and complete noisy-codeword separation.
+41. **Binary-symplectic code distance.** Exact GF(2) stabilizer and normalizer enumeration computes `d=min wt(N(S)\S)` and the `4^k` logical Pauli quotient without dense Hilbert-space counting.
+42. **Complete sub-distance local blindness.** Every encoded state in an `[[n,k,d]]` stabilizer code has the same reduced density matrix on every subset of fewer than `d` physical qubits.
+43. **Quantum Singleton constraint.** Two correctable erasures imply `n-k>=2(d-1)`; the five-qubit perfect code saturates the bound.
+44. **Five-qubit exact certificate.** Independent symplectic and state-vector checks verify the declared code is `[[5,1,3]]`, with all one- and two-qubit reductions identical across logical basis and superposition states.
+45. **Encoded logical predictive memory.** `m` blocks encoding `k` logical bits each require `mk` internal bits under worst logical-coordinate queries below error `1/2`, even though every sub-distance physical measurement is blind.
+46. **Error-set versus quantum-distance distinction.** The three-qubit bit-flip repetition code detects one-qubit X errors but has full quantum distance one because a weight-one logical Z exists.
 
 General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical and relational derivations are developed in:
 
@@ -71,6 +77,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/manybody-predictive-bounds.md`](docs/manybody-predictive-bounds.md)
 - [`docs/stabilizer-relational-consistency.md`](docs/stabilizer-relational-consistency.md)
 - [`docs/noisy-relational-rate-distortion.md`](docs/noisy-relational-rate-distortion.md)
+- [`docs/stabilizer-code-locality.md`](docs/stabilizer-code-locality.md)
 
 ## Layout
 
@@ -79,6 +86,7 @@ claims/claims-v1.json                    core typed claims, assumptions, evidenc
 claims/quantum-phase-claims.json         multidimensional quantum claim registry
 claims/stabilizer-relational-claims.json relational and online-consistency claim registry
 claims/noisy-relational-claims.json      noisy parity and rate-distortion claim registry
+claims/stabilizer-code-claims.json       code-distance and logical-locality claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -87,6 +95,7 @@ docs/quantum-sequential-bounds.md        adaptive phase-drift transcript model
 docs/manybody-predictive-bounds.md       subsystem-count and precision scaling
 docs/stabilizer-relational-consistency.md local blindness and streaming parity memory
 docs/noisy-relational-rate-distortion.md noise attenuation, repetition, and predictive coding
+docs/stabilizer-code-locality.md         code distance, erasures, and logical observables
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -108,7 +117,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, error correction, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
 
 ## Tempera Math boundary
 
