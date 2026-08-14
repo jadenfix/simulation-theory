@@ -1,0 +1,209 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T92",
+      "title": "Complete finite deterministic robust prefix-code universe",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph, finitely many exact rational source priors, and deterministic one-shot binary-prefix zero-error codes below declared search caps",
+      "assumptions": [
+        "zero-error encoders are independent-set partitions of the confusion graph",
+        "every robust objective is coordinatewise nondecreasing in state codeword lengths",
+        "unary tree nodes may be contracted and a full binary tree with k leaves has maximum depth at most k minus one"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#1-deterministic-code-universe",
+        "src/simtheory/robust_prior_codes.py:complete_prefix_shapes",
+        "src/simtheory/robust_prior_codes.py:enumerate_robust_code_candidates",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "the bounded exponential universe is not a scalable polynomial-time algorithm",
+        "prefix framing, one-shot operation, and declared-state zero error are explicit model assumptions"
+      ]
+    },
+    {
+      "id": "ST-T93",
+      "title": "Exact finite deterministic minimax length and minimax regret",
+      "kind": "THEOREM",
+      "scope": "the complete bounded deterministic code universe under a finite nonempty set of rational prior scenarios",
+      "assumptions": [
+        "scenario expected lengths are computed exactly from state lengths and priors",
+        "equal cost vectors are deduplicated and only Pareto-dominated vectors are removed",
+        "scenario-specific oracle costs are exact minima over the same complete code universe"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#2-exact-scenario-cost-frontier-and-safe-pruning",
+        "docs/finite-prior-robust-coding.md#4-deterministic-minimax-expected-length",
+        "docs/finite-prior-robust-coding.md#5-deterministic-minimax-regret",
+        "src/simtheory/robust_prior_codes.py:exact_finite_prior_robust_code",
+        "tests/test_robust_prior_codes.py",
+        "tests/test_robust_prior_objective_separation.py"
+      ],
+      "nonclaims": [
+        "minimax absolute length and minimax regret are not assumed to select the same codebook",
+        "the finite scenario set is not a learned or universal prior model"
+      ]
+    },
+    {
+      "id": "ST-T94",
+      "title": "Convex-hull control by finite prior scenarios",
+      "kind": "THEOREM",
+      "scope": "source priors in the convex hull of a finite rational scenario set under fixed deterministic or shared-randomness code designs",
+      "assumptions": [
+        "expected length is linear in the source prior",
+        "the prior-specific oracle value is a pointwise minimum of linear code costs and is therefore concave"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#6-finite-scenarios-control-their-convex-hull",
+        "src/simtheory/robust_prior_codes.py:convex_combination_prior",
+        "src/simtheory/robust_prior_codes.py:expected_length_under_prior",
+        "src/simtheory/robust_prior_codes.py:mixed_expected_length_under_prior",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "the result does not cover uncertainty sets larger than the declared convex hull",
+        "online drift, dependence, and estimation error require separate source-process models"
+      ]
+    },
+    {
+      "id": "ST-T95",
+      "title": "Exact shared-randomness minimax game with sparse support",
+      "kind": "THEOREM",
+      "scope": "a finite rational matrix of prior-scenario costs for complete deterministic zero-error codebooks",
+      "assumptions": [
+        "encoder and all decoders share a source-independent seed selecting the complete codebook",
+        "primal and dual support systems are exhaustively enumerated below the declared basis cap",
+        "every omitted primal and dual inequality is checked exactly"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#7-shared-randomness-codebook-mixtures",
+        "docs/finite-prior-robust-coding.md#8-exact-finite-zero-sum-game",
+        "src/simtheory/robust_prior_codes.py:solve_exact_zero_sum_game",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "private encoder randomness is not treated as shared codebook knowledge",
+        "the certificate bounds codebook support by the number of scenarios but does not price exact non-dyadic random-seed generation"
+      ]
+    },
+    {
+      "id": "ST-T96",
+      "title": "Least-favorable barycenter identity for shared-randomness minimax length",
+      "kind": "THEOREM",
+      "scope": "the complete bounded deterministic code universe and the convex hull of finitely many rational source priors",
+      "assumptions": [
+        "the dual scenario mixture forms a barycenter prior",
+        "expected code length is linear in the prior",
+        "the exact primal and dual finite-game values agree"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#9-least-favorable-barycenter-prior",
+        "src/simtheory/robust_prior_codes.py:FinitePriorRobustCodeCertificate",
+        "src/simtheory/robust_prior_codes.py:convex_combination_prior",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "the identity is for minimax expected length and is not transferred to peak length or nonlinear queueing loss",
+        "the regret dual retains the explicit mixture of scenario-oracle baselines"
+      ]
+    },
+    {
+      "id": "ST-T97",
+      "title": "Finite-prior robust coding hierarchy",
+      "kind": "THEOREM",
+      "scope": "deterministic and shared-randomness zero-error prefix codes for one finite confusion graph and finite prior scenario set",
+      "assumptions": [
+        "scenario oracle values use the same complete deterministic code universe",
+        "a fixed-length minimum coloring is an admissible deterministic prefix code",
+        "shared-randomness mixtures include deterministic point masses"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#10-robust-bound-hierarchy",
+        "src/simtheory/robust_prior_codes.py:FinitePriorRobustCodeCertificate",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "absolute minimax value and minimax regret value have different baselines and are not numerically ordered against each other",
+        "an expected-length bound is not hard one-shot network feasibility"
+      ]
+    },
+    {
+      "id": "ST-M21",
+      "title": "Three-state strict shared-codebook-randomness gain",
+      "kind": "MODEL_RESULT",
+      "scope": "the complete three-state confusion graph with priors (4/5,1/10,1/10) and (1/10,4/5,1/10)",
+      "assumptions": [
+        "a shared seed may select between complete deterministic prefix codebooks before the source state is observed",
+        "every selected codebook remains zero error on all declared states"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#11-three-state-strict-shared-randomness-gain",
+        "src/simtheory/robust_prior_codes.py:k3_shared_randomness_example",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "the zero-error message alphabet remains three",
+        "the strict gain is in worst-prior expected length and consumes shared codebook randomness"
+      ]
+    },
+    {
+      "id": "ST-M22",
+      "title": "Four-state robust minimax tree is not a scenario oracle",
+      "kind": "MODEL_RESULT",
+      "scope": "the complete four-state confusion graph with two priors concentrating probability seven tenths on different states",
+      "assumptions": [
+        "all complete binary prefix trees are included",
+        "absolute deterministic minimax expected length is the objective"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#12-four-state-minimax-tree-need-not-be-any-scenario-oracle",
+        "src/simtheory/robust_prior_codes.py:k4_nonoracle_minimax_example",
+        "tests/test_robust_prior_codes.py"
+      ],
+      "nonclaims": [
+        "a balanced tree is not universally minimax under prior uncertainty",
+        "enumerating only scenario-specific Huffman trees is not generally complete"
+      ]
+    },
+    {
+      "id": "ST-M23",
+      "title": "Minimax expected length and minimax regret select different four-state codes",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared complete four-state graph with priors (1,1,1,7)/10 and (1,2,5,2)/10",
+      "assumptions": [
+        "all deterministic complete prefix trees are exhausted",
+        "regret subtracts each scenario's exact prior-specific oracle value"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#13-minimax-length-and-minimax-regret-can-disagree",
+        "tests/test_robust_prior_objective_separation.py"
+      ],
+      "nonclaims": [
+        "neither robust objective is declared universally preferable",
+        "the separation concerns expected prefix length rather than decoding accuracy"
+      ]
+    },
+    {
+      "id": "ST-F13",
+      "title": "Bounded exact finite-prior robust coding and game audit",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite graphs, complete binary trees, rational prior scenarios, and finite rational zero-sum games checked by the repository",
+      "assumptions": [
+        "all configured partition, shape, candidate, dominance, and game-basis searches complete",
+        "independent tests enumerate every coloring and complete tree on all sixty-four labeled four-vertex graphs",
+        "primal and dual game mixtures have exactly zero rational gap"
+      ],
+      "evidence": [
+        "docs/finite-prior-robust-coding.md#14-bounded-certificate-and-independent-checks",
+        "src/simtheory/robust_prior_codes.py:exact_finite_prior_robust_code",
+        "tests/test_robust_prior_codes.py",
+        "tests/test_robust_prior_objective_separation.py"
+      ],
+      "nonclaims": [
+        "bounded exhaustive agreement is not a large-instance runtime guarantee",
+        "a cap failure is not an optimum or impossibility certificate"
+      ]
+    }
+  ]
+}
