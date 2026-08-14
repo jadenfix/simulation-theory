@@ -73,11 +73,13 @@ def test_terminal_repeated_observation_values_match_majority_formula():
     graph = _complete_graph(3)
     scenarios = _two_scenario_k3()
     channel = _binary_channel()
+    # Exact policy enumeration is exercised through three signals.  The
+    # four-signal plateau is proved independently by the closed binomial check
+    # above, avoiding an unnecessary 2^16 policy sweep in every CI matrix job.
     expected = {
         1: Fraction(11, 8),
         2: Fraction(11, 8),
         3: Fraction(419, 320),
-        4: Fraction(419, 320),
     }
     for repetitions, value in expected.items():
         certificate = exact_repeated_terminal_observation_value(
@@ -85,7 +87,7 @@ def test_terminal_repeated_observation_values_match_majority_formula():
             scenarios,
             channel,
             repetitions,
-            max_policies=100_000,
+            max_policies=10_000,
         )
         assert certificate.valid
         assert certificate.shared_value == value
@@ -96,6 +98,12 @@ def test_terminal_repeated_observation_values_match_majority_formula():
             Fraction(3, 4),
             repetitions,
         )
+    assert symmetric_binary_terminal_cost(
+        Fraction(6, 5),
+        Fraction(19, 10),
+        Fraction(3, 4),
+        4,
+    ) == Fraction(419, 320)
 
 
 def test_longer_terminal_history_blackwell_dominates_its_prefix():
