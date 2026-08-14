@@ -1,0 +1,204 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T85",
+      "title": "Proper-partition and Huffman decomposition of prior-weighted zero-error coding",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph, one exact rational source prior, one common deterministic zero-error message, and one binary prefix code",
+      "assumptions": [
+        "every declared source state must be assigned to one independent message class",
+        "the receiver knows the codebook and uses prefix framing rather than a separate message-length side channel",
+        "expected length is computed under the declared rational source prior"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#1-finite-source-graph-and-prior",
+        "docs/prior-weighted-zero-error-coding.md#3-exact-huffman-optimum-for-one-partition",
+        "src/simtheory/prior_weighted_codes.py:partition_prefix_code",
+        "src/simtheory/prior_weighted_codes.py:optimal_binary_prefix_code",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "the result does not cover externally framed non-prefix strings, interaction, or block coding",
+        "a source prior is a declared model input rather than a representation-independent fact about reality"
+      ]
+    },
+    {
+      "id": "ST-T86",
+      "title": "Exact bounded minimum expected prefix code over all proper color partitions",
+      "kind": "THEOREM",
+      "scope": "a finite confusion graph below the declared vertex and partition-enumeration caps",
+      "assumptions": [
+        "restricted-growth enumeration visits every unlabeled independent-set partition exactly once",
+        "Huffman coding is solved exactly for every enumerated class-probability vector",
+        "a cap exceedance raises instead of returning a partial optimum"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#4-exact-global-prior-weighted-optimum",
+        "docs/prior-weighted-zero-error-coding.md#5-exact-message-count-frontier",
+        "src/simtheory/prior_weighted_codes.py:iter_proper_partitions",
+        "src/simtheory/prior_weighted_codes.py:exact_prior_weighted_prefix_code",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "the exponential bounded algorithm is not a polynomial-time scalability claim",
+        "the average-optimal partition is not assumed to use the chromatic number of messages"
+      ]
+    },
+    {
+      "id": "ST-T87",
+      "title": "Minimum-coloring-entropy sandwich for exact expected prefix length",
+      "kind": "THEOREM",
+      "scope": "the exact finite prior-weighted zero-error prefix-code problem on a nonempty confusion graph",
+      "assumptions": [
+        "Shannon entropy is computed on the message-class distribution induced by a proper partition",
+        "binary prefix codes obey Kraft's inequality",
+        "the entropy-minimizing and expected-length-minimizing partitions are optimized separately"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#7-entropy-sandwich-for-the-global-optimum",
+        "src/simtheory/prior_weighted_codes.py:exact_prior_weighted_prefix_code",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "minimum coloring entropy is not asserted to be the exact one-shot expected prefix length",
+        "the one-bit redundancy bound is not an asymptotic graph-power result"
+      ]
+    },
+    {
+      "id": "ST-T88",
+      "title": "Fixed-length upper bound with separate mean and peak prefix costs",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph under a declared rational prior and one-shot binary prefix coding",
+      "assumptions": [
+        "a chi-coloring can be represented by ceil(log2 chi) fixed bits",
+        "expected and maximum prefix lengths are treated as distinct resources"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#8-fixed-length-mean-length-and-peak-length-are-different",
+        "src/simtheory/prior_weighted_codes.py:PriorWeightedCodeCertificate",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "an expected-length gain does not by itself lower a hard one-shot network cut or deadline",
+        "buffering, framing, queueing, and source-process assumptions remain separate"
+      ]
+    },
+    {
+      "id": "ST-T89",
+      "title": "Prior-weighted coding monotonicity under confusion-edge deletion",
+      "kind": "THEOREM",
+      "scope": "two finite confusion graphs with the same ordered vertices and one graph obtained by deleting edges from the other under the same source prior",
+      "assumptions": [
+        "the communication, prefix-framing, and zero-error conventions are unchanged",
+        "every proper partition of the original graph remains feasible after edge deletion"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#12-edge-deletion-and-side-information-monotonicity",
+        "src/simtheory/prior_weighted_codes.py:prior_weighted_edge_deletion_certificate",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "removing an edge need not strictly reduce expected length or chromatic number",
+        "more informative side information is an explicit causal resource rather than a free operation"
+      ]
+    },
+    {
+      "id": "ST-T90",
+      "title": "Positive-support zero-error coding equals coding the induced support graph",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph with an exact rational prior that may assign zero mass to some declared states",
+      "assumptions": [
+        "support-only zero error quantifies only over states with strictly positive prior mass",
+        "declared-state zero error quantifies over every graph vertex regardless of prior mass"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#13-zero-mass-states-expose-two-different-zero-error-conventions",
+        "src/simtheory/prior_weighted_codes.py:positive_support_code_certificate",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "rounding a small estimated probability to zero is not a harmless numerical operation under support-only semantics",
+        "support-only correctness is not the same guarantee as correctness on every declared state"
+      ]
+    },
+    {
+      "id": "ST-T91",
+      "title": "Exact rational ordering of coloring entropies",
+      "kind": "THEOREM",
+      "scope": "finite rational probability vectors whose denominators are cleared by one positive integer D",
+      "assumptions": [
+        "zero-mass entropy terms use the convention zero log zero equals zero",
+        "probability vectors are compared under the same logarithm base"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#6-minimum-coloring-entropy-and-exact-rational-ordering",
+        "src/simtheory/prior_weighted_codes.py:exact_entropy_order_product",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "the displayed decimal entropy is not used to determine the exact minimizing partition",
+        "this ordering device does not make irrational empirical probabilities exact"
+      ]
+    },
+    {
+      "id": "ST-M19",
+      "title": "Expected-optimal code can use more messages than the chromatic number",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared five-vertex graph with edges 01,02,03,04,12,23,34 and prior weights (12,19,1,5,13)/50",
+      "assumptions": [
+        "zero error is required for all five states",
+        "binary prefix expected length is the optimization objective",
+        "all proper partitions below the finite cap are exhausted"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#10-average-optimal-coding-can-use-more-than-chig-messages",
+        "src/simtheory/prior_weighted_codes.py:richer_than_chromatic_example",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "using additional colors is not always beneficial",
+        "the example does not replace chromatic number for worst-case message-alphabet optimization"
+      ]
+    },
+    {
+      "id": "ST-M20",
+      "title": "Skew K4 separates expected, fixed, and peak lengths",
+      "kind": "MODEL_RESULT",
+      "scope": "the complete four-vertex confusion graph with source prior (7/10,1/10,1/10,1/10)",
+      "assumptions": [
+        "all four states remain zero-error distinguishable",
+        "the expected objective uses a binary prefix code under the declared prior"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#9-skew-complete-graph-example",
+        "src/simtheory/prior_weighted_codes.py:optimal_binary_prefix_code",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "three-bit peak codewords do not fit a two-bit hard cut without buffering or a changed protocol",
+        "the source prior is not claimed stationary or known in an empirical deployment"
+      ]
+    },
+    {
+      "id": "ST-F12",
+      "title": "Bounded exact prior-weighted graph and prefix-code audit",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite graphs and rational priors, including every labeled four-vertex simple graph",
+      "assumptions": [
+        "direct tests enumerate every deterministic coloring modulo label renaming",
+        "small prefix-code optima are independently checked by Kraft-feasible length enumeration",
+        "all configured search caps complete without truncation"
+      ],
+      "evidence": [
+        "docs/prior-weighted-zero-error-coding.md#14-bounded-certificate-contents",
+        "src/simtheory/prior_weighted_codes.py:exact_prior_weighted_prefix_code",
+        "tests/test_prior_weighted_codes.py"
+      ],
+      "nonclaims": [
+        "agreement on bounded graphs is not a large-instance runtime guarantee",
+        "a rejected cap is not an optimum, impossibility, or universal theorem receipt"
+      ]
+    }
+  ]
+}
