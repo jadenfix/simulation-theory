@@ -64,6 +64,16 @@ from .physics import (
     mass_limited_operation_rate,
     schwarzschild_radius_meters,
 )
+from .predictive_networks import (
+    CausalCapacityNetwork,
+    approximate_predictive_cut_deficit_units,
+    binary_coordinate_query_family,
+    binary_parity_query_family,
+    deterministic_query_total_variation,
+    exact_predictive_network_certificate,
+    exact_single_sink_network_feasible,
+    maximum_predictive_packing,
+)
 from .progressive_queries import (
     QueryPartition,
     classical_progressive_information_deficit_bits,
@@ -257,6 +267,81 @@ def main() -> None:
         (1, 1, 1, 1),
     )
     print("finite_progressive_protocol_verified", verify_exact_progressive_allocation(allocation))
+
+    print("\n== predictive-equivalence network min-cuts ==")
+    coordinate_family = binary_coordinate_query_family(4)
+    parity_family = binary_parity_query_family(4, (0b1111,))
+    network = CausalCapacityNetwork(
+        ("source", "left", "right", "sink"),
+        (
+            ("source", "left", 2),
+            ("source", "right", 1),
+            ("left", "sink", 1),
+            ("left", "right", 1),
+            ("right", "sink", 2),
+        ),
+    )
+    print("coordinate_classes_m4", coordinate_family.class_count)
+    print("coordinate_predictive_bits_m4", coordinate_family.exact_predictive_bits)
+    print("parity_classes_m4", parity_family.class_count)
+    print("parity_predictive_bits_m4", parity_family.exact_predictive_bits)
+    print("network_min_cut_units", network.min_cut_capacity("source", "sink"))
+    print(
+        "coordinate_family_exact_feasible",
+        exact_single_sink_network_feasible(
+            network,
+            "source",
+            "sink",
+            coordinate_family,
+        ),
+    )
+    print(
+        "parity_family_exact_feasible",
+        exact_single_sink_network_feasible(
+            network,
+            "source",
+            "sink",
+            parity_family,
+        ),
+    )
+    print(
+        "weighted_signature_TV",
+        deterministic_query_total_variation(
+            coordinate_family,
+            (0, 0, 1, 1),
+            (1, 0, 0, 1),
+            (0.1, 0.2, 0.3, 0.4),
+        ),
+    )
+    predictive_packing = maximum_predictive_packing(
+        coordinate_family,
+        0.2,
+        max_records=16,
+    )
+    print("coordinate_packing_m4_eps0.2", len(predictive_packing))
+    print(
+        "packing_cut_deficit",
+        approximate_predictive_cut_deficit_units(
+            CausalCapacityNetwork(
+                ("source", "sink"),
+                (("source", "sink", 2),),
+            ),
+            "source",
+            "sink",
+            coordinate_family,
+            0.2,
+            max_records=16,
+        ),
+    )
+    certificate = exact_predictive_network_certificate(
+        network,
+        "source",
+        "sink",
+        binary_coordinate_query_family(3),
+    )
+    print("network_certificate_required", certificate.required_units)
+    print("network_certificate_cut", certificate.min_cut_units)
+    print("network_certificate_routed", certificate.routed_units)
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]
