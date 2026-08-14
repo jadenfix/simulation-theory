@@ -63,6 +63,22 @@ The repository's Bernoulli likelihood-ratio e-process is intentionally simple: i
 
 These bounds apply under specified local physical assumptions. They do not constrain an unknown parent substrate without a separate law-transfer or implementation premise.
 
+## Quantum information, dense coding, and random access
+
+- A. S. Holevo, **Bounds for the Quantity of Information Transmitted by a Quantum Communication Channel** (1973): https://doi.org/10.1007/BF01007468
+- Charles H. Bennett and Stephen J. Wiesner, **Communication via One- and Two-Particle Operators on Einstein-Podolsky-Rosen States** (1992): https://doi.org/10.1103/PhysRevLett.69.2881
+- Ashwin Nayak, **Optimal Lower Bounds for Quantum Automata and Random Access Codes** (1999): https://arxiv.org/abs/quant-ph/9904093
+- Andris Ambainis, Ashwin Nayak, Amnon Ta-Shma, Umesh Vazirani, **Dense Quantum Coding and a Lower Bound for 1-Way Quantum Automata**: https://arxiv.org/abs/quant-ph/9804043
+
+These works motivate the quantum causal-cut lane. The repository re-derives a bounded information argument for its declared post-message query interface, separates unassisted from entanglement-assisted capacity, and validates explicit two-to-one and three-to-one Bloch-vector codes. It does not infer unbounded classical retrievability from the continuum of quantum amplitudes.
+
+## Stabilizer codes and quantum error correction
+
+- Daniel Gottesman, **Stabilizer Codes and Quantum Error Correction**: https://arxiv.org/abs/quant-ph/9705052
+- Richard Cleve, Daniel Gottesman, Hoi-Kwong Lo, **How to Share a Quantum Secret**: https://arxiv.org/abs/quant-ph/9901025
+
+The stabilizer-code lane uses binary symplectic commutation, normalizer quotients, and code distance to state local-indistinguishability claims operationally. A finite five-qubit code checker is not promoted into a theorem about scalable physical matter or parent-substrate cost.
+
 ## How sources are used
 
 A citation can motivate a hypothesis, model family, or definition. It does not inherit theorem status. Every repository result must still be assigned one of: theorem under stated assumptions, model result, bounded finite check, restricted empirical hypothesis, or open problem.
