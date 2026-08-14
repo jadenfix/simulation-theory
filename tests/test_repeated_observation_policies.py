@@ -16,6 +16,9 @@ from simtheory.repeated_observation_policies import (
     product_observation_channel,
     symmetric_binary_terminal_cost,
 )
+from simtheory.two_scenario_policy_frontier import (
+    exact_two_scenario_sequential_observation_value,
+)
 
 
 def _complete_graph(count: int) -> ConfusionGraph:
@@ -73,7 +76,7 @@ def test_terminal_repeated_observation_values_match_majority_formula():
     graph = _complete_graph(3)
     scenarios = _two_scenario_k3()
     channel = _binary_channel()
-    # Exact policy enumeration is exercised through three signals.  The
+    # Exact policy enumeration is exercised through three signals. The
     # four-signal plateau is proved independently by the closed binomial check
     # above, avoiding an unnecessary 2^16 policy sweep in every CI matrix job.
     expected = {
@@ -121,8 +124,37 @@ def test_longer_terminal_history_blackwell_dominates_its_prefix():
     assert comparison.value_improvement == Fraction(21, 320)
 
 
+def test_two_scenario_frontier_matches_generic_solver_on_horizon_two():
+    graph = _complete_graph(3)
+    scenarios = _two_scenario_k3()
+    channel = _binary_channel()
+    generic = exact_sequential_observation_value(
+        graph,
+        scenarios,
+        channel,
+        2,
+        switching_penalty=Fraction(1, 10),
+    )
+    frontier = exact_two_scenario_sequential_observation_value(
+        graph,
+        scenarios,
+        channel,
+        2,
+        switching_penalty=Fraction(1, 10),
+    )
+    assert generic.valid and frontier.valid
+    assert generic.deterministic_observation_value == frontier.deterministic_observation_value
+    assert generic.shared_observation_value == frontier.shared_observation_value
+    assert generic.policy_enumeration.distinct_cost_count == frontier.policy_enumeration.distinct_cost_count
+    assert tuple(
+        policy.scenario_total_costs for policy in generic.policy_enumeration.policies
+    ) == tuple(
+        policy.scenario_total_costs for policy in frontier.policy_enumeration.policies
+    )
+
+
 def test_sequential_zero_switching_values_accumulate_repeated_information():
-    certificate = exact_sequential_observation_value(
+    certificate = exact_two_scenario_sequential_observation_value(
         _complete_graph(3),
         _two_scenario_k3(),
         _binary_channel(),
@@ -139,14 +171,13 @@ def test_sequential_zero_switching_values_accumulate_repeated_information():
 
 
 def test_sequential_switching_cost_couples_signal_history_actions():
-    certificate = exact_sequential_observation_value(
+    certificate = exact_two_scenario_sequential_observation_value(
         _complete_graph(3),
         _two_scenario_k3(),
         _binary_channel(),
         3,
         switching_penalty=Fraction(1, 10),
         max_policies=100_000,
-        max_policy_dominance_pairs=20_000_000,
     )
     assert certificate.valid
     assert certificate.deterministic_observation_value == Fraction(261, 64)
@@ -196,7 +227,7 @@ def test_repeated_observation_caps_fail_loudly():
             max_policies=10,
         )
     with pytest.raises(ValueError):
-        exact_sequential_observation_value(
+        exact_two_scenario_sequential_observation_value(
             graph,
             scenarios,
             channel,
