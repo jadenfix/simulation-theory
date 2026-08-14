@@ -154,7 +154,7 @@
         "all proper partitions below the finite cap are exhausted"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#10-the-mean-optimal-code-can-use-more-than-χg-messages",
+        "docs/prior-weighted-zero-error-coding.md",
         "src/simtheory/prior_weighted_codes.py:richer_than_chromatic_example",
         "tests/test_prior_weighted_codes.py"
       ],
