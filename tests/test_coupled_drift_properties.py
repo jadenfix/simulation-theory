@@ -14,9 +14,9 @@ def test_seeded_two_state_grid_never_exceeds_exact_coupled_optimum():
     )
     budgets = (Fraction(1, 4), Fraction(1, 3))
     cost_pairs = (
-        (((0, 1), (1, 0))),
-        (((1, 3), (2, 0))),
-        (((2, 1), (0, 4))),
+        ((0, 1), (1, 0)),
+        ((1, 3), (2, 0)),
+        ((2, 1), (0, 4)),
     )
     grid = tuple(Fraction(index, 24) for index in range(25))
 
@@ -73,5 +73,5 @@ def test_adding_a_constant_per_period_shifts_value_without_changing_gap():
     base = optimize_coupled_drift_costs(polytope, ((0, 1), (1, 0)))
     shifted = optimize_coupled_drift_costs(polytope, ((3, 4), (6, 5)))
     assert base.valid and shifted.valid
-    assert shifted.primal_value == base.primal_value + 9
+    assert shifted.primal_value == base.primal_value + 8
     assert shifted.marginal_relaxation_gap == base.marginal_relaxation_gap
