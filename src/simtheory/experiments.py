@@ -64,6 +64,16 @@ from .physics import (
     mass_limited_operation_rate,
     schwarzschild_radius_meters,
 )
+from .progressive_queries import (
+    QueryPartition,
+    classical_progressive_information_deficit_bits,
+    construct_exact_progressive_allocation,
+    equal_cell_bounded_error_per_run_lower_bound_bits,
+    equal_cell_exact_per_run_bits_lower_bound,
+    equal_cell_exact_per_run_qubits_lower_bound,
+    exact_shared_bits_required,
+    verify_exact_progressive_allocation,
+)
 from .quantum_phase import fisher_eigenvalues, schedule_fisher, state_total_variation
 from .quantum_phase_geometry import (
     canonical_chsh_cartesian_tv,
@@ -223,6 +233,30 @@ def main() -> None:
     print("canonical_3_to_1_success", canonical_qrac_success_probability(3))
     print("canonical_3_to_1_enumerated", brute_force_canonical_qrac_average_success(3))
     print("weighted_assisted_qubits", weighted_entanglement_assisted_qrac_qubits_lower_bound(skewed_weights, 0.1))
+
+    print("\n== progressive query revelation ==")
+    partition = QueryPartition.equal_cells(100, 10)
+    branch_bits = (5,) * partition.cell_count
+    print("exact_shared_bits_branch5", exact_shared_bits_required(partition, branch_bits))
+    print("exact_per_run_bits_after_hint", equal_cell_exact_per_run_bits_lower_bound(100, 10))
+    print("bounded_per_run_bits_eps0.1", equal_cell_bounded_error_per_run_lower_bound_bits(10, 0.1))
+    print("assisted_exact_per_run_qubits", equal_cell_exact_per_run_qubits_lower_bound(10, entanglement_assisted=True))
+    print(
+        "classical_deficit_shared40_branch5",
+        classical_progressive_information_deficit_bits(
+            partition,
+            40,
+            branch_bits,
+            (0.0,) * 100,
+        ),
+    )
+    small_partition = QueryPartition.equal_cells(12, 3)
+    allocation = construct_exact_progressive_allocation(
+        small_partition,
+        8,
+        (1, 1, 1, 1),
+    )
+    print("finite_progressive_protocol_verified", verify_exact_progressive_allocation(allocation))
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]
