@@ -1,0 +1,143 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T63",
+      "title": "Finite scalar-linear sink-rank recovery criterion",
+      "kind": "THEOREM",
+      "scope": "one finite directed acyclic unit-capacity network over a declared prime field with one h-symbol source and scalar linear local edge operations",
+      "assumptions": [
+        "every edge carries one symbol from the declared prime field",
+        "every non-source outgoing edge is a linear combination of that node's incoming edge symbols",
+        "the sink must recover every source symbol exactly with zero error"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#3-sink-rank-criterion",
+        "src/simtheory/network_coding.py:evaluate_scalar_linear_code",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "the result does not cover nonlinear, noisy, vector, cyclic, or interactive codes without a new derivation",
+        "field symbols and ranks are not parent-substrate hardware costs"
+      ]
+    },
+    {
+      "id": "ST-T64",
+      "title": "Per-sink multicast cut necessity",
+      "kind": "THEOREM",
+      "scope": "exact recovery of h source symbols by one sink in the declared finite scalar-linear unit-edge model",
+      "assumptions": [
+        "all information reaching the sink is propagated through the declared directed edges",
+        "one cut edge carries at most one field symbol per use"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#4-per-sink-cut-necessity",
+        "src/simtheory/network_coding.py:multicast_cut_certificate",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "per-sink cut adequacy is not claimed sufficient for routing-only simultaneous multicast",
+        "the repository does not promote this bounded proof into a parent-spacetime signaling theorem"
+      ]
+    },
+    {
+      "id": "ST-T65",
+      "title": "Predictive-class finite-field multicast bridge",
+      "kind": "THEOREM",
+      "scope": "a finite deterministic future-query family with K exact predictive classes and an exact h-symbol multicast code over F_p satisfying K at most p^h",
+      "assumptions": [
+        "records in one predictive class have identical complete future-query signatures",
+        "distinct predictive classes are injected into distinct source vectors",
+        "every sink exactly recovers the complete source vector"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#10-predictive-class-multicast-bridge",
+        "src/simtheory/network_coding.py:predictive_multicast_certificate",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "the field-vector label need not equal the original record representation",
+        "multicasting a predictive class does not multicast an unspecified microscopic state"
+      ]
+    },
+    {
+      "id": "ST-T66",
+      "title": "Declared butterfly routing-only impossibility",
+      "kind": "THEOREM",
+      "scope": "the repository's named binary two-symbol butterfly DAG under the declared zero-or-copy routing-only scalar semantics",
+      "assumptions": [
+        "source outgoing routing packets are zero or one unchanged source basis packet",
+        "intermediate outgoing routing packets are zero or one unchanged incoming packet",
+        "both sinks must recover both source symbols exactly"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#7-analytic-routing-impossibility-on-the-butterfly",
+        "src/simtheory/network_coding.py:certificate_is_routing",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "routing is not claimed inferior on every network or under every packet model",
+        "the proof does not address vector routing, time expansion, nonlinear operations, or additional side information"
+      ]
+    },
+    {
+      "id": "ST-M15",
+      "title": "Binary scalar-linear butterfly multicast solution",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared butterfly network over F_2 with source symbols x_1 and x_2",
+      "assumptions": [
+        "node c may transmit the linear combination x_1 plus x_2 through the shared bottleneck",
+        "each sink receives its declared direct side-information packet and the shared coded packet"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#8-binary-linear-code-on-the-butterfly",
+        "src/simtheory/network_coding.py:butterfly_linear_code",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "one successful finite code is not a proof of the general multicast coding theorem",
+        "the code is exact, scalar, binary, acyclic, and common-demand"
+      ]
+    },
+    {
+      "id": "ST-F07",
+      "title": "Exhaustive binary butterfly routing separation certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "all 4096 local binary scalar coefficient assignments in the declared two-symbol butterfly network",
+      "assumptions": [
+        "the assignment domain is exactly the finite local coefficient product enumerated by the checker",
+        "routing-only validity uses the repository's zero-or-unchanged-copy predicate",
+        "the configured search limit exceeds the complete assignment count"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#9-exhaustive-finite-certificate",
+        "src/simtheory/network_coding.py:butterfly_separation_certificate",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "a capped incomplete search is not reported as an impossibility result",
+        "the finite search does not rule out models outside the declared assignment space"
+      ]
+    },
+    {
+      "id": "ST-F08",
+      "title": "Exact finite-field decoder and predictive-label certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded prime-field matrices, declared finite DAGs, finite predictive class maps, and exact modular decoder equations",
+      "assumptions": [
+        "all field operations are performed modulo the declared prime",
+        "the supplied network and local coefficient map pass structural validation"
+      ],
+      "evidence": [
+        "docs/multicast-network-coding.md#12-computational-objects",
+        "src/simtheory/network_coding.py:gf_solve",
+        "src/simtheory/network_coding.py:predictive_multicast_certificate",
+        "tests/test_network_coding.py"
+      ],
+      "nonclaims": [
+        "bounded exact checks supplement rather than replace the universal linear-algebra derivations",
+        "an injective field label convention is not a physical ontology for hidden records"
+      ]
+    }
+  ]
+}
