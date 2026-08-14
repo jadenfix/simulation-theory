@@ -2,7 +2,7 @@
   "schema": "simulation-theory.claims/v1",
   "claims": [
     {
-      "id": "ST-T58",
+      "id": "ST-T67",
       "title": "Ternary total variation infinity-norm identity",
       "kind": "THEOREM",
       "scope": "two probability laws on exactly three outcomes",
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "id": "ST-T59",
+      "id": "ST-T68",
       "title": "Exact common-center feasibility for ternary target laws",
       "kind": "THEOREM",
       "scope": "one finite nonempty cluster of three-outcome target laws under total-variation tolerance epsilon",
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "id": "ST-T60",
+      "id": "ST-T69",
       "title": "Closed one-state ternary minimax predictive radius",
       "kind": "THEOREM",
       "scope": "one finite nonempty family of ternary target laws approximated by one arbitrary ternary predictor",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "id": "ST-T61",
+      "id": "ST-T70",
       "title": "Exact minimum arbitrary-center cover for finite ternary laws",
       "kind": "THEOREM",
       "scope": "a bounded finite one-query ternary target family under total-variation tolerance epsilon",
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "id": "ST-T62",
+      "id": "ST-T71",
       "title": "Exact one-sink network capacity for finite ternary approximation",
       "kind": "THEOREM",
       "scope": "one source, one sink, one bounded finite ternary target family, and one directed integer-capacity network carrying a center index",
@@ -100,7 +100,7 @@
       ]
     },
     {
-      "id": "ST-M14",
+      "id": "ST-M16",
       "title": "Three-vertex ternary predictive-state phase diagram",
       "kind": "MODEL_RESULT",
       "scope": "the three deterministic simplex-vertex laws under total-variation tolerance epsilon",
@@ -120,7 +120,7 @@
       ]
     },
     {
-      "id": "ST-F06",
+      "id": "ST-F09",
       "title": "Finite ternary center, cover, and routed-network certificate",
       "kind": "FINITE_CHECK",
       "scope": "bounded finite ternary families and integer-capacity one-sink networks checked by the repository",
