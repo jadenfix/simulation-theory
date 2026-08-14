@@ -6,16 +6,16 @@ hypotheses.
 This repository does **not** assume that reality is simulated. It asks a more
 scientifically useful question:
 
-> What can be inferred, proved, tested, or ruled out once the observation
-> interface, observer measure, source law, causal architecture, approximation
-> metric, communication resources, and physical implementation assumptions are
-> all stated explicitly?
+> What can be inferred, proved, tested, or ruled out after the observable
+> interface, observer measure, source law, temporal dynamics, approximation
+> metric, causal architecture, communication resources, and physical
+> implementation assumptions are stated explicitly?
 
 ## Core boundary
 
 A generic claim that “some external process generates our observations” is not
-internally identifiable when that process is allowed to reproduce exactly the
-same observable probability law as an ordinary physical model.
+internally identifiable when that process may reproduce the same observable law
+as an ordinary physical model.
 
 If
 
@@ -23,45 +23,44 @@ If
 P_{\mathrm{sim}}=P_{\mathrm{base}},
 \]
 
-then every internal statistic has the same law under both models and
+then every internal statistic has the same distribution under both models and
 
 \[
 BF_{\mathrm{sim}:\mathrm{base}}=1.
 \]
 
-No classifier, Bayesian update, larger AI model, or additional computation can
+No classifier, Bayesian update, larger model, or additional computation can
 recover information absent from the observable distribution.
 
-The productive research program is therefore:
+The productive program is therefore:
 
 1. define a **restricted** hypothesis;
 2. derive its observable law;
 3. establish identifiability before estimation;
-4. define the future-query and intervention interface;
+4. declare the future-query, intervention, and timing interface;
 5. separate converse bounds from constructive protocols;
 6. build exact or independently replayable certificates;
-7. preserve every assumption and nonclaim next to the result.
+7. keep every assumption and nonclaim next to the result.
 
-## Research discipline
+## Claim discipline
 
-Every claim is typed as one of:
+Every result is typed as one of:
 
 - **Theorem** — follows from stated mathematical assumptions.
 - **Model result** — exact inside one declared model or finite example.
 - **Finite check** — reproducible computation on an explicitly bounded domain.
-- **Open problem** — a research target, not an established conclusion.
+- **Open problem** — a research target rather than an established conclusion.
 
 Machine-readable manifests under [`claims/`](claims/) record stable IDs, scope,
-assumptions, evidence paths, and nonclaims. A passing test or CI run validates
-code and bounded receipts; it does not promote a finite check into a universal
-theorem.
+assumptions, evidence paths, and nonclaims. A test or CI run validates code and
+bounded receipts; it never promotes a finite check into a universal theorem.
 
 ## First-principles dependency chain
 
-The central technical program can be read as a sequence:
+The technical program is organized as a dependency graph:
 
 \[
-\text{allowed observations and future queries}
+\text{allowed observations, queries, and interventions}
 \]
 
 \[
@@ -77,7 +76,7 @@ The central technical program can be read as a sequence:
 \]
 
 \[
-\text{exact classes, approximate packings, covers, or confusion graphs}
+\text{exact classes, packings, covers, channels, or confusion graphs}
 \]
 
 \[
@@ -85,7 +84,7 @@ The central technical program can be read as a sequence:
 \]
 
 \[
-\text{state, message, or center index requirements}
+\text{state, message, center-index, or codebook requirements}
 \]
 
 \[
@@ -93,49 +92,48 @@ The central technical program can be read as a sequence:
 \]
 
 \[
-\text{causal-cut, network, source-coding, and robustness constraints}.
+\text{causal-cut, network, source-coding, robustness, and control constraints}.
 \]
 
-Changing any interface can change every downstream result. Raw hidden-state
-count, Hilbert-space dimension, or internal mass is never used as a substitute
-for the declared observable problem.
+Changing any upstream interface can change every downstream result. Raw hidden
+state count, Hilbert-space dimension, or internal mass is never substituted for
+an operationally declared observation problem.
 
 # Result map
 
-## 1. Identification, evidence ceilings, and model uncertainty
+## 1. Identification, evidence ceilings, and sequential inference
 
-The statistical foundations include:
+The statistical foundation includes:
 
 - unrestricted observational indistinguishability;
 - Bayes-factor equality for identical laws;
-- posterior movement bounds from bounded likelihood ratios;
+- posterior movement ceilings from bounded likelihood ratios;
 - equal-prior optimal classification
 
   \[
   A^\star=\frac{1+\operatorname{TV}(P,Q)}2;
   \]
 
-- Le Cam two-point lower bounds;
-- Fano multi-model identification bounds;
+- Le Cam and Fano lower bounds;
 - finite sample-size necessities for restricted architecture families;
-- hierarchical feasibility mixtures;
-- robust posterior intervals;
-- anytime-valid likelihood-ratio e-processes for specified signatures;
+- hierarchical feasibility mixtures and robust posterior intervals;
+- selection-policy and latent-intervention ambiguity;
+- anytime-valid likelihood-ratio e-processes;
 - exact finite-horizon optional-stopping audits.
 
 The governing rule is: **identification comes before estimation**.
 
 ## 2. Observer measure and anthropic sensitivity
 
-Observer counting is decomposed instead of hidden inside one dramatic number.
+Observer counting is decomposed rather than hidden inside one dramatic number.
 The model keeps separate:
 
 - civilization survival and technical feasibility;
 - deployment policy;
-- number of simulated environments;
+- number of environments;
 - observers versus observer-moments;
 - consciousness assumptions;
-- compatibility with the observer's complete evidence;
+- compatibility with complete evidence;
 - duration and duplication conventions.
 
 For uncertain simulated measure \(X\),
@@ -147,9 +145,8 @@ E\!\left[\frac{X}{B+X}\right]
 \]
 
 so inserting an expected count into a nonlinear ratio can overstate the
-properly averaged result. Finite SSA-, SIA-, and FNC-style conditioning rules
-are implemented as sensitivity models rather than silently collapsed into a
-single universal prior.
+properly averaged result. Finite SSA-, SIA-, and FNC-style rules are implemented
+as sensitivity models, not collapsed into one universal prior.
 
 ## 3. Adaptive rendering and predictive state
 
@@ -159,7 +156,7 @@ when each answer is sampled from the exact target conditional:
 \[
 P(A_{1:T}\mid Q_{1:T})
 =
-\prod_{t=1}^TP(A_t\mid H_t,Q_t).
+\prod_{t=1}^T P(A_t\mid H_t,Q_t).
 \]
 
 Approximate renderers have adaptive transcript bounds from per-step total
@@ -175,54 +172,44 @@ P(\text{all allowed futures}\mid h)
 P(\text{all allowed futures}\mid h').
 \]
 
-If there are \(K\) exact future-law classes, an exact finite renderer needs
-exactly \(K\) predictive states and at least
+If there are \(K\) exact future-law classes, an exact finite renderer requires
+\(K\) predictive states and at least
 
 \[
-\lceil\log_2K\rceil
+\lceil\log_2 K\rceil
 \]
 
-fixed-length bits.
-
-For approximation, strict \(2\epsilon\)-packings provide converse lower bounds,
-while target-centered and arbitrary-center covers provide constructive upper
-bounds. The gap is kept explicit unless an exact geometry closes it.
+fixed-length bits. For approximation, strict \(2\epsilon\)-packings provide
+converse lower bounds and arbitrary-center covers provide constructive upper
+bounds. Gaps are reported rather than silently closed.
 
 ## 4. Stochastic future laws, arbitrary centers, and observation channels
 
 Finite stochastic query families assign a full conditional outcome law to each
-record-query pair. Under an exogenous query schedule, joint TV and KL are the
+record-query pair. Under an exogenous query schedule, joint TV and KL are
 query-weighted sums of their conditional counterparts.
 
-For one query with exactly three outcomes,
+Exact rational arbitrary-center optimization is implemented for finite
+categorical laws, including Farkas infeasibility receipts and minimax LP duals.
+For one ternary query,
 
 \[
-\operatorname{TV}(p,u)=\max_j|p_j-u_j|.
+\operatorname{TV}(p,u)=\max_j|p_j-u_j|,
 \]
 
-This yields exact common-center feasibility, a closed one-state minimax radius,
-and exact unrestricted arbitrary-center covering by finite subset enumeration
-plus minimum set cover. For the three simplex vertices, the exact state count is:
+which yields exact common-center feasibility and closed finite examples.
 
-- three for \(\epsilon<1/2\);
-- two for \(1/2\le\epsilon<2/3\);
-- one uniform state for \(\epsilon\ge2/3\).
-
-The max-coordinate identity is special to three outcomes and is not generalized
-by analogy.
-
-For a shared record-independent outcome channel \(K\), the exact Dobrushin
-coefficient is
+For a record-independent outcome channel \(K\), the exact Dobrushin coefficient
 
 \[
 \delta(K)
 =
 \max_{a,b}
 \operatorname{TV}
-\bigl(K(\cdot\mid a),K(\cdot\mid b)\bigr),
+\bigl(K(\cdot\mid a),K(\cdot\mid b)\bigr)
 \]
 
-and
+satisfies
 
 \[
 \operatorname{TV}(\mu K,\nu K)
@@ -231,17 +218,13 @@ and
 u).
 \]
 
-Exact classes can only coarsen, and strict packings and target-centered covers
-cannot grow. Serial coefficients are submultiplicative. Binary symmetric and
-erasure channels have exact coefficients.
-
 Lossy observation can weaken evidence. It cannot create distinguishability that
 was absent before the channel.
 
 ## 5. Physical and quantum predictive geometry
 
 Physical-query lower bounds are derived from explicit measurement families,
-not from raw Hilbert-space dimension.
+not raw Hilbert-space dimension.
 
 Implemented examples include:
 
@@ -260,7 +243,7 @@ Implemented examples include:
 - exact computational-basis coordinate-query scaling;
 - continuous product-qubit \(L_1\) geometry;
 - subsystem-count versus accessible-resolution packings;
-- exact finite adaptive phase-drift transcript laws.
+- exact adaptive phase-drift transcript laws.
 
 The local-physics module separately implements Landauer, Margolus–Levitin,
 Bekenstein, mass-energy, Schwarzschild, and mass-limited operation expressions.
@@ -291,7 +274,7 @@ while the complete transcript obeys one global parity constraint. After
 \(\ell-1\) outcomes in each of \(m\) open blocks, exact continuation has
 \(2^m\) predictive classes and needs one parity bit per block.
 
-With independent flip probability \(p\), parity visibility is
+With independent local flip probability \(p\), parity visibility is
 
 \[
 c_\ell(p)=(1-2p)^\ell,
@@ -327,14 +310,9 @@ I(X;M)
 m[1-H_2(\epsilon)].
 \]
 
-The repository includes:
-
-- resident-state versus later-communication tradeoffs;
-- weighted future-query error allocation;
-- indexed parity-reconciliation equivalence;
-- isolated-region replication bounds;
-- progressive query revelation and exact shared/branch capacity regions;
-- explicit finite upper protocols.
+The repository includes resident-state versus communication tradeoffs, weighted
+future-query allocation, indexed parity reconciliation, isolated-region
+replication, progressive query revelation, and explicit finite upper protocols.
 
 Without entanglement assistance, an unresolved \(m\)-bit random-access record
 encoded into \(q\) qubits obeys
@@ -345,42 +323,24 @@ q\ge m[1-H_2(\epsilon)].
 
 Receiver-side preshared entanglement changes the coefficient by at most a factor
 of two. Exact dense coding attains the assisted zero-error full-record rate.
-Canonical two-to-one and three-to-one one-qubit random-access codes are checked
-on every record-query pair.
+Query timing is itself a resource: revealing the requested coordinate before
+encoding can reduce linear communication to one answer symbol.
 
-Query timing is a resource: revealing the requested coordinate before encoding
-can reduce linear communication to one answer symbol.
+## 8. Predictive networks and function computation
 
-## 8. Predictive networks and multicast coding
-
-For one sink, a finite exact predictive-class label can be routed through a
-directed integer-capacity network exactly when the declared source-sink min-cut
-can carry its fixed-length index. Approximate stochastic networks report three
-states:
+For one sink, a finite predictive-class index can be routed through an integer-
+capacity network exactly when the declared min-cut carries the required fixed-
+length index. Approximate stochastic networks distinguish:
 
 - **impossible** below a packing lower bound;
 - **constructively feasible** above a cover-index upper bound;
 - **unresolved** in between.
 
-Per-sink min-cuts are necessary but not generally jointly sufficient for
-multiple sinks.
+The finite multicast lane checks all 4096 binary scalar assignments on a
+butterfly network and verifies that the shared bottleneck must carry
+\(x_1+x_2\) rather than a routed uncoded symbol.
 
-The finite multicast lane implements exact scalar linear coding over prime
-fields. In the declared binary butterfly network:
-
-- both sinks have min-cut two;
-- all 4096 local binary scalar assignments are checked;
-- no routing-only assignment serves both sinks;
-- sending \(x_1+x_2\) through the shared bottleneck lets both decode.
-
-The project proves this bounded result and does not silently claim the full
-general multicast theorem.
-
-## 9. Sink-specific linear and nonlinear function computation
-
-A receiver need not reconstruct the entire source. For source
-\(x\in\mathbb F_p^h\), incoming rows \(G_t\), local side-information rows
-\(S_t\), and desired rows \(B_t\), exact recovery is equivalent to
+For sink-specific linear demands over \(\mathbb F_p\), exact recoverability is
 
 \[
 \operatorname{rowspan}(B_t)
@@ -389,20 +349,7 @@ A receiver need not reconstruct the entire source. For source
 \begin{pmatrix}G_t\\S_t\end{pmatrix}.
 \]
 
-The new linear information required across a cut is
-
-\[
-\operatorname{rank}
-\begin{pmatrix}S_t\\B_t\end{pmatrix}
--
-\operatorname{rank}(S_t).
-\]
-
-Complementary side information can make one XOR symbol serve two different
-receivers.
-
-For arbitrary finite nonlinear target and side-information functions, define a
-confusion edge
+For arbitrary finite nonlinear functions, define the confusion edge
 
 \[
 x\sim_c y
@@ -413,8 +360,7 @@ s_t(x)=s_t(y)
 f_t(x)\ne f_t(y).
 \]
 
-Zero-error common-message encoders are exactly proper colorings of this graph.
-Therefore
+Zero-error common-message encoders are precisely proper colorings, so
 
 \[
 |\mathcal M|_{\min}=\chi(G),
@@ -422,30 +368,23 @@ Therefore
 b_{\min}=\lceil\log_2\chi(G)\rceil.
 \]
 
-The implementation includes exact bounded chromatic, clique, independent-set,
-decoder, realization, monotonicity, and randomized-support checks. Every simple
-finite graph can be realized as a finite side-information function problem.
-All 64 labeled four-vertex graphs are independently audited.
+Every finite simple graph can be realized as a finite side-information function
+problem. All 64 labeled four-vertex graphs are independently audited.
 
-## 10. Prior-weighted zero-error source coding
+## 9. Prior-weighted zero-error source coding
 
 Chromatic number minimizes the hard message alphabet, not expected bits under a
 nonuniform source law.
 
-For a proper independent-set partition
-
-\[
-\mathcal P=\{C_1,\ldots,C_k\},
-\]
-
-and rational prior \(\pi\), class probabilities are
+For a proper independent-set partition \(\mathcal P\) and rational prior
+\(\pi\), class probabilities are
 
 \[
 p_j(\mathcal P)=\sum_{x\in C_j}\pi_x.
 \]
 
-For that partition, Huffman coding gives the exact minimum binary-prefix mean.
-The global one-shot optimum is
+Huffman coding is exact for each partition, and exhaustive bounded partition
+search gives
 
 \[
 \boxed{
@@ -456,103 +395,76 @@ L_H\bigl(p(\mathcal P)\bigr).
 }
 \]
 
-The bounded solver enumerates every unlabeled proper partition and complete
-prefix certificate. It reports the exact message-count frontier, mean length,
-peak length, and minimum coloring entropy.
+The implementation keeps separate:
 
-For rational probabilities, coloring entropies are ordered exactly through
+- minimum message alphabet;
+- fixed-length bits;
+- expected prefix length;
+- peak codeword length;
+- declared-state versus positive-support-only zero error;
+- one-shot cost versus block-amortized rate.
 
-\[
-Q_D(p)=\prod_jp_j^{Dp_j}=2^{-D H_2(p)}.
-\]
-
-The universal one-shot entropy sandwich, including zero-mass declared classes,
-is
+For complete-confusion i.i.d. blocks,
 
 \[
-H_{\mathrm{col}}(G,\pi)
+H(P)
 \le
-L^*(G,\pi)
-\le
-H_{\mathrm{col}}(G,\pi)+1,
+\frac{L_H(P^m)}m
+<
+H(P)+\frac1m
 \]
 
-with a strict upper inequality under full support.
+under positive support.
 
-Important exact examples:
+## 10. Finite-prior and polyhedral robustness
 
-- skew \(K_4\): mean \(3/2\), fixed length two, peak length three;
-- uniform \(C_5\): mean \(8/5\);
-- one five-vertex graph has \(\chi=3\) but its mean-optimal code uses four
-  message classes;
-- declared-state versus positive-support-only zero error can differ
-  discontinuously at zero prior mass.
-
-## 11. Finite-prior robust coding and shared codebook randomness
-
-For finite prior scenarios
-
-\[
-\Pi=\{\pi^{(1)},\ldots,\pi^{(R)}\},
-\]
-
-the deterministic robust value is
+For finite prior scenarios \(\Pi\), deterministic minimax cost is
 
 \[
 V_{\mathrm{det}}
 =
-\min_c\max_rL_r(c).
+\min_c\max_{\pi\in\Pi}E_\pi[\ell_c].
 \]
 
-Scenario-specific oracle costs
-
-\[
-L_r^*=\min_cL_r(c)
-\]
-
-define minimax regret
+Minimax regret is kept separate:
 
 \[
 R_{\mathrm{det}}
 =
-\min_c\max_r[L_r(c)-L_r^*].
+\min_c\max_{\pi\in\Pi}
+\left(E_\pi[\ell_c]-L^*(G,\pi)\right).
 \]
 
-The complete bounded code universe includes every proper partition and every
-full binary prefix shape. A deterministic minimax tree need not be Huffman-
-optimal for any one scenario, and minimax length need not select the same code
-as minimax regret.
+Shared source-independent codebook randomness produces an exact finite rational
+zero-sum game with zero primal-dual gap.
 
-With a source-independent seed shared by encoder and all decoders, one may mix
-complete deterministic codebooks:
+The ambiguity geometry is generalized to arbitrary compact rational polytopes
 
 \[
-V_{\mathrm{mix}}
+\mathcal U
 =
-\min_q\max_r\sum_cq_cL_r(c).
+\{q\in\Delta_{n-1}:Aq\le b\}.
 \]
 
-The finite rational zero-sum game is solved by exact primal and dual support
-enumeration with zero rational gap. An optimum needs at most \(R\) codebooks in
-its support.
-
-The dual scenario mixture defines a least-favorable barycenter prior, and
+The simplex equality is eliminated exactly, all bounded vertices are enumerated
+below active-basis caps, empty systems carry sparse Farkas witnesses, and linear
+expectation extrema carry exact LP dual multipliers. Continuous polyhedral
+minimax regret reduces to ambiguity vertices because
 
 \[
-V_{\mathrm{mix}}
-=
-\max_{\bar\pi\in\operatorname{conv}(\Pi)}L^*(G,\bar\pi).
+q\mapsto E_q[\ell_c]-L^*(G,q)
 \]
 
-For a declared \(K_3\) example, deterministic minimax is \(19/10\), while a
-shared 50/50 codebook mixture achieves \(31/20\). The zero-error alphabet is
-unchanged; the gain is in worst-prior expected length and consumes shared
-codebook randomness.
+is convex piecewise linear.
 
-## 12. Continuous TV-ball distributional robustness
+A separate statistical layer calibrates TV confidence regions from finite i.i.d.
+multinomial samples. Transcendental radii are evaluated at high precision and
+rounded outward onto a rational grid; downstream robust optimization remains
+exact conditional on that conservative radius.
 
-A finite prior list is not the only uncertainty model. For nominal prior \(p\)
-and radius \(\rho\), define
+## 11. Continuous TV-ball robustness and shared codebook mixtures
+
+For nominal prior \(p\) and radius \(\rho\),
 
 \[
 \mathcal U_{\mathrm{TV}}(p,\rho)
@@ -560,52 +472,16 @@ and radius \(\rho\), define
 \{q:\operatorname{TV}(q,p)\le\rho\}.
 \]
 
-For a fixed value vector \(f\), total variation is exactly moved probability
-mass. The robust maximum is obtained by moving mass from the lowest-value donors
-to a maximum-value state:
+For a fixed value vector, total variation is exactly moved probability mass.
+The robust maximum is obtained by moving mass from the lowest-value donors to
+maximum-value recipients. Every transfer, extremal law, and expectation is
+rational.
 
-\[
-\boxed{
-\sup_{q\in\mathcal U_{\mathrm{TV}}}E_q[f]
-=
-E_p[f]
-+
-\sum_t m_t(f_{j_t}-f_{i_t}).
-}
-\]
+The same problem has an exact fractional-knapsack dual with complementary
+slackness. Fixed-code robust expectation is continuous, monotone, piecewise
+linear, and concave in radius for maximization.
 
-The minimum reverses the transport order. Every transfer, extremal distribution,
-and expectation is rational.
-
-The same inner problem has an exact fractional-knapsack dual:
-
-\[
-\boxed{
-\min_{\lambda\ge0}
-\left[
-\rho\lambda
-+
-\sum_i p_i(g_i-\lambda)_+
-\right],
-}
-\]
-
-with exact complementary-slackness receipts and zero rational gap.
-
-Fixed-code robust expectation is continuous, monotone, piecewise linear, and
-concave in radius for maximization. It saturates once all nonmaximum mass reaches
-the maximum-value face. The range bound
-
-\[
-|E_q[f]-E_p[f]|
-\le
-\operatorname{TV}(q,p)
-\operatorname{range}(f)
-\]
-
-has an explicit tightness window.
-
-The outer exact deterministic coding problem is
+The outer deterministic coding problem is
 
 \[
 V_{\mathrm{TV}}(G,p,\rho)
@@ -614,26 +490,107 @@ V_{\mathrm{TV}}(G,p,\rho)
 \sup_{q:\operatorname{TV}(q,p)\le\rho}E_q[\ell_c].
 \]
 
-It exhausts every bounded proper partition and complete prefix shape. Exact
-endpoints are
+With source-independent shared codebook randomness, the continuous adversary
+reduces exactly to a finite game over TV-polytope vertices. The least-favorable
+dual barycenter is replayed by the nominal coding oracle. Exact Carathéodory
+elimination bounds support size without confusing support count with random-seed
+entropy.
+
+## 12. Static coding under bounded source-law drift
+
+A static ambiguity ball and a changing source law are different models. The
+finite path model is
 
 \[
-V_{\mathrm{TV}}(G,p,0)=L^*(G,p),
+q_0=p,
+\qquad
+\operatorname{TV}(q_t,q_{t-1})\le\eta.
 \]
 
-and
+For one fixed cost vector \(\ell\), canonical TV mass transport can be continued
+monotonically, giving
 
 \[
-V_{\mathrm{TV}}(G,p,1)
+\sup_{\text{paths}}
+\sum_{t=1}^T q_t^\top\ell
 =
-\lceil\log_2\chi(G)\rceil.
+\sum_{t=1}^T
+\sup_{\operatorname{TV}(q,p)\le\min(t\eta,1)}
+q^\top\ell.
 \]
 
-For skew \(K_4\), the robust code changes from an unbalanced tree to the
-balanced two-bit tree at exact radius \(1/4\). Huber contamination is implemented
-separately and is generally a strict subset of the equal-radius TV ball.
+The static-code optimizer exhausts every bounded componentwise-undominated
+zero-error prefix code. For skew \(K_4\), the exact finite-horizon decision
+boundary is
 
-## 13. Algorithmic priors and implementation multiplicity
+\[
+\eta_c(T)=\frac{1}{2(T+1)}.
+\]
+
+Statistical estimation uncertainty and separately declared drift combine by TV
+triangle inequality, but the drift assumption does not acquire statistical
+coverage merely by being added to a confidence radius.
+
+## 13. Coupled drift, changing objectives, and code reconfiguration
+
+When the state-cost vector changes with time, independently maximizing each
+period can select mutually unreachable source laws. The exact coupled problem is
+
+\[
+\max_{q_{1:T}}
+\sum_{t=1}^Tq_t^\top g_t
+\quad\text{s.t.}\quad
+q_0=p,
+\quad
+\operatorname{TV}(q_t,q_{t-1})\le\eta_t.
+\]
+
+Finite-alphabet TV is represented exactly by event halfspaces. After eliminating
+one simplex coordinate per period, the path is a bounded rational polytope in
+\(T(n-1)\) variables. The implementation enumerates all vertices below a hard
+cap and independently supplies an exact LP dual with complementary slackness.
+
+The sum of independent expanding-ball optima is only an upper bound. For
+
+\[
+p=(1/2,1/2),
+\quad
+\eta_1=\eta_2=1/4,
+\quad
+g_1=(0,1),
+\quad
+g_2=(1,0),
+\]
+
+the independent relaxation is \(7/4\), while the exact coupled value is
+
+\[
+\boxed{5/4.}
+\]
+
+The outer decision problem chooses a precommitted codebook sequence and may pay
+\(\kappa\) per switch. For uniform \(K_3\) with two drift steps of \(1/6\),
+rotating the length-one leaf gives
+
+\[
+V_{\mathrm{rotate}}=11/3,
+\qquad
+V_{\mathrm{static}}=23/6.
+\]
+
+The exact reconfiguration gain and switching threshold are both
+
+\[
+\boxed{1/6.}
+\]
+
+This is the first dynamic-control layer in the repository. It does not yet
+grant the encoder hidden access to the current source law; the complete sequence
+is committed before the adversarial path is chosen.
+
+See [`docs/coupled-drift-code-sequences.md`](docs/coupled-drift-code-sequences.md).
+
+## 14. Algorithmic priors and implementation multiplicity
 
 Many programs can implement one observable law. The algorithmic lane separates:
 
@@ -672,6 +629,10 @@ claims/confusion-graph-claims.json
 claims/prior-weighted-code-claims.json
 claims/robust-prior-code-claims.json
 claims/distributionally-robust-code-claims.json
+claims/polyhedral-regret-confidence-claims.json
+claims/polyhedral-dual-claims.json
+claims/prior-drift-claims.json
+claims/coupled-drift-claims.json
 ```
 
 ## Proof and derivation map
@@ -700,6 +661,10 @@ docs/prior-weighted-zero-error-coding.md
 docs/finite-prior-robust-coding.md
 docs/distributionally-robust-tv-coding.md
 docs/tv-transport-dual.md
+docs/polyhedral-regret-confidence.md
+docs/polyhedral-dual-certificates.md
+docs/prior-drift-path-robustness.md
+docs/coupled-drift-code-sequences.md
 docs/research-program.md
 docs/sources.md
 docs/tempera-math-bridge.md
@@ -746,24 +711,27 @@ must predeclare:
 
 Quantization, randomness, mathematical laws, Bell violation, entanglement,
 stabilizer structure, quantum coding, graph coloring, Huffman coding, robust
-optimization, network coding, max flow, min cuts, predictive equivalence, or
-information bounds are not generic evidence for simulation. Ordinary physical
-theories and ordinary distributed systems can contain all of those structures.
+optimization, network coding, max flow, min cuts, predictive equivalence,
+dynamic programming, or information bounds are not generic evidence for
+simulation. Ordinary physical theories and ordinary distributed systems can
+contain all of those structures.
 
 # Current frontier
 
 The highest-value next campaigns are:
 
-- shared-randomness minimax coding against a continuous TV adversary;
-- exact rational robust LP duals for general polyhedral prior sets;
-- finite-sample and time-uniform confidence sets that feed robust code design;
-- KL- and Wasserstein-ball coding with certified rather than floating bounds;
-- allowed-error function computation, where the unweighted confusion graph no
+- adaptive codebook policies under an explicitly declared observation kernel;
+- dynamic regret when the encoder learns only realized symbols rather than the
+  hidden source law;
+- exact finite-horizon Bellman and minimax-game certificates;
+- stochastic or adversarially uncertain drift budgets;
+- KL-, Wasserstein-, and physics-derived transition geometry with certified
+  primal and dual bounds;
+- allowed-error function computation, where an unweighted confusion graph no
   longer contains the full risk information;
-- block graph products and asymptotic source-coding rates;
+- multi-letter graph products and asymptotic side-information source coding;
 - queueing, buffer, and tail-delay consequences of variable-length messages;
 - progressive query revelation embedded in causal networks;
-- noisy edge coding with source, channel, and network coding kept separate;
 - scalable CSS, concatenated, and topological code families;
 - dynamic update-time and cell-probe lower bounds;
 - preregistered tests of one restricted physical architecture at a time.
