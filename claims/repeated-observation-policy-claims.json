@@ -1,0 +1,125 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T135",
+      "title": "Exact product observation channel and prefix Blackwell monotonicity",
+      "kind": "THEOREM",
+      "scope": "a finite rational observation channel repeated conditionally independently for a fixed hidden source-law scenario",
+      "assumptions": [
+        "the hidden scenario remains fixed across repetitions",
+        "signals are conditionally independent and use the same declared channel",
+        "the longer history is deterministically projected to a retained prefix"
+      ],
+      "evidence": [
+        "docs/repeated-observation-policy-trees.md#1-exact-product-observation-channel",
+        "docs/repeated-observation-policy-trees.md#2-longer-histories-blackwell-dominate-their-prefixes",
+        "src/simtheory/repeated_observation_policies.py:product_observation_channel",
+        "src/simtheory/repeated_observation_policies.py:exact_repeated_terminal_blackwell_comparison",
+        "tests/test_repeated_observation_policies.py"
+      ],
+      "nonclaims": [
+        "conditional independence is a model assumption rather than a universal sensor law",
+        "Blackwell dominance need not produce strict value improvement for one declared loss"
+      ]
+    },
+    {
+      "id": "ST-T136",
+      "title": "Signed count is sufficient for symmetric binary repeated evidence",
+      "kind": "THEOREM",
+      "scope": "two fixed hidden scenarios and a binary symmetric observation channel with accuracy in [1/2,1)",
+      "assumptions": [
+        "signals are conditionally independent",
+        "scenario zero and scenario one interchange the two signal probabilities"
+      ],
+      "evidence": [
+        "docs/repeated-observation-policy-trees.md#3-symmetric-binary-evidence-has-an-exact-sufficient-statistic",
+        "src/simtheory/binary_repeated_evidence.py:exact_binary_history_sufficiency",
+        "tests/test_binary_repeated_evidence.py"
+      ],
+      "nonclaims": [
+        "ordered history can matter for nonsymmetric or stateful observation channels",
+        "terminal likelihood sufficiency does not by itself include an installed-action state under switching costs"
+      ]
+    },
+    {
+      "id": "ST-T137",
+      "title": "Fair-tie symmetric majority has exact even-sample plateaus",
+      "kind": "THEOREM",
+      "scope": "binary symmetric repeated observations with majority decision and a fair public tie break",
+      "assumptions": [
+        "correct signal probability lies in [1/2,1]",
+        "ties at an even sample count receive one-half decision credit"
+      ],
+      "evidence": [
+        "docs/repeated-observation-policy-trees.md#4-exact-majority-accuracy-with-public-fair-ties",
+        "src/simtheory/binary_repeated_evidence.py:exact_binary_even_plateau",
+        "tests/test_binary_repeated_evidence.py",
+        "tests/test_repeated_observation_policies.py"
+      ],
+      "nonclaims": [
+        "an even observation is not Blackwell-equivalent to the preceding odd history",
+        "the plateau is loss- and symmetry-specific rather than a generic no-value-of-data theorem"
+      ]
+    },
+    {
+      "id": "ST-T138",
+      "title": "Exact bounded sequential public-signal policy-tree coding game",
+      "kind": "THEOREM",
+      "scope": "finite rational source-law scenarios, a fixed public rational observation channel, finite horizon, deterministic zero-error prefix codebooks, and rational switching cost",
+      "assumptions": [
+        "one hidden source-law scenario remains fixed throughout the horizon",
+        "the period codebook is a deterministic function of the complete public signal prefix",
+        "policy, code, dominance, no-signal sequence, and game support enumerations complete below configured caps"
+      ],
+      "evidence": [
+        "docs/repeated-observation-policy-trees.md#6-sequential-signal-history-policy-tree",
+        "docs/repeated-observation-policy-trees.md#7-sequential-benchmark-hierarchy",
+        "src/simtheory/repeated_observation_policies.py:exact_sequential_observation_value",
+        "tests/test_repeated_observation_policies.py"
+      ],
+      "nonclaims": [
+        "the policy does not observe the hidden scenario or true source law",
+        "full policy-tree enumeration is not a scalable large-horizon algorithm"
+      ]
+    },
+    {
+      "id": "ST-M33",
+      "title": "Two-scenario K3 repeated observations have exact terminal and sequential values",
+      "kind": "MODEL_RESULT",
+      "scope": "complete K3, heavy-state scenarios (4/5,1/10,1/10) and (1/10,4/5,1/10), and a binary symmetric observation channel of accuracy 3/4",
+      "assumptions": [
+        "binary deterministic zero-error prefix codebooks",
+        "public signal histories and optional source-independent shared policy randomness",
+        "the sequential example has horizon three"
+      ],
+      "evidence": [
+        "docs/repeated-observation-policy-trees.md#5-terminal-coding-value-for-two-symmetric-scenarios",
+        "docs/repeated-observation-policy-trees.md#8-exact-three-period-sequential-k3-values",
+        "tests/test_repeated_observation_policies.py"
+      ],
+      "nonclaims": [
+        "the exact fractions are specific to the declared finite instance",
+        "additivity of prefix decision values is not asserted for arbitrary minimax scenario families"
+      ]
+    },
+    {
+      "id": "ST-F22",
+      "title": "Bounded exact repeated-observation and policy-tree audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the product channels, history projections, binary evidence classes, policy trees, switching expectations, and exact games exercised by repository tests",
+      "assumptions": [
+        "all configured history, policy, dominance, code, sequence, and game support caps complete without truncation",
+        "Python Fraction arithmetic is used for finite channel and cost calculations"
+      ],
+      "evidence": [
+        "tests/test_binary_repeated_evidence.py",
+        "tests/test_repeated_observation_policies.py"
+      ],
+      "nonclaims": [
+        "CI success is not a continuous-observation or scalability theorem",
+        "finite coding-game values are not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
