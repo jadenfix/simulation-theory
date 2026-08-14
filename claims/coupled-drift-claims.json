@@ -1,0 +1,148 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T123",
+      "title": "Exact rational event-halfspace representation of finite total-variation source-law paths",
+      "kind": "THEOREM",
+      "scope": "finite rational source alphabets, a fixed rational initial law, finite horizon, and rational per-step total-variation budgets",
+      "assumptions": [
+        "q_0 equals the declared initial law",
+        "each future q_t lies in the probability simplex",
+        "TV(q_t,q_{t-1}) is bounded by the declared per-period budget",
+        "one event from every complement pair is retained after one simplex coordinate per period is eliminated"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#1-total-variation-gives-an-exact-event-halfspace-representation",
+        "docs/coupled-drift-code-sequences.md#2-eliminate-one-simplex-coordinate-per-period",
+        "src/simtheory/coupled_drift.py:enumerate_coupled_drift_path_polytope",
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "active-basis enumeration is not a polynomial-time large-instance guarantee",
+        "the declared drift budgets are model inputs unless separately justified"
+      ]
+    },
+    {
+      "id": "ST-T124",
+      "title": "Exact primal-dual optimum for time-varying linear costs on a bounded TV drift path",
+      "kind": "THEOREM",
+      "scope": "one nonempty bounded rational drift-path polytope and one rational state-cost vector per period",
+      "assumptions": [
+        "the complete bounded path vertex set is enumerated below the configured cap",
+        "the dual support search completes below its configured cap",
+        "the objective is additive and linear in each period's source law"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#3-time-varying-costs-remain-a-single-linear-program",
+        "docs/coupled-drift-code-sequences.md#4-an-independent-exact-dual-proves-optimality",
+        "src/simtheory/coupled_drift.py:optimize_coupled_drift_costs",
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "dual multipliers are not identified with physical energy or force",
+        "finite exact arithmetic does not imply practical scalability to arbitrary alphabet and horizon size"
+      ]
+    },
+    {
+      "id": "ST-T125",
+      "title": "Independent expanding TV balls upper-bound coupled path cost, with equality under a common state-cost ordering",
+      "kind": "THEOREM",
+      "scope": "finite source-law paths with additive rational linear costs and cumulative TV radii derived by triangle inequality",
+      "assumptions": [
+        "the marginal relaxation uses radius R_t=min(1,sum_{s<=t} eta_s)",
+        "for the equality statement every period cost vector induces the same weak ordering of source states",
+        "canonical TV mass transport uses one consistent tie-breaking order"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#5-independent-marginal-balls-form-only-a-relaxation",
+        "docs/coupled-drift-code-sequences.md#6-common-ordering-is-a-sufficient-condition-for-equality",
+        "src/simtheory/coupled_drift.py:common_cost_ordering",
+        "src/simtheory/coupled_drift.py:optimize_coupled_drift_costs",
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "common ordering is sufficient rather than necessary",
+        "a list of individually plausible marginals is not asserted to form one realizable path"
+      ]
+    },
+    {
+      "id": "ST-T126",
+      "title": "Exact bounded optimization of precommitted zero-error prefix-code sequences with switching cost",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph, one finite rational drift-path model, deterministic binary prefix codebooks, finite horizon, and rational cost per codebook switch",
+      "assumptions": [
+        "the complete componentwise-undominated deterministic code universe is enumerated below explicit caps",
+        "the entire code sequence is fixed before the source path is selected",
+        "the code-sequence search exhausts every admissible sequence below the configured sequence and switch caps",
+        "the adversarial source path is solved by the exact coupled path optimizer"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#7-precommitted-codebook-sequences",
+        "docs/coupled-drift-code-sequences.md#10-what-the-exact-certificate-contains",
+        "src/simtheory/coupled_drift.py:exact_precommitted_code_sequence",
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "precommitment is not adaptation to realized symbols or direct observation of the hidden source law",
+        "switching cost is an explicit decision-model input rather than a parent-substrate resource inference"
+      ]
+    },
+    {
+      "id": "ST-M30",
+      "title": "Two-state reversing costs have coupled value 5/4 while the independent marginal relaxation is 7/4",
+      "kind": "MODEL_RESULT",
+      "scope": "initial law (1/2,1/2), two periods, per-step TV budget 1/4, and costs (0,1) followed by (1,0)",
+      "assumptions": [
+        "the same source law path must satisfy both period constraints",
+        "costs are additive and linear"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#strict-two-state-gap",
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "the numerical gap is specific to the declared finite instance",
+        "the result does not imply all changing objectives create a strict coupling gap"
+      ]
+    },
+    {
+      "id": "ST-M31",
+      "title": "Uniform K3 rotating-leaf coding gains 1/6 and has switching threshold kappa_c=1/6",
+      "kind": "MODEL_RESULT",
+      "scope": "complete graph K3, uniform initial law, two periods, per-step TV budget 1/6, and deterministic full binary three-leaf prefix trees",
+      "assumptions": [
+        "the compared rotating sequence uses state-length vectors (1,2,2) and (2,1,2)",
+        "the deterministic bounded search exhausts all complete codebooks and two-period sequences",
+        "one switch incurs rational penalty kappa"
+      ],
+      "evidence": [
+        "docs/coupled-drift-code-sequences.md#8-exact-rotating-leaf-gain-for-uniform-k3",
+        "docs/coupled-drift-code-sequences.md#9-exact-switching-cost-phase-boundary",
+        "src/simtheory/coupled_drift.py:exact_precommitted_code_sequence",
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "the threshold is specific to the declared coding and drift model",
+        "the decision threshold is not a physical phase transition"
+      ]
+    },
+    {
+      "id": "ST-F19",
+      "title": "Bounded exact coupled-drift, dual, marginal-gap, and code-sequence audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational one-state, two-state, and K3 instances exercised by the repository test suite",
+      "assumptions": [
+        "all configured path-basis, dual-basis, codebook, and sequence searches complete without truncation",
+        "every returned adversarial path is checked period by period against the declared TV budget"
+      ],
+      "evidence": [
+        "tests/test_coupled_drift.py"
+      ],
+      "nonclaims": [
+        "bounded tests are not a runtime scalability theorem",
+        "CI success is not substituted for the explicit primal, dual, and path receipts"
+      ]
+    }
+  ]
+}
