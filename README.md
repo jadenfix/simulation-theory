@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, and distributed extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), and [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, and quantum-communication extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), and [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -74,6 +74,13 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 51. **Indexed parity reconciliation.** Answering `A_i xor B_i` with `B_i` locally known is exactly as hard, for the remote contribution, as answering `A_i`.
 52. **Isolated-region replication.** If `r` regions must answer locally with no later communication or shared record store, the sum of separate local storage lower bounds scales by `r`.
 53. **Explicit upper/lower gap.** Storing an exact prefix of `s` bits and guessing the rest has verified average error `(m-s)/(2m)`, providing a concrete upper construction without pretending it meets the Fano lower bound.
+54. **Unassisted quantum random-access cut.** Encoding an unresolved `m`-bit future-query record into `q` qubits requires `q>=m[1-H_2(epsilon)]` under uniform average error; exact recovery requires `m` qubits.
+55. **Entanglement-assisted factor-two limit.** Preshared entanglement independent of the record permits a `q`-qubit transmission to increase receiver information by at most `2q`, yielding `q>=m[1-H_2(epsilon)]/2`.
+56. **Exact dense-coding achievability.** With one preshared Bell pair per transmitted qubit, an exact `m`-bit record requires and can be sent using `ceil(m/2)` qubits.
+57. **Quantum query-timing phase change.** If the coordinate query is known before encoding, one qubit suffices exactly; if it remains unresolved, exact communication is linear in `m`.
+58. **Inverse-entropy quantum converse.** A fixed qubit budget implies a minimum average error through `H_2^{-1}(1-q/m)` unassisted or `H_2^{-1}(1-2q/m)` with entanglement assistance.
+59. **Canonical one-qubit random-access codes.** Explicit square and cube Bloch encodings achieve success `(1+1/sqrt(2))/2` for two bits and `(1+1/sqrt(3))/2` for three bits; complete finite enumeration verifies every record-query law.
+60. **Weighted quantum future queries.** Nonuniform query distributions inherit the KKT error allocation `e_i=1/(1+2^(lambda w_i))`, while the quantum capacity side changes by the unassisted versus assisted factor of two.
 
 General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical, relational, code, and distributed derivations are developed in:
 
@@ -86,6 +93,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/noisy-relational-rate-distortion.md`](docs/noisy-relational-rate-distortion.md)
 - [`docs/stabilizer-code-locality.md`](docs/stabilizer-code-locality.md)
 - [`docs/distributed-causal-consistency.md`](docs/distributed-causal-consistency.md)
+- [`docs/quantum-causal-cut-random-access.md`](docs/quantum-causal-cut-random-access.md)
 
 ## Layout
 
@@ -96,6 +104,7 @@ claims/stabilizer-relational-claims.json relational and online-consistency claim
 claims/noisy-relational-claims.json      noisy parity and rate-distortion claim registry
 claims/stabilizer-code-claims.json       code-distance and logical-locality claim registry
 claims/distributed-consistency-claims.json causal-cut and communication claim registry
+claims/quantum-causal-cut-claims.json    quantum random-access and assistance claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -106,6 +115,7 @@ docs/stabilizer-relational-consistency.md local blindness and streaming parity m
 docs/noisy-relational-rate-distortion.md noise attenuation, repetition, and predictive coding
 docs/stabilizer-code-locality.md         code distance, erasures, and logical observables
 docs/distributed-causal-consistency.md   query timing, cut-set bounds, and reconciliation
+docs/quantum-causal-cut-random-access.md quantum messages, entanglement assistance, and QRACs
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -127,7 +137,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
 
 ## Tempera Math boundary
 

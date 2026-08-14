@@ -1,0 +1,138 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T36",
+      "title": "Unassisted quantum random-access information lower bound",
+      "kind": "THEOREM",
+      "scope": "uniform independent m-bit records encoded into q qubits before a later uniformly random coordinate query, with average decoding error epsilon",
+      "assumptions": [
+        "the receiver has no preshared system correlated with the sender's encoder",
+        "ordinary finite-dimensional quantum data processing and entropy bounds apply"
+      ],
+      "evidence": [
+        "docs/quantum-causal-cut-random-access.md#unassisted-quantum-random-access-lower-bound",
+        "src/simtheory/quantum_random_access.py:unassisted_qrac_qubits_lower_bound",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "continuous quantum amplitudes do not become parent-universe storage units",
+        "the lower bound is not evidence that the actual universe uses a random-access encoding"
+      ]
+    },
+    {
+      "id": "ST-T37",
+      "title": "Entanglement-assisted quantum causal-cut factor-two lower bound",
+      "kind": "THEOREM",
+      "scope": "uniform m-bit records, receiver-side preshared entanglement independent of the record, q transmitted qubits, and a later coordinate query",
+      "assumptions": [
+        "the receiver's preshared system has zero mutual information with the later record before transmission",
+        "the conditional mutual-information increase from a q-qubit transmission is bounded by 2q"
+      ],
+      "evidence": [
+        "docs/quantum-causal-cut-random-access.md#entanglement-assisted-quantum-cut",
+        "src/simtheory/quantum_random_access.py:entanglement_assisted_qrac_qubits_lower_bound",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "the storage and generation cost of preshared entanglement is not included in transmitted-qubit count",
+        "entanglement improves the constant but does not remove linear scaling at fixed error"
+      ]
+    },
+    {
+      "id": "ST-T38",
+      "title": "Exact dense-coding achievability of the assisted cut bound",
+      "kind": "THEOREM",
+      "scope": "exact transmission of an m-bit classical record using preshared Bell pairs and transmitted qubits",
+      "assumptions": [
+        "one Bell pair is available per transmitted qubit",
+        "the receiver can perform the corresponding Bell measurements"
+      ],
+      "evidence": [
+        "docs/quantum-causal-cut-random-access.md#exact-dense-coding-achievability",
+        "src/simtheory/quantum_random_access.py:exact_entanglement_assisted_qubits",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "preshared entanglement is an explicit consumed resource rather than a universally free resource",
+        "the theorem concerns internal exact classical payload, not unknown parent communication physics"
+      ]
+    },
+    {
+      "id": "ST-T39",
+      "title": "Quantum random-access error converse by inverse binary entropy",
+      "kind": "THEOREM",
+      "scope": "fixed m-bit uniform record size and fixed unassisted or entanglement-assisted transmitted-qubit budget",
+      "assumptions": [
+        "the uniform average-error information lower bound applies",
+        "binary entropy is inverted on its increasing branch [0,1/2]"
+      ],
+      "evidence": [
+        "docs/quantum-causal-cut-random-access.md#inverting-the-information-bound",
+        "src/simtheory/quantum_random_access.py:uniform_qrac_error_lower_bound",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "the converse does not assert finite-code achievability at equality",
+        "zero lower bound means only that this converse no longer excludes exact decoding"
+      ]
+    },
+    {
+      "id": "ST-T40",
+      "title": "Weighted-query quantum random-access lower bound",
+      "kind": "THEOREM",
+      "scope": "uniform independent source bits with a declared nonuniform later query distribution and weighted average error",
+      "assumptions": [
+        "the coordinatewise-Fano KKT allocation from the classical causal-cut model is used",
+        "unassisted quantum information is bounded by q and entanglement-assisted information increase by 2q"
+      ],
+      "evidence": [
+        "docs/quantum-causal-cut-random-access.md#weighted-quantum-queries",
+        "src/simtheory/quantum_random_access.py:weighted_unassisted_qrac_qubits_lower_bound",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "the weighted result optimizes the coordinatewise-Fano lower bound rather than proving every finite quantum code optimum",
+        "zero-weight coordinates lie outside the declared query support"
+      ]
+    },
+    {
+      "id": "ST-M10",
+      "title": "Canonical one-qubit two-to-one and three-to-one random access codes",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared square and cube Bloch-vector encodings with Pauli-axis query measurements",
+      "assumptions": [
+        "Born probabilities are computed from qubit Bloch vectors",
+        "record and query pairs are averaged uniformly"
+      ],
+      "evidence": [
+        "docs/quantum-causal-cut-random-access.md#canonical-two-to-one-qubit-random-access-code",
+        "docs/quantum-causal-cut-random-access.md#canonical-three-to-one-qubit-random-access-code",
+        "src/simtheory/quantum_random_access.py:canonical_qrac_success_probability",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "the repository does not prove universal optimality of these finite constructions",
+        "the constructions obey but do not saturate the general Fano converse"
+      ]
+    },
+    {
+      "id": "ST-F02",
+      "title": "Finite Bloch-geometry random-access certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "all four two-bit records and eight three-bit records under every canonical Pauli query",
+      "assumptions": [
+        "floating-point checks use the declared analytic tolerance",
+        "the code enumerates exactly the finite canonical record and query sets"
+      ],
+      "evidence": [
+        "src/simtheory/quantum_random_access.py:brute_force_canonical_qrac_average_success",
+        "tests/test_quantum_random_access.py"
+      ],
+      "nonclaims": [
+        "finite enumeration is not a proof for arbitrary random-access codes",
+        "the checker validates the declared construction rather than quantum mechanics experimentally"
+      ]
+    }
+  ]
+}
