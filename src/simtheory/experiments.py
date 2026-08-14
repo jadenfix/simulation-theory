@@ -118,6 +118,15 @@ from .stabilizer_relations import (
     graph_generator_total_variation,
     stabilizer_distance,
 )
+from .stochastic_predictive import (
+    approximate_stochastic_network_certificate,
+    bernoulli_minimax_center,
+    optimal_bernoulli_cover_centers,
+    single_bernoulli_query_family,
+    stochastic_predictive_state_bracket,
+    weighted_query_kl_nats,
+    weighted_query_total_variation,
+)
 
 
 def observer_uncertainty_demo(seed: int = 7, draws: int = 20_000) -> tuple[float, float]:
@@ -342,6 +351,65 @@ def main() -> None:
     print("network_certificate_required", certificate.required_units)
     print("network_certificate_cut", certificate.min_cut_units)
     print("network_certificate_routed", certificate.routed_units)
+
+    print("\n== stochastic predictive covers and networks ==")
+    stochastic_grid = single_bernoulli_query_family(
+        (0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
+    )
+    bracket = stochastic_predictive_state_bracket(
+        stochastic_grid,
+        0.2,
+        max_records=10,
+    )
+    print("stochastic_packing_eps0.2", bracket.packing_size)
+    print("stochastic_target_cover_eps0.2", bracket.target_cover_size)
+    one_bit_network = CausalCapacityNetwork(
+        ("source", "sink"),
+        (("source", "sink", 1),),
+    )
+    stochastic_certificate = approximate_stochastic_network_certificate(
+        one_bit_network,
+        "source",
+        "sink",
+        stochastic_grid,
+        0.2,
+        max_records=10,
+    )
+    print("stochastic_network_status", stochastic_certificate.status)
+    print("stochastic_network_routed", stochastic_certificate.routed_units)
+    endpoint_family = single_bernoulli_query_family((0.0, 1.0))
+    endpoint_bracket = stochastic_predictive_state_bracket(
+        endpoint_family,
+        0.5,
+        max_records=4,
+    )
+    print("endpoint_packing_eps0.5", endpoint_bracket.packing_size)
+    print("endpoint_target_cover_eps0.5", endpoint_bracket.target_cover_size)
+    print(
+        "endpoint_arbitrary_centers_eps0.5",
+        optimal_bernoulli_cover_centers((0.0, 1.0), 0.5),
+    )
+    print("bernoulli_minimax_center", bernoulli_minimax_center((0.1, 0.4, 0.9)))
+    two_law_family = single_bernoulli_query_family(
+        (0.2, 0.8),
+        ("low", "high"),
+    )
+    print(
+        "stochastic_TV_low_high",
+        weighted_query_total_variation(
+            two_law_family,
+            "low",
+            "high",
+        ),
+    )
+    print(
+        "stochastic_KL_low_high",
+        weighted_query_kl_nats(
+            two_law_family,
+            "low",
+            "high",
+        ),
+    )
 
     print("\n== multi-architecture minimax bounds ==")
     models = [[0.9, 0.1], [0.6, 0.4], [0.4, 0.6], [0.1, 0.9]]

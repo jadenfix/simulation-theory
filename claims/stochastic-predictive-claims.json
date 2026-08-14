@@ -1,0 +1,166 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T52",
+      "title": "Exact finite stochastic predictive-equivalence theorem",
+      "kind": "THEOREM",
+      "scope": "finite hidden records, finite future queries, and one declared categorical conditional law for every record-query pair",
+      "assumptions": [
+        "one finite renderer state determines one conditional outcome law for every later query",
+        "fresh sampling randomness is independent of which hidden record produced a shared renderer state",
+        "zero-error law reproduction is required"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#2-exact-stochastic-predictive-equivalence",
+        "src/simtheory/stochastic_predictive.py:FiniteStochasticQueryFamily",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "records with identical full future-law tensors may be merged exactly",
+        "exact equality of finite declared laws is not an empirical claim about estimated probabilities"
+      ]
+    },
+    {
+      "id": "ST-T53",
+      "title": "Weighted stochastic query TV and KL decompositions",
+      "kind": "THEOREM",
+      "scope": "finite stochastic query families under one exogenous query distribution shared by the compared records",
+      "assumptions": [
+        "the joint transcript retains the selected query identity",
+        "categorical outcome spaces are aligned within each query",
+        "KL uses the usual infinite-divergence convention when reference support is absent"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#3-exogenous-query-schedules-and-the-joint-future-law",
+        "docs/stochastic-predictive-covers.md#4-weighted-kl-and-pinsker",
+        "src/simtheory/stochastic_predictive.py:weighted_query_total_variation",
+        "src/simtheory/stochastic_predictive.py:weighted_query_kl_nats",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "the decomposition changes when query selection depends on the hidden record",
+        "weighted average accuracy is not worst-query accuracy"
+      ]
+    },
+    {
+      "id": "ST-T54",
+      "title": "Finite stochastic predictive packing-cover bracket",
+      "kind": "THEOREM",
+      "scope": "finite target future laws under weighted or worst-query total-variation distortion epsilon",
+      "assumptions": [
+        "the lower-bound packing has pairwise distance strictly greater than 2 epsilon",
+        "the unrestricted predictor may use arbitrary admissible law centers",
+        "the constructive upper bound restricts centers to target laws in the family"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#8-packing-cover-bracket",
+        "src/simtheory/stochastic_predictive.py:stochastic_predictive_state_bracket",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "the target-centered upper bound need not equal the unrestricted optimum",
+        "a packing lower bound does not construct an approximate renderer"
+      ]
+    },
+    {
+      "id": "ST-T55",
+      "title": "Constructive approximate single-sink cover-index network bound",
+      "kind": "THEOREM",
+      "scope": "one source, one sink, one finite stochastic future-law family, and one target-centered epsilon-cover routed through an integer-capacity network",
+      "assumptions": [
+        "the source assigns each hidden record to one declared covering center",
+        "the network transmits the fixed-length center index",
+        "the sink can sample the center's conditional law after the query arrives"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#9-approximate-single-sink-network-certificate",
+        "src/simtheory/stochastic_predictive.py:approximate_stochastic_network_certificate",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "capacity below the implemented target-cover upper bound may still be feasible through arbitrary centers",
+        "the construction is not a simultaneous multi-sink stochastic network-coding theorem"
+      ]
+    },
+    {
+      "id": "ST-T56",
+      "title": "Exact arbitrary-center covering of finite Bernoulli laws",
+      "kind": "THEOREM",
+      "scope": "one-query finite Bernoulli parameter families under total-variation tolerance epsilon",
+      "assumptions": [
+        "Bernoulli TV equals absolute parameter distance",
+        "predictor centers may be arbitrary Bernoulli parameters in [0,1]",
+        "the objective minimizes the number of fixed-radius intervals covering all target parameters"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#13-exact-finite-bernoulli-covering",
+        "src/simtheory/stochastic_predictive.py:optimal_bernoulli_cover_centers",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "the greedy interval theorem is one-dimensional and is not promoted to general categorical simplices",
+        "arbitrary interpolating predictor laws must be admissible under the declared model"
+      ]
+    },
+    {
+      "id": "ST-T57",
+      "title": "Bernoulli one-state minimax predictive radius",
+      "kind": "THEOREM",
+      "scope": "one finite set of Bernoulli success parameters approximated by one arbitrary Bernoulli predictor",
+      "assumptions": [
+        "distortion is total variation",
+        "the predictor center may lie anywhere in [0,1]"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#12-one-state-bernoulli-minimax-radius",
+        "src/simtheory/stochastic_predictive.py:bernoulli_minimax_center",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "the midpoint formula depends on the one-dimensional Bernoulli TV geometry",
+        "one predictor state does not identify which target parameter generated the data"
+      ]
+    },
+    {
+      "id": "ST-M13",
+      "title": "Target-centered cover conservatism at the Bernoulli endpoints",
+      "kind": "MODEL_RESULT",
+      "scope": "target Bernoulli laws p=0 and p=1 at total-variation tolerance epsilon=1/2",
+      "assumptions": [
+        "unrestricted predictor centers may use p=1/2",
+        "target-centered covers may use only p=0 or p=1"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#14-why-arbitrary-centers-matter",
+        "src/simtheory/stochastic_predictive.py:optimal_bernoulli_state_count",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "the example does not imply target-centered covers are always loose",
+        "an unresolved general packing-cover certificate is not proof of infeasibility"
+      ]
+    },
+    {
+      "id": "ST-F05",
+      "title": "Finite stochastic packing, target-cover, and routed network certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite stochastic families and integer-capacity single-sink networks enumerated by the repository",
+      "assumptions": [
+        "exact packing and target-cover searches remain below their declared record caps",
+        "the route certificate uses the supplied network and the target-centered center index"
+      ],
+      "evidence": [
+        "docs/stochastic-predictive-covers.md#15-finite-even-grid-example",
+        "src/simtheory/stochastic_predictive.py:maximum_stochastic_predictive_packing",
+        "src/simtheory/stochastic_predictive.py:minimum_target_centered_cover",
+        "src/simtheory/stochastic_predictive.py:approximate_stochastic_network_certificate",
+        "tests/test_stochastic_predictive.py"
+      ],
+      "nonclaims": [
+        "bounded exact search is not a scalable optimization theorem",
+        "successful finite routing is not empirical evidence for simulation"
+      ]
+    }
+  ]
+}
