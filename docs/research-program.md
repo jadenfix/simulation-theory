@@ -11,7 +11,7 @@ The project is not trying to assign a dramatic single-number probability to “s
 3. What computational or physical constraints follow from a specified architecture?
 4. What experiment distinguishes that architecture from serious alternatives?
 5. What predictive information must an online generator retain to keep adaptive and distributed observations globally consistent?
-6. How do noise, error correction, and tolerated approximation change the necessary predictive state?
+6. How do noise, error correction, communication, and tolerated approximation change the necessary predictive state?
 7. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
 
 ## Completed mathematical lanes
@@ -95,8 +95,6 @@ See [`noisy-relational-rate-distortion.md`](noisy-relational-rate-distortion.md)
 
 ### Stabilizer-code distance and logical locality
 
-The code-locality lane now has a generic binary-symplectic implementation and an independently checked five-qubit example:
-
 - exact GF(2) rank, span, symplectic commutation, stabilizer, normalizer, and quotient calculations;
 - code distance `d=min wt(N(S)\S)` separated from minimum stabilizer weight;
 - projected Pauli trichotomy: detectable operators project to zero, stabilizers act as scalars, and normalizer elements outside the stabilizer act logically;
@@ -108,6 +106,21 @@ The code-locality lane now has a generic binary-symplectic implementation and an
 - logical-coordinate query geometry and an `mk`-bit predictive lower bound for `m` blocks encoding `k` logical bits each.
 
 See [`stabilizer-code-locality.md`](stabilizer-code-locality.md).
+
+### Distributed causal-cut consistency
+
+The first distributed program now isolates the effect of future query timing and causal access:
+
+- exact one-way INDEX answering requires an injective message and therefore `m` bits for an unresolved `m`-coordinate future query;
+- shared randomness independent of the record cannot remove the exact collision witness;
+- uniform records and uniform post-message queries obey the information lower bound `m[1-H_2(epsilon)]`;
+- resident predictive state and later pre-query communication obey one combined cut-set tradeoff;
+- indexed parity reconciliation `A_i xor B_i`, with `B_i` local, has the same remote-record lower bound as INDEX;
+- weighted query distributions yield the KKT allocation `e_i=1/(1+2^(lambda w_i))`, exposing how rare coordinates are discarded first;
+- isolated answer regions with no shared record store require replicated local storage budgets;
+- an exact finite prefix-storage protocol supplies an explicit upper bound and keeps the gap from the information lower bound visible.
+
+See [`distributed-causal-consistency.md`](distributed-causal-consistency.md).
 
 ## Current frontier campaigns
 
@@ -153,34 +166,41 @@ Research targets:
 4. Quantify the predictive state needed to filter a hidden syndrome process.
 5. Separate physical-error history, decoder belief state, and logical predictive memory.
 
-### Campaign C: distributed and relativistic consistency
+### Campaign C: multiround causal networks and quantum messages
 
-The cat and code results show that locally uninformative regions can jointly constrain a later logical observation. The next program should add causal structure:
+The one-way INDEX theorem identifies the first cut-set obstruction. The next distributed program should vary the interface rather than silently extrapolating it.
 
-- spacelike-separated local observers;
-- delayed comparison of authenticated records;
-- finite-speed communication;
-- adversarial query ordering;
-- causal diamonds and allowed information flow.
+Candidate extensions:
+
+- two-way and multiround record reconciliation;
+- a directed acyclic network of causal regions rather than one cut;
+- finite-speed communication and delayed query revelation;
+- quantum messages and entanglement-assisted random-access codes;
+- authenticated transcript comparison under adversarial scheduling;
+- robust query-weight sets rather than one known distribution;
+- shared caches with explicit access topology.
 
 Research questions:
 
-1. What predictive state must be duplicated versus shared across causal regions?
-2. What communication is necessary when records are reconciled?
-3. Can commitment be postponed without violating no-signaling and later logical constraints?
-4. How do memory and communication trade off under a fixed causal graph?
-5. Which lower bounds are ordinary distributed-computing bounds rather than specifically quantum bounds?
+1. What changes when the query is revealed between communication rounds?
+2. Which memory-communication tradeoffs are tight rather than only lower bounds?
+3. How does a min-cut constraint compose across a network?
+4. When does pre-shared entanglement reduce communication, and what remains linear?
+5. How much local-state replication is necessary when some shared stores remain accessible?
+6. Can causal commitment be postponed without increasing later communication?
+7. Which statements are ordinary communication complexity and which rely on the physical query family?
 
 ### Campaign D: update-time and computational lower bounds
 
 Current theorems mostly lower-bound state cardinality. Memory alone is not enough. Future work should measure:
 
-- update time after a new observation or syndrome;
+- update time after a new observation, syndrome, or remote record change;
 - query time for a future conditional law;
 - random-bit complexity;
 - communication across a distributed renderer;
 - preprocessing versus online computation;
-- tensor-network contraction or stabilizer-tableau update cost.
+- tensor-network contraction or stabilizer-tableau update cost;
+- cell-probe lower bounds for dynamic parity and relational queries.
 
 The goal is a bounded time-space tradeoff rather than an unsupported statement that “the universe is expensive to simulate.”
 
@@ -221,10 +241,11 @@ A research result is ready for the main branch only when:
 7. Locality claims distinguish one-shot local marginals from adaptive protocols that aggregate a higher-weight observable.
 8. Code claims distinguish stabilizer weight, code distance, degeneracy, logical weight, and query weight.
 9. Noise claims specify independence, stationarity, and parameter-knowledge assumptions.
-10. Physical claims state which laws apply and avoid cross-level leakage.
-11. A finite experiment is never promoted into a generic simulation conclusion.
-12. A memory lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
-13. Average-case, worst-case, necessary, sufficient, exact, and asymptotic statements remain explicitly separated.
+10. Distributed claims specify query timing, communication rounds, shared stores, source distribution, and local versus global storage accounting.
+11. Physical claims state which laws apply and avoid cross-level leakage.
+12. A finite experiment is never promoted into a generic simulation conclusion.
+13. A memory lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
+14. Average-case, worst-case, necessary, sufficient, exact, and asymptotic statements remain explicitly separated.
 
 ## Tempera Math integration
 
@@ -233,13 +254,13 @@ The repository claim manifests remain the source of truth. Tempera Math can late
 - theorem versus model-result versus finite-check status;
 - all assumptions and nonclaims;
 - exact source revision and checker command;
-- bounded code size, graph size, horizon, locality, tolerance, and noise parameters;
+- bounded code size, graph size, horizon, locality, tolerance, noise parameters, and communication interface;
 - the boundary between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, communication complexity, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.

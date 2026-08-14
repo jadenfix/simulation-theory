@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, and code-locality extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), and [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, and distributed extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), and [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -67,8 +67,15 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 44. **Five-qubit exact certificate.** Independent symplectic and state-vector checks verify the declared code is `[[5,1,3]]`, with all one- and two-qubit reductions identical across logical basis and superposition states.
 45. **Encoded logical predictive memory.** `m` blocks encoding `k` logical bits each require `mk` internal bits under worst logical-coordinate queries below error `1/2`, even though every sub-distance physical measurement is blind.
 46. **Error-set versus quantum-distance distinction.** The three-qubit bit-flip repetition code detects one-qubit X errors but has full quantum distance one because a weight-one logical Z exists.
+47. **Exact post-query causal-cut bound.** An `m`-bit record sent before an unresolved future coordinate query requires `2^m` exact message states, because every encoder collision fails on some query.
+48. **Bounded-error causal-cut information.** Uniform records and uniform post-message queries require at least `m[1-H_2(epsilon)]` bits of record information at average error `epsilon`.
+49. **Weighted-query forgetting law.** The least-informative coordinate errors satisfy `e_i=1/(1+2^(lambda w_i))`; frequently queried bits are protected more strongly and zero-weight bits can be forgotten.
+50. **Memory-communication cut tradeoff.** Record-dependent resident state plus later pre-query communication must jointly meet the same exact or bounded-error INDEX lower bound.
+51. **Indexed parity reconciliation.** Answering `A_i xor B_i` with `B_i` locally known is exactly as hard, for the remote contribution, as answering `A_i`.
+52. **Isolated-region replication.** If `r` regions must answer locally with no later communication or shared record store, the sum of separate local storage lower bounds scales by `r`.
+53. **Explicit upper/lower gap.** Storing an exact prefix of `s` bits and guessing the rest has verified average error `(m-s)/(2m)`, providing a concrete upper construction without pretending it meets the Fano lower bound.
 
-General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical and relational derivations are developed in:
+General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical, relational, code, and distributed derivations are developed in:
 
 - [`docs/bell-predictive-bounds.md`](docs/bell-predictive-bounds.md)
 - [`docs/quantum-phase-predictive-bounds.md`](docs/quantum-phase-predictive-bounds.md)
@@ -78,6 +85,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/stabilizer-relational-consistency.md`](docs/stabilizer-relational-consistency.md)
 - [`docs/noisy-relational-rate-distortion.md`](docs/noisy-relational-rate-distortion.md)
 - [`docs/stabilizer-code-locality.md`](docs/stabilizer-code-locality.md)
+- [`docs/distributed-causal-consistency.md`](docs/distributed-causal-consistency.md)
 
 ## Layout
 
@@ -87,6 +95,7 @@ claims/quantum-phase-claims.json         multidimensional quantum claim registry
 claims/stabilizer-relational-claims.json relational and online-consistency claim registry
 claims/noisy-relational-claims.json      noisy parity and rate-distortion claim registry
 claims/stabilizer-code-claims.json       code-distance and logical-locality claim registry
+claims/distributed-consistency-claims.json causal-cut and communication claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -96,6 +105,7 @@ docs/manybody-predictive-bounds.md       subsystem-count and precision scaling
 docs/stabilizer-relational-consistency.md local blindness and streaming parity memory
 docs/noisy-relational-rate-distortion.md noise attenuation, repetition, and predictive coding
 docs/stabilizer-code-locality.md         code distance, erasures, and logical observables
+docs/distributed-causal-consistency.md   query timing, cut-set bounds, and reconciliation
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -117,7 +127,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
 
 ## Tempera Math boundary
 
