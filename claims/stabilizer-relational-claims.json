@@ -1,0 +1,121 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T15",
+      "title": "Graph-basis stabilizer-query weighted-Hamming geometry",
+      "kind": "THEOREM",
+      "scope": "finite graph-state basis labels under a declared probability distribution over stabilizer-generator queries",
+      "assumptions": [
+        "the state family is |G,z>=Z^z|G> for one fixed simple graph",
+        "query i measures K_i=X_i product_{j in N(i)} Z_j",
+        "the generator-query distribution is identical under the compared labels"
+      ],
+      "evidence": [
+        "docs/stabilizer-relational-consistency.md#2-exact-relational-query-geometry",
+        "src/simtheory/stabilizer_relations.py:graph_generator_total_variation",
+        "tests/test_stabilizer_relations.py"
+      ],
+      "nonclaims": [
+        "does not establish a metric for arbitrary quantum states or observables",
+        "does not convert internal predictive distance into parent-substrate cost"
+      ]
+    },
+    {
+      "id": "ST-T16",
+      "title": "Cycle graph two-local blindness with three-local label queries",
+      "kind": "THEOREM",
+      "scope": "graph-basis states of the simple cycle C_n for n at least five",
+      "assumptions": [
+        "local reductions are evaluated through the exact graph-state stabilizer support criterion",
+        "label recovery queries are the weight-three graph stabilizer generators"
+      ],
+      "evidence": [
+        "docs/stabilizer-relational-consistency.md#4-cycle-graph-locality-threshold",
+        "src/simtheory/stabilizer_relations.py:cycle_stabilizer_distance",
+        "tests/test_stabilizer_relations.py"
+      ],
+      "nonclaims": [
+        "identical one- and two-body marginals do not imply indistinguishability after arbitrary global transcript aggregation",
+        "does not describe generic many-body matter"
+      ]
+    },
+    {
+      "id": "ST-T17",
+      "title": "Finite Gilbert predictive packing for graph-basis labels",
+      "kind": "THEOREM",
+      "scope": "uniform stabilizer-generator queries on n graph-basis label bits with total-variation tolerance epsilon",
+      "assumptions": [
+        "predictive approximation is measured in one-query total variation",
+        "one renderer state induces one approximating future query law"
+      ],
+      "evidence": [
+        "docs/stabilizer-relational-consistency.md#5-coding-theoretic-predictive-packings",
+        "src/simtheory/stabilizer_relations.py:gilbert_predictive_size_lower_bound",
+        "tests/test_stabilizer_relations.py"
+      ],
+      "nonclaims": [
+        "the asymptotic entropy rate is not substituted for the finite Hamming-ball certificate",
+        "does not claim every physical quantum family realizes this code"
+      ]
+    },
+    {
+      "id": "ST-T18",
+      "title": "Cat-state proper-marginal phase blindness",
+      "kind": "THEOREM",
+      "scope": "local X measurements of a declared ell-qubit phase-labeled cat state",
+      "assumptions": [
+        "the block state is (|0^ell>+(-1)^z|1^ell>)/sqrt(2)",
+        "each recorded local outcome is an X-basis eigenvalue"
+      ],
+      "evidence": [
+        "docs/stabilizer-relational-consistency.md#6-cat-state-parity-as-pure-relational-information",
+        "src/simtheory/cat_consistency.py:cat_x_marginal_law",
+        "tests/test_cat_consistency.py"
+      ],
+      "nonclaims": [
+        "proper-marginal blindness does not prevent a complete distributed transcript from revealing the phase",
+        "does not imply that arbitrary entangled states have the same parity law"
+      ]
+    },
+    {
+      "id": "ST-T19",
+      "title": "Exact online cat-parity consistency memory",
+      "kind": "THEOREM",
+      "scope": "m independent cat blocks after ell-1 local X outcomes have been emitted in each block",
+      "assumptions": [
+        "future queries request the final X outcome of a selected block",
+        "the renderer must reproduce the exact parity-constrained transcript law",
+        "predictive equivalence is defined by all allowed future block queries"
+      ],
+      "evidence": [
+        "docs/stabilizer-relational-consistency.md#7-exact-online-consistency-memory",
+        "src/simtheory/cat_consistency.py:checkpoint_exact_predictive_state_count",
+        "tests/test_cat_consistency.py"
+      ],
+      "nonclaims": [
+        "the renderer need not retain the full emitted transcript because one parity bit per block is sufficient",
+        "the m internal bits are not asserted to be m parent-hardware bits"
+      ]
+    },
+    {
+      "id": "ST-M06",
+      "title": "Constant-tolerance relational memory rate",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared uniform generator-query or final-block-query normalized-Hamming models",
+      "assumptions": [
+        "epsilon lies below one quarter for the positive asymptotic Gilbert rate",
+        "binary label codes are admissible hidden predictive states"
+      ],
+      "evidence": [
+        "docs/stabilizer-relational-consistency.md#5-coding-theoretic-predictive-packings",
+        "src/simtheory/stabilizer_relations.py:asymptotic_gilbert_rate_for_tv",
+        "tests/test_stabilizer_relations.py"
+      ],
+      "nonclaims": [
+        "the asymptotic rate is model-dependent and is not an empirical estimate about the universe",
+        "finite block-length claims use the explicit Gilbert size bound"
+      ]
+    }
+  ]
+}
