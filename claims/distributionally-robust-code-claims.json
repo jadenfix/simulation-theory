@@ -34,7 +34,7 @@
         "the TV budget is an upper bound and may be slack after saturation"
       ],
       "evidence": [
-        "docs/distributionally-robust-tv-coding.md#2-exact-extremal-expectation-theorem",
+        "docs/tv-transport-dual.md",
         "src/simtheory/tv_transport_duals.py:TVKnapsackDualCertificate",
         "src/simtheory/tv_transport_duals.py:tv_knapsack_dual_certificate",
         "tests/test_tv_transport_duals.py"
