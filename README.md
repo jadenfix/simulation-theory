@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum and relational extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json) and [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, and noisy extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), and [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -55,6 +55,12 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 32. **Constant-tolerance relational coding.** Finite Gilbert bounds and the rate `1-H_2(2 epsilon)` preserve a linear number of predictive bits under constant uniform-query tolerance below one quarter.
 33. **Cat-state proper-marginal blindness.** Every incomplete local-X transcript of a phase-labeled cat block is uniform and phase-independent, while the complete parity transcript separates the phases perfectly.
 34. **Exact streaming consistency memory.** After `ell-1` local outcomes in each of `m` cat blocks, an exact online renderer has exactly `2^m` predictive-equivalence classes and needs exactly `m` parity bits; the lower bound survives worst-query error below one half.
+35. **Noise-renormalized parity law.** Independent local flip probability `p` on an `ell`-qubit cat block produces effective parity crossover `q=[1-(1-2p)^ell]/2` and exact phase TV `(1-2p)^ell`.
+36. **Noisy proper-marginal blindness.** Even after independent local flips, every proper local-X marginal remains exactly uniform and phase-independent.
+37. **Locality-robustness tradeoff.** Relational locality increases with block length while observable parity visibility decays exponentially as `(1-2p)^ell` under fixed independent local noise.
+38. **Sharp noisy checkpoint threshold.** With parity visibility `c`, worst-query predictive memory is exactly `m` bits for error below `c/2` and collapses to zero at or above `c/2` in the declared one-step model.
+39. **Exact predictive rate distortion.** For a uniform `m`-bit noisy checkpoint signature and average TV distortion `D`, internal predictive information is at least `m[1-H_2(D/c)]` for `D<c/2`.
+40. **Noisy codeword recovery.** Exact binomial TV, KL/Pinsker necessary counts, and Bhattacharyya sufficient counts quantify repeated parity recovery and complete noisy-codeword separation.
 
 General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical and relational derivations are developed in:
 
@@ -64,6 +70,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/quantum-sequential-bounds.md`](docs/quantum-sequential-bounds.md)
 - [`docs/manybody-predictive-bounds.md`](docs/manybody-predictive-bounds.md)
 - [`docs/stabilizer-relational-consistency.md`](docs/stabilizer-relational-consistency.md)
+- [`docs/noisy-relational-rate-distortion.md`](docs/noisy-relational-rate-distortion.md)
 
 ## Layout
 
@@ -71,6 +78,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 claims/claims-v1.json                    core typed claims, assumptions, evidence, and nonclaims
 claims/quantum-phase-claims.json         multidimensional quantum claim registry
 claims/stabilizer-relational-claims.json relational and online-consistency claim registry
+claims/noisy-relational-claims.json      noisy parity and rate-distortion claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -78,6 +86,7 @@ docs/canonical-chsh-disk-geometry.md     exact disk norm and constructive scalin
 docs/quantum-sequential-bounds.md        adaptive phase-drift transcript model
 docs/manybody-predictive-bounds.md       subsystem-count and precision scaling
 docs/stabilizer-relational-consistency.md local blindness and streaming parity memory
+docs/noisy-relational-rate-distortion.md noise attenuation, repetition, and predictive coding
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -99,7 +108,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, error correction, or information bounds are not generic evidence for simulation; ordinary physical theories can contain those features too.
 
 ## Tempera Math boundary
 

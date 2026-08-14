@@ -1,0 +1,139 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T20",
+      "title": "Independent local-flip parity attenuation and noisy cat transcript law",
+      "kind": "THEOREM",
+      "scope": "one phase-labeled ell-qubit cat block under independent identical local X-outcome flips with probability p in [0,1/2]",
+      "assumptions": [
+        "the ideal local X transcript is uniform on the parity class product_i x_i=(-1)^z",
+        "local recorded outcomes are flipped independently with common probability p"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#2-exact-complete-transcript-law",
+        "src/simtheory/noisy_relations.py:noisy_cat_transcript_probability",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "independent identical flips are a declared model rather than a universal noise law",
+        "parity attenuation is not evidence that reality is simulated"
+      ]
+    },
+    {
+      "id": "ST-T21",
+      "title": "Proper noisy cat marginals remain phase blind",
+      "kind": "THEOREM",
+      "scope": "every proper subset of local X outcomes in the declared independently flipped cat-block model",
+      "assumptions": [
+        "the complete noisy law is 2^{-ell}[1+(-1)^z(1-2p)^ell product_i y_i]",
+        "at least one physical outcome is marginalized out"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#2-exact-complete-transcript-law",
+        "src/simtheory/noisy_relations.py:noisy_cat_marginal_law",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "proper-marginal blindness does not prevent the completed distributed parity transcript from carrying phase information",
+        "does not apply to arbitrary noise channels without derivation"
+      ]
+    },
+    {
+      "id": "ST-T22",
+      "title": "Exact repeated noisy-parity distinguishability bounds",
+      "kind": "THEOREM",
+      "scope": "independent repeated parity observations of one fixed binary phase through BSC(q)",
+      "assumptions": [
+        "repeated preparations and readout channels are independent",
+        "the two phase hypotheses induce Bernoulli(q) and Bernoulli(1-q) parity laws"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#4-repeating-the-noisy-parity-experiment",
+        "src/simtheory/noisy_relations.py:repeated_bsc_total_variation",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "the KL/Pinsker count is necessary rather than sufficient",
+        "the Bhattacharyya count is sufficient rather than exact"
+      ]
+    },
+    {
+      "id": "ST-T23",
+      "title": "Noisy checkpoint weighted-Hamming geometry and sharp worst-query threshold",
+      "kind": "THEOREM",
+      "scope": "m binary checkpoint signatures whose selected final-block outcomes pass independently through one declared BSC(q)",
+      "assumptions": [
+        "the future block-query distribution is exogenous and identical under compared signatures",
+        "worst-query approximation is evaluated over every allowed final-block query"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#6-sharp-worst-query-memory-threshold",
+        "src/simtheory/noisy_relations.py:noisy_checkpoint_worst_query_memory_bits",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "the all-or-nothing threshold is specific to the one-step worst-query interface",
+        "internal predictive bits are not parent-hardware bits"
+      ]
+    },
+    {
+      "id": "ST-T24",
+      "title": "Exact average noisy predictive rate-distortion lower bound",
+      "kind": "THEOREM",
+      "scope": "uniform m-bit checkpoint signatures, uniform coordinate queries, and average total-variation prediction distortion D",
+      "assumptions": [
+        "each target coordinate law has Bernoulli bias c Z_i with c=1-2q",
+        "the hidden signature bits are independent and uniform",
+        "the decoder may output any Bernoulli bias as a function of its finite internal state"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#8-exact-average-predictive-rate-distortion-lower-bound",
+        "src/simtheory/noisy_relations.py:noisy_average_predictive_information_lower_bound_bits",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "different source or query distributions have different rate-distortion functions",
+        "mutual-information bits do not automatically equal physical storage energy or parent RAM"
+      ]
+    },
+    {
+      "id": "ST-T25",
+      "title": "Product-BSC codeword total variation and Bhattacharyya lower bound",
+      "kind": "THEOREM",
+      "scope": "two binary signatures at Hamming distance h observed completely through independent BSC(q) coordinates",
+      "assumptions": [
+        "coordinate noise is independent",
+        "both compared signatures use the same crossover probability"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#9-full-noisy-signature-observations",
+        "src/simtheory/noisy_relations.py:bsc_codeword_total_variation",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "the Bhattacharyya expression is a lower bound on TV rather than an equality in general",
+        "complete signature observation is different from one uniformly selected coordinate query"
+      ]
+    },
+    {
+      "id": "ST-M07",
+      "title": "Finite noisy uniform-query Gilbert predictive packing",
+      "kind": "MODEL_RESULT",
+      "scope": "m checkpoint bits under uniform final-block queries, BSC(q) reliability c=1-2q, and finite tolerance epsilon",
+      "assumptions": [
+        "one renderer state determines one approximating future query law",
+        "codeword separation is measured by c times normalized Hamming distance"
+      ],
+      "evidence": [
+        "docs/noisy-relational-rate-distortion.md#7-finite-uniform-query-coding-bound",
+        "src/simtheory/noisy_relations.py:noisy_checkpoint_gilbert_size_lower_bound",
+        "tests/test_noisy_relations.py"
+      ],
+      "nonclaims": [
+        "the finite Gilbert certificate is not replaced by an unsupported asymptotic count",
+        "the bound concerns a selected code family rather than all checkpoint signatures at that tolerance"
+      ]
+    }
+  ]
+}

@@ -11,7 +11,8 @@ The project is not trying to assign a dramatic single-number probability to “s
 3. What computational or physical constraints follow from a specified architecture?
 4. What experiment distinguishes that architecture from serious alternatives?
 5. What predictive information must an online generator retain to keep adaptive and distributed observations globally consistent?
-6. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
+6. How do noise and tolerated error change the necessary predictive state?
+7. What exact evidence remains after selection, intervention, nuisance parameters, and optional stopping are modeled?
 
 ## Completed mathematical lanes
 
@@ -68,7 +69,7 @@ See [`bell-predictive-bounds.md`](bell-predictive-bounds.md), [`quantum-phase-pr
 
 ### Relational information and local blindness
 
-The newest lane isolates predictive information that is absent from low-order marginals:
+The relational lane isolates predictive information absent from low-order marginals:
 
 - graph-basis stabilizer queries have exact weighted-Hamming predictive geometry;
 - cycle graph states with at least five qubits have stabilizer distance three;
@@ -81,49 +82,73 @@ The newest lane isolates predictive information that is absent from low-order ma
 
 See [`stabilizer-relational-consistency.md`](stabilizer-relational-consistency.md).
 
+### Noisy relational consistency and predictive rate distortion
+
+The exact relational construction has now been extended to independent local readout noise:
+
+- local flip probability `p` on an `ell`-qubit cat block induces effective parity crossover
+  `q=[1-(1-2p)^ell]/2`;
+- the complete noisy phase laws have exact TV `(1-2p)^ell`;
+- every proper noisy local marginal remains uniform and phase-independent;
+- parity is a sufficient statistic for phase inference;
+- block locality and robustness trade off because parity visibility decays exponentially with `ell` at fixed `p`;
+- repeated parity inference has exact finite binomial TV and Bayes error;
+- KL/Pinsker gives necessary repetition counts and Bhattacharyya gives sufficient counts;
+- noisy checkpoint signatures have exact geometry
+  `TV=c*d_H/m` under uniform queries;
+- worst-query memory has a sharp threshold: `m` bits below error `c/2`, zero at or above `c/2` in the declared one-step model;
+- finite Gilbert codes give explicit noisy predictive packings;
+- uniform signatures under average TV distortion obey the exact information lower bound
+  `m[1-H_2(D/c)]`.
+
+See [`noisy-relational-rate-distortion.md`](noisy-relational-rate-distortion.md).
+
 ## Current frontier campaigns
 
-### Campaign A: noisy relational consistency and rate distortion
+### Campaign A: quantum error-correcting and stabilizer-code locality
 
-The exact parity results identify the sufficient state in a noiseless model. The next step is to allow:
-
-- local outcome flips;
-- imperfect visibility;
-- approximate parity constraints;
-- dropped or delayed observations;
-- bounded renderer error measured over future transcript families.
-
-Targets:
-
-1. Derive the predictive rate-distortion function of noisy cat blocks.
-2. Separate hidden-label memory from dynamic consistency memory.
-3. Determine when parity summaries can be compressed below one bit per block.
-4. Prove finite lower bounds using Fano, strong data processing, or conditional mutual information.
-5. Build exact small-instance dynamic programs as independent checkers.
-
-### Campaign B: quantum error-correcting and stabilizer-code locality
-
-Graph cycles establish two-local blindness with three-local access. The deeper target is a family with tunable local-indistinguishability distance.
+Graph cycles establish two-local blindness with three-local access. The next target is a family with tunable local-indistinguishability distance and explicit logical predictive geometry.
 
 Candidate programs:
 
-- repetition/cat block products with adjustable block locality;
-- CSS codes where logical labels are invisible below the code distance;
-- small exact stabilizer codes, including explicit logical Pauli query laws;
+- repetition/cat block products with adjustable locality;
+- CSS codes where logical labels are invisible below code distance;
+- the three-qubit repetition code as a minimal exact checker;
+- the five-qubit perfect code and Steane code on bounded state-vector instances;
 - graph families whose minimum stabilizer support grows with system size;
 - approximate code states with noisy local indistinguishability.
 
 Deliverables:
 
-1. A typed binary-symplectic stabilizer representation.
-2. Exact code distance and logical-observable enumeration for bounded sizes.
-3. Reduced-state equality checks below the declared locality threshold.
-4. Predictive packings over logical labels.
-5. A clean distinction between code distance, stabilizer distance, and query weight.
+1. A typed binary-symplectic Pauli and stabilizer representation.
+2. Exact commutation, rank, stabilizer, normalizer, and logical-operator checks.
+3. A clean distinction between stabilizer distance, code distance, logical-operator weight, and query weight.
+4. Reduced-state equality below a declared locality threshold.
+5. Predictive packings over logical labels.
+6. Independent brute-force checks for small codes.
+
+### Campaign B: correlated-noise and strong-data-processing bounds
+
+Independent local flips are analytically clean but restrictive. The next noisy lane should include:
+
+- common-mode flips;
+- finite-range correlated errors;
+- Markov noise along a spatial block;
+- adversarial contamination bounded in total variation;
+- erasures and delayed observations;
+- uncertain noise parameters integrated hierarchically.
+
+Research targets:
+
+1. Determine when proper marginal blindness survives.
+2. Replace `(1-2p)^ell` with correlation-function or transfer-matrix expressions.
+3. Prove strong-data-processing bounds for relational information through a noisy causal chain.
+4. Separate robustness to stochastic noise from robustness to adversarial corruption.
+5. Quantify prior sensitivity when the noise law is not known exactly.
 
 ### Campaign C: distributed and relativistic consistency
 
-The cat result already shows that individually random local outcomes can be tied by a later global parity check. The next program should add causal structure:
+The cat result shows that individually random local outcomes can be tied by a later global parity check. The next program should add causal structure:
 
 - spacelike-separated local observers;
 - delayed comparison of authenticated records;
@@ -133,9 +158,9 @@ The cat result already shows that individually random local outcomes can be tied
 
 Research questions:
 
-1. What state must be duplicated versus shared across causal regions?
+1. What predictive state must be duplicated versus shared across causal regions?
 2. What communication is necessary when records are reconciled?
-3. Can a renderer postpone commitment without violating no-signaling and later parity constraints?
+3. Can commitment be postponed without violating no-signaling and later parity constraints?
 4. How do memory and communication trade off under a fixed causal graph?
 5. Which lower bounds are ordinary distributed-computing bounds rather than specifically quantum bounds?
 
@@ -187,9 +212,11 @@ A research result is ready for the main branch only when:
 5. Numerical demonstrations use fixed seeds and are labeled illustrative when priors are invented.
 6. Sequential claims state their sampling model, retained transcript, and stopping guarantee.
 7. Locality claims distinguish one-shot local marginals from adaptive protocols that aggregate a global transcript.
-8. Physical claims state which laws apply and avoid cross-level leakage.
-9. A finite experiment is never promoted into a generic simulation conclusion.
-10. A memory lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
+8. Noise claims specify independence, stationarity, and parameter-knowledge assumptions.
+9. Physical claims state which laws apply and avoid cross-level leakage.
+10. A finite experiment is never promoted into a generic simulation conclusion.
+11. A memory lower bound identifies the predictive interface and does not silently become a parent-hardware claim.
+12. Average-case, worst-case, necessary, sufficient, exact, and asymptotic statements remain explicitly separated.
 
 ## Tempera Math integration
 
@@ -198,13 +225,13 @@ The repository claim manifests remain the source of truth. Tempera Math can late
 - theorem versus model-result versus finite-check status;
 - all assumptions and nonclaims;
 - exact source revision and checker command;
-- bounded graph size, horizon, locality, and tolerance;
+- bounded graph size, horizon, locality, tolerance, and noise parameters;
 - the boundary between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
+This project does not claim that quantum mechanics, Bell violation, entanglement, stabilizer structure, error correction, Planck scales, cosmic-ray cutoffs, entropy bounds, mathematical elegance, coincidences, observer effects, or finite signal speed are evidence of simulation by themselves. It does not assume digital physics, substrate-independent consciousness, finite parent resources, or a parent universe obeying our constants.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding an anomaly does not favor simulation until the anomaly is more likely under a specified simulator model than under serious ordinary-physics and measurement alternatives.
