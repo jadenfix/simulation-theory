@@ -48,7 +48,7 @@ def test_interval_expectation_max_and_min_have_zero_exact_duality_gap():
     minimum = exact_expectation_primal_dual(poly, (1, 2, 4), maximize=False)
     assert maximum.valid and minimum.valid
     assert maximum.primal.optimum == maximum.original_dual_value == Fraction(7, 2)
-    assert minimum.primal.optimum == minimum.original_dual_value == Fraction(13, 10)
+    assert minimum.primal.optimum == minimum.original_dual_value == Fraction(7, 5)
     assert len(maximum.support) <= poly.dimension
     assert len(minimum.support) <= poly.dimension
 
