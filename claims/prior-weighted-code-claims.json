@@ -12,8 +12,8 @@
         "expected length is computed under the declared rational source prior"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#1-finite-source-graph-and-prior",
-        "docs/prior-weighted-zero-error-coding.md#3-exact-huffman-optimum-for-one-partition",
+        "docs/prior-weighted-zero-error-coding.md#1-from-future-demands-to-independent-message-classes",
+        "docs/prior-weighted-zero-error-coding.md#3-exact-huffman-optimum-for-one-proper-partition",
         "src/simtheory/prior_weighted_codes.py:partition_prefix_code",
         "src/simtheory/prior_weighted_codes.py:optimal_binary_prefix_code",
         "tests/test_prior_weighted_codes.py"
@@ -34,7 +34,7 @@
         "a cap exceedance raises instead of returning a partial optimum"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#4-exact-global-prior-weighted-optimum",
+        "docs/prior-weighted-zero-error-coding.md#4-exact-global-one-shot-optimum",
         "docs/prior-weighted-zero-error-coding.md#5-exact-message-count-frontier",
         "src/simtheory/prior_weighted_codes.py:iter_proper_partitions",
         "src/simtheory/prior_weighted_codes.py:exact_prior_weighted_prefix_code",
@@ -57,7 +57,7 @@
         "zero-probability declared states may still require codewords under declared-state zero error"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#7-entropy-sandwich-for-the-global-optimum",
+        "docs/prior-weighted-zero-error-coding.md#7-entropy-sandwich-including-the-zero-mass-boundary",
         "src/simtheory/prior_weighted_codes.py:exact_prior_weighted_prefix_code",
         "tests/test_prior_weighted_codes.py"
       ],
@@ -77,7 +77,7 @@
         "expected and maximum prefix lengths are treated as distinct resources"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#8-fixed-length-mean-length-and-peak-length-are-different",
+        "docs/prior-weighted-zero-error-coding.md#8-fixed-length-mean-length-and-peak-length",
         "src/simtheory/prior_weighted_codes.py:PriorWeightedCodeCertificate",
         "tests/test_prior_weighted_codes.py"
       ],
@@ -96,7 +96,7 @@
         "every proper partition of the original graph remains feasible after edge deletion"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#12-edge-deletion-and-side-information-monotonicity",
+        "docs/prior-weighted-zero-error-coding.md#12-monotonicity-under-deleted-confusion-edges",
         "src/simtheory/prior_weighted_codes.py:prior_weighted_edge_deletion_certificate",
         "tests/test_prior_weighted_codes.py"
       ],
@@ -115,7 +115,7 @@
         "declared-state zero error quantifies over every graph vertex regardless of prior mass"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#13-zero-mass-states-expose-two-different-zero-error-conventions",
+        "docs/prior-weighted-zero-error-coding.md#13-zero-mass-states-and-two-correctness-conventions",
         "src/simtheory/prior_weighted_codes.py:positive_support_code_certificate",
         "tests/test_prior_weighted_codes.py"
       ],
@@ -134,7 +134,7 @@
         "probability vectors are compared under the same logarithm base"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#6-minimum-coloring-entropy-and-exact-rational-ordering",
+        "docs/prior-weighted-zero-error-coding.md#6-exact-rational-ordering-of-coloring-entropies",
         "src/simtheory/prior_weighted_codes.py:exact_entropy_order_product",
         "tests/test_prior_weighted_codes.py"
       ],
@@ -154,7 +154,7 @@
         "all proper partitions below the finite cap are exhausted"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md",
+        "docs/prior-weighted-zero-error-coding.md#10-the-mean-optimal-code-can-use-more-than-χg-messages",
         "src/simtheory/prior_weighted_codes.py:richer_than_chromatic_example",
         "tests/test_prior_weighted_codes.py"
       ],
@@ -193,7 +193,7 @@
         "all configured search caps complete without truncation"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#14-bounded-certificate-contents",
+        "docs/prior-weighted-zero-error-coding.md#15-bounded-certificate-contents-and-independent-audits",
         "src/simtheory/prior_weighted_codes.py:exact_prior_weighted_prefix_code",
         "tests/test_prior_weighted_codes.py"
       ],
