@@ -1,7 +1,7 @@
 """Certified bounds separating robust absolute cost from pathwise regret.
 
 For a decision mixture x and path q, write C_x(q) for its expected cost and
-O(q) for the path-specific comparator oracle.  Pathwise regret is
+O(q) for the path-specific comparator oracle. Pathwise regret is
 
     max_q [C_x(q) - O(q)],
 
@@ -9,7 +9,22 @@ not generally
 
     max_q C_x(q) - max_q O(q).
 
-The two maxima may occur at different paths.  If
+The two maxima may occur at different paths. More subtly, O(q) is a minimum of
+affine comparator costs and is therefore concave piecewise linear. Its maximum
+over a path polytope need not occur at a path vertex.
+
+If the path polytope has vertices v_j, every feasible path is a convex
+combination of them. Because every comparator cost is affine,
+
+    max_q min_b C_b(q)
+      = max_{lambda in simplex} min_b sum_j lambda_j C_b(v_j).
+
+This is exactly the dual side of the finite rational zero-sum game whose rows
+are path vertices and whose columns are comparators. The repository therefore
+certifies the oracle maximum with a full primal-dual game receipt rather than
+incorrectly taking the largest vertex oracle value.
+
+If
 
     V_abs = min_x max_q C_x(q),
     O_min = min_q O(q),
@@ -19,10 +34,10 @@ then deterministic and shared-randomness minimax regret satisfy
 
     V_abs - O_max <= R <= V_abs - O_min.
 
-This module constructs exact rational absolute-cost games from an already
-validated pathwise-regret certificate and checks both bounds.  It exists to
-prevent an adaptivity gap between separately optimized robust values from being
-misreported as dynamic regret.
+The module constructs exact rational absolute-cost and oracle-maximin games from
+an already validated pathwise-regret certificate and checks both bounds. It
+exists to prevent either a robust value gap or a vertex-only oracle calculation
+from being misreported as dynamic regret.
 """
 
 from __future__ import annotations
@@ -41,7 +56,19 @@ class RegretValueBoundsCertificate:
     deterministic_absolute_value: Fraction
     shared_absolute_game: ExactZeroSumGameCertificate
     oracle_minimum: Fraction
-    oracle_maximum: Fraction
+    oracle_max_game: ExactZeroSumGameCertificate
+
+    @property
+    def oracle_maximum(self) -> Fraction:
+        return self.oracle_max_game.value
+
+    @property
+    def oracle_vertex_maximum(self) -> Fraction:
+        return max(self.regret.oracle_costs)
+
+    @property
+    def oracle_interior_gain(self) -> Fraction:
+        return self.oracle_maximum - self.oracle_vertex_maximum
 
     @property
     def deterministic_lower_bound(self) -> Fraction:
@@ -72,8 +99,11 @@ class RegretValueBoundsCertificate:
         if (
             not self.regret.valid
             or not self.shared_absolute_game.valid
+            or not self.oracle_max_game.valid
             or self.shared_absolute_game.cost_matrix
             != self.regret.decision_cost_matrix
+            or self.oracle_max_game.cost_matrix
+            != self.regret.comparator_cost_matrix
             or not 0
             <= self.deterministic_absolute_decision_index
             < len(self.regret.decisions)
@@ -94,11 +124,17 @@ class RegretValueBoundsCertificate:
                 self.regret.decisions[index].label,
             ),
         )
+        expected_oracle_minimum = min(
+            value
+            for row in self.regret.comparator_cost_matrix
+            for value in row
+        )
         return (
             self.deterministic_absolute_decision_index == expected_index
             and self.deterministic_absolute_value == worst_absolute[expected_index]
-            and self.oracle_minimum == min(self.regret.oracle_costs)
-            and self.oracle_maximum == max(self.regret.oracle_costs)
+            and self.oracle_minimum == expected_oracle_minimum
+            and self.oracle_maximum >= self.oracle_vertex_maximum
+            and self.oracle_interior_gain >= 0
             and self.deterministic_lower_bound
             <= self.regret.deterministic_value
             <= self.deterministic_upper_bound
@@ -115,7 +151,7 @@ def exact_regret_value_bounds(
     *,
     max_game_bases: int = 2_000_000,
 ) -> RegretValueBoundsCertificate:
-    """Return exact deterministic/shared absolute-cost bounds on regret."""
+    """Return exact absolute-cost and oracle-maximin bounds on regret."""
 
     if not regret.valid:
         raise ValueError("pathwise regret certificate must be valid")
@@ -138,13 +174,22 @@ def exact_regret_value_bounds(
         regret.decision_cost_matrix,
         max_bases=max_game_bases,
     )
+    oracle_max_game = solve_exact_zero_sum_game(
+        regret.comparator_cost_matrix,
+        max_bases=max_game_bases,
+    )
+    oracle_minimum = min(
+        value
+        for row in regret.comparator_cost_matrix
+        for value in row
+    )
     result = RegretValueBoundsCertificate(
         regret,
         index,
         worst_absolute[index],
         shared_absolute,
-        min(regret.oracle_costs),
-        max(regret.oracle_costs),
+        oracle_minimum,
+        oracle_max_game,
     )
     if not result.valid:
         raise AssertionError("regret-versus-value bound certificate failed")
