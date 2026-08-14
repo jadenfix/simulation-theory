@@ -1,17 +1,17 @@
 """Finite-field multicast network-coding certificates.
 
 The single-sink predictive min-cut theorem does not automatically solve a
-simultaneous multi-sink problem.  Different sinks can compete for one shared
-bottleneck.  Routing and replication may fail even when every sink separately
+simultaneous multi-sink problem. Different sinks can compete for one shared
+bottleneck. Routing and replication may fail even when every sink separately
 has a large enough min-cut.
 
 This module builds a bounded, auditable bridge from predictive class labels to
 scalar linear network coding over a prime field.
 
-A source holds h symbols x in F_p^h.  Every unit-capacity edge carries one
-linear combination g_e dot x, where g_e is its global encoding vector.  At a
+A source holds h symbols x in F_p^h. Every unit-capacity edge carries one
+linear combination g_e dot x, where g_e is its global encoding vector. At a
 non-source node, every outgoing global vector must lie in the span of the
-incoming vectors.  A sink recovers all source symbols exactly iff its incoming
+incoming vectors. A sink recovers all source symbols exactly iff its incoming
 global vectors have rank h.
 
 The canonical butterfly network supplies a sharp finite separation:
@@ -25,7 +25,7 @@ The implementation includes exact GF(p) rank/solve routines, local coefficient
 validation, sink decoders, exhaustive bounded code search, exhaustive routing
 search, min-cut checks, and a predictive-class bridge.
 
-These are internal finite communication results for declared networks.  They
+These are internal finite communication results for declared networks. They
 are not evidence for simulation and do not convert field symbols or edge units
 into parent-universe hardware, energy, mass, or spacetime.
 """
@@ -306,26 +306,30 @@ class UnitCapacityDAG:
         target = str(node)
         if target not in self.nodes:
             raise ValueError("node is not in the network")
-        return tuple(sorted(
-            (edge for edge in self.edges if edge.head == target),
-            key=lambda edge: edge.edge_id,
-        ))
+        return tuple(
+            sorted(
+                (edge for edge in self.edges if edge.head == target),
+                key=lambda edge: edge.edge_id,
+            )
+        )
 
     def outgoing(self, node: str) -> tuple[UnitEdge, ...]:
         source = str(node)
         if source not in self.nodes:
             raise ValueError("node is not in the network")
-        return tuple(sorted(
-            (edge for edge in self.edges if edge.tail == source),
-            key=lambda edge: edge.edge_id,
-        ))
+        return tuple(
+            sorted(
+                (edge for edge in self.edges if edge.tail == source),
+                key=lambda edge: edge.edge_id,
+            )
+        )
 
     def edge(self, edge_id: str) -> UnitEdge:
         identifier = str(edge_id)
-        return next(
-            (edge for edge in self.edges if edge.edge_id == identifier),
-            _raise_unknown_edge(identifier),
-        )
+        for edge in self.edges:
+            if edge.edge_id == identifier:
+                return edge
+        raise ValueError(f"unknown unit edge: {identifier}")
 
     def to_capacity_network(self) -> CausalCapacityNetwork:
         counts: dict[tuple[str, str], int] = {}
@@ -341,10 +345,6 @@ class UnitCapacityDAG:
 
     def min_cut_capacity(self, source: str, sink: str) -> int:
         return self.to_capacity_network().min_cut_capacity(source, sink)
-
-
-def _raise_unknown_edge(edge_id: str) -> UnitEdge:
-    raise ValueError(f"unknown unit edge: {edge_id}")
 
 
 @dataclass(frozen=True)
@@ -472,13 +472,14 @@ def evaluate_scalar_linear_code(
             decoder_rows.append(
                 solution if solution is not None else _zero_vector(len(vectors))
             )
-        decoder = SinkDecoder(
-            sink,
-            tuple(edge.edge_id for edge in incoming),
-            rank,
-            tuple(decoder_rows),
+        decoders.append(
+            SinkDecoder(
+                sink,
+                tuple(edge.edge_id for edge in incoming),
+                rank,
+                tuple(decoder_rows),
+            )
         )
-        decoders.append(decoder)
 
     certificate = LinearMulticastCertificate(
         network,
@@ -494,7 +495,9 @@ def _verify_decoder_equations(certificate: LinearMulticastCertificate) -> None:
     vectors = certificate.global_vector_map()
     code = certificate.code
     for decoder in certificate.decoders:
-        incoming_vectors = tuple(vectors[edge_id] for edge_id in decoder.incoming_edges)
+        incoming_vectors = tuple(
+            vectors[edge_id] for edge_id in decoder.incoming_edges
+        )
         if decoder.rank < code.source_dimension:
             continue
         for coordinate, coefficients in enumerate(
@@ -511,19 +514,27 @@ def _verify_decoder_equations(certificate: LinearMulticastCertificate) -> None:
 
 
 def certificate_is_routing(certificate: LinearMulticastCertificate) -> bool:
-    """Whether every edge only carries zero or copies one locally available symbol."""
+    """Whether every edge carries zero or an unchanged locally available symbol."""
 
     vectors = certificate.global_vector_map()
     code = certificate.code
-    basis = {_basis_vector(code.source_dimension, index) for index in range(code.source_dimension)}
+    basis = {
+        _basis_vector(code.source_dimension, index)
+        for index in range(code.source_dimension)
+    }
     zero = _zero_vector(code.source_dimension)
     for node in certificate.network.topological_order():
         incoming_vectors = {
-            vectors[edge.edge_id] for edge in certificate.network.incoming(node)
+            vectors[edge.edge_id]
+            for edge in certificate.network.incoming(node)
         }
         for edge in certificate.network.outgoing(node):
             vector = vectors[edge.edge_id]
-            allowed = ({zero} | basis) if node == code.source else ({zero} | incoming_vectors)
+            allowed = (
+                ({zero} | basis)
+                if node == code.source
+                else ({zero} | incoming_vectors)
+            )
             if vector not in allowed:
                 return False
     return True
