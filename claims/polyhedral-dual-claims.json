@@ -1,0 +1,64 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T118",
+      "title": "Exact sparse Farkas infeasibility certificate for rational prior ambiguity",
+      "kind": "THEOREM",
+      "scope": "empty finite rational prior polytopes after exact simplex-coordinate elimination",
+      "assumptions": [
+        "the transformed ambiguity system is Cx<=d with rational coefficients",
+        "the normalized Farkas witness satisfies y>=0, C^T y=0, and one^T y=1",
+        "all normalized witness bases below the configured cap are exhausted"
+      ],
+      "evidence": [
+        "docs/polyhedral-dual-certificates.md#2-farkas-alternative-for-an-empty-ambiguity-set",
+        "src/simtheory/polyhedral_duals.py:exact_farkas_infeasibility_certificate",
+        "tests/test_polyhedral_duals.py"
+      ],
+      "nonclaims": [
+        "the certificate proves inconsistency of the declared inequalities but does not identify which modeling assumption should be relaxed",
+        "active-basis enumeration is not a large-instance polynomial-time guarantee"
+      ]
+    },
+    {
+      "id": "ST-T119",
+      "title": "Exact rational primal-dual certificate for polyhedral expectation extrema",
+      "kind": "THEOREM",
+      "scope": "linear expectations over nonempty bounded rational prior polytopes",
+      "assumptions": [
+        "after simplex elimination the primal is max constant+c^T x subject to Cx<=d",
+        "the dual is min constant+d^T y subject to C^T y=c and y>=0",
+        "minimization is certified by applying the maximum dual to the negated value vector"
+      ],
+      "evidence": [
+        "docs/polyhedral-dual-certificates.md#3-exact-expectation-dual",
+        "docs/polyhedral-dual-certificates.md#4-sparse-optimality-receipts",
+        "src/simtheory/polyhedral_duals.py:exact_expectation_primal_dual",
+        "tests/test_polyhedral_duals.py"
+      ],
+      "nonclaims": [
+        "zero rational duality gap is a certificate for the declared finite LP rather than a statistical coverage claim",
+        "dual multipliers are not automatically physical prices or parent-substrate resource costs"
+      ]
+    },
+    {
+      "id": "ST-F17",
+      "title": "Bounded independent Farkas and expectation-dual audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the contradictory interval, incompatible-halfspace, interval-expectation, Huber K4, and constant-objective instances exercised by the repository",
+      "assumptions": [
+        "all configured Farkas and dual basis searches complete below their caps",
+        "all arithmetic in the certificate path is exact rational arithmetic"
+      ],
+      "evidence": [
+        "docs/polyhedral-dual-certificates.md#5-independent-checks",
+        "tests/test_polyhedral_duals.py"
+      ],
+      "nonclaims": [
+        "bounded agreement is not a scalability theorem",
+        "a passing CI run is not itself the mathematical proof object"
+      ]
+    }
+  ]
+}
