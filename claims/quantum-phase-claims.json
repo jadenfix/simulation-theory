@@ -77,6 +77,25 @@
       ]
     },
     {
+      "id": "ST-T15",
+      "title": "Bell schedule projection seminorm criterion",
+      "kind": "THEOREM",
+      "scope": "finite coplanar setting schedules in correlation-disk coordinates",
+      "assumptions": [
+        "the declared visibility-phase Bell law holds",
+        "positive-weight setting directions are treated as vectors in R^2"
+      ],
+      "evidence": [
+        "src/simtheory/quantum_phase_geometry.py:schedule_cartesian_tv",
+        "src/simtheory/quantum_phase_geometry.py:schedule_direction_rank",
+        "tests/test_quantum_phase_geometry.py"
+      ],
+      "nonclaims": [
+        "the criterion concerns identifiability inside this two-dimensional observable family",
+        "it does not characterize arbitrary quantum tomography"
+      ]
+    },
+    {
       "id": "ST-M04",
       "title": "Two-parameter Fisher-rank identifiability",
       "kind": "MODEL_RESULT",
