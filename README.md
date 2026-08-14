@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, quantum-communication, progressive-query, predictive-network, and stochastic-cover extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json), [`claims/progressive-query-claims.json`](claims/progressive-query-claims.json), [`claims/predictive-network-claims.json`](claims/predictive-network-claims.json), and [`claims/stochastic-predictive-claims.json`](claims/stochastic-predictive-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, quantum-communication, progressive-query, predictive-network, stochastic-cover, and ternary-center extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json), [`claims/progressive-query-claims.json`](claims/progressive-query-claims.json), [`claims/predictive-network-claims.json`](claims/predictive-network-claims.json), [`claims/stochastic-predictive-claims.json`](claims/stochastic-predictive-claims.json), and [`claims/ternary-predictive-claims.json`](claims/ternary-predictive-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -104,6 +104,13 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 81. **Exact arbitrary-center Bernoulli covering.** Greedy interval covering computes the minimum number of epsilon-accurate Bernoulli predictor states and the exact corresponding one-sink index capacity.
 82. **Target-center conservatism.** At targets `p=0,1` and `epsilon=1/2`, one interpolating center `p=1/2` suffices although two target-centered states are required.
 83. **Finite stochastic certification.** Bounded exact packing, target set cover, assignments, KL/TV checks, Bernoulli arbitrary centers, and routed cover indices are independently tested.
+84. **Ternary TV infinity norm.** For exactly three outcomes, total variation equals the maximum coordinate probability difference.
+85. **Exact ternary common-center test.** A target cluster shares one epsilon-center iff its coordinate intersection intervals are nonempty and their lower/upper sums bracket one.
+86. **Closed ternary minimax radius.** Coordinate half-ranges plus two water-filling thresholds give the exact best one-state worst-target TV radius.
+87. **Exact arbitrary-center ternary cover.** Exhaustive feasible-cluster generation and exact set cover compute the unrestricted minimum number of ternary predictor laws.
+88. **Three-vertex phase diagram.** The three simplex vertices need three states below error `1/2`, two states from `1/2` to `2/3`, and one uniform state at or above `2/3`.
+89. **Ternary target-center gap.** At the simplex vertices and error `2/3`, one arbitrary uniform center suffices although three target-centered states remain necessary.
+90. **Exact ternary network capacity.** The unrestricted ternary cover index gives an exact one-sink min-cut requirement, removing the general stochastic certificate’s unresolved region for this special geometry.
 
 General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical, relational, code, and distributed derivations are developed in:
 
@@ -120,6 +127,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/progressive-query-revelation.md`](docs/progressive-query-revelation.md)
 - [`docs/predictive-network-mincuts.md`](docs/predictive-network-mincuts.md)
 - [`docs/stochastic-predictive-covers.md`](docs/stochastic-predictive-covers.md)
+- [`docs/ternary-predictive-centers.md`](docs/ternary-predictive-centers.md)
 
 ## Layout
 
@@ -134,6 +142,7 @@ claims/quantum-causal-cut-claims.json    quantum random-access and assistance cl
 claims/progressive-query-claims.json     progressive hint-timing and multiround claim registry
 claims/predictive-network-claims.json    predictive classes, min-cuts, and packing claim registry
 claims/stochastic-predictive-claims.json stochastic laws, covers, and network claim registry
+claims/ternary-predictive-claims.json    exact ternary centers, covers, and network claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -148,6 +157,7 @@ docs/quantum-causal-cut-random-access.md quantum messages, entanglement assistan
 docs/progressive-query-revelation.md     staged hints and shared/branch capacity regions
 docs/predictive-network-mincuts.md       query classes, exact cuts, routing, and packings
 docs/stochastic-predictive-covers.md     stochastic laws, packing-cover brackets, and interpolation
+docs/ternary-predictive-centers.md       exact three-outcome centers, covers, and capacities
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -169,7 +179,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, progressive query revelation, predictive equivalence, stochastic covering, interpolation, max flow, min cuts, parity compression, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, progressive query revelation, predictive equivalence, stochastic covering, ternary interpolation, max flow, min cuts, parity compression, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
 
 ## Tempera Math boundary
 
