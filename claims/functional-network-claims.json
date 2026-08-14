@@ -1,0 +1,149 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T72",
+      "title": "Exact linear function recovery by row-space inclusion",
+      "kind": "THEOREM",
+      "scope": "one sink receiving finite-field linear network symbols Gx and local side-information symbols Sx while demanding Bx",
+      "assumptions": [
+        "source, network symbols, target functions, side information, and decoder operations use one declared prime field",
+        "the sink must recover every demanded function exactly for every source vector"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#2-exact-row-space-recovery-theorem",
+        "src/simtheory/functional_networks.py:evaluate_linear_function_code",
+        "src/simtheory/functional_networks.py:rowspace_contains",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "the theorem does not cover nonlinear or approximate decoding without a new argument",
+        "finite-field rows are representations of internal information rather than parent-substrate ontology"
+      ]
+    },
+    {
+      "id": "ST-T73",
+      "title": "Conditional linear-demand cut lower bound",
+      "kind": "THEOREM",
+      "scope": "one sink with target rows B, local side-information rows S, and scalar finite-field symbols crossing every declared source-sink cut",
+      "assumptions": [
+        "all source-dependent network information reaching the sink downstream of the cut is generated from the cut symbols",
+        "one cut unit carries at most one scalar field dimension per use"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#4-conditional-cut-lower-bound",
+        "src/simtheory/functional_networks.py:conditional_linear_rank",
+        "src/simtheory/functional_networks.py:functional_cut_certificates",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "satisfying every receiver-wise cut bound is not claimed jointly sufficient for heterogeneous sinks",
+        "side information transmitted in an earlier stage must be counted in that stage rather than treated as universally free"
+      ]
+    },
+    {
+      "id": "ST-T74",
+      "title": "Exact bounded minimum common linear summary",
+      "kind": "THEOREM",
+      "scope": "bounded source dimension and prime field with finitely many linear sink demands and side-information row spaces",
+      "assumptions": [
+        "the configured enumeration exhausts every independent generator set below the returned dimension",
+        "candidate subspaces are canonicalized by exact finite-field reduced-row-echelon form",
+        "the common message is a linear subspace basis sent before sink-specific decoding"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#7-exact-bounded-subspace-search",
+        "src/simtheory/functional_networks.py:minimum_common_linear_summary",
+        "src/simtheory/functional_networks.py:gf_rref_basis",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "a capped incomplete enumeration is not an optimum certificate",
+        "the result does not solve unrestricted nonlinear index coding or network function computation"
+      ]
+    },
+    {
+      "id": "ST-T75",
+      "title": "Receiver-wise cut adequacy is not joint heterogeneous-demand sufficiency",
+      "kind": "THEOREM",
+      "scope": "the declared two-bit one-symbol broadcast network with t1 demanding x1 and t2 demanding x2 and no side information",
+      "assumptions": [
+        "the one shared source-to-relay edge carries one scalar linear form",
+        "both sinks receive only scalar multiples of that common form",
+        "both demanded basis functions must be recovered exactly"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#5-why-per-sink-cut-adequacy-is-not-jointly-sufficient",
+        "src/simtheory/functional_networks.py:heterogeneous_no_side_information_problem",
+        "src/simtheory/functional_networks.py:side_information_broadcast_separation",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "the counterexample does not say per-sink cuts are never sufficient under stronger common-demand assumptions",
+        "the obstruction is one shared scalar subspace rather than a general impossibility for larger block codes"
+      ]
+    },
+    {
+      "id": "ST-T76",
+      "title": "Restricted linear predictive-function bridge",
+      "kind": "THEOREM",
+      "scope": "finite predictive classes embedded explicitly in F_p^h with each sink's future answer signature declared as B_t x and side information as S_t x",
+      "assumptions": [
+        "the embedding is injective on every predictive class distinction that remains relevant to the modeled sinks",
+        "the declared sink signatures are exactly linear in that embedding",
+        "recovering B_t x is sufficient for every future query assigned to sink t"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#11-predictive-function-bridge",
+        "src/simtheory/functional_networks.py:linear_signature_map",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "arbitrary predictive functions need not be linear in a selected embedding",
+        "the finite-field class label is a coding choice rather than a physical identity"
+      ]
+    },
+    {
+      "id": "ST-M17",
+      "title": "Complementary side-information XOR broadcast",
+      "kind": "MODEL_RESULT",
+      "scope": "two binary source symbols, one common broadcast symbol, t1 knowing x1 and demanding x2, and t2 knowing x2 and demanding x1",
+      "assumptions": [
+        "all operations are over F_2",
+        "the relay copies one common source symbol to both receivers",
+        "local side information is exact and causally available at decoding time"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#8-complementary-side-information-and-one-xor-symbol",
+        "src/simtheory/functional_networks.py:xor_broadcast_code",
+        "src/simtheory/functional_networks.py:side_information_broadcast_separation",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "the result does not make side information free under every accounting system",
+        "one XOR construction is not a general index-coding theorem"
+      ]
+    },
+    {
+      "id": "ST-F10",
+      "title": "Exhaustive binary side-information broadcast separation",
+      "kind": "FINITE_CHECK",
+      "scope": "all 16 local binary scalar coefficient assignments in the declared one-source relay-broadcast network",
+      "assumptions": [
+        "the finite assignment domain consists of four source edge vectors and two scalar choices on each relay-to-sink edge",
+        "routing-only source messages are zero or unchanged source basis symbols",
+        "the search cap exceeds the complete 16-assignment domain"
+      ],
+      "evidence": [
+        "docs/functional-network-computation.md#9-coding-versus-routing-separation",
+        "src/simtheory/functional_networks.py:search_scalar_linear_function_code",
+        "src/simtheory/functional_networks.py:side_information_broadcast_separation",
+        "tests/test_functional_networks.py"
+      ],
+      "nonclaims": [
+        "the finite search does not rule out models outside the declared scalar assignment space",
+        "a capped search is reported incomplete rather than impossible"
+      ]
+    }
+  ]
+}
