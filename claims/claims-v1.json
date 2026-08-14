@@ -138,6 +138,44 @@
       ]
     },
     {
+      "id": "ST-T09",
+      "title": "Werner Bell predictive-law total-variation geometry",
+      "kind": "THEOREM",
+      "scope": "finite coplanar projective Bell schedules in the declared one-parameter Werner/singlet visibility family",
+      "assumptions": [
+        "outcomes follow P(a,b|x,y,v)=1/4[1-ab v cos(alpha_x-beta_y)]",
+        "the setting-pair distribution is identical under the compared visibility hypotheses"
+      ],
+      "evidence": [
+        "docs/bell-predictive-bounds.md#2-exact-predictive-law-geometry",
+        "src/simtheory/bell_predictive.py:analytic_visibility_tv",
+        "tests/test_bell_predictive.py"
+      ],
+      "nonclaims": [
+        "does not imply that Bell violation is evidence for simulation",
+        "does not constrain an unrestricted simulator or unknown parent substrate"
+      ]
+    },
+    {
+      "id": "ST-T10",
+      "title": "Adaptive Bell-query KL/Pinsker necessary-trial bound",
+      "kind": "THEOREM",
+      "scope": "finite allowed Bell setting sets for two fixed visibility hypotheses in the declared Werner/singlet family",
+      "assumptions": [
+        "each adaptive query selects one setting pair from the declared finite set",
+        "conditional outcomes follow the declared Werner/singlet visibility laws"
+      ],
+      "evidence": [
+        "docs/bell-predictive-bounds.md#5-adaptive-query-distinguishability-bound",
+        "src/simtheory/bell_predictive.py:adaptive_trials_necessary_for_tv",
+        "tests/test_bell_predictive.py"
+      ],
+      "nonclaims": [
+        "the returned trial count is necessary rather than sufficient",
+        "does not establish a universal quantum query lower bound"
+      ]
+    },
+    {
       "id": "ST-M01",
       "title": "Local physical-computation envelope",
       "kind": "MODEL_RESULT",
@@ -173,13 +211,34 @@
       ]
     },
     {
+      "id": "ST-M03",
+      "title": "Bell visibility predictive-memory lower bound",
+      "kind": "MODEL_RESULT",
+      "scope": "finite visibility grids under the declared Bell schedule and epsilon-accurate finite-state renderer model",
+      "assumptions": [
+        "one internal renderer state determines one future predictive law",
+        "target Bell laws are approximated within epsilon total variation",
+        "candidate hidden histories are represented by the supplied finite visibility grid"
+      ],
+      "evidence": [
+        "docs/bell-predictive-bounds.md#3-physically-derived-state-memory-lower-bound",
+        "src/simtheory/bell_predictive.py:predictive_memory_lower_bound_bits",
+        "tests/test_bell_predictive.py"
+      ],
+      "nonclaims": [
+        "bits are internal representational bits, not a claim about parent-universe hardware cost",
+        "does not establish a lower bound for all quantum states"
+      ]
+    },
+    {
       "id": "ST-O01",
-      "title": "Quantum and relativistic predictive-state lower bounds",
+      "title": "Multidimensional quantum and relativistic predictive-state lower bounds",
       "kind": "OPEN_PROBLEM",
-      "scope": "adaptive physically admissible query families",
+      "scope": "adaptive physically admissible query families beyond the one-parameter Bell visibility model",
       "assumptions": [],
       "evidence": [
-        "docs/research-program.md"
+        "docs/research-program.md",
+        "docs/bell-predictive-bounds.md#7-next-extension"
       ],
       "nonclaims": [
         "no uniform quantum or relativistic lower bound is currently claimed"
