@@ -14,7 +14,7 @@ def test_stabilizer_relational_claim_manifest_is_valid_and_bound_to_local_eviden
     digest = canonical_claim_manifest_hash(manifest)
     assert len(digest) == 64
     assert {claim["id"] for claim in manifest["claims"]} == {
-        "ST-T15",
+        "ST-T138",
         "ST-T16",
         "ST-T17",
         "ST-T18",
