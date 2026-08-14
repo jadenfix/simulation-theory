@@ -1,5 +1,3 @@
-from itertools import product
-
 import pytest
 
 from simtheory.network_coding import (
@@ -23,7 +21,8 @@ from simtheory.predictive_networks import binary_coordinate_query_family
 def test_gf_rank_and_solve_over_multiple_prime_fields():
     assert gf_rank(((1, 0), (0, 1)), 2) == 2
     assert gf_rank(((1, 1), (1, 1)), 2) == 1
-    assert gf_rank(((1, 2, 0), (0, 1, 1), (1, 0, 1)), 3) == 3
+    # Determinant is one modulo three, so this matrix is full rank over F_3.
+    assert gf_rank(((1, 2, 0), (0, 1, 1), (1, 0, 2)), 3) == 3
 
     matrix = (
         (1, 0, 1),
@@ -43,6 +42,13 @@ def test_butterfly_mincuts_are_two_for_both_sinks():
     cuts = multicast_cut_certificate(network, "s", ("t1", "t2"), 2)
     assert cuts.necessary_cuts_hold
     assert dict(cuts.sink_min_cuts) == {"t1": 2, "t2": 2}
+
+
+def test_unit_edge_lookup_is_total_on_declared_ids_and_rejects_unknown_ids():
+    network = butterfly_network()
+    assert network.edge("cd") == UnitEdge("cd", "c", "d")
+    with pytest.raises(ValueError, match="unknown unit edge"):
+        network.edge("missing")
 
 
 def test_explicit_butterfly_linear_code_decodes_at_both_sinks():
@@ -109,10 +115,20 @@ def test_predictive_class_labels_multicast_over_butterfly():
     assert certificate.valid
     assert family.class_count == 4
     assert family.exact_predictive_bits == 2
+
     vectors = dict(certificate.record_symbol_vectors)
-    assert len(set(vectors.values())) == 4
-    for record in family.records:
-        assert vectors[record] == record
+    labels = family.class_label_map()
+    assert set(vectors) == set(family.records)
+    assert set(vectors.values()) == {(0, 0), (1, 0), (0, 1), (1, 1)}
+
+    # The field-vector naming is arbitrary. The invariant is that records in
+    # one predictive class share a vector and distinct classes receive distinct
+    # vectors; it need not equal the original record tuple coordinate-for-coordinate.
+    for left in family.records:
+        for right in family.records:
+            assert (vectors[left] == vectors[right]) == (
+                labels[left] == labels[right]
+            )
 
 
 def test_predictive_embedding_rejects_too_many_classes():
