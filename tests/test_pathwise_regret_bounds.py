@@ -26,7 +26,20 @@ def test_robust_value_difference_can_be_strictly_smaller_than_regret():
     assert bounds.valid
 
     assert bounds.deterministic_absolute_value == 3
+    assert bounds.oracle_vertex_maximum == 0
     assert bounds.oracle_maximum == Fraction(3, 2)
+    assert bounds.oracle_interior_gain == Fraction(3, 2)
+    assert not bounds.oracle_barycenter_is_vertex
+    assert bounds.oracle_maximizing_path == (
+        (Fraction(1, 2), Fraction(1, 2)),
+        (Fraction(1, 2), Fraction(1, 2)),
+        (Fraction(1, 2), Fraction(1, 2)),
+    )
+    assert all(
+        cost == Fraction(3, 2)
+        for cost in bounds.oracle_barycenter_comparator_costs
+    )
+
     assert bounds.deterministic_lower_bound == Fraction(3, 2)
     assert regret.deterministic_value == 3
     assert bounds.deterministic_slack_above_value_gap == Fraction(3, 2)
@@ -50,6 +63,7 @@ def test_regret_value_bounds_collapse_when_oracle_cost_is_constant():
     bounds = exact_regret_value_bounds(regret)
     assert bounds.valid
     assert bounds.oracle_minimum == bounds.oracle_maximum == 2
+    assert bounds.oracle_interior_gain == 0
     assert bounds.deterministic_lower_bound == bounds.deterministic_upper_bound == 0
     assert bounds.shared_lower_bound == bounds.shared_upper_bound == 0
     assert regret.deterministic_value == regret.shared_value == 0
