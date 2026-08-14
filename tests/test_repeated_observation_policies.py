@@ -146,6 +146,7 @@ def test_sequential_switching_cost_couples_signal_history_actions():
         3,
         switching_penalty=Fraction(1, 10),
         max_policies=100_000,
+        max_policy_dominance_pairs=20_000_000,
     )
     assert certificate.valid
     assert certificate.deterministic_observation_value == Fraction(261, 64)
