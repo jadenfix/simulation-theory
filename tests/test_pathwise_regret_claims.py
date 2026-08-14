@@ -14,12 +14,12 @@ def test_pathwise_regret_claim_manifest_is_valid_and_evidence_bound():
     digest = canonical_claim_manifest_hash(manifest)
     assert len(digest) == 64
     assert {claim["id"] for claim in manifest["claims"]} == {
-        "ST-T131",
-        "ST-T132",
-        "ST-T133",
-        "ST-T134",
-        "ST-T135",
-        "ST-T136",
-        "ST-T137",
-        "ST-F21",
+        "ST-T139",
+        "ST-T140",
+        "ST-T141",
+        "ST-T142",
+        "ST-T143",
+        "ST-T144",
+        "ST-T145",
+        "ST-F23",
     }
