@@ -53,7 +53,8 @@
       "assumptions": [
         "Shannon entropy is computed on the message-class distribution induced by a proper partition",
         "binary prefix codes obey Kraft's inequality",
-        "the entropy-minimizing and expected-length-minimizing partitions are optimized separately"
+        "the entropy-minimizing and expected-length-minimizing partitions are optimized separately",
+        "zero-probability declared states may still require codewords under declared-state zero error"
       ],
       "evidence": [
         "docs/prior-weighted-zero-error-coding.md#7-entropy-sandwich-for-the-global-optimum",
@@ -62,6 +63,7 @@
       ],
       "nonclaims": [
         "minimum coloring entropy is not asserted to be the exact one-shot expected prefix length",
+        "the universal upper bound is weak L star at most H coloring plus one when zero-mass declared classes require codewords; strictness needs a positive-mass condition",
         "the one-bit redundancy bound is not an asymptotic graph-power result"
       ]
     },
@@ -152,7 +154,7 @@
         "all proper partitions below the finite cap are exhausted"
       ],
       "evidence": [
-        "docs/prior-weighted-zero-error-coding.md#10-average-optimal-coding-can-use-more-than-chig-messages",
+        "docs/prior-weighted-zero-error-coding.md",
         "src/simtheory/prior_weighted_codes.py:richer_than_chromatic_example",
         "tests/test_prior_weighted_codes.py"
       ],
