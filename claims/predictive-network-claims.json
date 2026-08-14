@@ -1,0 +1,163 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T46",
+      "title": "Finite deterministic predictive-equivalence state theorem",
+      "kind": "THEOREM",
+      "scope": "one finite hidden-record family and one finite deterministic future-query family whose query is selected after the predictive state is fixed",
+      "assumptions": [
+        "each query has one declared deterministic outcome for every hidden record",
+        "one finite predictive state must support every allowed later query",
+        "zero-error correctness is required"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#2-exact-predictive-state-cardinality",
+        "src/simtheory/predictive_networks.py:FiniteQueryFamily",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "the full hidden record need not be retained when several records have one future-query signature",
+        "predictive-state bits are not parent-universe hardware bits"
+      ]
+    },
+    {
+      "id": "ST-T47",
+      "title": "Exact single-sink predictive min-cut characterization",
+      "kind": "THEOREM",
+      "scope": "one finite directed acyclic integer-capacity network, one source, one sink, and one deterministic future-query family at the sink",
+      "assumptions": [
+        "the source can compute a fixed-length predictive-class label",
+        "intermediate nodes may route and recombine exact binary payloads",
+        "the sink query is selected after the record-dependent network state is established"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#5-exact-predictive-min-cut-lower-bound",
+        "docs/predictive-network-mincuts.md#6-single-sink-sufficiency-by-integral-max-flow",
+        "src/simtheory/predictive_networks.py:exact_single_sink_network_feasible",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "the theorem does not optimize latency, total edge use, computation, or robustness",
+        "single-sink sufficiency is not promoted into a general multi-sink multicast theorem"
+      ]
+    },
+    {
+      "id": "ST-T48",
+      "title": "Weighted deterministic future-query total-variation geometry",
+      "kind": "THEOREM",
+      "scope": "a fixed exogenous probability distribution over finite deterministic queries",
+      "assumptions": [
+        "the query distribution is identical under the compared hidden records",
+        "the joint law records both the selected query and its deterministic outcome"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#8-exact-deterministic-predictive-geometry",
+        "src/simtheory/predictive_networks.py:deterministic_query_total_variation",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "the identity does not apply unchanged when the query policy depends on the hidden record",
+        "the metric is induced by the declared query family rather than by raw record dimension"
+      ]
+    },
+    {
+      "id": "ST-T49",
+      "title": "Approximate predictive-packing cut lower bound",
+      "kind": "THEOREM",
+      "scope": "a finite family of future laws containing a pairwise greater-than-2-epsilon total-variation packing and a finite capacity cut before the future query",
+      "assumptions": [
+        "one state on the sink side of the cut determines one approximating future law",
+        "approximation error is at most epsilon in total variation for every packed record"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#9-approximate-predictive-packing-cut-bound",
+        "src/simtheory/predictive_networks.py:approximate_predictive_cut_deficit_units",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "a packing lower bound is necessary and does not construct an approximate covering or renderer",
+        "the exact maximum-clique checker is capped at bounded record families"
+      ]
+    },
+    {
+      "id": "ST-T50",
+      "title": "Declared quantum-capacity multiplier for exact predictive labels",
+      "kind": "THEOREM",
+      "scope": "exact classical predictive-class labels transmitted over unassisted-qubit or edge-local entanglement-assisted noiseless channels",
+      "assumptions": [
+        "an unassisted transmitted qubit carries at most one exact classical label bit",
+        "the assisted model has suitable receiver-side Bell pairs independent of the later hidden record",
+        "assisted intermediate nodes may decode and re-encode dense-coded classical payloads"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#7-capacity-units-and-quantum-interpretations",
+        "src/simtheory/predictive_networks.py:exact_predictive_network_units_required",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "the factor two does not count entanglement creation, distribution, storage, or refresh",
+        "the scalar multiplier is not claimed for arbitrary coherent quantum-network tasks"
+      ]
+    },
+    {
+      "id": "ST-T51",
+      "title": "Per-sink predictive min-cut necessity",
+      "kind": "THEOREM",
+      "scope": "one source and several sinks, each with a declared deterministic future-query family",
+      "assumptions": [
+        "each sink must recover its required future-query signature under the declared capacity model",
+        "the theorem is applied separately to every source-sink cut"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#11-several-sinks",
+        "src/simtheory/predictive_networks.py:multisink_exact_cut_deficits_units",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "individually adequate sink cuts do not generally prove simultaneous multicast feasibility",
+        "shared bottlenecks and network coding require a separate demand model"
+      ]
+    },
+    {
+      "id": "ST-M12",
+      "title": "Coordinate-versus-parity predictive compression",
+      "kind": "MODEL_RESULT",
+      "scope": "finite m-bit records under either all coordinate queries or a declared family of binary linear parity queries",
+      "assumptions": [
+        "coordinate queries return individual record bits",
+        "parity signatures are computed over GF(2)"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#3-coordinate-queries-versus-parity-queries",
+        "src/simtheory/predictive_networks.py:binary_coordinate_query_family",
+        "src/simtheory/predictive_networks.py:binary_parity_query_family",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "one parity bit does not reconstruct the full hidden record",
+        "the effective predictive dimension changes when the allowed future-query family changes"
+      ]
+    },
+    {
+      "id": "ST-F04",
+      "title": "Finite predictive network flow, cut, routing, and packing certificate",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite query families and directed acyclic integer-capacity networks enumerated by the repository",
+      "assumptions": [
+        "maximum predictive packing is searched only below the declared record cap",
+        "max flow and route decomposition use the supplied finite graph and integer capacities"
+      ],
+      "evidence": [
+        "docs/predictive-network-mincuts.md#12-predictive-network-certificate",
+        "src/simtheory/predictive_networks.py:exact_predictive_network_certificate",
+        "src/simtheory/predictive_networks.py:maximum_predictive_packing",
+        "tests/test_predictive_networks.py"
+      ],
+      "nonclaims": [
+        "a finite certificate is not a proof of unrelated network instances",
+        "successful routing is not empirical evidence for a physical simulator"
+      ]
+    }
+  ]
+}
