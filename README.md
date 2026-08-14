@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, quantum-communication, and progressive-query extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json), and [`claims/progressive-query-claims.json`](claims/progressive-query-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, quantum-communication, progressive-query, and predictive-network extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json), [`claims/progressive-query-claims.json`](claims/progressive-query-claims.json), and [`claims/predictive-network-claims.json`](claims/predictive-network-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -88,6 +88,14 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 65. **Progressive assisted quantum tradeoff.** Receiver-side entanglement changes each transmitted-qubit coefficient from one to two; equal residual cells need exactly `ceil(s/2)` qubits at zero error.
 66. **Predictive equivalence coarsens with query hints.** Exact future-law classes fall from `2^m` before any hint to `2^s_j` after cell `j`, then to two after the final coordinate is known.
 67. **Constructive finite progressive certificate.** A canonical uncovered-bit allocation is exhaustively verified across every record, hint cell, and later coordinate for bounded sizes.
+68. **Exact finite predictive equivalence.** A deterministic future-query family with `K` distinct signatures requires and can be represented by exactly `K` predictive states, or `ceil(log2 K)` fixed-length bits.
+69. **Single-sink predictive min-cut theorem.** A directed integer-capacity causal network supports every later query exactly iff its source-sink min-cut can carry the predictive-class label.
+70. **Coordinate-versus-parity compression.** All coordinate queries on `m` bits induce `2^m` classes, while a rank-`rho` parity family induces only `2^rho` classes.
+71. **Weighted signature geometry.** Deterministic joint query-outcome TV is exactly the total query probability mass on which two signatures disagree.
+72. **Approximate packing cut.** Any pairwise greater-than-`2 epsilon` future-law packing of size `P` forces at least `ceil(log2 P)` bits across every pre-query cut.
+73. **Network quantum capacity accounting.** Exact unassisted qubit edges use one classical payload bit per unit; edge-local dense coding changes the declared coefficient to two while keeping entanglement cost explicit.
+74. **Per-sink necessity without multicast overclaiming.** Every sink must satisfy its own predictive min-cut, but individual cut adequacy is not claimed sufficient for simultaneous multi-sink demands.
+75. **Finite flow and packing certificates.** Exact max-flow/min-cut, path decomposition, predictive class counts, and bounded maximum packings are independently checked on finite instances.
 
 General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical, relational, code, and distributed derivations are developed in:
 
@@ -102,6 +110,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/distributed-causal-consistency.md`](docs/distributed-causal-consistency.md)
 - [`docs/quantum-causal-cut-random-access.md`](docs/quantum-causal-cut-random-access.md)
 - [`docs/progressive-query-revelation.md`](docs/progressive-query-revelation.md)
+- [`docs/predictive-network-mincuts.md`](docs/predictive-network-mincuts.md)
 
 ## Layout
 
@@ -114,6 +123,7 @@ claims/stabilizer-code-claims.json       code-distance and logical-locality clai
 claims/distributed-consistency-claims.json causal-cut and communication claim registry
 claims/quantum-causal-cut-claims.json    quantum random-access and assistance claim registry
 claims/progressive-query-claims.json     progressive hint-timing and multiround claim registry
+claims/predictive-network-claims.json    predictive classes, min-cuts, and packing claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -126,6 +136,7 @@ docs/stabilizer-code-locality.md         code distance, erasures, and logical ob
 docs/distributed-causal-consistency.md   query timing, cut-set bounds, and reconciliation
 docs/quantum-causal-cut-random-access.md quantum messages, entanglement assistance, and QRACs
 docs/progressive-query-revelation.md     staged hints and shared/branch capacity regions
+docs/predictive-network-mincuts.md       query classes, exact cuts, routing, and packings
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -147,7 +158,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, progressive query revelation, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, progressive query revelation, predictive equivalence, max flow, min cuts, parity compression, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
 
 ## Tempera Math boundary
 
