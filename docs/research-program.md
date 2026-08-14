@@ -11,7 +11,7 @@ The project is not trying to manufacture one dramatic probability that reality i
 3. Which future query family defines the required predictive state?
 4. How do approximation, noise, query timing, and selection change that state?
 5. What must cross each causal or communication cut?
-6. When do routing, replication, coding, or quantum assistance change feasibility?
+6. When do routing, replication, coding, side information, or quantum assistance change feasibility?
 7. Which claims are lower bounds, which are constructions, and where is the gap?
 8. What experiment distinguishes one restricted architecture from ordinary alternatives?
 
@@ -191,8 +191,7 @@ For a shared record-independent channel \(K\), the repository proves
 \[
 \operatorname{TV}(\mu K,\nu K)
 \le
-\delta(K)\operatorname{TV}(\mu,
-u),
+\delta(K)\operatorname{TV}(\mu,\nu),
 \]
 
 with exact rational certificates, query-specific coefficients, serial submultiplicativity, BSC and erasure examples, and monotonicity of exact classes, strict packings, and target-centered covers.
@@ -216,6 +215,43 @@ The completed multicast lane extends one-sink predictive cuts to a bounded commo
 - predictive-class injection into \(\mathbb F_p^h\).
 
 The project does not claim the general multicast max-flow/min-cut theorem. It owns the finite theorems and certificates it proves.
+
+### Sink-specific linear function computation
+
+The newest completed lane removes the requirement that every sink reconstruct the full source vector.
+
+For sink target rows \(B_t\), incoming network rows \(G_t\), and local side-information rows \(S_t\), exact recovery is equivalent to
+
+\[
+\operatorname{rowspan}(B_t)
+\subseteq
+\operatorname{rowspan}
+\begin{pmatrix}G_t\\S_t\end{pmatrix}.
+\]
+
+Completed results include:
+
+- exact finite-field row-space and decoder certificates;
+- conditional new-information rank
+
+  \[
+  r_t
+  =
+  \operatorname{rank}
+  \begin{pmatrix}S_t\\B_t\end{pmatrix}
+  -
+  \operatorname{rank}(S_t);
+  \]
+
+- the necessary source-to-sink cut bound \(\operatorname{mincut}(s,t)\ge r_t\);
+- a counterexample showing all individual cut bounds can hold while one shared bottleneck remains jointly infeasible;
+- exact bounded enumeration of common linear-summary subspaces;
+- complementary side information reducing a two-dimensional common requirement to one XOR symbol;
+- exhaustive checking of all 16 binary scalar broadcast assignments;
+- a routing-versus-coding separation;
+- a restricted bridge from finite predictive-class embeddings to sink-specific linear future signatures.
+
+Side information is treated as an explicit resource and causal assumption, not free compression.
 
 ## Current frontier campaigns
 
@@ -253,54 +289,55 @@ Targets:
 
 Quality boundary: do not cite a general theorem and then treat a finite implementation as verified. The constructor and checker must be independently testable.
 
-### Campaign C: approximate stochastic multicast and sink-specific functions
+### Campaign C: approximate and nonlinear sink functions
 
-Current multicast uses one exact common class label. Current stochastic approximation is strongest at one sink. The next bridge should combine them.
+Current function computation is exact and linear. Current stochastic approximation is strongest at one sink. The next bridge should combine them without blurring demand type.
 
 Research questions:
 
-1. Can several sinks share one upstream stochastic cover index?
-2. When do heterogeneous sink tolerances require different refinements?
-3. Which demands are common multicast, linear function computation, or multiple unicast?
-4. How should a source prior alter worst-record cover design?
-5. Can a code carry interpolating predictive centers rather than only target labels?
-6. What packing cuts remain necessary at each sink?
-7. What constructive cover or rate-distortion code is jointly feasible?
+1. How should a sink-specific stochastic distortion be defined over future laws?
+2. When do heterogeneous sink tolerances share one upstream cover or require refinements?
+3. Can interpolating predictive centers be coded as functions rather than class labels?
+4. Which packing cuts remain necessary at each sink?
+5. What common-summary analogue replaces row space for nonlinear finite functions?
+6. How do source priors alter worst-record versus average-distortion designs?
+7. When does interaction reduce common-summary size?
 
 Deliverables:
 
-- typed sink-demand objects;
+- typed approximate sink-demand objects;
 - per-sink distortion metrics;
 - common-refinement and sink-specific cover solvers;
-- exact row-space criteria for linear sink functions;
+- bounded nonlinear truth-table function checks;
 - network lower/upper certificates;
-- bounded examples where coding strictly improves replication or routing.
+- examples that separate multicast, index coding, function computation, and multiple unicast.
 
-### Campaign D: noisy edges and robust channels
+### Campaign D: noisy side information, edges, and robust channels
 
-Observation channels and communication edges are currently modeled separately. The next lane must preserve that distinction while composing them.
+Observation channels, side information, and communication edges are currently modeled separately. The next lane must preserve that distinction while composing them.
 
 Targets:
 
-1. Add finite noisy edge kernels.
-2. Separate source coding, channel coding, network coding, and observation post-processing.
-3. Compute Dobrushin and KL contraction along paths and cuts.
-4. Add uncertain channel sets and worst-case robust certificates.
-5. Distinguish record-independent noise from record-dependent intervention.
-6. Add erasures, correlated failures, and adversarial contamination.
-7. Prove when coding restores reliable class transmission and at what block length.
+1. Add finite noisy side-information kernels.
+2. Add finite noisy edge kernels.
+3. Separate source coding, channel coding, network coding, and observation post-processing.
+4. Compute Dobrushin and KL contraction along paths and cuts.
+5. Add uncertain channel sets and worst-case robust certificates.
+6. Distinguish record-independent noise from record-dependent intervention.
+7. Add erasures, correlated failures, and adversarial contamination.
+8. Prove when coding restores reliable function transmission and at what block length.
 
 Noisy-edge capacity must not be inferred from one-shot total-variation contraction alone.
 
 ### Campaign E: progressive causal networks
 
-The repository has progressive hints on one cut and exact multicast on one stage. The next target is a query-revelation tree embedded in a network.
+The repository has progressive hints on one cut, exact multicast on one stage, and static sink side information. The next target is a query-revelation tree embedded in a network.
 
 Research questions:
 
 1. Which state must cross before each hint?
 2. Which branches can share upstream summaries?
-3. How do branch-specific covers refine after observations?
+3. How do branch-specific covers and function demands refine after observations?
 4. When can later side information decode a coded bottleneck symbol?
 5. How do memory, communication, and delay trade off?
 6. Which branch capacities are design-wide versus per execution?
@@ -316,7 +353,7 @@ The five-qubit code is a bounded checker, not a scaling theory. Next targets inc
 - surface/toric-code patches;
 - logical predictive packings over several encoded qubits;
 - noisy syndrome-history state;
-- distributed logical queries across causal regions.
+- distributed logical function queries across causal regions.
 
 Every result must distinguish code distance, stabilizer weight, degeneracy, logical operator weight, and query locality.
 
@@ -331,6 +368,7 @@ State cardinality does not determine update cost. Future work should measure:
 - dynamic parity cell-probe bounds;
 - stabilizer-tableau update cost;
 - network recoding after edge failure;
+- common-summary changes under drifting sink demands;
 - cover-cell changes under drifting stochastic laws.
 
 The goal is a bounded time-space-communication tradeoff, not an unsupported claim that the universe is computationally expensive.
@@ -378,13 +416,14 @@ A result is ready for `main` only when:
 8. Noise results state independence, correlation, and parameter-knowledge assumptions.
 9. Quantum results separate qubits, classical payload, receiver memory, and preshared entanglement.
 10. Progressive results separate shared-stage capacity, branch budgets, and executed paths.
-11. Network results separate one-sink sufficiency, per-sink necessity, routing, replication, coding, and multicast demand type.
-12. Search-based impossibility claims require exhaustion of the declared finite domain; capped searches remain incomplete.
-13. Packing lower bounds, target-centered covers, arbitrary-center covers, rate-distortion results, and constructions remain distinct.
-14. Higher-dimensional center claims require certified feasibility and optimality rather than an unchecked numerical solution.
-15. Physical results avoid cross-level resource leakage.
-16. A finite result is never promoted into a generic simulation conclusion.
-17. Internal bits, symbols, qubits, operations, and capacities are not silently converted into parent hardware.
+11. Network results separate one-sink sufficiency, per-sink necessity, routing, replication, coding, common-demand multicast, and sink-specific functions.
+12. Side-information results state how side information is created, stored, accessed, and accounted for.
+13. Search-based impossibility claims require exhaustion of the declared finite domain; capped searches remain incomplete.
+14. Packing lower bounds, target-centered covers, arbitrary-center covers, rate-distortion results, and constructions remain distinct.
+15. Higher-dimensional center claims require certified feasibility and optimality rather than an unchecked numerical solution.
+16. Physical results avoid cross-level resource leakage.
+17. A finite result is never promoted into a generic simulation conclusion.
+18. Internal bits, symbols, qubits, ranks, operations, and capacities are not silently converted into parent hardware.
 
 ## Tempera Math integration
 
@@ -395,13 +434,13 @@ Any bridge must preserve:
 - theorem versus model-result versus finite-check status;
 - every assumption and nonclaim;
 - exact source revision and checker command;
-- graph size, field, horizon, locality, tolerance, block length, noise law, assistance model, and search domain;
+- graph size, field, horizon, locality, tolerance, block length, noise law, side-information model, assistance model, and search domain;
 - the difference between structural validation and mathematical execution.
 
 See [`tempera-math-bridge.md`](tempera-math-bridge.md).
 
 ## Nonclaims
 
-This project does not claim that quantum mechanics, Bell violation, entanglement, graph states, quantum codes, error correction, random-access coding, network coding, max flow, min cuts, predictive equivalence, stochastic covers, arbitrary predictive centers, information bounds, Planck scales, mathematical elegance, observer effects, or finite signal speed are evidence of simulation by themselves.
+This project does not claim that quantum mechanics, Bell violation, entanglement, graph states, quantum codes, error correction, random-access coding, network coding, XOR side-information coding, max flow, min cuts, predictive equivalence, stochastic covers, arbitrary predictive centers, information bounds, Planck scales, mathematical elegance, observer effects, or finite signal speed are evidence of simulation by themselves.
 
 Rejecting one restricted implementation does not reject every possible simulator. Finding one anomaly does not favor simulation until it is more likely under a specified simulator model than under serious physical, measurement, selection, and intervention alternatives.
