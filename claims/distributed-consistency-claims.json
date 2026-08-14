@@ -1,0 +1,138 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T30",
+      "title": "Exact one-way INDEX causal-cut lower bound",
+      "kind": "THEOREM",
+      "scope": "deterministic zero-error one-way answering of every coordinate of an m-bit record when the query is revealed after the message is fixed",
+      "assumptions": [
+        "every coordinate remains an allowed future query",
+        "the decoder receives no record-dependent information beyond the declared message or resident state"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#exact-zero-error-causal-cut-bound",
+        "src/simtheory/distributed_consistency.py:encoder_collision_witness",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "if the query is known before communication, the m-bit conclusion does not apply",
+        "the result does not identify parent-universe hardware or prove simulation"
+      ]
+    },
+    {
+      "id": "ST-T31",
+      "title": "Uniform bounded-error causal-cut information lower bound",
+      "kind": "THEOREM",
+      "scope": "uniform independent m-bit records, a uniformly random post-message coordinate query, and average query error epsilon in [0,1/2]",
+      "assumptions": [
+        "shared randomness is independent of the hidden record",
+        "the decoder answer for coordinate i is a function of its record-dependent message and shared randomness"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#bounded-error-information-lower-bound",
+        "src/simtheory/distributed_consistency.py:uniform_index_information_lower_bound_bits",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "the information lower bound is not asserted to equal exact finite communication complexity for every m and epsilon",
+        "mutual-information bits are not automatically physical storage or energy"
+      ]
+    },
+    {
+      "id": "ST-T32",
+      "title": "Weighted-query coordinatewise-Fano optimization",
+      "kind": "THEOREM",
+      "scope": "uniform independent source bits, a declared nonnegative query-weight vector summing to one, and weighted average error epsilon",
+      "assumptions": [
+        "coordinatewise binary Fano bounds are used to upper-bound conditional entropy",
+        "only the weighted average error constraint is supplied"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#weighted-query-information-bound",
+        "src/simtheory/distributed_consistency.py:weighted_optimal_error_allocation",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "the KKT solution optimizes this information lower-bound relaxation rather than proving exact finite weighted INDEX complexity",
+        "zero-weight coordinates are outside the declared future query support"
+      ]
+    },
+    {
+      "id": "ST-T33",
+      "title": "Resident-memory and one-way communication cut tradeoff",
+      "kind": "THEOREM",
+      "scope": "one answering region with s record-dependent resident bits and c additional pre-query communication bits",
+      "assumptions": [
+        "the resident state and communication together contain all record-dependent information available before the unresolved query",
+        "the bounded-error case uses the uniform source and query model"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#memory-communication-cut-tradeoff",
+        "src/simtheory/distributed_consistency.py:minimum_additional_communication_bits",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "the division between memory and communication is architecture-dependent",
+        "shared randomness populated using the record must be counted as state or communication"
+      ]
+    },
+    {
+      "id": "ST-T34",
+      "title": "Isolated answer-region storage replication",
+      "kind": "THEOREM",
+      "scope": "r physically separate answer regions, each with its own finite local state, no later communication, and no record-dependent shared store",
+      "assumptions": [
+        "each region must answer its own post-separation future query under the declared error model",
+        "local storage lengths are summed across regions"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#isolated-region-replication-bound",
+        "src/simtheory/distributed_consistency.py:replicated_region_storage_lower_bound_bits",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "replicated copies do not contain r times as much unique global mutual information",
+        "the replication factor fails if all regions retain access to one shared record-dependent store"
+      ]
+    },
+    {
+      "id": "ST-T35",
+      "title": "Indexed parity reconciliation is one-way INDEX",
+      "kind": "THEOREM",
+      "scope": "one region holds remote record A, the answering region holds local record B, and query i asks for A_i xor B_i",
+      "assumptions": [
+        "B_i is locally known when the parity answer is produced",
+        "the remote-record message is fixed before query i is revealed"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#parity-reconciliation-equivalence",
+        "src/simtheory/distributed_consistency.py:parity_reconciliation_information_lower_bound_bits",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "the equivalence concerns the remote contribution and does not count storage of the local record B",
+        "does not imply every distributed physical comparison is an INDEX instance"
+      ]
+    },
+    {
+      "id": "ST-M09",
+      "title": "Prefix-storage random-access upper construction",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform m-bit records and uniform coordinate queries when the first s record bits are stored exactly and every other coordinate is guessed zero",
+      "assumptions": [
+        "unstored source bits are independent and uniform",
+        "the deterministic decoder guesses zero outside the stored prefix"
+      ],
+      "evidence": [
+        "docs/distributed-causal-consistency.md#a-simple-finite-upper-construction",
+        "src/simtheory/distributed_consistency.py:prefix_storage_average_error",
+        "tests/test_distributed_consistency.py"
+      ],
+      "nonclaims": [
+        "the prefix protocol is an illustrative upper bound rather than an optimal random-access code",
+        "its gap from the Fano lower bound remains explicit"
+      ]
+    }
+  ]
+}
