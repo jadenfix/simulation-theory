@@ -20,5 +20,6 @@ def test_pathwise_regret_claim_manifest_is_valid_and_evidence_bound():
         "ST-T130",
         "ST-T131",
         "ST-T132",
+        "ST-T133",
         "ST-F20",
     }
