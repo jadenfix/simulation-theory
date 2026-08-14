@@ -1,0 +1,105 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T120",
+      "title": "Exact cumulative fixed-cost optimum under bounded total-variation source drift",
+      "kind": "THEOREM",
+      "scope": "finite rational source laws, one fixed finite rational state-cost vector, finite horizon T, and per-step TV drift bound eta",
+      "assumptions": [
+        "q_0 equals the declared nominal prior p",
+        "TV(q_t,q_{t-1})<=eta for every future period",
+        "the same state-cost vector is used at every period",
+        "the exact TV mass-transport extremizers are continued in their canonical donor-recipient order as radius grows"
+      ],
+      "evidence": [
+        "docs/prior-drift-path-robustness.md#1-marginal-radius-growth-follows-from-triangle-inequality",
+        "docs/prior-drift-path-robustness.md#2-a-fixed-linear-objective-admits-nested-tv-extremizers",
+        "docs/prior-drift-path-robustness.md#3-exact-path-certificate",
+        "src/simtheory/drifting_priors.py:exact_drift_path_cost",
+        "tests/test_drifting_priors.py"
+      ],
+      "nonclaims": [
+        "the equality is not asserted for a time-varying state-cost vector whose maximizing transport order may change",
+        "the theorem does not infer that an empirical source satisfies the declared drift bound"
+      ]
+    },
+    {
+      "id": "ST-T121",
+      "title": "Exact bounded static zero-error prefix-code optimization under TV source drift",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph, one rational nominal prior, one rational per-step TV drift bound, finite horizon, and one deterministic codebook fixed for the whole horizon",
+      "assumptions": [
+        "the bounded deterministic code universe exhausts proper independent-set partitions and complete binary prefix shapes below explicit caps",
+        "simplex-vertex scenarios make Pareto pruning equivalent to componentwise state-length dominance",
+        "the fixed-cost drift theorem applies independently to each surviving code"
+      ],
+      "evidence": [
+        "docs/prior-drift-path-robustness.md#4-static-robust-code-design",
+        "docs/prior-drift-path-robustness.md#5-zero-drift-endpoint",
+        "src/simtheory/drifting_priors.py:exact_static_drift_robust_prefix_code",
+        "tests/test_drifting_priors.py"
+      ],
+      "nonclaims": [
+        "the result does not optimize adaptive code switching or learning from realized source observations",
+        "expected code length is not identified with queueing delay or parent-substrate resource cost"
+      ]
+    },
+    {
+      "id": "ST-T122",
+      "title": "Statistical TV uncertainty and declared source drift combine by triangle inequality",
+      "kind": "THEOREM",
+      "scope": "a valid TV confidence radius around an empirical training law plus a separately declared TV bound from the training law to a current source law",
+      "assumptions": [
+        "on the confidence event TV(p_hat,p_train)<=r_stat",
+        "the current law satisfies TV(p_current,p_train)<=D"
+      ],
+      "evidence": [
+        "docs/prior-drift-path-robustness.md#8-combining-estimation-uncertainty-and-declared-drift",
+        "src/simtheory/drifting_priors.py:inflate_confidence_radius_for_drift",
+        "tests/test_drifting_priors.py"
+      ],
+      "nonclaims": [
+        "the declared drift budget D does not acquire statistical coverage merely by being added to a statistical radius",
+        "the result does not provide a confidence process for arbitrary nonstationarity"
+      ]
+    },
+    {
+      "id": "ST-M29",
+      "title": "Skew K4 static-code drift phase boundary is eta_c(T)=1/[2(T+1)]",
+      "kind": "MODEL_RESULT",
+      "scope": "complete graph K4, nominal prior (7/10,1/10,1/10,1/10), one static deterministic prefix tree, and finite horizon T",
+      "assumptions": [
+        "the compared nominally optimal unbalanced tree has lengths (1,2,3,3) with the length-one leaf on the dominant state",
+        "the balanced comparator has lengths (2,2,2,2)",
+        "the exact bounded code search confirms no third deterministic code improves the declared instances"
+      ],
+      "evidence": [
+        "docs/prior-drift-path-robustness.md#6-skew-k4-admits-a-closed-finite-horizon-phase-boundary",
+        "src/simtheory/drifting_priors.py:exact_static_drift_robust_prefix_code",
+        "tests/test_drifting_priors.py"
+      ],
+      "nonclaims": [
+        "the phase threshold is specific to the declared source and zero-error prefix-code model",
+        "the phase change is a decision-theoretic code switch rather than a physical phase transition"
+      ]
+    },
+    {
+      "id": "ST-F18",
+      "title": "Bounded exact TV drift-path and static-code audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational K4 path, horizon phase, zero-drift endpoint, and confidence-plus-drift instances exercised by the repository",
+      "assumptions": [
+        "all configured deterministic code and TV transport searches complete below their caps",
+        "every explicit extremal path is checked period by period for the declared TV step bound"
+      ],
+      "evidence": [
+        "tests/test_drifting_priors.py"
+      ],
+      "nonclaims": [
+        "bounded test agreement is not a runtime scalability theorem",
+        "CI success is not used as a substitute for the explicit mathematical path certificate"
+      ]
+    }
+  ]
+}
