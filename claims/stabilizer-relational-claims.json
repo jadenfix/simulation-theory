@@ -2,7 +2,7 @@
   "schema": "simulation-theory.claims/v1",
   "claims": [
     {
-      "id": "ST-T15",
+      "id": "ST-T138",
       "title": "Graph-basis stabilizer-query weighted-Hamming geometry",
       "kind": "THEOREM",
       "scope": "finite graph-state basis labels under a declared probability distribution over stabilizer-generator queries",
