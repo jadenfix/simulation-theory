@@ -1,0 +1,212 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T104",
+      "title": "Exact event-halfspace and active-set vertex description of finite TV balls",
+      "kind": "THEOREM",
+      "scope": "one finite exact rational nominal prior and one rational total-variation radius, below declared state and active-basis caps",
+      "assumptions": [
+        "finite total variation equals the maximum absolute probability difference over events",
+        "one event from each nontrivial complement pair is retained with both signs",
+        "the final simplex coordinate is eliminated and every active rational basis is exhausted"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#2-event-characterization-of-a-finite-tv-ball",
+        "docs/shared-randomness-tv-robust-coding.md#3-exact-tv-ball-vertex-enumeration",
+        "src/simtheory/shared_tv_robust_codes.py:tv_ball_event_inequalities",
+        "src/simtheory/shared_tv_robust_codes.py:enumerate_tv_ball_vertices",
+        "tests/test_shared_tv_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the exponential event and basis enumeration is not a high-dimensional scalability claim",
+        "a TV polytope is a declared ambiguity set rather than an empirical confidence region by itself"
+      ]
+    },
+    {
+      "id": "ST-T105",
+      "title": "Exact finite-game reduction of shared-randomness coding over a continuous TV ball",
+      "kind": "THEOREM",
+      "scope": "one finite confusion graph, all bounded complete deterministic zero-error prefix codebooks, and one finite rational TV-ball source-law ambiguity set",
+      "assumptions": [
+        "encoder and every decoder share a source-independent codebook seed",
+        "the source law is selected independently of the realized seed",
+        "a linear payoff over the TV polytope reaches its maximum at a vertex"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#1-codebook-mixtures-collapse-to-expected-state-lengths",
+        "docs/shared-randomness-tv-robust-coding.md#4-exact-reduction-of-the-continuous-game-to-a-finite-game",
+        "src/simtheory/shared_tv_robust_codes.py:exact_shared_tv_robust_prefix_code",
+        "tests/test_shared_tv_robust_codes.py"
+      ],
+      "nonclaims": [
+        "private encoder randomness is not substituted for shared codebook knowledge",
+        "the game minimizes expected prefix length rather than peak length, queueing delay, or decoding error"
+      ]
+    },
+    {
+      "id": "ST-T106",
+      "title": "Exact continuous mass-transport replay of a mixed codebook solution",
+      "kind": "THEOREM",
+      "scope": "a rational shared codebook mixture whose payoff depends on its mixed expected state-length vector",
+      "assumptions": [
+        "the mixed state-length vector is the convex combination of deterministic state-length vectors",
+        "the finite-game adversary rows are every TV-ball vertex",
+        "the independent TV transport solver is exact for a fixed rational value vector"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#5-continuous-mass-transport-replay",
+        "src/simtheory/shared_tv_robust_codes.py:SharedTVRobustCodeCertificate",
+        "src/simtheory/distributionally_robust_codes.py:maximize_expectation_tv_ball",
+        "tests/test_shared_tv_robust_codes.py"
+      ],
+      "nonclaims": [
+        "agreement between two exact finite constructions does not justify a different ambiguity model",
+        "the mixed expected state-length vector does not price the entropy of the shared seed"
+      ]
+    },
+    {
+      "id": "ST-T107",
+      "title": "Least-favorable prior identity over a continuous TV ball",
+      "kind": "THEOREM",
+      "scope": "the complete bounded deterministic zero-error prefix-code universe, shared codebook randomness, and one rational TV-ball ambiguity set",
+      "assumptions": [
+        "the dual vertex mixture forms a prior barycenter inside the convex TV polytope",
+        "the deterministic code universe is complete under the declared caps",
+        "the exact finite game has matching primal and dual values"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#6-least-favorable-prior-identity",
+        "src/simtheory/shared_tv_robust_codes.py:SharedTVRobustCodeCertificate",
+        "src/simtheory/shared_tv_robust_codes.py:exact_shared_tv_robust_prefix_code",
+        "tests/test_shared_tv_robust_codes.py"
+      ],
+      "nonclaims": [
+        "the identity is for expected length and is not transferred to nonlinear queueing or peak objectives",
+        "the least-favorable prior is a game certificate rather than a claim about the true empirical source law"
+      ]
+    },
+    {
+      "id": "ST-T108",
+      "title": "Adversary timing phase change for shared robust codebooks",
+      "kind": "THEOREM",
+      "scope": "shared codebook mixtures under either an oblivious source-law adversary or a source-law adversary observing the realized codebook seed",
+      "assumptions": [
+        "every selected deterministic codebook remains zero error",
+        "the seed-observing adversary may select a different TV-ball law for each realized codebook",
+        "the encoder chooses the codebook mixture before the seed is realized"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#8-adversary-timing-theorem",
+        "src/simtheory/shared_tv_robust_codes.py:SharedTVRobustCodeCertificate",
+        "tests/test_shared_tv_robust_codes.py"
+      ],
+      "nonclaims": [
+        "a shared-randomness gain under an oblivious source law does not survive arbitrary correlation between the law and seed",
+        "the result does not decide which timing model is appropriate without a causal source model"
+      ]
+    },
+    {
+      "id": "ST-T109",
+      "title": "Exact Caratheodory support bounds for shared codebook and least-favorable prior mixtures",
+      "kind": "THEOREM",
+      "scope": "rational convex mixtures of deterministic state-length vectors in n dimensions and TV-ball prior vertices in the n minus one dimensional simplex",
+      "assumptions": [
+        "only the convex barycenter affects the declared payoff",
+        "exact affine dependences are eliminated while preserving nonnegative weights and normalization"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#7-exact-caratheodory-support-compression",
+        "src/simtheory/convex_sparsification.py:caratheodory_sparsify",
+        "src/simtheory/convex_sparsification.py:sparsify_shared_tv_certificate",
+        "tests/test_convex_sparsification.py"
+      ],
+      "nonclaims": [
+        "support size does not equal the Shannon entropy or exact random-bit cost of the shared seed",
+        "the bounds preserve barycenters and payoffs but need not preserve the original finite-game basic support"
+      ]
+    },
+    {
+      "id": "ST-T110",
+      "title": "Closed full-TV shared-randomness value for every complete confusion graph",
+      "kind": "THEOREM",
+      "scope": "the complete confusion graph K_n, full total-variation radius one, one-shot zero-error binary prefix coding, and an oblivious source law",
+      "assumptions": [
+        "every source state requires a distinct message",
+        "the source law may be any finite distribution",
+        "a cyclic shared mixture may permute a near-balanced uniform-Huffman tree across states"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#9-closed-full-radius-solution-for-every-complete-graph",
+        "src/simtheory/full_tv_complete_graph.py:full_tv_complete_graph_certificate",
+        "tests/test_full_tv_complete_graph.py"
+      ],
+      "nonclaims": [
+        "the strict gain disappears when the state count is a power of two",
+        "the theorem concerns worst-law expected length and does not lower the hard zero-error message alphabet"
+      ]
+    },
+    {
+      "id": "ST-M26",
+      "title": "Full-TV three-state shared-randomness gain",
+      "kind": "MODEL_RESULT",
+      "scope": "the complete three-state confusion graph at total-variation radius one",
+      "assumptions": [
+        "the source law is oblivious to the shared codebook seed",
+        "the three depth-one choices are mixed uniformly"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#9-closed-full-radius-solution-for-every-complete-graph",
+        "src/simtheory/shared_tv_robust_codes.py:full_tv_k3_shared_randomness_example",
+        "tests/test_shared_tv_robust_codes.py",
+        "tests/test_full_tv_complete_graph.py"
+      ],
+      "nonclaims": [
+        "the deterministic peak remains two bits",
+        "the gain is removed if the source law may condition on the realized seed"
+      ]
+    },
+    {
+      "id": "ST-M27",
+      "title": "Skew three-state shared-TV coding threshold at seven fifteenths",
+      "kind": "MODEL_RESULT",
+      "scope": "K3 with nominal prior (4/5,1/10,1/10) under shared-randomness TV-robust expected prefix coding",
+      "assumptions": [
+        "the two low-probability states are symmetrized",
+        "the source law is selected from the TV ball independently of the realized seed"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#10-skew-three-state-phase-transition",
+        "tests/test_shared_tv_robust_codes.py"
+      ],
+      "nonclaims": [
+        "seven fifteenths is specific to the declared prior and three-tree code universe",
+        "the phase change is an optimization transition rather than a physical phase transition"
+      ]
+    },
+    {
+      "id": "ST-F15",
+      "title": "Bounded exact shared-TV vertex, game, replay, and sparsification audit",
+      "kind": "FINITE_CHECK",
+      "scope": "bounded finite rational TV balls, confusion graphs, complete prefix trees, finite games, and convex sparsifications checked by the repository",
+      "assumptions": [
+        "all configured event-basis, partition, tree, candidate, dominance, game, and affine-elimination searches complete",
+        "vertex maxima are compared with independent mass transport",
+        "all labeled three-vertex graphs and closed complete-graph values through sixteen states are checked"
+      ],
+      "evidence": [
+        "docs/shared-randomness-tv-robust-coding.md#12-independent-audits",
+        "src/simtheory/shared_tv_robust_codes.py:exact_shared_tv_robust_prefix_code",
+        "src/simtheory/convex_sparsification.py:sparsify_shared_tv_certificate",
+        "src/simtheory/full_tv_complete_graph.py:full_tv_complete_graph_certificate",
+        "tests/test_shared_tv_robust_codes.py",
+        "tests/test_convex_sparsification.py",
+        "tests/test_full_tv_complete_graph.py"
+      ],
+      "nonclaims": [
+        "bounded exact agreement is not a large-instance runtime guarantee",
+        "a cap failure is not an optimum, impossibility, statistical coverage, or empirical evidence certificate"
+      ]
+    }
+  ]
+}
