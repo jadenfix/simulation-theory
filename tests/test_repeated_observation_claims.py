@@ -18,11 +18,11 @@ def test_repeated_observation_claim_manifest_is_valid_and_evidence_bound():
     digest = canonical_claim_manifest_hash(manifest)
     assert len(digest) == 64
     assert {claim["id"] for claim in manifest["claims"]} == {
-        "ST-T135",
-        "ST-T136",
-        "ST-T137",
-        "ST-T138",
-        "ST-T139",
+        "ST-T146",
+        "ST-T147",
+        "ST-T148",
+        "ST-T149",
+        "ST-T150",
         "ST-M33",
         "ST-F22",
     }
