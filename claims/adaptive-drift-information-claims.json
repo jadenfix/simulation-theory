@@ -1,0 +1,120 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T127",
+      "title": "Exact finite rational simplex-grid drift game",
+      "kind": "THEOREM",
+      "scope": "finite categorical source laws restricted to a declared rational denominator grid with exact total-variation transitions and finite deterministic codebooks",
+      "assumptions": [
+        "the initial source law lies exactly on the declared grid",
+        "all law pairs, source paths, codebooks, and code sequences complete below configured caps",
+        "source-law transitions are adversarial within the declared finite graph"
+      ],
+      "evidence": [
+        "docs/adaptive-drift-information-patterns.md#1-exact-rational-simplex-grid",
+        "src/simtheory/adaptive_drift_policies.py:exact_simplex_grid",
+        "src/simtheory/adaptive_drift_policies.py:exact_drift_information_patterns",
+        "tests/test_adaptive_drift_policies.py"
+      ],
+      "nonclaims": [
+        "the finite grid is not silently identified with the continuous simplex",
+        "complete finite enumeration is not a polynomial-time scalability result"
+      ]
+    },
+    {
+      "id": "ST-T128",
+      "title": "Drift information-pattern value hierarchy",
+      "kind": "THEOREM",
+      "scope": "the declared finite-grid open-loop, delayed-feedback, current-law-feedback, and clairvoyant deterministic coding games",
+      "assumptions": [
+        "the source adversary and designer both know the game and information pattern",
+        "the designer minimizes and nature maximizes the same cumulative source and switching cost",
+        "the codebook universe is identical across the four games"
+      ],
+      "evidence": [
+        "docs/adaptive-drift-information-patterns.md#7-information-pattern-value-hierarchy",
+        "src/simtheory/adaptive_drift_policies.py:DriftInformationPatternCertificate",
+        "tests/test_adaptive_drift_policies.py"
+      ],
+      "nonclaims": [
+        "the hierarchy orders values under nested designer information sets rather than asserting one information pattern describes reality",
+        "strict inequality is instance-dependent"
+      ]
+    },
+    {
+      "id": "ST-T129",
+      "title": "Zero switching cost equates current-law feedback and clairvoyance",
+      "kind": "THEOREM",
+      "scope": "finite-horizon deterministic coding when the designer observes each current source law before acting and codebook changes have zero cost",
+      "assumptions": [
+        "period source cost is q_t dot ell_c",
+        "there is no interperiod codebook constraint or switching penalty",
+        "the same deterministic code universe is available in every period"
+      ],
+      "evidence": [
+        "docs/adaptive-drift-information-patterns.md#8-zero-switching-cost-collapses-current-feedback-to-clairvoyance",
+        "src/simtheory/adaptive_drift_policies.py:exact_drift_information_patterns",
+        "tests/test_adaptive_drift_policies.py"
+      ],
+      "nonclaims": [
+        "positive switching costs can make clairvoyance strictly more valuable",
+        "the equality does not cover hidden or noisily estimated current laws"
+      ]
+    },
+    {
+      "id": "ST-T130",
+      "title": "Finite-grid open-loop adversary is a restriction of the continuous path adversary",
+      "kind": "THEOREM",
+      "scope": "one common initial law, TV transition budget, identical deterministic code-sequence universe, and a grid contained in the continuous simplex",
+      "assumptions": [
+        "every grid transition is feasible in the continuous source-law model",
+        "the objective and switching penalties agree between models"
+      ],
+      "evidence": [
+        "docs/adaptive-drift-information-patterns.md#11-finite-grid-versus-continuous-source-adversaries",
+        "tests/test_adaptive_drift_policies.py"
+      ],
+      "nonclaims": [
+        "grid and continuous values need not be equal",
+        "the grid value is a lower bound on adversarial cost rather than a conservative upper bound"
+      ]
+    },
+    {
+      "id": "ST-M31",
+      "title": "Uniform K3 has a strict four-level information value separation",
+      "kind": "MODEL_RESULT",
+      "scope": "complete three-state confusion graph, uniform initial law, denominator six, eta=1/6, horizon two, and switching cost 1/4",
+      "assumptions": [
+        "deterministic binary zero-error prefix codebooks",
+        "the exact source law is observed in the feedback games",
+        "the whole future path is known only in the clairvoyant benchmark"
+      ],
+      "evidence": [
+        "docs/adaptive-drift-information-patterns.md#9-exact-strict-k3-separation",
+        "tests/test_adaptive_drift_policies.py"
+      ],
+      "nonclaims": [
+        "the exact fractions are specific to the declared finite instance",
+        "the result does not price the mechanism used to observe a source law"
+      ]
+    },
+    {
+      "id": "ST-F20",
+      "title": "Bounded exact drift Bellman and path audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational simplex grids, transition graphs, code sequences, Bellman tables, and witness paths exercised by the repository tests",
+      "assumptions": [
+        "all configured law-pair, path, code, and sequence caps complete without truncation",
+        "Python Fraction arithmetic is used for finite costs and transitions"
+      ],
+      "evidence": [
+        "tests/test_adaptive_drift_policies.py"
+      ],
+      "nonclaims": [
+        "CI success is not a continuum or scalability theorem",
+        "finite coding-game checks are not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
