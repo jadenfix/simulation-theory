@@ -1,0 +1,177 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T153",
+      "title": "Posterior hidden-law belief is an exact sufficient state for Bayesian coding control",
+      "kind": "THEOREM",
+      "scope": "finite rational hidden Markov source-law models with action-independent hidden transitions and observation channels, finite zero-error prefix-codebook actions, and additive switching cost",
+      "assumptions": [
+        "the hidden-state transition and current observation channel are known exactly",
+        "stage expected code length depends on history only through the current hidden source-law scenario and selected codebook",
+        "switching cost depends on history only through the previous and current codebooks"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#2-why-the-posterior-belief-is-sufficient",
+        "src/simtheory/belief_state_coding.py:exact_belief_state_prefix_coding",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "the belief vector is not asserted to be universally minimal under other observation or control architectures",
+        "a Bayesian sufficient state is not a parent-substrate memory claim"
+      ]
+    },
+    {
+      "id": "ST-T154",
+      "title": "Bayesian source-law information obeys the clairvoyant-perfect-observed-none cost hierarchy",
+      "kind": "THEOREM",
+      "scope": "the declared finite hidden Markov coding model under expected cumulative prefix length plus switching cost",
+      "assumptions": [
+        "perfect current-state observation can simulate the declared noisy observation policy",
+        "a noisy-observation policy may ignore its signal",
+        "the path-first oracle selects a code sequence after observing the complete hidden-state path"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#4-information-hierarchy",
+        "src/simtheory/belief_state_coding.py:BeliefStateCodingCertificate",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "the path-first oracle is a retrospective benchmark rather than an implementable causal policy",
+        "the hierarchy is for one known stochastic model rather than adversarial ambiguity"
+      ]
+    },
+    {
+      "id": "ST-T155",
+      "title": "An uninformative signal has zero value in the Bayesian expected-cost coding problem",
+      "kind": "THEOREM",
+      "scope": "the declared hidden-law model when every observation-channel row is identical",
+      "assumptions": [
+        "the signal is independent of the hidden state",
+        "the objective is one fixed Bayesian expected cumulative cost",
+        "all exogenous random bits may be sampled before the horizon to represent a mixture over deterministic policy trees"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#signal-independent-of-the-hidden-state",
+        "src/simtheory/belief_state_coding.py:HiddenLawModel.observation_is_uninformative",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "uninformative public randomization can still help in a minimax game",
+        "the theorem does not deny the value of signals statistically dependent on the hidden state"
+      ]
+    },
+    {
+      "id": "ST-T156",
+      "title": "Dynamic Blackwell garbling cannot improve Bayesian coding value",
+      "kind": "THEOREM",
+      "scope": "two finite rational observation channels on the same action-independent hidden Markov source-law model when the poorer channel is a row-stochastic garbling of the richer channel",
+      "assumptions": [
+        "the richer-signal policy may privately simulate the declared garbling kernel",
+        "hidden transitions and signal generation do not depend on the selected codebook",
+        "the objective is expected cumulative cost"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#6-dynamic-blackwell-monotonicity",
+        "src/simtheory/dynamic_blackwell.py:exact_dynamic_blackwell_comparison",
+        "tests/test_dynamic_blackwell.py"
+      ],
+      "nonclaims": [
+        "Blackwell ordering is not a universal scalar ordering of channels outside the declared decision problem",
+        "action-dependent experiments require a different theorem"
+      ]
+    },
+    {
+      "id": "ST-T157",
+      "title": "Bayes regret against the path oracle differs from Bayes cost by one policy-independent constant",
+      "kind": "THEOREM",
+      "scope": "any policy class under the declared stochastic hidden-state path law and the same path-specific clairvoyant code-sequence oracle",
+      "assumptions": [
+        "the path oracle depends on the hidden path but not on the policy's private randomization or observations",
+        "expectations are finite"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#7-bayes-regret-differs-from-bayes-cost-by-one-constant",
+        "src/simtheory/belief_state_coding.py:BeliefStateCodingCertificate",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "the equivalence does not hold for minimax pathwise regret by subtracting separately optimized robust values",
+        "the oracle remains a benchmark rather than a causal policy"
+      ]
+    },
+    {
+      "id": "ST-T158",
+      "title": "Identity observation equals perfect current-state information and free switching removes future-foresight regret",
+      "kind": "THEOREM",
+      "scope": "the declared hidden-law model with an identity observation channel; the free-switching conclusion uses zero switching charge",
+      "assumptions": [
+        "the identity signal reveals the current hidden scenario exactly",
+        "with zero switching charge the path oracle decomposes into independent periodwise codebook choices"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#5-identity-and-uninformative-channel-endpoints",
+        "docs/belief-state-source-law-coding.md#9-switching-cost-creates-strict-future-foresight-value",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "perfect current-state information need not match clairvoyance when switching couples periods",
+        "identity of model signals is not an empirical claim about real observations"
+      ]
+    },
+    {
+      "id": "ST-T159",
+      "title": "Bayesian information and future foresight admit an exact nonnegative regret telescope",
+      "kind": "THEOREM",
+      "scope": "any valid belief-state coding certificate satisfying the declared information hierarchy",
+      "assumptions": [
+        "all values use the same hidden Markov model, codebook family, horizon, switching charge, and path oracle"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#8-exact-information-value-telescope",
+        "src/simtheory/belief_state_coding.py:BeliefStateCodingCertificate.information_telescope",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "the additive terms are decision-value differences rather than Shannon mutual informations",
+        "the telescope does not price physical sensing or computation"
+      ]
+    },
+    {
+      "id": "ST-M34",
+      "title": "Positive switching cost creates strict future-foresight value in a two-state K3 hidden-law model",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared two hidden source laws, uniform redraw transition, horizon three, complete K3 confusion graph, and switching charge 2/5",
+      "assumptions": [
+        "the bounded candidate enumeration returns the two nondominated source-specialized prefix trees",
+        "the hidden path follows the declared rational Markov model"
+      ],
+      "evidence": [
+        "docs/belief-state-source-law-coding.md#9-switching-cost-creates-strict-future-foresight-value",
+        "tests/test_belief_state_coding.py"
+      ],
+      "nonclaims": [
+        "the exact value 1/40 is specific to the declared instance",
+        "strict future-foresight value is not asserted for every positive switching charge"
+      ]
+    },
+    {
+      "id": "ST-F25",
+      "title": "Bounded exact belief filtering, dynamic Blackwell, and hidden-path oracle audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the finite rational hidden-law models, reachable beliefs, positive-probability paths, codebook candidates, and channel garblings exercised by the repository tests",
+      "assumptions": [
+        "all configured hidden-path, candidate, partition, and prefix-shape caps complete without truncation",
+        "Python Fraction arithmetic is used for every finite probability and cost calculation"
+      ],
+      "evidence": [
+        "tests/test_belief_state_coding.py",
+        "tests/test_dynamic_blackwell.py"
+      ],
+      "nonclaims": [
+        "bounded exact agreement is not an infinite-horizon or scalability theorem",
+        "finite Bayesian filtering results are not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
