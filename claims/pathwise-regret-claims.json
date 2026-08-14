@@ -118,6 +118,27 @@
       ]
     },
     {
+      "id": "ST-T133",
+      "title": "The path-specific oracle maximum is an exact maximin game and may be attained only in the interior",
+      "kind": "THEOREM",
+      "scope": "finite affine comparator families over one compact finite-horizon path polytope with an exact finite vertex representation",
+      "assumptions": [
+        "each comparator cost is affine in the complete path",
+        "the path polytope equals the convex hull of its enumerated vertices",
+        "exact rational zero-sum game support enumeration completes"
+      ],
+      "evidence": [
+        "docs/oracle-maximin-interior.md#2-exact-finite-game-reduction-of-the-oracle-maximum",
+        "docs/oracle-maximin-interior.md#3-strict-interior-example",
+        "src/simtheory/pathwise_regret_bounds.py:exact_regret_value_bounds",
+        "tests/test_pathwise_regret_bounds.py"
+      ],
+      "nonclaims": [
+        "the maximizing vertex mixture is a proof representation of a feasible barycenter and need not describe physical randomization among paths",
+        "a concave oracle maximum is not generally obtained by taking the largest oracle value at a path vertex"
+      ]
+    },
+    {
       "id": "ST-F20",
       "title": "Bounded exact pathwise regret and value-gap audit",
       "kind": "FINITE_CHECK",
