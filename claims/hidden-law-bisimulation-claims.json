@@ -1,0 +1,122 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T162",
+      "title": "Exact partition refinement returns the coarsest hidden-law bisimulation",
+      "kind": "THEOREM",
+      "scope": "finite rational hidden Markov source-law models with action-independent transitions and observation channels",
+      "assumptions": [
+        "states in one candidate block must have identical categorical source laws and observation-channel rows",
+        "transition behavior is compared by exact probability mass assigned to every current partition block",
+        "finite refinement continues until a stable partition is reached"
+      ],
+      "evidence": [
+        "docs/hidden-law-bisimulation.md#2-exact-partition-refinement",
+        "docs/hidden-law-bisimulation.md#3-coarsest-bisimulation-theorem",
+        "src/simtheory/hidden_law_bisimulation.py:exact_hidden_law_bisimulation",
+        "tests/test_hidden_law_bisimulation.py"
+      ],
+      "nonclaims": [
+        "behavioral equivalence is not metaphysical or physical identity",
+        "finite exact refinement is not a complexity guarantee for very large models"
+      ]
+    },
+    {
+      "id": "ST-T163",
+      "title": "The hidden-law bisimulation quotient preserves the finite observable class process",
+      "kind": "THEOREM",
+      "scope": "the quotient model induced by the coarsest exact hidden-law bisimulation",
+      "assumptions": [
+        "quotient initial mass is aggregated over final equivalence blocks",
+        "quotient transition probability is the representative-independent probability mass into each final block",
+        "source laws and observation rows are constant within each final block"
+      ],
+      "evidence": [
+        "docs/hidden-law-bisimulation.md#4-quotient-hidden-markov-model",
+        "docs/hidden-law-bisimulation.md#5-equality-of-finite-observation-laws",
+        "src/simtheory/hidden_law_bisimulation.py:quotient_hidden_law_model",
+        "tests/test_hidden_law_bisimulation.py"
+      ],
+      "nonclaims": [
+        "the quotient does not preserve unmodeled observables that reveal internal state identity",
+        "quotient-state count is not parent-substrate memory"
+      ]
+    },
+    {
+      "id": "ST-T164",
+      "title": "Hidden-law bisimulation preserves all declared finite-horizon Bayesian coding values",
+      "kind": "THEOREM",
+      "scope": "no-signal, noisy-observation, perfect-current-state, and expected clairvoyant zero-error prefix-coding values under one finite horizon and rational switching charge",
+      "assumptions": [
+        "the original and quotient models use the same confusion graph and codebook action family",
+        "all codebook stage costs depend on hidden state only through its categorical source law",
+        "hidden transitions and observation channels are action independent"
+      ],
+      "evidence": [
+        "docs/hidden-law-bisimulation.md#6-preservation-of-causal-coding-values",
+        "docs/hidden-law-bisimulation.md#7-preservation-of-the-clairvoyant-path-oracle",
+        "src/simtheory/hidden_law_bisimulation.py:exact_hidden_law_quotient_values",
+        "tests/test_hidden_law_bisimulation.py"
+      ],
+      "nonclaims": [
+        "value preservation need not hold after adding an action or observation that exposes internal state identity",
+        "the theorem is finite horizon rather than an unqualified infinite-horizon claim"
+      ]
+    },
+    {
+      "id": "ST-T165",
+      "title": "Syntactic hidden-state duplication does not imply predictive-state multiplicity",
+      "kind": "THEOREM",
+      "scope": "finite hidden-state refinements that preserve source laws, observation rows, and transition mass into every behavioral equivalence class",
+      "assumptions": [
+        "duplicated states are merged by the exact hidden-law bisimulation relation",
+        "the predictive interface is restricted to the declared source observations, signals, codebook costs, and hidden dynamics"
+      ],
+      "evidence": [
+        "docs/hidden-law-bisimulation.md#8-predictive-multiplicity-versus-syntactic-multiplicity",
+        "src/simtheory/hidden_law_bisimulation.py:HiddenLawBisimulationCertificate",
+        "tests/test_hidden_law_bisimulation.py"
+      ],
+      "nonclaims": [
+        "the theorem does not deny that internal labels may matter under a richer interface",
+        "syntactic multiplicity is not converted into observer multiplicity or simulation evidence"
+      ]
+    },
+    {
+      "id": "ST-M35",
+      "title": "Three-state internal-transition model quotients exactly to two predictive hidden states",
+      "kind": "MODEL_RESULT",
+      "scope": "the declared three-state rational example with states zero and one sharing source/signal labels and equal transition mass into blocks {0,1} and {2}",
+      "assumptions": [
+        "the source laws, observation rows, initial belief, and transition rows are exactly those exercised by the bounded test",
+        "the coding horizon and switch charge are supplied to the quotient-value checker"
+      ],
+      "evidence": [
+        "docs/hidden-law-bisimulation.md#9-example-with-nonidentical-raw-transitions",
+        "tests/test_hidden_law_bisimulation.py"
+      ],
+      "nonclaims": [
+        "the numerical quotient transition matrix is instance specific",
+        "the example is not a claim about real-world hidden-state ontology"
+      ]
+    },
+    {
+      "id": "ST-F26",
+      "title": "Bounded exact hidden-law refinement and quotient-value audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the finite rational hidden-state partitions, quotient models, paths, beliefs, and coding values exercised by the repository tests",
+      "assumptions": [
+        "all configured path, candidate, partition, and prefix-shape caps complete without truncation",
+        "Python Fraction arithmetic is used for every finite transition, belief, and cost calculation"
+      ],
+      "evidence": [
+        "tests/test_hidden_law_bisimulation.py"
+      ],
+      "nonclaims": [
+        "bounded test completion is not a scalability theorem",
+        "finite quotient agreement is not evidence that reality is simulated"
+      ]
+    }
+  ]
+}
