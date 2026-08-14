@@ -22,6 +22,7 @@ def test_repeated_observation_claim_manifest_is_valid_and_evidence_bound():
         "ST-T136",
         "ST-T137",
         "ST-T138",
+        "ST-T139",
         "ST-M33",
         "ST-F22",
     }
