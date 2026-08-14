@@ -17,7 +17,7 @@ Every claim is kept in one of four scopes:
 - **Finite check** — reproducible computation over a bounded domain.
 - **Open problem** — a research target, not an established conclusion.
 
-The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, quantum-communication, progressive-query, and predictive-network extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json), [`claims/progressive-query-claims.json`](claims/progressive-query-claims.json), and [`claims/predictive-network-claims.json`](claims/predictive-network-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
+The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.json). Multidimensional quantum, relational, noisy, code-locality, distributed, quantum-communication, progressive-query, predictive-network, and stochastic-cover extensions are registered in [`claims/quantum-phase-claims.json`](claims/quantum-phase-claims.json), [`claims/stabilizer-relational-claims.json`](claims/stabilizer-relational-claims.json), [`claims/noisy-relational-claims.json`](claims/noisy-relational-claims.json), [`claims/stabilizer-code-claims.json`](claims/stabilizer-code-claims.json), [`claims/distributed-consistency-claims.json`](claims/distributed-consistency-claims.json), [`claims/quantum-causal-cut-claims.json`](claims/quantum-causal-cut-claims.json), [`claims/progressive-query-claims.json`](claims/progressive-query-claims.json), [`claims/predictive-network-claims.json`](claims/predictive-network-claims.json), and [`claims/stochastic-predictive-claims.json`](claims/stochastic-predictive-claims.json). Their purpose is to stop finite experiments, philosophical premises, and restricted tests from silently becoming generic claims.
 
 ## Main results encoded
 
@@ -96,6 +96,14 @@ The core machine-readable ledger is [`claims/claims-v1.json`](claims/claims-v1.j
 73. **Network quantum capacity accounting.** Exact unassisted qubit edges use one classical payload bit per unit; edge-local dense coding changes the declared coefficient to two while keeping entanglement cost explicit.
 74. **Per-sink necessity without multicast overclaiming.** Every sink must satisfy its own predictive min-cut, but individual cut adequacy is not claimed sufficient for simultaneous multi-sink demands.
 75. **Finite flow and packing certificates.** Exact max-flow/min-cut, path decomposition, predictive class counts, and bounded maximum packings are independently checked on finite instances.
+76. **Exact stochastic predictive equivalence.** Finite records with `K` distinct full conditional-law tensors require and can use exactly `K` predictive states, even when fresh randomness samples each law.
+77. **Weighted stochastic TV and KL chains.** Under a shared exogenous query schedule, joint TV and KL are the query-weighted sums of their conditional counterparts.
+78. **Packing-cover state bracket.** Strict `2 epsilon` packing size lower-bounds arbitrary predictor states, while minimum target-centered epsilon-cover size gives a constructive upper bound.
+79. **Three-way approximate network certificate.** Min-cut below the packing bound is impossible, capacity above the target-cover index is constructively feasible, and the interval between remains explicitly unresolved.
+80. **Bernoulli one-state minimax law.** A finite Bernoulli family has optimal one-state center `(p_min+p_max)/2` and radius `(p_max-p_min)/2` in total variation.
+81. **Exact arbitrary-center Bernoulli covering.** Greedy interval covering computes the minimum number of epsilon-accurate Bernoulli predictor states and the exact corresponding one-sink index capacity.
+82. **Target-center conservatism.** At targets `p=0,1` and `epsilon=1/2`, one interpolating center `p=1/2` suffices although two target-centered states are required.
+83. **Finite stochastic certification.** Bounded exact packing, target set cover, assignments, KL/TV checks, Bernoulli arbitrary centers, and routed cover indices are independently tested.
 
 General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physical, relational, code, and distributed derivations are developed in:
 
@@ -111,6 +119,7 @@ General proofs are in [`docs/formal-results.md`](docs/formal-results.md). Physic
 - [`docs/quantum-causal-cut-random-access.md`](docs/quantum-causal-cut-random-access.md)
 - [`docs/progressive-query-revelation.md`](docs/progressive-query-revelation.md)
 - [`docs/predictive-network-mincuts.md`](docs/predictive-network-mincuts.md)
+- [`docs/stochastic-predictive-covers.md`](docs/stochastic-predictive-covers.md)
 
 ## Layout
 
@@ -124,6 +133,7 @@ claims/distributed-consistency-claims.json causal-cut and communication claim re
 claims/quantum-causal-cut-claims.json    quantum random-access and assistance claim registry
 claims/progressive-query-claims.json     progressive hint-timing and multiround claim registry
 claims/predictive-network-claims.json    predictive classes, min-cuts, and packing claim registry
+claims/stochastic-predictive-claims.json stochastic laws, covers, and network claim registry
 docs/formal-results.md                   general theorem statements and proofs
 docs/bell-predictive-bounds.md           one-parameter physical Bell derivations
 docs/quantum-phase-predictive-bounds.md  two-parameter geometry and Fisher analysis
@@ -137,6 +147,7 @@ docs/distributed-causal-consistency.md   query timing, cut-set bounds, and recon
 docs/quantum-causal-cut-random-access.md quantum messages, entanglement assistance, and QRACs
 docs/progressive-query-revelation.md     staged hints and shared/branch capacity regions
 docs/predictive-network-mincuts.md       query classes, exact cuts, routing, and packings
+docs/stochastic-predictive-covers.md     stochastic laws, packing-cover brackets, and interpolation
 docs/research-program.md                 completed lanes, next campaigns, and quality gates
 docs/sources.md                          primary research context
 docs/tempera-math-bridge.md              optional external proof-harness boundary
@@ -158,7 +169,7 @@ The mathematical core uses only the Python standard library. GitHub Actions runs
 
 Evidence must favor a **restricted** simulator model over serious alternative physical models. Examples include a specified lattice, finite-precision mechanism, constrained random source, or resource model that predicts a previously unobserved signature.
 
-Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, progressive query revelation, predictive equivalence, max flow, min cuts, parity compression, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
+Quantization, randomness, mathematical laws, finite signal speed, observer effects, Bell violation, entanglement, stabilizer structure, quantum coding, random-access coding, superdense coding, progressive query revelation, predictive equivalence, stochastic covering, interpolation, max flow, min cuts, parity compression, error correction, communication complexity, or information bounds are not generic evidence for simulation; ordinary physical theories and ordinary distributed systems can contain those features too.
 
 ## Tempera Math boundary
 
