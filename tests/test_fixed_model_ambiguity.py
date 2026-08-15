@@ -97,7 +97,15 @@ def test_informative_signal_has_strict_robust_value_between_none_and_full():
     assert noisy.fixed_model_value == Fraction(5, 4)
     assert full.fixed_model_value == 1
     assert none.fixed_model_value > noisy.fixed_model_value > full.fixed_model_value
-    assert noisy.rectangular_value == noisy.fixed_model_value
+
+    # Fixed-model ambiguity commits to one model before the noisy signal.  The
+    # rectangular relaxation can reselect an active model after each signal;
+    # because both models assign positive probability to both signals, it can
+    # always retain the model whose source symbol received length two.
+    assert none.rectangular_value == 2
+    assert noisy.rectangular_value == 2
+    assert noisy.model_consistency_gap == Fraction(3, 4)
+    assert full.rectangular_value == 1
 
 
 def test_zero_probability_observation_eliminates_incompatible_models():
