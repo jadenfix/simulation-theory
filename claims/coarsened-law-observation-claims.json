@@ -1,0 +1,77 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T157",
+      "title": "Exact policy-vector frontier recursion for deterministic coarsened law observations",
+      "kind": "THEOREM",
+      "scope": "finite rational source-law states, deterministic observation partitions, directed nonempty transitions, deterministic zero-error prefix-code actions, finite horizon, and rational switching penalties",
+      "assumptions": ["one actual hidden law-state path obeys the declared transition relation", "the observation class is revealed before each code action", "the controller uses deterministic policies with perfect recall", "all frontier combinations and dominance checks complete below configured caps"],
+      "evidence": ["docs/coarsened-law-observation-games.md#4-achievable-policy-cost-vectors", "docs/coarsened-law-observation-games.md#6-exact-nonterminal-frontier-recursion", "src/simtheory/coarsened_observation_games.py:exact_coarsened_observation_game", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["the theorem is a robust set-membership game rather than Bayesian filtering", "the bounded frontier method is not a polynomial-time scalability guarantee", "the result is not evidence for simulation or a parent-resource bound"]
+    },
+    {
+      "id": "ST-T158",
+      "title": "Componentwise policy-vector dominance is safe in the coarsened-observation recursion",
+      "kind": "THEOREM",
+      "scope": "achievable future-cost vectors indexed by possible actual hidden law states in one information set",
+      "assumptions": ["one vector is no larger in every actual-state coordinate and strictly smaller in at least one", "parent operations consist of nonnegative stage-cost addition, coordinate selection, and maximization over reachable successors"],
+      "evidence": ["docs/coarsened-law-observation-games.md#4-achievable-policy-cost-vectors", "src/simtheory/coarsened_observation_games.py:_deduplicate_and_prune_entries", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["dominance can fail if omitted policy features create rewards or constraints not represented in the cost vector", "Pareto pruning does not prevent exponential frontier growth"]
+    },
+    {
+      "id": "ST-T159",
+      "title": "Deterministic observation refinement cannot worsen the minimizing coder",
+      "kind": "THEOREM",
+      "scope": "two observation partitions over identical finite law states where every fine cell is contained in one coarse cell",
+      "assumptions": ["the transition model, code actions, switching cost, initial possible set, and horizon are held fixed", "the controller may ignore fine information and emulate a coarse policy"],
+      "evidence": ["docs/coarsened-law-observation-games.md#8-observation-refinement-monotonicity", "src/simtheory/coarsened_observation_games.py:exact_partition_refinement_value", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["the theorem does not price acquiring or communicating the finer observation", "more informative observations need not produce a strict improvement"]
+    },
+    {
+      "id": "ST-T160",
+      "title": "No-observation and singleton-observation endpoints equal independent open-loop and full-feedback games",
+      "kind": "THEOREM",
+      "scope": "known initial law state, code-independent finite transitions, identical deterministic code universe, finite horizon, and matching switching penalty",
+      "assumptions": ["the one-cell observation supplies no future state distinction", "the singleton partition reveals the exact current law state before code choice", "the independent endpoint solvers use the same action and transition timing"],
+      "evidence": ["docs/coarsened-law-observation-games.md#9-endpoint-equivalence", "src/simtheory/coarsened_observation_games.py:exact_endpoint_equivalence", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["the endpoint equality does not identify intermediate coarsenings with either endpoint", "partial observation cannot be replaced by the fully observed Bellman recursion"]
+    },
+    {
+      "id": "ST-T161",
+      "title": "Scalar rectangular information-set recursion can overstate a path-consistent hidden-state adversary",
+      "kind": "THEOREM",
+      "scope": "deterministic partial-observation games where one hidden state path must obey the transition relation",
+      "assumptions": ["a scalar relaxation remaximizes over every state in the next information set rather than conditioning continuation cost on the actual successor", "the exact policy-vector recursion preserves one actual hidden path"],
+      "evidence": ["docs/coarsened-law-observation-games.md#3-why-a-scalar-information-set-bellman-equation-can-be-wrong", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["scalar recursions are not always wrong; they are exact under additional rectangularity or full-observation conditions", "the theorem does not quantify the gap for every game"]
+    },
+    {
+      "id": "ST-M35",
+      "title": "Strict K3 observation-refinement chain",
+      "kind": "MODEL_RESULT",
+      "scope": "complete confusion on three point-mass law states, identity transitions, two periods, initial uncertainty over all states, and partitions {123}, {1}{23}, and {1}{2}{3}",
+      "assumptions": ["complete binary prefix codes have length vectors that are permutations of (1,2,2)", "observations arrive before each code choice"],
+      "evidence": ["docs/coarsened-law-observation-games.md#8-observation-refinement-monotonicity", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["the values 4, 3, and 2 are specific to the declared finite instance", "a refinement can have zero value in other games"]
+    },
+    {
+      "id": "ST-M36",
+      "title": "K3 hidden-path frontier separates exact value five from scalar relaxation six",
+      "kind": "MODEL_RESULT",
+      "scope": "complete confusion on three point-mass law states, identity transitions, no observations, three periods, and initial uncertainty over all states",
+      "assumptions": ["the actual hidden state remains fixed under identity transitions", "the code schedule may assign the short leaf to a different state each period"],
+      "evidence": ["docs/coarsened-law-observation-games.md#3-why-a-scalar-information-set-bellman-equation-can-be-wrong", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["the one-bit gap is not universal", "the scalar value six belongs to a stronger rectangular adversary rather than one legal hidden path"]
+    },
+    {
+      "id": "ST-F26",
+      "title": "Bounded exact coarsened-observation policy-frontier audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the partition, endpoint, strict-refinement, hidden-path, switching, directed-transition, and cap instances exercised by the repository tests",
+      "assumptions": ["all code candidates, information-set nodes, continuation combinations, frontier entries, and dominance comparisons complete below declared caps", "all costs and law probabilities use exact rational arithmetic"],
+      "evidence": ["src/simtheory/coarsened_observation_games.py:exact_coarsened_observation_game", "tests/test_coarsened_observation_games.py"],
+      "nonclaims": ["bounded finite agreement is not a scalability theorem", "CI success does not turn the internal game into empirical evidence for simulation"]
+    }
+  ]
+}
