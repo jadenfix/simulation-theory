@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T175",
+      "title": "Exact minimax regret is a translated optimization over the active fixed-model root frontier",
+      "kind": "THEOREM",
+      "scope": "finite fixed-model active-experiment problems with one model selected once, exact rational costs, deterministic public policies, and a model-informed causal oracle",
+      "assumptions": ["the oracle knows the fixed model identity before the horizon", "the oracle and shared controller use the same experiment menu, acquisition costs, horizon, hidden dynamics, and zero-error code universe", "the active-experiment frontier is complete below configured caps"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#2-shared-policy-regret-vector", "src/simtheory/active_fixed_model_regret.py:exact_active_fixed_model_minimax_regret", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["the oracle does not know future hidden-state or observation realizations", "this is minimax regret rather than Bayesian regret", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T176",
+      "title": "Componentwise cost dominance remains valid after subtracting the fixed model-oracle vector",
+      "kind": "THEOREM",
+      "scope": "root policy-cost vectors and one fixed vector of model-informed oracle values",
+      "assumptions": ["the same oracle value O_m is subtracted from every candidate policy in model coordinate m", "componentwise dominated policies were removed only by non-strict coordinatewise cost dominance"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#3-why-the-existing-pareto-frontier-is-sufficient", "src/simtheory/active_fixed_model_regret.py:_entry_regrets", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["the argument would fail for policy-dependent benchmark translations", "Pareto sufficiency does not imply frontier size is polynomial"]
+    },
+    {
+      "id": "ST-T177",
+      "title": "Every shared public policy has nonnegative regret relative to the model-informed causal oracle",
+      "kind": "THEOREM",
+      "scope": "fixed-model active-experiment policies where the singleton oracle receives the model identity but no additional future information",
+      "assumptions": ["the singleton oracle may emulate the shared policy", "both sides pay identical declared experiment and coding costs"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#2-shared-policy-regret-vector", "src/simtheory/active_fixed_model_regret.py:_entry_regrets", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["zero regret does not imply the model was identified", "the theorem does not compare against a path-clairvoyant oracle"]
+    },
+    {
+      "id": "ST-T178",
+      "title": "The exact minimax-regret policy cannot have larger worst-model regret than the robust-cost optimizer",
+      "kind": "THEOREM",
+      "scope": "the same complete active fixed-model root policy frontier under robust-cost and minimax-regret objectives",
+      "assumptions": ["both objectives range over the same deterministic public policies", "oracle values are fixed before selecting the regret-optimal policy"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#4-robust-cost-and-minimax-regret-are-different-objectives", "src/simtheory/active_fixed_model_regret.py:ActiveExperimentRegretCertificate.valid", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["the theorem does not assert a strict improvement", "the robust-cost and minimax-regret optimizers may coincide"]
+    },
+    {
+      "id": "ST-T179",
+      "title": "Symmetric acquisition-cost accounting prevents artificial model-uncertainty regret",
+      "kind": "THEOREM",
+      "scope": "active-experiment regret benchmarks in which controller and oracle face the same compulsory or optional experiment menu",
+      "assumptions": ["the oracle is charged the same acquisition cost for any experiment it selects", "the shared controller is charged the declared acquisition cost under the same rule"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#6-cost-accounting-must-be-symmetric", "src/simtheory/active_fixed_model_regret.py:_singleton_experiments", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["experiment costs do not generally cancel when oracle and shared controller choose different experiments", "the acquisition-cost numbers are declared model inputs"]
+    },
+    {
+      "id": "ST-M44",
+      "title": "One-period no-signal point-mass K3 has exact minimax regret one",
+      "kind": "MODEL_RESULT",
+      "scope": "three globally fixed point-mass K3 models, one period, one no-signal experiment, and zero acquisition cost",
+      "assumptions": ["binary complete prefix-code length vectors are permutations of (1,2,2)", "the model-informed oracle knows which point-mass model is fixed"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#5-exact-k3-boundaries", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["the value one is specific to this finite instance"]
+    },
+    {
+      "id": "ST-M45",
+      "title": "Source-independent public three-way randomness lowers K3 minimax regret from one to two-thirds without model information",
+      "kind": "MODEL_RESULT",
+      "scope": "the same one-period point-mass K3 family with a uniform public signal independent of source and model",
+      "assumptions": ["the public signal is observed by the deterministic policy before code selection", "the singleton oracle value remains one"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#5-exact-k3-boundaries", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["the regret reduction is coordination value rather than epistemic information gain"]
+    },
+    {
+      "id": "ST-M46",
+      "title": "Free one-period model revelation eliminates K3 minimax regret",
+      "kind": "MODEL_RESULT",
+      "scope": "the same one-period point-mass K3 family with a perfectly model-revealing zero-cost experiment",
+      "assumptions": ["the signal arrives before code selection", "the model-informed oracle and shared controller use the same code universe"],
+      "evidence": ["docs/active-fixed-model-minimax-regret.md#5-exact-k3-boundaries", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["free perfect revelation is a bounded example rather than a claim about real experiments"]
+    },
+    {
+      "id": "ST-F30",
+      "title": "Bounded exact active fixed-model minimax-regret audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the no-signal, public-randomness, revealing-signal, symmetric-cost, and robust-cost comparison instances exercised by repository tests",
+      "assumptions": ["all active-experiment policy frontiers and singleton oracle solves complete below configured caps", "all probabilities and costs use exact rational arithmetic"],
+      "evidence": ["src/simtheory/active_fixed_model_regret.py:exact_active_fixed_model_minimax_regret", "tests/test_active_fixed_model_regret.py"],
+      "nonclaims": ["bounded finite testing is not a scalability theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
