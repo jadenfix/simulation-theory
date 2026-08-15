@@ -1,0 +1,68 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T215",
+      "title": "Posterior support cell and remaining budget are sufficient for deterministic adaptive Boolean coordinate queries",
+      "kind": "THEOREM",
+      "scope": "finite Boolean hidden models with exact deterministic coordinate queries and Bayesian terminal coding loss",
+      "assumptions": ["query outcomes are deterministic functions of the hidden bit string", "future admissible queries depend only on the current cell and remaining budget"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md", "src/simtheory/bayesian_adaptive_boolean_queries.py:exact_adaptive_boolean_query_design", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["the sufficiency statement changes with noisy or history-dependent query channels"]
+    },
+    {
+      "id": "ST-T216",
+      "title": "Exact adaptive Boolean query value obeys the finite Bellman recursion over posterior cells",
+      "kind": "THEOREM",
+      "scope": "the declared finite query-budget model",
+      "assumptions": ["terminal loss is posterior minority probability", "only strictly splitting coordinates need be considered"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#bellman-recursion", "src/simtheory/bayesian_adaptive_boolean_queries.py:exact_adaptive_boolean_query_design"],
+      "nonclaims": ["the bounded solver is not asserted polynomial-time"]
+    },
+    {
+      "id": "ST-T217",
+      "title": "Adaptive query value weakly dominates the best nonadaptive subset at the same budget",
+      "kind": "THEOREM",
+      "scope": "the same Boolean prior, terminal loss, and query budget",
+      "assumptions": ["an adaptive controller may ignore outcomes and emulate any fixed query subset"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#bellman-recursion", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["strict improvement is not guaranteed"]
+    },
+    {
+      "id": "ST-T218",
+      "title": "A zero-myopic-value query can have positive finite-horizon option value",
+      "kind": "THEOREM",
+      "scope": "finite adaptive experiment problems where an early observation changes which later query is useful",
+      "assumptions": ["experiment scheduling may depend on earlier observed outcomes"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#multiplexer-adaptivity-gap", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["myopic value and option value need not coincide"]
+    },
+    {
+      "id": "ST-M61",
+      "title": "Three-bit multiplexer has exact two-query adaptivity gain one quarter",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform three-bit multiplexer with two free exact coordinate queries",
+      "assumptions": ["f(x)=x1 when x0=0 and x2 when x0=1"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#multiplexer-adaptivity-gap", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["the value one quarter is specific to this finite construction"]
+    },
+    {
+      "id": "ST-M62",
+      "title": "Three-bit parity has no adaptive query advantage before full information",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform three-bit parity with budgets zero through three",
+      "assumptions": ["queries reveal individual coordinates exactly"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#parity-boundary", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["other Boolean functions may have strict adaptivity gain"]
+    },
+    {
+      "id": "ST-F37",
+      "title": "Bounded exact adaptive Boolean query audit",
+      "kind": "FINITE_CHECK",
+      "scope": "multiplexer option value, nonadaptive comparison, budget monotonicity, majority, and parity boundary tests",
+      "assumptions": ["all priors and Bellman values use exact rational arithmetic"],
+      "evidence": ["src/simtheory/bayesian_adaptive_boolean_queries.py", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["bounded tests are not a scalability theorem", "CI success is not evidence for simulation"]
+    }
+  ]
+}
