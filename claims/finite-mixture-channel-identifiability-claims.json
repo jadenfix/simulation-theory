@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T238",
+      "title": "A finite categorical mixture prior is identifiable exactly when its component emission rows are affinely independent",
+      "kind": "THEOREM",
+      "scope": "finite rational categorical channel K with a latent prior on its rows and exact observed mixture law pi K",
+      "assumptions": ["component emission rows are known", "latent mixing weights lie on the probability simplex"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#1-affine-rank-criterion", "src/simtheory/finite_mixture_channel_identifiability.py:exact_finite_mixture_channel_certificate", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["identifiability does not imply small-sample estimability", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T239",
+      "title": "Affine-rank failure yields two explicit distinct rational priors with exactly the same observed law",
+      "kind": "THEOREM",
+      "scope": "rank-deficient finite rational categorical mixture channels",
+      "assumptions": ["the null direction is scaled inside the probability simplex"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#2-rank-failure-gives-an-explicit-collision", "src/simtheory/finite_mixture_channel_identifiability.py:exact_finite_mixture_channel_certificate", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["the returned collision is not asserted unique"]
+    },
+    {
+      "id": "ST-T240",
+      "title": "Any invertible affine coordinate minor gives an exact rational reconstruction of latent prior differences on the channel tangent image",
+      "kind": "THEOREM",
+      "scope": "full-affine-rank finite rational categorical mixture channels",
+      "assumptions": ["the observed difference lies in the image of the declared channel", "the selected square difference minor is invertible"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#3-exact-coordinate-reconstruction-when-rank-is-full", "src/simtheory/finite_mixture_channel_identifiability.py:reconstruct_latent_difference", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["arbitrary off-model observed vectors are not projected onto the channel image"]
+    },
+    {
+      "id": "ST-T241",
+      "title": "Coordinate-minor reconstruction supplies a fail-closed inverse total-variation conditioning bound",
+      "kind": "THEOREM",
+      "scope": "full-affine-rank finite rational categorical channels with a completed bounded coordinate-minor search",
+      "assumptions": ["the selected-coordinate L1 mass is bounded using the zero-sum observed difference", "all arithmetic is exact rational arithmetic"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#4-a-fail-closed-tv-conditioning-certificate", "src/simtheory/finite_mixture_channel_identifiability.py:certified_latent_tv_radius", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["the coordinate-minor constant is not asserted globally optimal"]
+    },
+    {
+      "id": "ST-T242",
+      "title": "The optimal inverse TV modulus is the reciprocal of the minimum TV distance between convex hulls of disjoint latent row subsets",
+      "kind": "THEOREM",
+      "scope": "finite categorical mixture channels, normalized nonzero zero-sum latent perturbations",
+      "assumptions": ["positive and negative parts of a normalized zero-sum perturbation are treated as disjoint-support probability mixtures"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object"],
+      "nonclaims": ["the current coordinate-minor solver does not yet optimize this global modulus"]
+    },
+    {
+      "id": "ST-T243",
+      "title": "Affine independence is equivalent to strictly positive disjoint-face TV separation",
+      "kind": "THEOREM",
+      "scope": "finite categorical channel rows viewed as points in the observed probability simplex",
+      "assumptions": ["the row family is finite"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object"],
+      "nonclaims": ["positive separation can still be arbitrarily small across different channel families"]
+    },
+    {
+      "id": "ST-M69",
+      "title": "A symmetric binary noisy channel with row TV separation one-half has certified inverse TV constant two",
+      "kind": "MODEL_RESULT",
+      "scope": "rows (3/4,1/4) and (1/4,3/4)",
+      "assumptions": ["binary latent and observed alphabets"],
+      "evidence": ["tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["the numerical constant is specific to this channel"]
+    },
+    {
+      "id": "ST-M70",
+      "title": "Identity K3 exposes conservatism of the generic coordinate-minor conditioning certificate",
+      "kind": "MODEL_RESULT",
+      "scope": "three latent components emitted through the identity K3 channel",
+      "assumptions": ["TV is computed on both latent and observed simplices"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#4-a-fail-closed-tv-conditioning-certificate", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["a conservative certificate is not a failure of identifiability"]
+    },
+    {
+      "id": "ST-F43",
+      "title": "Bounded exact finite-mixture affine-identifiability audit",
+      "kind": "FINITE_CHECK",
+      "scope": "binary exact boundaries plus all three-row channels drawn from the denominator-two ternary simplex and denominator-three latent-prior test grid",
+      "assumptions": ["bounded coordinate-minor enumeration completes", "all probabilities use exact rational arithmetic"],
+      "evidence": ["src/simtheory/finite_mixture_channel_identifiability.py", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["bounded exhaustive checks are not a scalability theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
