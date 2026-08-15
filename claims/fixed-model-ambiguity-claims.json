@@ -1,0 +1,143 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T166",
+      "title": "Exact fixed-model policy-vector frontier recursion",
+      "kind": "THEOREM",
+      "scope": "a finite family of complete rational hidden-Markov source models, one model selected once for the full horizon, public observations, deterministic zero-error prefix-code actions, finite horizon, and rational switching penalty",
+      "assumptions": [
+        "the selected model identity remains fixed across every observation history",
+        "model transitions and observation kernels are code-independent",
+        "one public continuation policy is shared by all active models capable of emitting the same observation",
+        "all frontier combinations and dominance checks complete below declared caps"
+      ],
+      "evidence": [
+        "docs/fixed-model-ambiguity-frontiers.md#5-fixed-model-policy-vector-frontier",
+        "src/simtheory/fixed_model_ambiguity.py:exact_fixed_model_ambiguity_game",
+        "tests/test_fixed_model_ambiguity.py"
+      ],
+      "nonclaims": [
+        "the theorem supplies no prior probability over model labels",
+        "the finite model family is not a confidence region unless separately calibrated",
+        "the result is not evidence for simulation or a parent-resource bound"
+      ]
+    },
+    {
+      "id": "ST-T167",
+      "title": "Rectangular model reselection upper-bounds fixed-model ambiguity",
+      "kind": "THEOREM",
+      "scope": "the fixed-model minimax game and the scalar rectangular relaxation built from the same model family, observations, code actions, horizon, and switching cost",
+      "assumptions": [
+        "the rectangular recursion may maximize over the active model set again at every public node",
+        "the fixed-model recursion preserves one common model coordinate for the entire expected-cost calculation"
+      ],
+      "evidence": [
+        "docs/fixed-model-ambiguity-frontiers.md#7-rectangular-model-relaxation",
+        "src/simtheory/fixed_model_ambiguity.py:FixedModelAmbiguityCertificate",
+        "tests/test_fixed_model_ambiguity.py"
+      ],
+      "nonclaims": [
+        "the rectangular game is a stronger ambiguity hypothesis rather than a conservative implementation of the same fixed-model hypothesis",
+        "strict inequality is instance-dependent"
+      ]
+    },
+    {
+      "id": "ST-T168",
+      "title": "Public observations update model-conditional beliefs and eliminate only zero-likelihood models",
+      "kind": "THEOREM",
+      "scope": "positive-probability observation branches in the declared finite rational model family",
+      "assumptions": [
+        "each active model applies its own transition and observation probabilities",
+        "a model remains active after an observation exactly when that observation has positive probability under the model"
+      ],
+      "evidence": [
+        "docs/fixed-model-ambiguity-frontiers.md#2-public-multi-model-belief-state",
+        "docs/fixed-model-ambiguity-frontiers.md#4-model-conditional-observation-branches",
+        "src/simtheory/fixed_model_ambiguity.py:initial_model_observation_branches",
+        "src/simtheory/fixed_model_ambiguity.py:next_model_observation_branches",
+        "tests/test_fixed_model_ambiguity.py"
+      ],
+      "nonclaims": [
+        "model elimination is logical under the supplied exact probabilities and is not a finite-sample statistical rejection guarantee",
+        "no posterior probability over model labels is introduced"
+      ]
+    },
+    {
+      "id": "ST-T169",
+      "title": "Componentwise dominance pruning preserves the fixed-model frontier",
+      "kind": "THEOREM",
+      "scope": "expected continuation-cost vectors indexed by the still-active fixed models at one public state",
+      "assumptions": [
+        "one vector is no larger in every active-model coordinate and strictly smaller in at least one",
+        "parent operations use nonnegative model-specific observation probabilities, nonnegative stage-cost addition, and a final maximum over model coordinates"
+      ],
+      "evidence": [
+        "docs/fixed-model-ambiguity-frontiers.md#5-fixed-model-policy-vector-frontier",
+        "src/simtheory/fixed_model_ambiguity.py:_prune_entries",
+        "tests/test_fixed_model_ambiguity.py"
+      ],
+      "nonclaims": [
+        "Pareto pruning does not prevent exponential frontier growth",
+        "dominance would need to be reconsidered if omitted constraints or rewards were not represented in the cost vector"
+      ]
+    },
+    {
+      "id": "ST-M39",
+      "title": "No-signal K3 has fixed-model value five and rectangular value six",
+      "kind": "MODEL_RESULT",
+      "scope": "three one-state point-mass source models, complete confusion K3, one common uninformative observation, three periods, zero switching cost, and complete binary prefix codes",
+      "assumptions": [
+        "nature selects one of the three models once in the fixed-model game",
+        "the rectangular relaxation may reselect the worst active model at later nodes"
+      ],
+      "evidence": [
+        "docs/fixed-model-ambiguity-frontiers.md#8-exact-no-signal-k3-model-consistency-gap",
+        "tests/test_fixed_model_ambiguity.py"
+      ],
+      "nonclaims": [
+        "the one-unit gap is specific to the declared bounded instance",
+        "the example does not imply that any physical simulator changes models"
+      ]
+    },
+    {
+      "id": "ST-M40",
+      "title": "A noisy signal helps fixed-model minimax while rectangular ambiguity can erase its value",
+      "kind": "MODEL_RESULT",
+      "scope": "two one-state point-mass K3 models, one-period horizon, zero switching cost, and no, symmetric noisy, and fully revealing public signals",
+      "assumptions": [
+        "the noisy signal has conditional probabilities three quarters versus one quarter under the two models",
+        "both noisy observations retain both models as active because every conditional probability is positive",
+        "one public code action is selected after observing the signal"
+      ],
+      "evidence": [
+        "docs/fixed-model-ambiguity-frontiers.md#9-strict-value-of-a-noisy-model-discriminating-signal",
+        "tests/test_fixed_model_ambiguity.py"
+      ],
+      "nonclaims": [
+        "the fixed-model values two, five quarters, and one and the rectangular noisy value two are specific to the declared model family",
+        "the observation kernel is supplied rather than estimated",
+        "a fully revealing signal eliminates the incompatible model and therefore restores value under both ambiguity semantics"
+      ]
+    },
+    {
+      "id": "ST-F28",
+      "title": "Bounded exact fixed-model frontier and rectangular-relaxation audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the fixed-versus-rectangular K3, noisy-signal, zero-likelihood elimination, duplicate-model, validation, and frontier-cap cases exercised by repository tests",
+      "assumptions": [
+        "all code candidates, public belief states, continuation combinations, frontier entries, and dominance comparisons complete below configured caps",
+        "all probabilities and costs use exact rational arithmetic"
+      ],
+      "evidence": [
+        "src/simtheory/fixed_model_ambiguity.py:exact_fixed_model_ambiguity_game",
+        "tests/test_fixed_model_ambiguity.py",
+        "tests/test_fixed_model_ambiguity_claims.py"
+      ],
+      "nonclaims": [
+        "bounded finite completion is not a polynomial-time scalability theorem",
+        "CI success is not empirical evidence for simulation"
+      ]
+    }
+  ]
+}
