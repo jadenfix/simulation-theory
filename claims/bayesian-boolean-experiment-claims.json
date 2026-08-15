@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T205",
+      "title": "Bayesian Boolean K3 excess coding cost equals summed posterior minority mass",
+      "kind": "THEOREM",
+      "scope": "finite Boolean model families with a declared rational prior, deterministic coordinate observations, and complete-confusion K3 coding using only two source symbols",
+      "assumptions": ["the model-informed oracle knows the model identity", "the Bayesian controller minimizes expected prefix length under the declared prior", "observations reveal the declared coordinate subset exactly"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#exact-cell-formula", "src/simtheory/bayesian_boolean_experiments.py:bayesian_boolean_gap", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["the prior is not empirically inferred by this theorem", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T206",
+      "title": "Uniform-prior Bayesian Boolean gap is one half times one minus expected absolute conditional bias",
+      "kind": "THEOREM",
+      "scope": "uniform Boolean cube prior with g=(-1)^f and exact coordinate observations",
+      "assumptions": ["the Boolean source uses symbols zero and one", "conditional expectations are taken under the uniform prior"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#conditional-bias-form-under-the-uniform-prior", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["the same unweighted formula is not asserted for arbitrary priors"]
+    },
+    {
+      "id": "ST-T207",
+      "title": "Bayesian Boolean experiment value is monotone under coordinate refinement",
+      "kind": "THEOREM",
+      "scope": "the declared Bayesian Boolean experiment model",
+      "assumptions": ["additional observations refine the existing sigma-field without changing the prior or decision loss"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#conditional-bias-form-under-the-uniform-prior", "src/simtheory/bayesian_boolean_experiments.py:BayesianBooleanGeometry.valid"],
+      "nonclaims": ["monotonicity does not imply submodularity"]
+    },
+    {
+      "id": "ST-T208",
+      "title": "Leave-one-coordinate Bayesian gap equals one half of Boolean influence under the uniform prior",
+      "kind": "THEOREM",
+      "scope": "uniform Boolean cube prior after observing every coordinate except one",
+      "assumptions": ["influence is the uniform probability that flipping the omitted coordinate changes f"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#boolean-influence-appears-exactly", "src/simtheory/bayesian_boolean_experiments.py:uniform_boolean_influence", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["the identity uses the uniform cube measure"]
+    },
+    {
+      "id": "ST-T209",
+      "title": "The Boolean-lattice Möbius transform exactly reconstructs Bayesian experiment value",
+      "kind": "THEOREM",
+      "scope": "finite coordinate-subset value functions returned by the Bayesian Boolean geometry solver",
+      "assumptions": ["every coordinate subset is included exactly once"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#möbius-interaction-hierarchy", "src/simtheory/bayesian_boolean_experiments.py:boolean_mobius_transform", "src/simtheory/bayesian_boolean_experiments.py:boolean_zeta_reconstruct", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["Möbius coefficients are not automatically causal effects"]
+    },
+    {
+      "id": "ST-M57",
+      "title": "Uniform three-bit parity keeps Bayesian gap one half until all three bits are observed",
+      "kind": "MODEL_RESULT",
+      "scope": "three-bit parity under the uniform prior",
+      "assumptions": ["coordinate observations are exact"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#worst-case-collapse-versus-bayesian-geometry", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["the value one half is specific to the symmetric prior"]
+    },
+    {
+      "id": "ST-M58",
+      "title": "Uniform three-bit AND has the same top-order interaction support as parity but one-quarter the Bayesian gap magnitude",
+      "kind": "MODEL_RESULT",
+      "scope": "three-bit AND versus parity under the uniform prior",
+      "assumptions": ["the same K3 coding criterion is used"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#worst-case-collapse-versus-bayesian-geometry", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["matching interaction support does not imply matching truth-table geometry"]
+    },
+    {
+      "id": "ST-M59",
+      "title": "Uniform three-bit majority spreads Bayesian experiment interaction across first, second, and third orders",
+      "kind": "MODEL_RESULT",
+      "scope": "three-bit majority under the uniform prior",
+      "assumptions": ["all coordinate subsets are evaluated"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#möbius-interaction-hierarchy", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["the coefficient pattern is specific to this finite example"]
+    },
+    {
+      "id": "ST-F35",
+      "title": "Bounded exact Bayesian Boolean experiment audit",
+      "kind": "FINITE_CHECK",
+      "scope": "parity, AND, majority, skewed-prior, influence, monotonicity, and Möbius inversion tests",
+      "assumptions": ["all probabilities use exact rational arithmetic"],
+      "evidence": ["src/simtheory/bayesian_boolean_experiments.py", "tests/test_bayesian_boolean_experiments.py"],
+      "nonclaims": ["bounded tests are not a scalability theorem", "CI success is not evidence for simulation"]
+    }
+  ]
+}
