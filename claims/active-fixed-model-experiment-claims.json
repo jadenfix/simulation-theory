@@ -38,6 +38,15 @@
       "nonclaims": ["persistent model elimination does not guarantee that early sensing is strictly optimal", "positive option value depends on horizon, experiment quality, costs, and the remaining decision problem"]
     },
     {
+      "id": "ST-T174",
+      "title": "Blackwell-equivalent experiments can have different deterministic minimax values when randomization is not separately admitted",
+      "kind": "THEOREM",
+      "scope": "finite observation experiments evaluated by deterministic public minimax policies without an independent shared-randomness resource",
+      "assumptions": ["Blackwell simulation may use stochastic post-processing", "the decision policy itself is deterministic conditional on the observed signal", "one experiment may physically supply public random outcomes absent from the other"],
+      "evidence": ["docs/blackwell-randomness-separation.md", "tests/test_blackwell_randomness_separation.py", "docs/active-fixed-model-experiments.md#4-the-key-semantic-separation-information-versus-public-randomness"],
+      "nonclaims": ["this does not contradict Blackwell's statistical order", "with matching independent shared randomness the stochastic garbling can be simulated and the resource mismatch disappears"]
+    },
+    {
       "id": "ST-M41",
       "title": "K3 no-signal, public-randomness, and full-revelation values are two, five-thirds, and one",
       "kind": "MODEL_RESULT",
@@ -68,9 +77,9 @@
       "id": "ST-F29",
       "title": "Bounded exact active-experiment and information-randomness audit",
       "kind": "FINITE_CHECK",
-      "scope": "the K3 no-signal, public-randomness, revealing-signal, acquisition-threshold, persistent-horizon, monotonicity, and cap instances exercised by repository tests",
+      "scope": "the K3 no-signal, public-randomness, revealing-signal, Blackwell-equivalence, acquisition-threshold, persistent-horizon, monotonicity, reduction, and cap instances exercised by repository tests",
       "assumptions": ["all exact-rational policy combinations and Pareto dominance checks complete below configured caps", "all experiment kernels, source laws, and costs are represented with exact Fraction arithmetic"],
-      "evidence": ["src/simtheory/active_fixed_model_experiments.py:exact_active_fixed_model_experiment_design", "tests/test_active_fixed_model_experiments.py"],
+      "evidence": ["src/simtheory/active_fixed_model_experiments.py:exact_active_fixed_model_experiment_design", "tests/test_active_fixed_model_experiments.py", "tests/test_active_experiment_reductions.py", "tests/test_blackwell_randomness_separation.py"],
       "nonclaims": ["bounded finite tests are not a continuous-model theorem", "CI success is not empirical evidence for simulation"]
     }
   ]
