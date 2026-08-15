@@ -1,0 +1,50 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T219",
+      "title": "Cost-sensitive adaptive Boolean queries obey an exact stop-versus-experiment Bellman recursion",
+      "kind": "THEOREM",
+      "scope": "finite Boolean hidden models with rational query costs, deterministic coordinate observations, Bayesian terminal coding loss, and a finite query budget",
+      "assumptions": ["query costs are paid when the query is taken", "terminal loss is posterior minority probability"],
+      "evidence": ["docs/bayesian-cost-sensitive-query-stopping.md", "src/simtheory/bayesian_cost_sensitive_queries.py:exact_cost_sensitive_boolean_query_design", "tests/test_bayesian_cost_sensitive_queries.py"],
+      "nonclaims": ["query costs are declared decision costs rather than physical resource costs"]
+    },
+    {
+      "id": "ST-T220",
+      "title": "A query can be dynamically optimal even when querying it and immediately stopping is strictly worse than stopping now",
+      "kind": "THEOREM",
+      "scope": "finite-horizon adaptive experiment problems with future query choice contingent on the current observation",
+      "assumptions": ["future experiment scheduling may depend on current query outcomes"],
+      "evidence": ["docs/bayesian-cost-sensitive-query-stopping.md#nonmyopic-option-value", "tests/test_bayesian_cost_sensitive_queries.py"],
+      "nonclaims": ["negative myopic value does not imply negative dynamic value"]
+    },
+    {
+      "id": "ST-M63",
+      "title": "Uniform three-bit multiplexer has exact equal-cost dynamic query threshold one quarter",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform three-bit multiplexer, two-query budget, equal rational cost c per coordinate query",
+      "assumptions": ["the selector is queried first in the two-step contingent plan", "terminal K3 Bayes gap without information is one half"],
+      "evidence": ["docs/bayesian-cost-sensitive-query-stopping.md#nonmyopic-option-value", "tests/test_bayesian_cost_sensitive_queries.py"],
+      "nonclaims": ["the threshold is specific to this finite construction"]
+    },
+    {
+      "id": "ST-M64",
+      "title": "Three-bit parity stops immediately under any positive query cost when only two queries remain",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform three-bit parity with two-query budget and strictly positive coordinate query costs",
+      "assumptions": ["every proper subset leaves parity balanced"],
+      "evidence": ["docs/bayesian-cost-sensitive-query-stopping.md#parity-boundary", "tests/test_bayesian_cost_sensitive_queries.py"],
+      "nonclaims": ["full three-query access can still determine parity"]
+    },
+    {
+      "id": "ST-F38",
+      "title": "Bounded exact cost-sensitive adaptive query audit",
+      "kind": "FINITE_CHECK",
+      "scope": "multiplexer thresholds, negative-myopic-value option value, zero-cost boundary, and parity stopping tests",
+      "assumptions": ["all values use exact rational arithmetic"],
+      "evidence": ["src/simtheory/bayesian_cost_sensitive_queries.py", "tests/test_bayesian_cost_sensitive_queries.py"],
+      "nonclaims": ["bounded tests are not a scalability theorem", "CI success is not evidence for simulation"]
+    }
+  ]
+}
