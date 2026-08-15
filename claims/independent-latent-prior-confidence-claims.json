@@ -1,0 +1,59 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T229",
+      "title": "Independent latent-model counts satisfy an exact multinomial second-moment TV bound",
+      "kind": "THEOREM",
+      "scope": "N independent categorical latent-model draws over k observed labels",
+      "assumptions": ["latent labels are observed", "draws are iid from one stationary categorical law"],
+      "evidence": ["docs/independent-latent-prior-confidence.md#exact-second-moment-bound", "src/simtheory/independent_latent_prior_confidence.py:independent_latent_tv_confidence_radius", "tests/test_independent_latent_prior_confidence.py"],
+      "nonclaims": ["lower-level repeated observations within one persistent latent unit are not counted as independent latent draws"]
+    },
+    {
+      "id": "ST-T230",
+      "title": "Markov calibration gives a finite-sample TV confidence radius from independent latent-model draws",
+      "kind": "THEOREM",
+      "scope": "the same fixed-sample iid categorical design at failure probability alpha",
+      "assumptions": ["rho squared is at least (k-1)/(4N alpha)"],
+      "evidence": ["docs/independent-latent-prior-confidence.md#exact-second-moment-bound", "src/simtheory/independent_latent_prior_confidence.py:independent_latent_tv_confidence_radius", "tests/test_independent_latent_prior_confidence.py"],
+      "nonclaims": ["the conservative radius is not claimed optimal", "the guarantee is not anytime-valid"]
+    },
+    {
+      "id": "ST-T231",
+      "title": "The fixed-sample latent-prior confidence radius can be rounded outward exactly on a rational grid",
+      "kind": "THEOREM",
+      "scope": "nonnegative rational squared-radius targets and a declared positive integer grid denominator",
+      "assumptions": ["integer arithmetic is exact"],
+      "evidence": ["docs/independent-latent-prior-confidence.md#exact-outward-rational-rounding", "src/simtheory/independent_latent_prior_confidence.py:_ceil_sqrt_fraction_on_grid", "tests/test_independent_latent_prior_confidence.py"],
+      "nonclaims": ["grid rounding does not improve the underlying statistical bound"]
+    },
+    {
+      "id": "ST-T232",
+      "title": "Independent-latent confidence balls compose with Bayesian value and marginal-gain TV sensitivity bounds",
+      "kind": "THEOREM",
+      "scope": "confidence event TV(p,p_hat)<=rho combined with the Bayesian Boolean prior-robustness lane",
+      "assumptions": ["the prior-robust value and gain Lipschitz theorems apply to the downstream decision problem"],
+      "evidence": ["docs/independent-latent-prior-confidence.md#composition-with-bayesian-experiment-value", "src/simtheory/independent_latent_prior_confidence.py:data_calibrated_value_band", "src/simtheory/independent_latent_prior_confidence.py:data_calibrated_gain_interval", "tests/test_independent_latent_prior_confidence.py"],
+      "nonclaims": ["confidence-set coverage does not imply the nominal prior is the true data-generating prior"]
+    },
+    {
+      "id": "ST-T233",
+      "title": "The effective sample size for mixing-weight calibration is the number of independent latent draws, not within-unit observation count",
+      "kind": "THEOREM",
+      "scope": "hierarchical models distinguishing iid latent units from repeated conditional observations of one persistent latent state",
+      "assumptions": ["the confidence theorem is applied only to counts of independent latent labels"],
+      "evidence": ["docs/independent-latent-prior-confidence.md#effective-sample-size-is-hierarchical", "tests/test_independent_latent_prior_confidence.py"],
+      "nonclaims": ["within-unit observations may still identify the unit's latent model"]
+    },
+    {
+      "id": "ST-F41",
+      "title": "Bounded exact independent-latent confidence audit",
+      "kind": "FINITE_CHECK",
+      "scope": "outward square-root rounding, confidence radii, sample-size scaling, full-simplex clipping, downstream value/gain bands, and ranking certificates",
+      "assumptions": ["all count arithmetic and downstream bounds use exact rational arithmetic"],
+      "evidence": ["src/simtheory/independent_latent_prior_confidence.py", "tests/test_independent_latent_prior_confidence.py"],
+      "nonclaims": ["bounded tests are not an empirical validation of simulation hypotheses", "CI success is not evidence for simulation"]
+    }
+  ]
+}
