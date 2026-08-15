@@ -1,0 +1,77 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T249",
+      "title": "The global finite-mixture TV modulus is two-Lipschitz under maximum rowwise TV perturbation",
+      "kind": "THEOREM",
+      "scope": "finite categorical channels K,K' with matched rows satisfying max_i TV(K_i,K_i')<=epsilon",
+      "assumptions": ["the same latent row labels are matched across channels"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#1-two-epsilon-stability-of-the-global-modulus", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["the bound need not be tight for nonuniform row radii"]
+    },
+    {
+      "id": "ST-T250",
+      "title": "The factor two in rowwise TV stability is sharp",
+      "kind": "THEOREM",
+      "scope": "binary identity channel with both rows moved inward by epsilon in [0,1/2]",
+      "assumptions": ["standard total variation on a binary observed alphabet"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#1-two-epsilon-stability-of-the-global-modulus", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["sharpness is a worst-case statement"]
+    },
+    {
+      "id": "ST-T251",
+      "title": "Row-specific uncertainty yields an exact zero-sum lower certificate for every disjoint-face separation",
+      "kind": "THEOREM",
+      "scope": "finite categorical channel with one declared TV radius per component row",
+      "assumptions": ["nominal face event games are complete", "penalized exact rational game searches complete below caps"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#2-why-max-row-uncertainty-can-be-too-pessimistic", "src/simtheory/finite_mixture_row_uncertainty.py", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["the robust lower certificate is not asserted equal to the worst admissible channel modulus for arbitrary coupled row perturbations"]
+    },
+    {
+      "id": "ST-T252",
+      "title": "A positive facewise robust modulus certifies identifiability and inverse conditioning uniformly over the rowwise channel uncertainty set",
+      "kind": "THEOREM",
+      "scope": "finite rowwise-TV channel uncertainty sets with positive robust lower modulus",
+      "assumptions": ["the true channel lies inside every declared row TV ball"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#4-robust-inverse-conditioning", "src/simtheory/finite_mixture_row_uncertainty.py:certified_latent_radius_with_channel_uncertainty"],
+      "nonclaims": ["zero lower bound means no certificate, not universal nonidentifiability"]
+    },
+    {
+      "id": "ST-T253",
+      "title": "Uniform row uncertainty epsilon preserves a certified modulus max(0,alpha-2epsilon)",
+      "kind": "THEOREM",
+      "scope": "finite categorical channels with the same TV radius epsilon on every row",
+      "assumptions": ["all disjoint-face games are enumerated exactly"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#5-a-phase-boundary-for-channel-estimation", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["epsilon<alpha/2 is sufficient for robust identifiability, not a universal necessary condition under structured perturbations"]
+    },
+    {
+      "id": "ST-M73",
+      "title": "Identity K3 with uncertainty only on one row has facewise robust modulus three-quarters versus coarse lower bound one-half",
+      "kind": "MODEL_RESULT",
+      "scope": "identity K3 with row radii (0,0,1/4)",
+      "assumptions": ["independent rowwise TV uncertainty balls"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#3-exact-asymmetric-example", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["the numerical improvement is example-specific"]
+    },
+    {
+      "id": "ST-M74",
+      "title": "Half-TV uncertainty around the binary identity channel permits exact row collapse and loss of identifiability",
+      "kind": "MODEL_RESULT",
+      "scope": "binary identity channel with radius one-half on each row",
+      "assumptions": ["the midpoint row is admissible for both components"],
+      "evidence": ["tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["smaller structured uncertainty sets may retain identifiability"]
+    },
+    {
+      "id": "ST-F45",
+      "title": "Bounded exact row-uncertain finite-mixture conditioning audit",
+      "kind": "FINITE_CHECK",
+      "scope": "binary sharpness, exact collapse, asymmetric K3, uniform near-midpoint uncertainty, latent-radius transfer, and invalid-radius rejection",
+      "assumptions": ["all nominal and penalized exact game searches complete below caps", "all values use exact rational arithmetic"],
+      "evidence": ["src/simtheory/finite_mixture_row_uncertainty.py", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["bounded tests are not a scalability theorem", "CI success is not evidence for simulation"]
+    }
+  ]
+}
