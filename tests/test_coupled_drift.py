@@ -1,15 +1,20 @@
 from fractions import Fraction
-from itertools import product
+from itertools import combinations, product
 
 import pytest
 
-from simtheory.confusion_graphs import complete_graph
+from simtheory.confusion_graphs import ConfusionGraph
 from simtheory.coupled_drift import (
     brute_force_two_state_path_grid,
     exact_coupled_drift_path,
     exact_precommitted_code_sequence,
 )
 from simtheory.drifting_priors import exact_drift_path_cost
+
+
+def _complete_graph(vertex_count: int) -> ConfusionGraph:
+    vertices = tuple(range(vertex_count))
+    return ConfusionGraph.from_edges(vertices, tuple(combinations(vertices, 2)))
 
 
 def test_antagonistic_period_costs_have_strict_coupling_gap():
@@ -70,7 +75,7 @@ def test_two_state_solver_matches_complete_quarter_grid_on_many_cost_sequences()
 
 
 def test_k3_rotating_short_leaf_beats_every_static_code():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     prior = (Fraction(1, 3),) * 3
     certificate = exact_precommitted_code_sequence(
         graph,
@@ -91,7 +96,7 @@ def test_k3_rotating_short_leaf_beats_every_static_code():
 
 
 def test_switching_cost_phase_boundary_is_exactly_one_sixth():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     prior = (Fraction(1, 3),) * 3
 
     below = exact_precommitted_code_sequence(
@@ -127,7 +132,7 @@ def test_validation_and_search_caps_are_explicit():
         exact_coupled_drift_path((Fraction(1, 2), Fraction(1, 2)), ((0, 1),), Fraction(2))
     with pytest.raises(ValueError):
         exact_precommitted_code_sequence(
-            complete_graph(3),
+            _complete_graph(3),
             (Fraction(1, 3),) * 3,
             Fraction(1, 6),
             3,
