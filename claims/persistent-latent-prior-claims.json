@@ -1,0 +1,68 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T225",
+      "title": "Persistent latent-mixture likelihood ratio is a posterior-weighted average of component prior-weight ratios",
+      "kind": "THEOREM",
+      "scope": "one latent model drawn once from one of two finite mixing vectors, followed by an arbitrary common model-conditional transcript channel",
+      "assumptions": ["denominator mixing weights are strictly positive", "the conditional transcript law given latent model is the same under both mixing-weight hypotheses"],
+      "evidence": ["docs/persistent-latent-prior-evidence-ceilings.md#exact-likelihood-ratio-identity", "src/simtheory/persistent_latent_priors.py:persistent_evidence_certificate", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["the theorem does not constrain evidence about the latent model itself", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T226",
+      "title": "One persistent latent draw imposes transcript-length-independent prior-ratio evidence ceilings",
+      "kind": "THEOREM",
+      "scope": "the same finite persistent-latent mixture model",
+      "assumptions": ["the chosen transcript has positive denominator-mixture probability"],
+      "evidence": ["docs/persistent-latent-prior-evidence-ceilings.md#exact-likelihood-ratio-identity", "src/simtheory/persistent_latent_priors.py:prior_ratio_bounds", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["the ceiling concerns mixing-weight hypotheses rather than transcript distinguishability between component models"]
+    },
+    {
+      "id": "ST-T227",
+      "title": "Mutually singular component transcript laws can attain the persistent prior-ratio evidence ceiling",
+      "kind": "THEOREM",
+      "scope": "finite latent mixtures with a transcript event identifying one component exactly",
+      "assumptions": ["the identifying event has positive probability under the selected denominator component"],
+      "evidence": ["docs/persistent-latent-prior-evidence-ceilings.md#saturation", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["not every overlapping component family attains the bound"]
+    },
+    {
+      "id": "ST-T228",
+      "title": "Evidence about mixing weights multiplies across independent latent draws rather than conditionally repeated observations from one draw",
+      "kind": "THEOREM",
+      "scope": "independent units whose latent models are freshly drawn from the same candidate mixing distribution",
+      "assumptions": ["units are independent conditional on their fresh latent draws"],
+      "evidence": ["docs/persistent-latent-prior-evidence-ceilings.md#multiple-independent-units", "src/simtheory/persistent_latent_priors.py:fresh_unit_likelihood_ratio", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["within-unit observations may still strongly identify that unit's latent model"]
+    },
+    {
+      "id": "ST-M66",
+      "title": "One hundred noiseless repetitions from one persistent binary model give the same mixing-weight Bayes factor as one repetition",
+      "kind": "MODEL_RESULT",
+      "scope": "binary persistent latent M with Y_t=M and theta hypotheses 3/4 versus 1/4",
+      "assumptions": ["the same M persists for all repetitions"],
+      "evidence": ["docs/persistent-latent-prior-evidence-ceilings.md#binary-noiseless-example", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["the corresponding fresh-redraw model has a different likelihood and different evidence scaling"]
+    },
+    {
+      "id": "ST-M67",
+      "title": "Treating persistent binary repetitions as fresh IID latent draws spuriously exponentiates the mixing-weight likelihood ratio",
+      "kind": "MODEL_RESULT",
+      "scope": "the same binary example comparing persistent and fresh-redraw causal models",
+      "assumptions": ["the IID comparator redraws M independently before each observation"],
+      "evidence": ["docs/persistent-latent-prior-evidence-ceilings.md#binary-noiseless-example", "src/simtheory/persistent_latent_priors.py:misspecified_iid_binary_likelihood", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["the fresh-redraw model is not called mathematically invalid; it is a different causal hypothesis"]
+    },
+    {
+      "id": "ST-F40",
+      "title": "Bounded exact persistent-latent prior evidence audit",
+      "kind": "FINITE_CHECK",
+      "scope": "convex-average likelihood-ratio certificates, singular-component saturation, persistent versus IID binary repetition, and independent-unit multiplication",
+      "assumptions": ["all finite probabilities use exact rational arithmetic"],
+      "evidence": ["src/simtheory/persistent_latent_priors.py", "tests/test_persistent_latent_priors.py"],
+      "nonclaims": ["bounded checks are not an empirical validation of any simulation prior", "CI success is not evidence for simulation"]
+    }
+  ]
+}
