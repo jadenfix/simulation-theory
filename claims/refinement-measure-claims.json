@@ -1,0 +1,50 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T268",
+      "title": "Normalization and finite rational refinement additivity uniquely force local mass mu(w)=w on rational weights",
+      "kind": "THEOREM",
+      "scope": "local weight-only mass rules on Q intersect [0,1] with mu(1)=1 and additivity over every finite rational partition",
+      "assumptions": ["mass depends only on the local rational probability weight"],
+      "evidence": ["docs/refinement-measure-uniqueness.md#2-rational-uniqueness-theorem", "src/simtheory/refinement_measures.py:rational_refinement_uniqueness_certificate", "tests/test_refinement_measures.py"],
+      "nonclaims": ["measures depending on additional physical or causal structure are outside this characterization"]
+    },
+    {
+      "id": "ST-T269",
+      "title": "Equal r-way cloning scales integer-power escort score w^gamma by r^(1-gamma)",
+      "kind": "THEOREM",
+      "scope": "positive rational component weight, integer gamma>=0, and r>=2 equal positive clones",
+      "assumptions": ["escort score is defined as w^gamma with gamma=0 assigning unit score to positive weights"],
+      "evidence": ["docs/refinement-measure-uniqueness.md#3-escort-weight-family", "src/simtheory/refinement_measures.py:equal_clone_score_scaling", "tests/test_refinement_measures.py"],
+      "nonclaims": ["escort scores are examples rather than a preferred anthropic measure"]
+    },
+    {
+      "id": "ST-T270",
+      "title": "Within the nonnegative integer-power escort family, only gamma one is invariant under every equal positive clone refinement",
+      "kind": "THEOREM",
+      "scope": "integer gamma>=0 and arbitrary clone count r>=2",
+      "assumptions": ["invariance means total unnormalized local score is unchanged by equal cloning"],
+      "evidence": ["docs/refinement-measure-uniqueness.md#3-escort-weight-family", "tests/test_refinement_measures.py"],
+      "nonclaims": ["the theorem does not classify all possible nonlocal measures"]
+    },
+    {
+      "id": "ST-M82",
+      "title": "Twenty-way refinement of one half-mass category yields escort category masses 20/21, 1/2, and 1/21 at powers zero, one, and two",
+      "kind": "MODEL_RESULT",
+      "scope": "two equal initial category weights with only the simulated category refined into twenty equal positive clones",
+      "assumptions": ["escort category probabilities are normalized from local power scores"],
+      "evidence": ["docs/refinement-measure-uniqueness.md#4-exact-two-category-phase-reversal", "tests/test_refinement_measures.py"],
+      "nonclaims": ["the three escort powers are illustrative"]
+    },
+    {
+      "id": "ST-F49",
+      "title": "Bounded exact rational refinement-measure audit",
+      "kind": "FINITE_CHECK",
+      "scope": "all rational weights with denominators through twenty, clone counts through fifty, escort powers zero through three, and invalid-weight rejection",
+      "assumptions": ["all calculations use exact rational arithmetic"],
+      "evidence": ["src/simtheory/refinement_measures.py", "tests/test_refinement_measures.py"],
+      "nonclaims": ["bounded checks are not empirical evidence for simulation"]
+    }
+  ]
+}
