@@ -1,0 +1,68 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T162",
+      "title": "Exact rational belief-state Bellman recursion for stochastic law observations",
+      "kind": "THEOREM",
+      "scope": "finite rational hidden law states, rational Markov transitions, rational stochastic observation kernels, deterministic zero-error prefix-code actions, finite horizon, and rational switching penalties",
+      "assumptions": ["the current observation is emitted before the current code choice", "code actions do not affect hidden transitions or observation probabilities", "the initial prior and all model probabilities are known exactly", "all reachable belief nodes and positive-probability branches complete below configured caps"],
+      "evidence": ["docs/stochastic-law-observation-beliefs.md#5-exact-belief-state-bellman-recursion", "src/simtheory/stochastic_observation_beliefs.py:exact_bayesian_coding_game", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["the theorem supplies no statistical coverage for the model probabilities", "the model minimizes expected cost rather than a worst-case hidden path", "the result is not evidence for simulation or a parent-resource bound"]
+    },
+    {
+      "id": "ST-T163",
+      "title": "Exact posterior belief and previous code are sufficient controller state in the declared hidden Markov coding model",
+      "kind": "THEOREM",
+      "scope": "public histories in the same finite hidden Markov source model that induce equal posterior beliefs and equal previous code actions",
+      "assumptions": ["hidden transitions and observations are conditionally Markov under the supplied matrices", "future transition and observation laws are code-independent", "stage cost depends on the hidden state only through the declared source law and selected code"],
+      "evidence": ["docs/stochastic-law-observation-beliefs.md#3-belief-sufficiency", "src/simtheory/stochastic_observation_beliefs.py:next_observation_branches", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["belief sufficiency fails if omitted history variables affect transitions, observations, or costs", "a Bayesian posterior is not interchangeable with a frequentist confidence region or robust information set"]
+    },
+    {
+      "id": "ST-T164",
+      "title": "Blackwell garbling cannot improve minimum expected coding cost",
+      "kind": "THEOREM",
+      "scope": "two finite rational observation experiments where the coarse kernel equals the fine kernel followed by a row-stochastic garbling channel",
+      "assumptions": ["the hidden law model, initial prior, action set, horizon, and switching cost are held fixed", "source-independent private randomization may be used to simulate the garbled signal", "finite expected-cost belief control admits a deterministic optimal policy"],
+      "evidence": ["docs/stochastic-law-observation-beliefs.md#7-blackwell-garbling-monotonicity", "src/simtheory/stochastic_observation_beliefs.py:exact_blackwell_observation_value", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["the theorem does not price acquiring, storing, or communicating the finer signal", "a finer signal need not provide a strict improvement", "the result assumes the declared probabilistic model is correct"]
+    },
+    {
+      "id": "ST-T165",
+      "title": "Exact rational Bayes observation and prediction updates preserve the finite probability simplex",
+      "kind": "THEOREM",
+      "scope": "positive-probability observations in a finite rational hidden Markov model",
+      "assumptions": ["the supplied prior, transition rows, and observation rows are probability vectors", "zero-probability observations are excluded from the reachable branch tree"],
+      "evidence": ["docs/stochastic-law-observation-beliefs.md#2-exact-observation-update", "src/simtheory/stochastic_observation_beliefs.py:initial_observation_branches", "src/simtheory/stochastic_observation_beliefs.py:next_observation_branches", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["exact arithmetic conditional on supplied probabilities is not evidence that those probabilities are empirically exact", "the update does not address unknown parameters or model misspecification"]
+    },
+    {
+      "id": "ST-M37",
+      "title": "Static point-mass K3 has strict no, partial, and full expected-observation values",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform prior over three static point-mass hidden law states, complete confusion K3, two periods, no switching penalty, and observation kernels none, partition {1}{23}, and full",
+      "assumptions": ["complete binary prefix codes have length vectors that are permutations of (1,2,2)", "the hidden law state remains fixed and observations arrive before code choices"],
+      "evidence": ["docs/stochastic-law-observation-beliefs.md#9-strict-k3-deterministic-observation-chain", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["the values 10/3, 8/3, and 2 are specific to the declared finite model", "the example does not estimate an observation value from data"]
+    },
+    {
+      "id": "ST-M38",
+      "title": "Reveal-or-unknown K3 garbling has exact one-period value four thirds",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform static point-mass K3 where the exact state label is revealed with probability one half and an uninformative symbol is emitted otherwise",
+      "assumptions": ["the reveal-or-unknown channel is independent conditional on the hidden state", "the horizon is one period and switching cost is zero"],
+      "evidence": ["docs/stochastic-law-observation-beliefs.md#10-strict-stochastic-garbling-example", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["the exact gains of one third are specific to this channel and prior", "the noisy signal is a model input rather than a measured sensor specification"]
+    },
+    {
+      "id": "ST-F27",
+      "title": "Bounded exact Bayesian belief-tree and garbling audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the rational Bayes-update, deterministic partition, stochastic garbling, K3 expected-cost, switching, and cap instances exercised by repository tests",
+      "assumptions": ["the deterministic code universe, reachable beliefs, and observation branches complete below configured caps", "all supplied model probabilities and dynamic-program values use exact rational arithmetic"],
+      "evidence": ["src/simtheory/stochastic_observation_beliefs.py:exact_bayesian_coding_game", "tests/test_stochastic_observation_beliefs.py"],
+      "nonclaims": ["bounded finite agreement is not a continuous-state or scalability theorem", "CI success does not provide empirical support for simulation"]
+    }
+  ]
+}
