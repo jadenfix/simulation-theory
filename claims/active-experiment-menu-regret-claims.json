@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T185",
+      "title": "Model-informed oracle cost is coordinatewise nonincreasing under active-experiment menu expansion",
+      "kind": "THEOREM",
+      "scope": "finite active fixed-model problems with a baseline experiment menu literally contained in an enriched menu",
+      "assumptions": ["the enriched singleton-model oracle may ignore all newly added experiments", "model identity, horizon, coding universe, and cost accounting are otherwise unchanged"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#1-oracle-shift", "src/simtheory/active_experiment_menu_regret.py:exact_active_experiment_menu_regret_shift", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["the oracle improvement need not be strict", "the theorem does not compare different model families"]
+    },
+    {
+      "id": "ST-T186",
+      "title": "Active-experiment menu expansion cannot worsen deterministic or public-mixed controller value when the regret benchmark is held fixed",
+      "kind": "THEOREM",
+      "scope": "baseline and enriched finite active fixed-model policy classes evaluated against the same enriched model-oracle vector",
+      "assumptions": ["every baseline experiment remains available in the enriched menu", "public mixing uses the same source-independent assistance model on both sides"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#2-fixed-benchmark-controller-gain", "src/simtheory/active_experiment_menu_regret.py:exact_active_experiment_menu_regret_shift", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["own-oracle regret need not be monotone because its benchmark moves", "the public-mixed statement treats shared randomness as an explicit resource"]
+    },
+    {
+      "id": "ST-T187",
+      "title": "Own-oracle regret shift is bounded by oracle-improvement extrema minus fixed-benchmark controller gain",
+      "kind": "THEOREM",
+      "scope": "finite baseline/enriched active experiment menus with modelwise oracle-improvement vector delta",
+      "assumptions": ["delta_m equals baseline oracle value minus enriched oracle value", "fixed-benchmark controller gain is measured against the enriched oracle vector"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#3-exact-regret-shift-bounds", "src/simtheory/active_experiment_menu_regret.py:exact_active_experiment_menu_regret_shift", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["nonuniform oracle shifts need not yield a scalar equality", "the bound does not claim the same worst model before and after expansion"]
+    },
+    {
+      "id": "ST-T188",
+      "title": "A uniform oracle shift gives an exact own-regret identity",
+      "kind": "THEOREM",
+      "scope": "baseline/enriched active experiment menus whose model-informed oracle values all improve by the same rational amount d",
+      "assumptions": ["the controller gain is measured with the enriched benchmark fixed", "the baseline policy class is contained in the enriched class"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#4-uniform-oracle-shift", "src/simtheory/active_experiment_menu_regret.py:ActiveExperimentMenuRegretShift.valid", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["the identity does not imply regret is monotone", "the result is relative to the declared model-informed causal oracle"]
+    },
+    {
+      "id": "ST-T189",
+      "title": "Minimax own-oracle regret can increase under a strictly richer active-experiment menu",
+      "kind": "THEOREM",
+      "scope": "finite active fixed-model decision problems where menu expansion can improve the model-informed oracle more than the shared controller",
+      "assumptions": ["regret is recomputed against each menu's own model-informed oracle", "the new experiments remain optional for the shared controller"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#5-exact-k4-counterexample", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["absolute robust cost cannot increase under the same menu expansion", "the theorem does not say regret is an invalid metric; it says benchmark movement matters"]
+    },
+    {
+      "id": "ST-M50",
+      "title": "Specialized K4 sensing leaves robust cost at two while doubling deterministic own-oracle regret from one-half to one",
+      "kind": "MODEL_RESULT",
+      "scope": "two disjoint-support two-hidden-state K4 models, one no-signal baseline experiment, and two symmetric model-specialized hidden-state experiments",
+      "assumptions": ["each specialized experiment perfectly reveals hidden state under its target model and emits a fair hidden-state-independent coin under the other model", "experiment costs are zero"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#5-exact-k4-counterexample", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["the numerical values are specific to the declared finite K4 construction"]
+    },
+    {
+      "id": "ST-M51",
+      "title": "Public mixing softens but does not remove the specialized K4 moving-benchmark regret increase",
+      "kind": "MODEL_RESULT",
+      "scope": "the same specialized K4 menu-expansion instance after an independent public seed convexifies complete deterministic policy trees",
+      "assumptions": ["the baseline mixed own-regret is one-half", "the enriched fixed-benchmark mixed controller gain is one-quarter", "the oracle shift is uniformly one-half"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#5-exact-k4-counterexample", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["public mixing is an explicit assistance resource", "the mixed value three-quarters is not a deterministic policy value"]
+    },
+    {
+      "id": "ST-M52",
+      "title": "When a K3 public-coin menu expansion leaves oracle values unchanged, deterministic own-oracle regret falls exactly by the fixed-benchmark controller gain",
+      "kind": "MODEL_RESULT",
+      "scope": "one-period point-mass K3 with baseline no signal and an added source-independent uniform three-way public signal",
+      "assumptions": ["all model-informed oracle values remain one", "the public signal arrives before deterministic code selection"],
+      "evidence": ["docs/active-experiment-menu-regret-shifts.md#6-zero-oracle-shift-restores-monotonic-regret", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["the regret decrease is coordination value rather than model information"]
+    },
+    {
+      "id": "ST-F32",
+      "title": "Bounded exact active-experiment menu-regret audit",
+      "kind": "FINITE_CHECK",
+      "scope": "uniform-shift K4, nonuniform-shift K4, zero-shift K3, deterministic and public-mixed fixed-benchmark comparisons, and literal menu-inclusion validation",
+      "assumptions": ["all active policy frontiers, singleton oracles, and public-mixed zero-sum games complete below configured caps", "all probabilities and costs use exact rational arithmetic"],
+      "evidence": ["src/simtheory/active_experiment_menu_regret.py:exact_active_experiment_menu_regret_shift", "tests/test_active_experiment_menu_regret.py"],
+      "nonclaims": ["bounded checks are not a continuous-model or scalability theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
