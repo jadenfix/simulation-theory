@@ -43,7 +43,7 @@
       "kind": "THEOREM",
       "scope": "finite coordinate-subset value functions returned by the Bayesian Boolean geometry solver",
       "assumptions": ["every coordinate subset is included exactly once"],
-      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#mobius-interaction-hierarchy", "src/simtheory/bayesian_boolean_experiments.py:boolean_mobius_transform", "src/simtheory/bayesian_boolean_experiments.py:boolean_zeta_reconstruct", "tests/test_bayesian_boolean_experiments.py"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#möbius-interaction-hierarchy", "src/simtheory/bayesian_boolean_experiments.py:boolean_mobius_transform", "src/simtheory/bayesian_boolean_experiments.py:boolean_zeta_reconstruct", "tests/test_bayesian_boolean_experiments.py"],
       "nonclaims": ["Möbius coefficients are not automatically causal effects"]
     },
     {
@@ -70,7 +70,7 @@
       "kind": "MODEL_RESULT",
       "scope": "three-bit majority under the uniform prior",
       "assumptions": ["all coordinate subsets are evaluated"],
-      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#mobius-interaction-hierarchy", "tests/test_bayesian_boolean_experiments.py"],
+      "evidence": ["docs/bayesian-boolean-experiment-geometry.md#möbius-interaction-hierarchy", "tests/test_bayesian_boolean_experiments.py"],
       "nonclaims": ["the coefficient pattern is specific to this finite example"]
     },
     {
