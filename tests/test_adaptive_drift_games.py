@@ -1,4 +1,5 @@
 from fractions import Fraction
+from itertools import combinations
 
 import pytest
 
@@ -10,7 +11,12 @@ from simtheory.adaptive_drift_games import (
     transition_relation_is_subset,
     tv_law_transition_model,
 )
-from simtheory.confusion_graphs import complete_graph
+from simtheory.confusion_graphs import ConfusionGraph
+
+
+def _complete_graph(vertex_count: int) -> ConfusionGraph:
+    vertices = tuple(range(vertex_count))
+    return ConfusionGraph.from_edges(vertices, tuple(combinations(vertices, 2)))
 
 
 def _point_masses(count: int):
@@ -33,7 +39,7 @@ def test_tv_transition_model_distinguishes_static_and_fully_mobile_laws():
 
 
 def test_full_observation_strictly_improves_over_open_loop_for_mobile_k3():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     model = tv_law_transition_model(_point_masses(3), 1)
     certificate = exact_observation_value(graph, model, 0, 2)
 
@@ -52,7 +58,7 @@ def test_full_observation_strictly_improves_over_open_loop_for_mobile_k3():
 
 
 def test_feedback_switching_cost_has_exact_unit_threshold():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     model = tv_law_transition_model(_point_masses(3), 1)
 
     below = exact_observation_value(
@@ -84,7 +90,7 @@ def test_feedback_switching_cost_has_exact_unit_threshold():
 
 
 def test_no_source_mobility_erases_the_value_of_feedback():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     model = tv_law_transition_model(_point_masses(3), 0)
     certificate = exact_observation_value(graph, model, 0, 4)
 
@@ -97,7 +103,7 @@ def test_no_source_mobility_erases_the_value_of_feedback():
 
 
 def test_enlarging_transition_relation_cannot_help_the_minimizing_coder():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     laws = _point_masses(3)
     static = tv_law_transition_model(laws, 0)
     mobile = tv_law_transition_model(laws, 1)
@@ -121,7 +127,7 @@ def test_explicit_directed_transition_relation_is_supported():
             (2,),
         ),
     )
-    certificate = exact_observation_value(complete_graph(3), model, 0, 3)
+    certificate = exact_observation_value(_complete_graph(3), model, 0, 3)
     assert model.valid
     assert certificate.valid
     assert all(
@@ -134,7 +140,7 @@ def test_explicit_directed_transition_relation_is_supported():
 
 
 def test_dynamic_game_validation_and_caps_are_explicit():
-    graph = complete_graph(3)
+    graph = _complete_graph(3)
     model = tv_law_transition_model(_point_masses(3), 1)
 
     with pytest.raises(ValueError):
