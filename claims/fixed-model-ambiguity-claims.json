@@ -102,11 +102,12 @@
     },
     {
       "id": "ST-M40",
-      "title": "A noisy model-discriminating signal has strict intermediate robust value",
+      "title": "A noisy signal helps fixed-model minimax while rectangular ambiguity can erase its value",
       "kind": "MODEL_RESULT",
       "scope": "two one-state point-mass K3 models, one-period horizon, zero switching cost, and no, symmetric noisy, and fully revealing public signals",
       "assumptions": [
         "the noisy signal has conditional probabilities three quarters versus one quarter under the two models",
+        "both noisy observations retain both models as active because every conditional probability is positive",
         "one public code action is selected after observing the signal"
       ],
       "evidence": [
@@ -114,8 +115,9 @@
         "tests/test_fixed_model_ambiguity.py"
       ],
       "nonclaims": [
-        "the values two, five quarters, and one are specific to the declared model family",
-        "the observation kernel is supplied rather than estimated"
+        "the fixed-model values two, five quarters, and one and the rectangular noisy value two are specific to the declared model family",
+        "the observation kernel is supplied rather than estimated",
+        "a fully revealing signal eliminates the incompatible model and therefore restores value under both ambiguity semantics"
       ]
     },
     {
