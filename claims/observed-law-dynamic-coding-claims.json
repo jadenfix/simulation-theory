@@ -1,0 +1,121 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T153",
+      "title": "Exact Bellman recursion for fully observed finite law-state coding",
+      "kind": "THEOREM",
+      "scope": "finite rational source-law states, finite deterministic zero-error prefix-code actions, finite horizon, directed nonempty transition relation, and rational switching penalty",
+      "assumptions": [
+        "the current law state is observed exactly before each code action",
+        "the adversary selects the next law after the current stage cost and code action",
+        "the first code action pays no switching penalty"
+      ],
+      "evidence": [
+        "docs/observed-law-dynamic-coding.md#2-fully-observed-bellman-theorem",
+        "src/simtheory/adaptive_drift_games.py:exact_feedback_dynamic_code",
+        "tests/test_adaptive_drift_games.py"
+      ],
+      "nonclaims": [
+        "the recursion does not apply unchanged when the current law is latent or estimated from finite samples",
+        "the finite transition relation is not a continuous-law control theorem"
+      ]
+    },
+    {
+      "id": "ST-T154",
+      "title": "Exact current-law observation cannot worsen the minimizing coder relative to open-loop commitment",
+      "kind": "THEOREM",
+      "scope": "the same finite law states, code actions, transition relation, switching penalty, initial state, and horizon under open-loop and fully observed policy classes",
+      "assumptions": [
+        "a feedback policy may ignore observations and emulate any open-loop sequence",
+        "both games use the same adversarial transition timing"
+      ],
+      "evidence": [
+        "docs/observed-law-dynamic-coding.md#3-open-loop-benchmark",
+        "docs/observed-law-dynamic-coding.md#4-value-of-observing-the-current-law",
+        "src/simtheory/adaptive_drift_games.py:exact_observation_value",
+        "tests/test_adaptive_drift_games.py"
+      ],
+      "nonclaims": [
+        "the value is not the value of one sample or one observed source symbol",
+        "a partial-observation policy need not attain the fully observed value"
+      ]
+    },
+    {
+      "id": "ST-T155",
+      "title": "Adversarial transition-set enlargement is monotone for open-loop and feedback coding values",
+      "kind": "THEOREM",
+      "scope": "two finite transition relations over identical law states where every successor set of the first is contained in the corresponding successor set of the second",
+      "assumptions": [
+        "all code actions, costs, initial state, horizon, and information timing are held fixed",
+        "the source player maximizes cumulative expected length"
+      ],
+      "evidence": [
+        "docs/observed-law-dynamic-coding.md#7-transition-set-monotonicity",
+        "src/simtheory/adaptive_drift_games.py:transition_relation_is_subset",
+        "tests/test_adaptive_drift_games.py"
+      ],
+      "nonclaims": [
+        "transition-set inclusion is not inferred from data by this theorem",
+        "the monotonicity direction would reverse for a source player minimizing rather than maximizing cost"
+      ]
+    },
+    {
+      "id": "ST-T156",
+      "title": "Finite TV transition constructor is exact on the declared law-state set",
+      "kind": "THEOREM",
+      "scope": "a finite list of exact rational categorical laws and a rational total-variation transition threshold",
+      "assumptions": [
+        "an edge i to j is allowed exactly when TV(q_i,q_j) is no larger than the threshold",
+        "the declared finite law list is the complete state space of the model"
+      ],
+      "evidence": [
+        "docs/observed-law-dynamic-coding.md#1-finite-law-state-model",
+        "src/simtheory/adaptive_drift_games.py:tv_law_transition_model",
+        "tests/test_adaptive_drift_games.py"
+      ],
+      "nonclaims": [
+        "the finite relation is not an exact discretization of every law in a continuous TV ball",
+        "the threshold is a model parameter unless separately calibrated"
+      ]
+    },
+    {
+      "id": "ST-M34",
+      "title": "Mobile K3 exact feedback value and unit switching threshold",
+      "kind": "MODEL_RESULT",
+      "scope": "complete confusion on three symbols, point-mass law states with complete transitions, initial state e1, two periods, and complete binary prefix codes",
+      "assumptions": [
+        "the current point-mass law is exactly observed before code selection",
+        "changing the short-leaf assignment incurs additive penalty kappa"
+      ],
+      "evidence": [
+        "docs/observed-law-dynamic-coding.md#5-exact-mobile-k3-separation",
+        "docs/observed-law-dynamic-coding.md#6-exact-feedback-switching-threshold",
+        "tests/test_adaptive_drift_games.py"
+      ],
+      "nonclaims": [
+        "the values V_OL=3 and V_FB=max(2+kappa, capped at 3) are specific to the declared finite instance",
+        "the example does not show that real source laws are observed exactly"
+      ]
+    },
+    {
+      "id": "ST-F25",
+      "title": "Bounded exact open-loop and observed-law Bellman audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the finite K3, directed-transition, switching-threshold, monotonicity, and validation instances exercised by the repository tests",
+      "assumptions": [
+        "the deterministic zero-error code universe and open-loop sequence space complete below configured caps",
+        "all value and policy tables are replayed over exact rational arithmetic"
+      ],
+      "evidence": [
+        "src/simtheory/adaptive_drift_games.py:exact_open_loop_dynamic_code",
+        "src/simtheory/adaptive_drift_games.py:exact_feedback_dynamic_code",
+        "tests/test_adaptive_drift_games.py"
+      ],
+      "nonclaims": [
+        "bounded finite agreement is not a scalability theorem",
+        "CI success does not make the finite game evidence for simulation"
+      ]
+    }
+  ]
+}
