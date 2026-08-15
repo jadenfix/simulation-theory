@@ -1,0 +1,59 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T234",
+      "title": "Binary latent-mixture emission TV equals latent-weight TV times emission-row separation",
+      "kind": "THEOREM",
+      "scope": "two latent components with known categorical emission rows and arbitrary binary mixing weights",
+      "assumptions": ["both mixing hypotheses use the same two emission rows"],
+      "evidence": ["docs/binary-latent-mixture-identifiability.md#exact-tv-geometry", "src/simtheory/binary_latent_mixture_identifiability.py:binary_mixture_identifiability_certificate", "tests/test_binary_latent_mixture_identifiability.py"],
+      "nonclaims": ["the scalar identity is specific to a two-component mixture"]
+    },
+    {
+      "id": "ST-T235",
+      "title": "Identical binary latent emission rows make the mixing weight observationally unidentifiable",
+      "kind": "THEOREM",
+      "scope": "binary mixtures with R0=R1",
+      "assumptions": ["only the declared emissions are observed"],
+      "evidence": ["docs/binary-latent-mixture-identifiability.md#exact-tv-geometry", "tests/test_binary_latent_mixture_identifiability.py"],
+      "nonclaims": ["additional interventions or observations could change identifiability"]
+    },
+    {
+      "id": "ST-T236",
+      "title": "Observed-law TV uncertainty transfers to binary latent-weight uncertainty with inverse row-separation amplification",
+      "kind": "THEOREM",
+      "scope": "binary mixtures with positive emission-row TV separation d",
+      "assumptions": ["the compared latent and observed laws remain in the declared mixture family"],
+      "evidence": ["docs/binary-latent-mixture-identifiability.md#exact-tv-geometry", "src/simtheory/binary_latent_mixture_identifiability.py:latent_radius_from_emission_radius", "tests/test_binary_latent_mixture_identifiability.py"],
+      "nonclaims": ["the amplified radius may be conservative when additional structure is available"]
+    },
+    {
+      "id": "ST-T237",
+      "title": "Binary Bernoulli emission calibration inflates latent-weight squared uncertainty by inverse row separation squared",
+      "kind": "THEOREM",
+      "scope": "N independent units with one Bernoulli emission each from a binary latent mixture with known row probabilities",
+      "assumptions": ["units receive independent latent draws", "emission rows are known exactly", "fixed-sample second-moment/Markov calibration is used"],
+      "evidence": ["docs/binary-latent-mixture-identifiability.md#fixed-sample-uncertainty-amplification", "src/simtheory/binary_latent_mixture_identifiability.py:bernoulli_emission_second_moment_theta_radius", "tests/test_binary_latent_mixture_identifiability.py"],
+      "nonclaims": ["the fixed-sample Markov bound is not claimed optimal"]
+    },
+    {
+      "id": "ST-M68",
+      "title": "Halving binary emission-row separation quadruples the fixed-sample latent squared-radius inflation",
+      "kind": "MODEL_RESULT",
+      "scope": "clean Bernoulli rows 0 versus 1 compared with noisy rows 1/4 versus 3/4 at equal N and alpha",
+      "assumptions": ["both empirical emission frequencies equal one half"],
+      "evidence": ["tests/test_binary_latent_mixture_identifiability.py"],
+      "nonclaims": ["the exact numerical factor follows from this binary row-separation comparison"]
+    },
+    {
+      "id": "ST-F42",
+      "title": "Bounded exact binary latent-mixture identifiability audit",
+      "kind": "FINITE_CHECK",
+      "scope": "multicategory TV identity, identical-row nonidentifiability, radius amplification, Bernoulli inversion, and inverse-square sample conditioning tests",
+      "assumptions": ["all probabilities and radii use exact rational arithmetic"],
+      "evidence": ["src/simtheory/binary_latent_mixture_identifiability.py", "tests/test_binary_latent_mixture_identifiability.py"],
+      "nonclaims": ["bounded checks are not evidence for simulation", "CI success is not empirical validation of latent-mixture assumptions"]
+    }
+  ]
+}
