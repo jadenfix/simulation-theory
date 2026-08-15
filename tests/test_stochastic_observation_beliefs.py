@@ -110,7 +110,7 @@ def test_validation_and_reachable_belief_caps_are_explicit():
     model = bayesian_law_model(_point_masses(3), _identity_transition(3))
     prior = (Fraction(1, 3),) * 3
     with pytest.raises(ValueError):
-        observation_kernel(((Fraction(1, 2), Fraction(1, 2)),))
+        observation_kernel(((Fraction(1, 2), Fraction(1, 4)),))
     with pytest.raises(ValueError):
         bayesian_law_model(_point_masses(2), ((1, 0),))
     with pytest.raises(ValueError):
