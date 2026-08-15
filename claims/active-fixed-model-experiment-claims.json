@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T170",
+      "title": "Exact finite-horizon active-experiment frontier under one globally fixed probabilistic model",
+      "kind": "THEOREM",
+      "scope": "finite fixed-model families, finite rational experiment menus, exact rational observation kernels and acquisition costs, deterministic zero-error prefix-code actions, and finite horizon",
+      "assumptions": ["one model is selected once and remains fixed for the full horizon", "the experiment is chosen before the current public observation and the code after it", "code actions do not alter hidden-state transitions", "all candidate, continuation, frontier, and dominance searches complete below configured caps"],
+      "evidence": ["docs/active-fixed-model-experiments.md#3-exact-recursion", "src/simtheory/active_fixed_model_experiments.py:exact_active_fixed_model_experiment_design", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["the theorem does not estimate experiment kernels or model families from data", "the bounded solver is not a polynomial-time scalability guarantee", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T171",
+      "title": "Source-independent public observations can strictly improve deterministic minimax coding through public randomization alone",
+      "kind": "THEOREM",
+      "scope": "finite minimax coding policies where a public observation has the same distribution under every hidden state and every fixed model",
+      "assumptions": ["the public observation is available before the deterministic code action", "all decoders observe the same public signal", "the source-independent signal is admitted as a coordination resource"],
+      "evidence": ["docs/active-fixed-model-experiments.md#4-the-key-semantic-separation-information-versus-public-randomness", "docs/active-fixed-model-experiments.md#5-exact-k3-decomposition", "src/simtheory/active_fixed_model_experiments.py:experiment_is_source_independent", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["decision improvement from such a signal is not epistemic information about the model", "the theorem does not claim every uninformative signal is useful"]
+    },
+    {
+      "id": "ST-T172",
+      "title": "Adding an available experiment cannot worsen the exact minimizing fixed-model controller",
+      "kind": "THEOREM",
+      "scope": "two finite experiment menus with one contained in the other and otherwise identical model family, code universe, horizon, and costs",
+      "assumptions": ["the controller may ignore newly added experiments", "the outer objective remains minimum over policies of maximum expected cost across one fixed model"],
+      "evidence": ["docs/active-fixed-model-experiments.md#3-exact-recursion", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["adding an experiment need not improve value strictly", "the result does not price external implementation complexity omitted from acquisition cost"]
+    },
+    {
+      "id": "ST-T173",
+      "title": "Model exclusions from a public history persist into later decisions when model identity is globally fixed",
+      "kind": "THEOREM",
+      "scope": "finite-horizon active experiment policies in which one latent model is selected once and remains responsible for all later signals and source laws",
+      "assumptions": ["a model assigning zero probability to an observed public history is incompatible with that history", "nature may not reselect a new model at later public nodes", "future experiment and code choices may depend on the public history"],
+      "evidence": ["docs/active-fixed-model-experiments.md#2-experiment-and-observation-branches", "docs/active-fixed-model-experiments.md#7-persistence-creates-option-value-for-early-information", "src/simtheory/active_fixed_model_experiments.py:_branches", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["persistent model elimination does not guarantee that early sensing is strictly optimal", "positive option value depends on horizon, experiment quality, costs, and the remaining decision problem"]
+    },
+    {
+      "id": "ST-T174",
+      "title": "Blackwell-equivalent experiments can have different deterministic minimax values when randomization is not separately admitted",
+      "kind": "THEOREM",
+      "scope": "finite observation experiments evaluated by deterministic public minimax policies without an independent shared-randomness resource",
+      "assumptions": ["Blackwell simulation may use stochastic post-processing", "the decision policy itself is deterministic conditional on the observed signal", "one experiment may physically supply public random outcomes absent from the other"],
+      "evidence": ["docs/blackwell-randomness-separation.md", "tests/test_blackwell_randomness_separation.py", "docs/active-fixed-model-experiments.md#4-the-key-semantic-separation-information-versus-public-randomness"],
+      "nonclaims": ["this does not contradict Blackwell's statistical order", "with matching independent shared randomness the stochastic garbling can be simulated and the resource mismatch disappears"]
+    },
+    {
+      "id": "ST-M41",
+      "title": "K3 no-signal, public-randomness, and full-revelation values are two, five-thirds, and one",
+      "kind": "MODEL_RESULT",
+      "scope": "three globally fixed one-state point-mass K3 models over one period with respectively no signal, a source-independent uniform three-way public signal, and a model-revealing signal",
+      "assumptions": ["complete binary zero-error prefix codes have length vectors that are permutations of (1,2,2)", "experiment acquisition costs are zero"],
+      "evidence": ["docs/active-fixed-model-experiments.md#5-exact-k3-decomposition", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["the one-third and two-thirds decomposition is specific to this symmetric finite instance", "the public-randomness gain is not evidence that the signal learned the model"]
+    },
+    {
+      "id": "ST-M42",
+      "title": "Randomness-matched K3 sensing threshold is two-thirds",
+      "kind": "MODEL_RESULT",
+      "scope": "the K3 public-coin baseline compared with a fully model-revealing one-period experiment carrying additive acquisition cost kappa",
+      "assumptions": ["the public coin is available at zero cost", "tie-breaking selects the lexicographically earlier public-coin experiment at equality"],
+      "evidence": ["docs/active-fixed-model-experiments.md#6-sensing-cost-must-be-compared-with-a-resource-matched-baseline", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["the threshold differs if the baseline excludes public randomization", "the acquisition cost is an abstract declared quantity"]
+    },
+    {
+      "id": "ST-M43",
+      "title": "Three-period persistent K3 revelation at cost three-halves lowers robust value from five to nine-halves",
+      "kind": "MODEL_RESULT",
+      "scope": "three globally fixed point-mass K3 models, three periods, free no-signal experiment, and a perfectly revealing experiment costing 3/2",
+      "assumptions": ["the revealing experiment is run before a code action", "once a public history excludes other models, that model identity remains fixed in later periods"],
+      "evidence": ["docs/active-fixed-model-experiments.md#7-persistence-creates-option-value-for-early-information", "tests/test_active_fixed_model_experiments.py"],
+      "nonclaims": ["the exact values are specific to the finite K3 construction", "the example is not an empirical estimate of real sensing value"]
+    },
+    {
+      "id": "ST-F29",
+      "title": "Bounded exact active-experiment and information-randomness audit",
+      "kind": "FINITE_CHECK",
+      "scope": "the K3 no-signal, public-randomness, revealing-signal, Blackwell-equivalence, acquisition-threshold, persistent-horizon, monotonicity, reduction, and cap instances exercised by repository tests",
+      "assumptions": ["all exact-rational policy combinations and Pareto dominance checks complete below configured caps", "all experiment kernels, source laws, and costs are represented with exact Fraction arithmetic"],
+      "evidence": ["src/simtheory/active_fixed_model_experiments.py:exact_active_fixed_model_experiment_design", "tests/test_active_fixed_model_experiments.py", "tests/test_active_experiment_reductions.py", "tests/test_blackwell_randomness_separation.py"],
+      "nonclaims": ["bounded finite tests are not a continuous-model theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
