@@ -22,6 +22,7 @@ def test_active_fixed_model_experiment_claim_manifest_is_valid_and_evidence_boun
         "ST-T171",
         "ST-T172",
         "ST-T173",
+        "ST-T174",
         "ST-M41",
         "ST-M42",
         "ST-M43",
