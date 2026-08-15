@@ -1,0 +1,68 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T190",
+      "title": "Active-experiment marginal value need not satisfy diminishing returns under one fixed oracle benchmark",
+      "kind": "THEOREM",
+      "scope": "finite active fixed-model policy classes B, B+a, B+b, and B+a+b evaluated against one full-menu model-informed causal oracle vector",
+      "assumptions": ["one model remains globally fixed", "the full-menu oracle benchmark is held fixed across all four controller classes", "all exact policy frontier searches complete below configured caps"],
+      "evidence": ["docs/active-experiment-complementarity.md#2-marginal-experiment-value", "src/simtheory/active_experiment_complementarity.py:exact_active_experiment_complementarity", "tests/test_active_experiment_complementarity.py"],
+      "nonclaims": ["the theorem does not claim all experiment-value functions are supermodular", "the result does not imply greedy selection is always suboptimal", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T191",
+      "title": "Experiment complementarity can persist after independent public-randomness resources are matched",
+      "kind": "THEOREM",
+      "scope": "the same four active fixed-model policy classes after source-independent public-seed convexification of complete deterministic policy trees",
+      "assumptions": ["public mixing is available under the same rule for all four policy classes", "mixed minimax values are solved by the exact rational zero-sum game", "the benchmark remains fixed"],
+      "evidence": ["docs/active-experiment-complementarity.md#5-complementarity-survives-public-randomness-matching", "src/simtheory/active_experiment_complementarity.py:exact_active_experiment_complementarity", "tests/test_active_experiment_complementarity.py"],
+      "nonclaims": ["public randomness is an explicit assistance resource", "strict complementarity is not guaranteed for every model family"]
+    },
+    {
+      "id": "ST-T192",
+      "title": "Fixed full-menu oracle benchmarking removes menu-dependent oracle motion from experiment-complementarity comparisons",
+      "kind": "THEOREM",
+      "scope": "four nested experiment policy classes all evaluated by subtracting one full-menu model-informed oracle vector",
+      "assumptions": ["the full-menu oracle is feasible as a benchmark lower bound for every restricted-menu controller", "the same model family, horizon, code universe, and cost accounting are used throughout"],
+      "evidence": ["docs/active-experiment-complementarity.md#1-four-policy-classes", "src/simtheory/active_experiment_complementarity.py:exact_active_experiment_complementarity"],
+      "nonclaims": ["this benchmark choice is one declared estimand rather than the only possible notion of experiment value", "the oracle is not future-path clairvoyant"]
+    },
+    {
+      "id": "ST-T193",
+      "title": "Negative cost-form submodularity slack is exactly equivalent to positive two-experiment complementarity margin",
+      "kind": "THEOREM",
+      "scope": "any four finite policy-class values V(B), V(B+a), V(B+b), and V(B+a+b) under the declared minimization convention",
+      "assumptions": ["marginal gain is defined as V(S)-V(S+e)", "complementarity is gain_b(B+a)-gain_b(B)"],
+      "evidence": ["docs/active-experiment-complementarity.md#2-marginal-experiment-value", "src/simtheory/active_experiment_complementarity.py:ActiveExperimentComplementarityCertificate.valid"],
+      "nonclaims": ["the algebraic equivalence does not establish the sign of the slack in arbitrary problems"]
+    },
+    {
+      "id": "ST-M53",
+      "title": "Two persistent latent bits give deterministic K3 complementarity margin one",
+      "kind": "MODEL_RESULT",
+      "scope": "four globally fixed two-period models indexed by two latent bits, K3 source mapping 0,1,1,2 in the second period, and one experiment revealing each bit",
+      "assumptions": ["the first-period source is common and known", "each bit observation persists through the public history", "the full-menu oracle cost is two for every model"],
+      "evidence": ["docs/active-experiment-complementarity.md#4-deterministic-complementarity", "tests/test_active_experiment_complementarity.py"],
+      "nonclaims": ["the unit margin is specific to this exact finite construction"]
+    },
+    {
+      "id": "ST-M54",
+      "title": "The two-bit K3 complementarity margin remains one-third after public-seed convexification",
+      "kind": "MODEL_RESULT",
+      "scope": "the same persistent two-bit K3 construction after independent public mixing over complete deterministic policies",
+      "assumptions": ["baseline mixed benchmark gap is two-thirds", "one-bit mixed gaps are one-half", "the both-bit mixed gap is zero"],
+      "evidence": ["docs/active-experiment-complementarity.md#5-complementarity-survives-public-randomness-matching", "tests/test_active_experiment_complementarity.py"],
+      "nonclaims": ["the one-third value is not a universal interaction coefficient"]
+    },
+    {
+      "id": "ST-F33",
+      "title": "Bounded exact active-experiment complementarity audit",
+      "kind": "FINITE_CHECK",
+      "scope": "two-bit K3 deterministic and public-mixed complementarity, experiment-order symmetry, fixed full-menu oracle, exact game duality, and candidate-name validation",
+      "assumptions": ["all active policy frontiers, singleton oracles, and zero-sum support searches complete below configured caps", "all probabilities and costs use exact rational arithmetic"],
+      "evidence": ["src/simtheory/active_experiment_complementarity.py:exact_active_experiment_complementarity", "tests/test_active_experiment_complementarity.py"],
+      "nonclaims": ["bounded exact checks are not a continuous-model or scalability theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
