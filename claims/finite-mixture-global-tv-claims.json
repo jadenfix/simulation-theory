@@ -1,0 +1,77 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T244",
+      "title": "Normalized zero-sum latent directions are exactly differences of disjoint-support latent probability mixtures",
+      "kind": "THEOREM",
+      "scope": "finite latent simplex with total-variation normalization TV(delta)=1",
+      "assumptions": ["delta sums to zero and is nonzero"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#2-positivenegative-decomposition"],
+      "nonclaims": ["the decomposition concerns signed tangent directions, not physical negative probabilities"]
+    },
+    {
+      "id": "ST-T245",
+      "title": "TV distance between two disjoint latent faces is an exact finite zero-sum event game",
+      "kind": "THEOREM",
+      "scope": "finite categorical channel and two disjoint nonempty latent row subsets",
+      "assumptions": ["all observed events are enumerated", "the exact rational game support search completes below its configured cap"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#3-turning-one-face-distance-into-a-finite-zero-sum-game", "src/simtheory/finite_mixture_global_tv.py", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["the bounded exact solver is not asserted polynomial time"]
+    },
+    {
+      "id": "ST-T246",
+      "title": "Minimum disjoint-face separation equals the global latent-to-observed TV modulus alpha(K)",
+      "kind": "THEOREM",
+      "scope": "finite categorical latent-mixture channels",
+      "assumptions": ["all disjoint nonempty face pairs and observed events are enumerated below explicit caps"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#4-global-exactness", "src/simtheory/finite_mixture_global_tv.py:exact_global_tv_modulus", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["alpha is a conditioning modulus rather than a posterior probability"]
+    },
+    {
+      "id": "ST-T247",
+      "title": "The exact inverse TV constant is 1/alpha and cannot exceed any valid coordinate-minor inverse certificate",
+      "kind": "THEOREM",
+      "scope": "identifiable finite categorical mixture channels",
+      "assumptions": ["alpha(K)>0", "the coordinate-minor certificate is valid"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#4-global-exactness", "src/simtheory/finite_mixture_global_tv.py:GlobalTVModulusCertificate.valid", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["a conservative coordinate certificate is not an identifiability failure"]
+    },
+    {
+      "id": "ST-T248",
+      "title": "Uniformly positive pairwise component separation does not lower-bound finite-mixture conditioning away from zero",
+      "kind": "THEOREM",
+      "scope": "the three-row epsilon family K0=(1,0,0), K1=(0,1,0), K2=(1/2,1/2-epsilon,epsilon) for rational 0<epsilon<1/2",
+      "assumptions": ["TV is used on the observed simplex"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#5-pairwise-separation-can-be-radically-misleading", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["the result does not say pairwise separation is useless for component classification"]
+    },
+    {
+      "id": "ST-M71",
+      "title": "Identity K3 has alpha one and exact inverse constant one while the generic coordinate-minor certificate returns two",
+      "kind": "MODEL_RESULT",
+      "scope": "identity channel on three latent and three observed symbols",
+      "assumptions": ["standard total variation"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#4-global-exactness", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["the factor-two coordinate gap is specific to that generic certificate"]
+    },
+    {
+      "id": "ST-M72",
+      "title": "The near-midpoint three-row family has pairwise TV separation one-half but global alpha equal to epsilon",
+      "kind": "MODEL_RESULT",
+      "scope": "rational epsilon values tested at 1/4, 1/5, 1/8, and 1/10",
+      "assumptions": ["the declared channel rows are exact"],
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#5-pairwise-separation-can-be-radically-misleading", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["the finite test grid is not the proof of the symbolic family theorem"]
+    },
+    {
+      "id": "ST-F44",
+      "title": "Bounded exact global finite-mixture TV-modulus audit",
+      "kind": "FINITE_CHECK",
+      "scope": "identity, binary noisy, exact midpoint, near-midpoint epsilon family, event caps, face caps, and exact primal-dual game receipts",
+      "assumptions": ["all configured event, face, minor, and game-support searches complete", "all channel probabilities are exact rationals"],
+      "evidence": ["src/simtheory/finite_mixture_global_tv.py", "tests/test_finite_mixture_global_tv.py"],
+      "nonclaims": ["bounded enumeration is not a scalability theorem", "CI success is not evidence for simulation"]
+    }
+  ]
+}
