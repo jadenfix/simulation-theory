@@ -1,0 +1,77 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T194",
+      "title": "Deterministic experiment subsets induce an exact refinement lattice of fixed-model observation cells",
+      "kind": "THEOREM",
+      "scope": "finite globally fixed model families with deterministic finite-valued model-label experiments",
+      "assumptions": ["experiment subset S reveals the joint labels of experiments in S", "one fixed model generates the observation signature", "all experiment label vectors are predeclared"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#1-observation-partitions", "src/simtheory/experiment_observation_lattice.py:_observation_cells", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["the theorem does not cover stochastic experiment kernels in this static lattice layer", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T195",
+      "title": "Fixed-benchmark deterministic and public-mixed coding gaps are monotone under observation-partition refinement",
+      "kind": "THEOREM",
+      "scope": "finite deterministic experiment subsets evaluated against one model-informed source-coding oracle vector",
+      "assumptions": ["a richer experiment subset refines rather than coarsens model observation cells", "the controller chooses its code after learning the observation cell", "public mixing uses the same independent seed resource at every subset"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#2-cell-values", "src/simtheory/experiment_observation_lattice.py:ObservationLatticeCertificate.valid", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["monotonicity alone does not imply submodularity", "public mixing is an explicit assistance resource"]
+    },
+    {
+      "id": "ST-T196",
+      "title": "The Boolean-lattice Möbius transform gives an exact interaction decomposition of experiment-subset value",
+      "kind": "THEOREM",
+      "scope": "any rational value function defined on all subsets of a finite experiment set",
+      "assumptions": ["subset values are indexed by bit masks", "interaction coefficients use the standard Boolean subset-lattice incidence algebra"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#3-boolean-lattice-mobius-transform", "src/simtheory/experiment_observation_lattice.py:boolean_mobius_transform", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["Möbius coefficients are operational algebraic interactions rather than physical energies", "coefficient signs are not universally constrained"]
+    },
+    {
+      "id": "ST-T197",
+      "title": "k-bit parity source coding has pure top-order deterministic experiment interaction on complete K3",
+      "kind": "THEOREM",
+      "scope": "models indexed by all k-bit strings, one deterministic experiment per bit, K3 source law equal to the parity bit, and fixed model-informed oracle coding value one",
+      "assumptions": ["every strict experiment subset omits at least one parity bit", "complete binary zero-error K3 codebooks remain required", "all k bit experiments together determine parity"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#5-pure-top-order-interaction-theorem", "src/simtheory/experiment_observation_lattice.py:parity_observation_lattice", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["the theorem concerns the declared K3 coding objective", "it does not assert the same interaction magnitude for arbitrary Boolean functions"]
+    },
+    {
+      "id": "ST-T198",
+      "title": "k-bit parity retains pure top-order experiment interaction after independent public-seed convexification",
+      "kind": "THEOREM",
+      "scope": "the same k-bit parity/K3 family after exact public mixing of deterministic zero-error codebooks within each observation cell",
+      "assumptions": ["the public seed is independent of the fixed model", "every strict subset leaves both parity source symbols possible", "the exact finite zero-sum game is solved for each observation cell"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#5-pure-top-order-interaction-theorem", "src/simtheory/experiment_observation_lattice.py:parity_observation_lattice", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["public-seed convexification is an explicit assistance resource", "the one-half coefficient is specific to complete binary prefix coding on K3"]
+    },
+    {
+      "id": "ST-M55",
+      "title": "Three-bit parity has zero first- and second-order nonconstant interactions and deterministic third-order coefficient minus one",
+      "kind": "MODEL_RESULT",
+      "scope": "the exact k=3 parity observation lattice",
+      "assumptions": ["all seven strict subsets have deterministic benchmark gap one", "the full subset has gap zero"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#5-pure-top-order-interaction-theorem", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["the coefficient minus one is not a universal third-order interaction magnitude"]
+    },
+    {
+      "id": "ST-M56",
+      "title": "Three-bit parity public-mixed lattice has sole nonconstant third-order coefficient minus one-half",
+      "kind": "MODEL_RESULT",
+      "scope": "the exact k=3 parity observation lattice after public-seed convexification",
+      "assumptions": ["all strict-subset mixed benchmark gaps equal one-half", "the full-subset mixed gap is zero"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#5-pure-top-order-interaction-theorem", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["the coefficient is specific to the declared finite K3 coding family"]
+    },
+    {
+      "id": "ST-F34",
+      "title": "Bounded exact observation-lattice and Möbius audit",
+      "kind": "FINITE_CHECK",
+      "scope": "Boolean Möbius/zeta inversion plus exact k=2,3,4 parity deterministic and public-mixed interaction checks",
+      "assumptions": ["all code enumerations, observation-cell games, experiment subsets, and game support searches complete below configured caps", "all probabilities use exact rational arithmetic"],
+      "evidence": ["src/simtheory/experiment_observation_lattice.py:exact_observation_lattice_values", "tests/test_experiment_observation_lattice.py"],
+      "nonclaims": ["bounded finite checks are not a scalability theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
