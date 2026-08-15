@@ -1,0 +1,59 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T221",
+      "title": "Bayesian Boolean experiment value is concave in the declared model prior",
+      "kind": "THEOREM",
+      "scope": "finite Boolean hidden-model priors with fixed experiment subset and Bayesian K3 excess coding loss",
+      "assumptions": ["the same truth table and observation partition are used across priors"],
+      "evidence": ["docs/bayesian-boolean-prior-robustness.md#concavity-in-the-prior", "src/simtheory/bayesian_boolean_prior_robustness.py:concavity_gap", "tests/test_bayesian_boolean_prior_robustness.py"],
+      "nonclaims": ["concavity does not assert the mixture prior is empirically justified"]
+    },
+    {
+      "id": "ST-T222",
+      "title": "Bayesian Boolean experiment value is sharply one-Lipschitz in prior total variation",
+      "kind": "THEOREM",
+      "scope": "finite priors on one common hidden-model support and one fixed observation subset",
+      "assumptions": ["loss is bounded in [0,1] before the K3 excess-cost reduction"],
+      "evidence": ["docs/bayesian-boolean-prior-robustness.md#sharp-total-variation-continuity", "src/simtheory/bayesian_boolean_prior_robustness.py:exact_value_sensitivity_certificate", "tests/test_bayesian_boolean_prior_robustness.py"],
+      "nonclaims": ["the TV radius itself must come from a separate modeling or statistical argument"]
+    },
+    {
+      "id": "ST-T223",
+      "title": "Marginal Bayesian experiment gain is two-Lipschitz in prior total variation",
+      "kind": "THEOREM",
+      "scope": "differences of two Bayesian Boolean experiment values under a common prior perturbation",
+      "assumptions": ["both endpoint values obey the one-Lipschitz theorem"],
+      "evidence": ["docs/bayesian-boolean-prior-robustness.md#marginal-experiment-gains", "src/simtheory/bayesian_boolean_prior_robustness.py:marginal_gain_interval", "tests/test_bayesian_boolean_prior_robustness.py"],
+      "nonclaims": ["the factor two is a generic worst-case bound and may be loose for a specific experiment"]
+    },
+    {
+      "id": "ST-T224",
+      "title": "Strict nominal experiment-value and marginal-gain margins yield sufficient TV-robust ranking certificates",
+      "kind": "THEOREM",
+      "scope": "two-value or two-marginal-gain comparisons throughout one declared TV ball",
+      "assumptions": ["absolute-value margins exceed twice the TV radius for values or four times the radius for marginal gains"],
+      "evidence": ["docs/bayesian-boolean-prior-robustness.md#marginal-experiment-gains", "src/simtheory/bayesian_boolean_prior_robustness.py:value_ranking_is_tv_robust", "src/simtheory/bayesian_boolean_prior_robustness.py:gain_ranking_is_tv_robust", "tests/test_bayesian_boolean_prior_robustness.py"],
+      "nonclaims": ["the sufficient margins are not necessary conditions"]
+    },
+    {
+      "id": "ST-M65",
+      "title": "The one-bit point-mass prior perturbation saturates the TV continuity constant",
+      "kind": "MODEL_RESULT",
+      "scope": "f(x)=x with no observation and priors (1,0) and (1-rho,rho) for rho<=1/2",
+      "assumptions": ["the same two hidden models are retained"],
+      "evidence": ["docs/bayesian-boolean-prior-robustness.md#sharp-total-variation-continuity", "tests/test_bayesian_boolean_prior_robustness.py"],
+      "nonclaims": ["not every finite problem attains the bound"]
+    },
+    {
+      "id": "ST-F39",
+      "title": "Bounded exact Bayesian prior-robustness audit",
+      "kind": "FINITE_CHECK",
+      "scope": "tight TV continuity, strict prior concavity, value/gain bands, ranking margins, and shifted-prior gain tests",
+      "assumptions": ["all priors and values use exact rational arithmetic"],
+      "evidence": ["src/simtheory/bayesian_boolean_prior_robustness.py", "tests/test_bayesian_boolean_prior_robustness.py"],
+      "nonclaims": ["bounded tests do not generate a statistical confidence region", "CI success is not evidence for simulation"]
+    }
+  ]
+}
