@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T259",
+      "title": "Two conditionally independent categorical views sharing one latent component have joint law K^T diag(pi) K",
+      "kind": "THEOREM",
+      "scope": "finite latent mixture with two iid emissions conditional on the same latent label",
+      "assumptions": ["the two views share latent identity", "the views are conditionally independent given that identity"],
+      "evidence": ["docs/latent-mixture-two-view-rigidity.md#2-two-view-moment", "src/simtheory/latent_mixture_two_view.py:two_view_law", "tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["independently redrawn latent labels produce a different law"]
+    },
+    {
+      "id": "ST-T260",
+      "title": "Affine independence and linear independence coincide for finite probability-vector rows",
+      "kind": "THEOREM",
+      "scope": "finite row family in a probability simplex",
+      "assumptions": ["every row sums to one"],
+      "evidence": ["docs/latent-mixture-two-view-rigidity.md#3-full-affine-rank-means-k-has-a-right-inverse"],
+      "nonclaims": ["the equivalence is stated for probability-vector rows"]
+    },
+    {
+      "id": "ST-T261",
+      "title": "Under full affine rank and strictly positive transformed prior, preserving one- and two-view laws forces an invertible nonnegative row-stochastic gauge to be a permutation",
+      "kind": "THEOREM",
+      "scope": "finite categorical latent-mixture gauge K'=AK, pi'=pi A^{-1}",
+      "assumptions": ["K has full affine row rank", "pi' is strictly positive", "A is invertible, nonnegative, and row-stochastic", "the shared-latent two-view law is preserved"],
+      "evidence": ["docs/latent-mixture-two-view-rigidity.md#4-rigidity-theorem", "src/simtheory/latent_mixture_two_view.py:exact_two_view_gauge_certificate", "tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["ordinary label permutations remain symmetries", "the theorem is not a complete identifiability theorem for arbitrary latent models"]
+    },
+    {
+      "id": "ST-T262",
+      "title": "Two observations with independently redrawn latent labels have product law q tensor q and cannot break a one-view factorization gauge",
+      "kind": "THEOREM",
+      "scope": "two independent repetitions of the fully marginalized one-view mixture distribution",
+      "assumptions": ["the latent component is redrawn independently before each observation"],
+      "evidence": ["docs/latent-mixture-two-view-rigidity.md#6-why-the-assumptions-matter"],
+      "nonclaims": ["shared-latent repeated measurements have a different joint law"]
+    },
+    {
+      "id": "ST-T263",
+      "title": "Cross-observation structure tied to persistent latent identity can identify factorization information absent from the one-view marginal",
+      "kind": "THEOREM",
+      "scope": "the full-rank positive-prior gauge family under shared-latent conditionally independent two-view observations",
+      "assumptions": ["the hypotheses of ST-T261 hold"],
+      "evidence": ["docs/latent-mixture-two-view-rigidity.md#7-consequence-for-experimental-design", "tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["not every multi-view latent model is identifiable"]
+    },
+    {
+      "id": "ST-M77",
+      "title": "The binary one-view gauge witness changes its two-view law from diagonal halves to a matrix with one-eighth off-diagonal mass",
+      "kind": "MODEL_RESULT",
+      "scope": "uniform binary prior, identity channel, and gauge [[3/4,1/4],[0,1]]",
+      "assumptions": ["two emissions are iid conditional on the shared latent label"],
+      "evidence": ["docs/latent-mixture-two-view-rigidity.md#5-exact-binary-example", "tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["the numerical matrix is example-specific"]
+    },
+    {
+      "id": "ST-M78",
+      "title": "Rank-deficient identical component rows admit a nonpermutation gauge preserving the two-view law",
+      "kind": "MODEL_RESULT",
+      "scope": "two identical deterministic binary component rows with positive latent weights",
+      "assumptions": ["full affine rank is intentionally violated"],
+      "evidence": ["tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["the counterexample does not contradict the full-rank rigidity theorem"]
+    },
+    {
+      "id": "ST-M79",
+      "title": "A zero-mass latent component can be changed by a nonpermutation gauge without changing one- or two-view observations",
+      "kind": "MODEL_RESULT",
+      "scope": "full-rank binary identity channel with prior (1,0)",
+      "assumptions": ["strict positivity is intentionally violated"],
+      "evidence": ["tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["the counterexample does not apply to strictly positive transformed priors"]
+    },
+    {
+      "id": "ST-F47",
+      "title": "Bounded exact two-view gauge-rigidity audit",
+      "kind": "FINITE_CHECK",
+      "scope": "binary detection, permutation invariance, K3 nonpermutation detection, rank-deficient boundary, zero-mass boundary, and joint-law normalization",
+      "assumptions": ["all probabilities and matrix operations use exact rational arithmetic"],
+      "evidence": ["src/simtheory/latent_mixture_two_view.py", "tests/test_latent_mixture_two_view.py"],
+      "nonclaims": ["bounded checks are not empirical evidence for simulation"]
+    }
+  ]
+}
