@@ -1,0 +1,86 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T180",
+      "title": "Independent public-seed convexification of a fixed-model policy frontier is an exact finite zero-sum game",
+      "kind": "THEOREM",
+      "scope": "finite exact active fixed-model root frontiers with a fixed modelwise benchmark vector and source-independent public mixing over complete deterministic policy trees",
+      "assumptions": ["expected modelwise costs are linear in the public-seed mixture", "the root frontier is complete below configured caps", "the exact rational game support search completes below its configured cap"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#2-deterministic-and-mixed-benchmark-gaps", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["the public seed is an explicit assistance resource", "the theorem does not assert a polynomial-time solver", "the result is not evidence for simulation"]
+    },
+    {
+      "id": "ST-T181",
+      "title": "Componentwise dominated deterministic policy trees are unnecessary after public-seed convexification",
+      "kind": "THEOREM",
+      "scope": "finite modelwise cost vectors under minimization of the worst expected coordinate after arbitrary public mixing",
+      "assumptions": ["a dominated policy has another available policy no worse in every model coordinate", "mixture weights are source-independent"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#2-deterministic-and-mixed-benchmark-gaps", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap"],
+      "nonclaims": ["Pareto pruning does not bound the frontier size polynomially", "the argument concerns expected cost vectors rather than arbitrary nonlinear policy statistics"]
+    },
+    {
+      "id": "ST-T182",
+      "title": "After matching public-randomness resources, restoring an experiment's observation information cannot worsen minimax benchmark gap",
+      "kind": "THEOREM",
+      "scope": "an actual finite experiment menu and its information-erased menu with identical experiment names and acquisition costs, both additionally convexified by the same independent public-seed resource",
+      "assumptions": ["an actual controller may ignore observations and emulate every information-erased deterministic policy", "both policy classes are evaluated against the same fixed benchmark vector", "the public seed can mix the same complete deterministic policies on both sides"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#3-information-erasure", "src/simtheory/active_experiment_regret_decomposition.py:exact_active_experiment_regret_decomposition", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["strict improvement is not guaranteed", "information erasure changes observation alphabets while preserving declared acquisition cost"]
+    },
+    {
+      "id": "ST-T183",
+      "title": "The actual model-informed causal oracle is a valid fixed benchmark for information-erased policies",
+      "kind": "THEOREM",
+      "scope": "actual and information-erased versions of the same active experiment menu under one globally fixed model",
+      "assumptions": ["the actual singleton-model oracle may ignore its observations", "actual and erased experiment menus have identical acquisition costs and causal timing", "the oracle and shared policies use the same zero-error code universe"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#1-fixed-benchmark", "docs/active-experiment-regret-value-decomposition.md#6-why-a-fixed-oracle-matters", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap"],
+      "nonclaims": ["the fixed benchmark is one declared estimand rather than the only possible experiment-value definition", "the oracle is not path-clairvoyant"]
+    },
+    {
+      "id": "ST-T184",
+      "title": "Deterministic experiment gain has an exact coordination-information-residual-randomization decomposition",
+      "kind": "THEOREM",
+      "scope": "actual and information-erased active fixed-model policy classes evaluated against one fixed actual oracle vector, with deterministic and independently public-mixed values",
+      "assumptions": ["D0, M0, DA, and MA refer to the four declared policy classes under the same benchmark", "all four exact finite optimizations complete"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#4-exact-decomposition-identity", "src/simtheory/active_experiment_regret_decomposition.py:ActiveExperimentRegretDecomposition.valid", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["the three terms are operational resource values rather than ontological quantities", "the residual randomization term is subtracted rather than asserted to be an additional positive component of deterministic gain"]
+    },
+    {
+      "id": "ST-M47",
+      "title": "Perfect K3 model revelation decomposes unit deterministic gain into one-third coordination and two-thirds information value",
+      "kind": "MODEL_RESULT",
+      "scope": "three one-state point-mass K3 models, one period, a free perfectly model-revealing experiment, and the actual model-informed oracle vector (1,1,1)",
+      "assumptions": ["complete binary prefix codes have state-length permutations of (1,2,2)", "public mixing is free only in the mixed comparison classes"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#5-exact-k3-boundaries", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["the one-third/two-thirds split is specific to this symmetric finite construction"]
+    },
+    {
+      "id": "ST-M48",
+      "title": "A source-independent public K3 coin has zero resource-matched information value",
+      "kind": "MODEL_RESULT",
+      "scope": "three one-state point-mass K3 models with a uniform three-way signal independent of model and source",
+      "assumptions": ["the information-erased mixed class and actual mixed class both admit an independent public seed", "the fixed actual oracle vector is (1,1,1)"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#5-exact-k3-boundaries", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["the public coin can still have positive coordination value under deterministic policies"]
+    },
+    {
+      "id": "ST-M49",
+      "title": "No-signal K3 has zero total experiment gain because erased coordination and actual residual-randomization gaps cancel",
+      "kind": "MODEL_RESULT",
+      "scope": "three one-state point-mass K3 models with a one-symbol no-signal experiment",
+      "assumptions": ["deterministic regret is one and public-mixed regret is two-thirds under the fixed actual oracle"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#5-exact-k3-boundaries", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["the cancellation identity does not mean public randomness is valueless; it means the actual and erased experiment are the same information structure"]
+    },
+    {
+      "id": "ST-F31",
+      "title": "Bounded exact active-experiment regret-decomposition audit",
+      "kind": "FINITE_CHECK",
+      "scope": "perfect-revelation, source-independent public-coin, no-signal, noisy-signal, information-erasure, and exact primal-dual game checks exercised by repository tests",
+      "assumptions": ["all active policy frontier searches and singleton oracle solves complete below configured caps", "all zero-sum support searches complete below configured caps", "all probabilities and costs use exact rational arithmetic"],
+      "evidence": ["src/simtheory/active_experiment_regret_decomposition.py:exact_active_experiment_regret_decomposition", "tests/test_active_experiment_regret_decomposition.py"],
+      "nonclaims": ["bounded checks are not a continuous-model or scalability theorem", "CI success is not empirical evidence for simulation"]
+    }
+  ]
+}
