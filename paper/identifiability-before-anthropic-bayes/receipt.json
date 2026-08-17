@@ -1,0 +1,23 @@
+{
+  "clone": {
+    "clone_base": "1/21",
+    "clone_sim": "20/21",
+    "initial": "1/2",
+    "weighted": "1/2"
+  },
+  "gauge": {
+    "one_view": ["1/2", "1/2"],
+    "transformed_one_view": ["1/2", "1/2"],
+    "two_view_equal": false
+  },
+  "persistent": {
+    "T": 100,
+    "persistent_bayes_factor": "3/1",
+    "redraw_bayes_factor": "515377520732011331036461129765621272702107522001/1"
+  },
+  "two_view_grid_audit": {
+    "denominator": 4,
+    "only_permutations": true,
+    "preserving_count": 2
+  }
+}
