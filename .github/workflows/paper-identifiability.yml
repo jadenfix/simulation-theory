@@ -37,6 +37,17 @@ jobs:
             texlive-latex-base texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended poppler-utils
 
+      - name: Record toolchain provenance
+        working-directory: paper/identifiability-before-anthropic-bayes
+        run: |
+          {
+            python --version
+            pdflatex --version | head -n 1
+            bibtex --version | head -n 1
+            pdfinfo -v 2>&1 | head -n 1
+            uname -a
+          } | tee toolchain.txt
+
       - name: Build manuscript
         working-directory: paper/identifiability-before-anthropic-bayes
         run: |
@@ -58,7 +69,7 @@ jobs:
           pdfinfo paper.pdf | tee pdfinfo.txt
           grep -q 'Title:.*Identifiability Before Anthropic Bayes' pdfinfo.txt
           grep -q 'Author:.*Jaden Fix' pdfinfo.txt
-          sha256sum paper.tex references.bib claims.json citation_provenance.json reproduce.py receipt.json PEER_REVIEW_LOOP.md PEER_REVIEW_RESPONSE.md AUDIT.md paper.pdf > release_hashes.txt
+          sha256sum paper.tex references.bib claims.json citation_provenance.json reproduce.py receipt.json PEER_REVIEW_LOOP.md PEER_REVIEW_RESPONSE.md AUDIT.md toolchain.txt paper.pdf > release_hashes.txt
 
       - name: Upload release-candidate artifact
         uses: actions/upload-artifact@v4
@@ -69,6 +80,7 @@ jobs:
             paper/identifiability-before-anthropic-bayes/receipt.json
             paper/identifiability-before-anthropic-bayes/release_hashes.txt
             paper/identifiability-before-anthropic-bayes/pdfinfo.txt
+            paper/identifiability-before-anthropic-bayes/toolchain.txt
             paper/identifiability-before-anthropic-bayes/AUDIT.md
             paper/identifiability-before-anthropic-bayes/PEER_REVIEW_LOOP.md
             paper/identifiability-before-anthropic-bayes/PEER_REVIEW_RESPONSE.md
