@@ -1,103 +1,61 @@
 \documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm,booktabs,microtype,hyperref}
-\usepackage[numbers,sort&compress]{natbib}
+\usepackage[margin=1in]{geometry}\usepackage{amsmath,amssymb,amsthm,microtype,hyperref}\usepackage[numbers,sort&compress]{natbib}
 \newtheorem{theorem}{Theorem}\newtheorem{proposition}{Proposition}\newtheorem{definition}{Definition}\newtheorem{example}{Example}
-\title{Identifiability Before Anthropic Bayes:\\Representation Invariance, Persistent Latents, and Observable Equivalence in Simulation Arguments}
-\author{Jaden Figgs\\Tempera\\\texttt{Jaden@Tempera.dev}}\date{August 2026}
+\title{Identifiability Before Anthropic Bayes:\\Representation Invariance, Persistent Latents, and Observable Equivalence in Simulation Arguments}\author{Jaden Figgs\\Tempera\\\texttt{Jaden@Tempera.dev}}\date{August 2026}
 \begin{document}\maketitle
-\begin{abstract}
-Arguments about whether an observer is simulated often move quickly from a claim about the abundance of simulated observers to a posterior probability of being simulated. This paper isolates three prior questions that must be answered before that update is well-defined: whether the competing hypotheses induce different observable laws, whether the observer measure is invariant to representational refinements that change no observable process, and whether repeated evidence corresponds to repeated draws from the population-level latent variable whose prevalence is being inferred. Observationally equivalent hypotheses have Bayes factor one for every internal transcript. Splitting a latent component into arbitrarily many positive-weight observational clones preserves every finite shared-latent observation law while label counting can move the apparent category probability arbitrarily close to zero or one; on rational weights, normalized local split-additivity uniquely recovers probability weight. When one latent model is drawn once and an arbitrarily long transcript is generated conditional on it, the likelihood ratio between hypotheses differing only in their mixing weights is a posterior-weighted convex combination of component weight ratios, so within-world repetition does not become repeated sampling from the hyperprior. We distinguish conditional identifiability of mixture weights given an observation channel from joint identifiability of prior and channel, exhibit a continuous one-view factorization gauge, and show that within this gauge two conditionally independent views sharing one persistent latent variable collapse the continuous ambiguity to label permutation under explicit rank and positivity assumptions. These results do not argue that reality is or is not simulated. They state identifiability and invariance conditions that a quantitative anthropic simulation argument should satisfy before its numerical posterior is interpreted as evidence rather than as a consequence of representation, reference-class, or sampling choices.
-\end{abstract}
+\begin{abstract}Arguments about whether an observer is simulated often move quickly from abundance claims to a posterior probability. We isolate prior questions: whether competing hypotheses induce different observable laws, whether an observer measure is invariant to representational refinements that change no observable process, and whether repeated evidence corresponds to repeated draws from the population-level latent variable whose prevalence is being inferred. Observationally equivalent hypotheses have Bayes factor one. Splitting a latent component into positive-weight observational clones preserves every finite shared-latent observation law while label counting can move apparent category probability toward zero or one; normalized local rational split-additivity recovers probability weight. When one latent model is drawn once and an arbitrarily long transcript is generated conditional on it, the likelihood ratio between hypotheses differing only in mixing weights is a posterior-weighted convex combination of component weight ratios, so within-world repetition is not repeated hyperprior sampling. We distinguish conditional mixture identifiability from joint prior/channel identifiability, exhibit a continuous one-view factorization gauge, and show that within this gauge two conditionally independent views sharing one persistent latent collapse the ambiguity to label permutation under rank and positivity assumptions. These results do not argue that reality is or is not simulated. They give identifiability and invariance conditions that should precede quantitative anthropic Bayes.\end{abstract}
 \section{Introduction}
-Bostrom's simulation argument is deliberately a trilemma rather than a direct empirical proof that we inhabit a simulation \citep{bostrom2003}. Subsequent discussion has focused on the indifference principle, reference classes, self-location, and what evidence could support a high simulant-to-non-simulant ratio \citep{weatherson2003,crawford2013,franceschi2014,richmond2017,thomas2024}. Our concern is logically prior to many disagreements in that literature.
+Bostrom's simulation argument is a trilemma rather than a direct empirical proof \citep{bostrom2003}. Discussion has focused on indifference, reference classes, self-location, and evidence for simulant abundance \citep{weatherson2003,crawford2013,franceschi2014,richmond2017,thomas2024}. We ask a logically prior question: what statistical experiment is the observer participating in?
 
-Before asking how a Bayesian agent should update on being an observer, we should ask what statistical experiment the agent is participating in. What exactly was sampled? Which latent variable persists through time? Which variables are redrawn? What is observable? Which distinctions are merely different descriptions of the same observable process? And does a proposed observer measure change if we duplicate a latent label without changing anything that can happen?
-
-These questions are routine in statistics. A mixture parameter is not estimable before it is identifiable; a repeated conditional observation is not automatically a repeated sample from a population mixing distribution; a latent parameterization is not evidence merely because it contains more labels. The same discipline is useful in anthropic reasoning.
-
-The individual ingredients connect to established literatures: observation selection and reference classes \citep{bostrom2002}; objections to indifference \citep{weatherson2003}; reference-class sensitivity \citep{franceschi2014,richmond2017}; recent Bayesian reconstructions \citep{thomas2024}; branching indifference and branch counting \citep{wilson2013,dizadji2015,khawaja2026}; and identifiability of finite latent-variable models \citep{allman2009}. We do not claim priority for those general literatures. The contribution is an integrated, auditable hierarchy aimed specifically at simulation-style observer arguments.
-
+A mixture parameter is not estimable before it is identifiable; repeated conditional observations are not automatically repeated samples from a population mixing distribution; and a latent parameterization is not evidence merely because it contains more labels. The same discipline applies to anthropic reasoning. Our ingredients connect to observation-selection theory \citep{bostrom2002}, simulation-argument critiques, Everettian branching debates \citep{wilson2013,dizadji2015,khawaja2026}, and latent-model identifiability \citep{allman2009}. We do not claim priority for those general literatures. The contribution is their integrated use as an auditable precondition hierarchy for simulation-style Bayes.
 \section{Observable equivalence comes first}
-Let $H\in\{B,S\}$ denote two hypotheses, informally ``base'' and ``simulated.'' Let $Y$ be the complete transcript available under a declared observation and intervention protocol, with induced laws $P_B$ and $P_S$.
-\begin{theorem}[Observable-equivalence ceiling]\label{thm:equiv}
-If $P_B=P_S$, then every measurable statistic of $Y$ has the same law under both hypotheses. For every transcript $y$ with positive common probability, $\mathrm{BF}_{S:B}(y)=P_S(y)/P_B(y)=1$. Under equal prior odds no classifier based only on $Y$ has accuracy above $1/2$.
-\end{theorem}
-\begin{proof}Equality of measures is preserved by measurable pushforward. The likelihood ratio is one on common positive support. Optimal equal-prior binary accuracy is $(1+\operatorname{TV}(P_B,P_S))/2=1/2$.\end{proof}
-A restricted simulator architecture may predict a different observable law. The theorem says only that an implementation distinction cannot be inferred from an interface after the hypotheses have been stipulated to induce the same law on that interface.
-
-\section{Representation invariance and the counting problem}
-Let $M\in\{1,\ldots,m\}$ have weights $w_i>0$, $\sum_iw_i=1$, and conditional transcript laws $K_i$. Then $P(Y\in A)=\sum_iw_iK_i(A)$.
-\begin{definition}[Observational refinement]A component $(w,K)$ is replaced by clones $(w_1,K),\ldots,(w_r,K)$ with $w_j>0$ and $\sum_jw_j=w$.\end{definition}
-\begin{theorem}[Finite shared-latent refinement invariance]\label{thm:clone}Observational refinement preserves the one-view law and every finite conditionally independent shared-latent view law.\end{theorem}
-\begin{proof}For one view, $\sum_jw_jK=wK$. For $T$ shared-latent conditionally independent views, $\sum_jw_jK^{\otimes T}=wK^{\otimes T}$.\end{proof}
-
-Start with one base and one simulated label, each of probability weight $1/2$. Uniform label counting gives simulated mass $1/2$. Clone only the simulated label $r$ times: label counting gives $r/(r+1)\to1$. Clone only the base label: it gives $1/(r+1)\to0$. The observable process and additive category weight remain unchanged.
-
-This has a structural analogue in Everettian debates over branching indifference and branch counting \citep{wilson2013,dizadji2015,khawaja2026}. We do not equate observer measures with quantum branch measures. The shared lesson is narrower: a counting rule needs a reason why the objects it counts are invariantly individuated.
-
-\begin{theorem}[Rational refinement-additive uniqueness]\label{thm:add}
-Let $\mu:[0,1]\cap\mathbb Q\to\mathbb R$ satisfy $\mu(1)=1$ and $\mu(w)=\sum_j\mu(w_j)$ for every finite rational split $w=\sum_jw_j$. Then $\mu(w)=w$ for every rational $w\in[0,1]$.
-\end{theorem}
-\begin{proof}Splitting $1$ into $n$ equal pieces gives $\mu(1/n)=1/n$. Summing $p$ pieces gives $\mu(p/n)=p/n$.\end{proof}
-This elementary theorem is a diagnostic, not a novelty claim about probability axioms. Measures using consciousness, computation, causal depth, spacetime volume, or other structure can differ, but that structure must be part of the model.
-
+Let $Y$ be the complete allowed transcript and $P_B,P_S$ the induced laws under base and simulation hypotheses.
+\begin{theorem}[Observable-equivalence ceiling]\label{thm:equiv}If $P_B=P_S$, every measurable statistic of $Y$ has the same law. Wherever the common probability is positive, $\mathrm{BF}_{S:B}(y)=1$. Under equal priors no classifier based only on $Y$ exceeds accuracy $1/2$.\end{theorem}
+\begin{proof}Equality is preserved by measurable pushforward; the likelihood ratio is one; and equal-prior optimal binary accuracy is $(1+\operatorname{TV}(P_B,P_S))/2$.\end{proof}
+A restricted simulator architecture may be testable by predicting a different law. An implementation distinction stipulated to preserve the full allowed law is not detectable from that law.
+\section{Representation invariance and counting}
+Let latent component $i$ have weight $w_i$ and conditional law $K_i$. An \emph{observational refinement} replaces $(w,K)$ by $(w_1,K),\ldots,(w_r,K)$ with positive $w_j$ summing to $w$.
+\begin{theorem}[Shared-latent refinement invariance]\label{thm:clone}Such refinement preserves the one-view law and every finite conditionally independent shared-latent view law.\end{theorem}
+\begin{proof}$\sum_jw_jK=wK$, and for $T$ shared-latent views $\sum_jw_jK^{\otimes T}=wK^{\otimes T}$.\end{proof}
+With one base and one simulated label of weight $1/2$, uniform label counting gives $1/2$. Clone only the simulated label $r$ times and it gives $r/(r+1)\to1$; clone only base and it gives $1/(r+1)\to0$. Nothing observable changed. This resembles, without being identical to, disputes over branching indifference and branch counting in Everettian probability \citep{wilson2013,dizadji2015,khawaja2026}: a count requires a principled individuation rule.
+\begin{theorem}[Rational refinement-additive uniqueness]\label{thm:add}If $\mu:[0,1]\cap\mathbb Q\to\mathbb R$ has $\mu(1)=1$ and is additive under every finite rational split, then $\mu(w)=w$ for all rational $w\in[0,1]$.\end{theorem}
+\begin{proof}Split $1$ into $n$ equal pieces, giving $\mu(1/n)=1/n$, then sum $p$ pieces.\end{proof}
+This elementary theorem is diagnostic, not a novelty claim. Measures using consciousness, computation, causal depth, or other structure may differ, but that structure must be explicit.
 \section{Persistent latents and effective sample size}
-Let one persistent latent model $M$ be drawn once. Conditional on $M=m$, an arbitrary transcript $Y$ has law $P_m$. Hypotheses $H_a,H_b$ share the $P_m$ but assign mixing weights $a_m,b_m$.
-\begin{theorem}[Persistent-latent likelihood-ratio ceiling]\label{thm:persist}
-For transcript $y$, assume $b_m>0$ for every component with $P_m(y)>0$. Then
+Let $M$ be drawn once. Conditional on $M=m$, transcript $Y$ has law $P_m$. Hypotheses $a,b$ differ only in mixing weights $a_m,b_m$.
+\begin{theorem}[Persistent-latent likelihood-ratio ceiling]\label{thm:persist}For $y$, assume $b_m>0$ whenever $P_m(y)>0$. Then
 \[\frac{P_a(y)}{P_b(y)}=\sum_mP_b(M=m\mid y)\frac{a_m}{b_m},\]
-so the likelihood ratio lies between the minimum and maximum component weight ratios with positive posterior weight.
-\end{theorem}
-\begin{proof}Substitute $P_a(y)=\sum_ma_mP_m(y)$ and $P_b(y)=\sum_mb_mP_m(y)$ and recognize $b_mP_m(y)/P_b(y)$ as the posterior under $H_b$.\end{proof}
-If $b_m=0$ where $a_m>0$, the finite ceiling need not exist.
-
-\begin{example}[One world observed one hundred times]Draw $M\sim\operatorname{Bernoulli}(\theta)$ once and set $Y_t=M$ noiselessly. Then $P_\theta(Y_1=\cdots=Y_T=1)=\theta$, not $\theta^T$. Comparing $\theta_a=3/4$ and $\theta_b=1/4$ gives Bayes factor $3$ for one repeated $1$ or one hundred. The factor $3^{100}$ describes a different experiment with an independent latent redraw before each observation.\end{example}
-A long transcript can identify the active component. It does not thereby become many independent samples from the hyperprior over components.
-
-\section{Latent prior/channel factorization}
-Let $K$ be an $m\times n$ row-stochastic channel, $\pi$ a latent prior, and $q=\pi K$. If $K$ is known, $\pi$ is identifiable iff the rows of $K$ are affinely independent. Rank failure yields a nonzero zero-sum $\delta$ with $\delta K=0$, hence distinct nearby interior priors with the same $q$. Broader latent-structure identifiability theory uses related rank and tensor conditions \citep{allman2009}.
-
-If both factors are unknown, one-view data admit a gauge.
-\begin{proposition}[Row-stochastic factorization gauge]\label{prop:gauge}
-Let $A$ be invertible, nonnegative, and row-stochastic. Put $K'=AK$ and $\pi'=\pi A^{-1}$. Whenever $\pi'$ is a valid prior, $\pi'K'=\pi K$.
-\end{proposition}
-\begin{proof}$(\pi A^{-1})(AK)=\pi K$. Nonnegative row-stochastic $A$ maps probability rows to probability rows.\end{proof}
-Near-identity stochastic transformations can therefore generate a continuum of equivalent factorizations for interior priors. Infinite one-view data identify $q$, not necessarily a unique $(\pi,K)$.
-
+so the ratio lies between the relevant minimum and maximum $a_m/b_m$.\end{theorem}
+\begin{proof}Expand both mixtures and identify $b_mP_m(y)/P_b(y)$ as the posterior weight.\end{proof}
+The support assumption is essential. If the denominator excludes a component allowed by the numerator, a finite ceiling need not exist.
+\begin{example}Draw $M\sim\operatorname{Bernoulli}(\theta)$ once and set $Y_t=M$. Then $P_\theta(Y_1=\cdots=Y_T=1)=\theta$, not $\theta^T$. Comparing $3/4$ to $1/4$ gives Bayes factor $3$ after one or one hundred repeated ones. $3^{100}$ belongs to a model that redraws $M$ independently one hundred times.\end{example}
+A long transcript can identify the active component; it is not thereby many samples from the hyperprior.
+\section{Prior/channel factorization}
+Let $K$ be a row-stochastic channel, $\pi$ a latent prior, and $q=\pi K$. Given known $K$, $\pi$ is identifiable iff the channel rows are affinely independent. Rank failure yields a nonzero zero-sum $\delta$ with $\delta K=0$. Broader latent-structure identifiability results use related rank/tensor conditions \citep{allman2009}.
+\begin{proposition}[One-view row-stochastic gauge]\label{prop:gauge}Let $A$ be invertible, nonnegative, and row-stochastic. Set $K'=AK$, $\pi'=\pi A^{-1}$. Whenever $\pi'$ is a valid prior, $\pi'K'=\pi K$.\end{proposition}
+\begin{proof}Direct multiplication. Row stochasticity preserves normalization and nonnegativity preserves channel rows.\end{proof}
+Thus infinite one-view data may identify $q$ without identifying a unique $(\pi,K)$.
 \section{Shared-latent views can change the experiment}
-For two conditionally independent observations sharing the same latent component, $T=K^\top D_\pi K$. The next theorem is scoped to Proposition~\ref{prop:gauge}; it is not unrestricted two-view latent-class identifiability.
-\begin{theorem}[Two-view rigidity inside the row-stochastic gauge]\label{thm:twoview}
-Assume $K$ has full row rank; $A$ is invertible, nonnegative, and row-stochastic; $K'=AK$; $\pi'=\pi A^{-1}$ is strictly positive; and the shared-latent two-view law is preserved. Then $A$ is a permutation matrix.
-\end{theorem}
-\begin{proof}Two-view equality gives $K^\top A^\top D_{\pi'}AK=K^\top D_\pi K$. Full row rank gives a right inverse $R$ with $KR=I$, so $A^\top D_{\pi'}A=D_\pi$. For $j\ne k$, $0=\sum_i\pi_i'A_{ij}A_{ik}$. Every term is nonnegative and $\pi_i'>0$, hence each row has at most one positive entry. Row stochasticity makes that entry one; invertibility makes selected columns distinct. Thus $A$ is a permutation.\end{proof}
-If the two observations instead use independently redrawn latent labels, their joint law is $q\otimes q$. ``More data'' is not a sufficient description of an experiment; persistence matters.
-
+For two conditionally independent observations sharing one latent component, $T=K^\top D_\pi K$. The following is only a gauge-orbit result, not unrestricted two-view latent-class identifiability.
+\begin{theorem}[Two-view rigidity inside the gauge]\label{thm:twoview}Assume $K$ has full row rank; $A$ is invertible, nonnegative and row-stochastic; $K'=AK$; $\pi'=\pi A^{-1}$ is strictly positive; and the shared-latent two-view law is preserved. Then $A$ is a permutation matrix.\end{theorem}
+\begin{proof}Two-view equality yields $K^\top A^\top D_{\pi'}AK=K^\top D_\pi K$. A right inverse of full-row-rank $K$ gives $A^\top D_{\pi'}A=D_\pi$. For $j\ne k$, $0=\sum_i\pi_i'A_{ij}A_{ik}$. All terms are nonnegative and $\pi_i'>0$, so each row has at most one positive entry. Row stochasticity makes it one; invertibility makes selected columns distinct.\end{proof}
+Independent latent redraws instead give $q\otimes q$. The causal coupling of observations, not merely their number, determines identification.
 \section{Implications for simulation arguments}
-A quantitative simulation posterior should answer five questions before arithmetic begins. First, what restricted hypothesis supplies a likelihood? ``Simulated'' alone is an implementation label, not a distribution. Second, what is the measure-bearing unit, and is it invariant to observationally null redescription? Third, what random variable was sampled once and what was resampled? Fourth, are latent prevalence and observation mechanisms identifiable from the proposed evidence? Fifth, which part of the update is ordinary likelihood evidence and which part is self-locating or anthropic conditioning?
+A numerical simulation posterior should specify: (i) the restricted hypothesis that supplies a likelihood; (ii) the measure-bearing unit and its invariance under redundant representation; (iii) what is sampled once and what is resampled; (iv) whether latent prevalence and observation mechanisms are identifiable; and (v) which update is ordinary likelihood evidence versus self-locating conditioning.
 
-Reference-class disputes are already recognized in the literature \citep{bostrom2002,franceschi2014,richmond2017}. Refinement invariance adds a distinct test: after choosing a reference class, duplicating a redundant latent description should not manufacture probability mass unless that duplication represents additional measure-bearing structure. Theorem~\ref{thm:persist} similarly forces a distinction between a population over worlds and observations generated inside one selected world.
-
+Reference-class sensitivity is established in the anthropic literature \citep{bostrom2002,franceschi2014,richmond2017}. Refinement invariance adds a separate test: after choosing a reference class, duplicating a redundant description should not manufacture probability mass unless the duplication represents additional measure-bearing structure.
 \section{Relation to recent simulation arguments}
-Bostrom's original paper establishes a trilemma concerning posthuman civilizations and ancestor simulations \citep{bostrom2003}. Weatherson challenges the indifference step connecting population ratios to self-locating credence \citep{weatherson2003}. Crawford argues that evidence that simulants exist need not be evidence that one is a simulant \citep{crawford2013}. Franceschi and Richmond emphasize reference-class sensitivity \citep{franceschi2014,richmond2017}.
+Bostrom supplies the classic trilemma \citep{bostrom2003}; Weatherson challenges its indifference step \citep{weatherson2003}; Crawford argues that evidence that simulants exist need not establish that one is a simulant \citep{crawford2013}; Franceschi and Richmond emphasize reference-class sensitivity \citep{franceschi2014,richmond2017}.
 
-Thomas's recent ``Simulation Expectation'' replaces a high realized simulant ratio with a high conditional expected ratio and explicitly chooses a reference class of people in worlds broadly like ours \citep{thomas2024}. Our framework is complementary rather than a direct refutation. A high expected ratio can support a posterior after the units entering that ratio and the mapping from world structure to observer measure are fixed. Refinement invariance asks whether that ratio is stable under observationally null redescription. Persistent-latent semantics ask whether empirical observations from our world are evidence about one selected world or repeated samples from the population over worlds. Factorization identifiability asks whether latent prevalence and the observation channel are separately recoverable from the evidence being used.
+Thomas's recent ``Simulation Expectation'' replaces a high realized simulant ratio with a high conditional expected ratio and uses a stipulated reference class of people in broadly similar worlds \citep{thomas2024}. Our framework is complementary. A high expected ratio can support a posterior after the units entering the ratio and the map from world structure to observer measure are fixed. Refinement invariance tests stability under observationally null redescription; persistent-latent semantics tests whether evidence is from one selected world or repeated world draws; factorization identifiability tests whether latent prevalence and observation channel can be separately recovered.
+\section{Scope, reproducibility, and conclusion}
+We do not show that Bostrom's trilemma is false, that simulation is unlikely, or that there is a privileged anthropic reference class. We do not claim probability weight is the only possible observer measure once additional physical or phenomenal structure is admitted. We do not claim two views identify arbitrary latent-class models. The novelty claim is modest: an integrated identifiability hierarchy applied to simulation-style anthropic Bayes, accompanied by an executable audit artifact.
 
-These requirements can be satisfied in an explicit model. If they are, our results do not block the subsequent Bayesian update. If they are not, a numerical posterior may be precise without being identified.
+The repository freezes this manuscript, its BibTeX database, a machine-readable theorem manifest, and a standard-library Python script that reproduces every numerical example in exact rational arithmetic and emits a deterministic JSON receipt. CI checks compilation of the audit code and all receipts. Passing CI is evidence that the artifact reproduces its declared finite calculations; it is not treated as proof of novelty or of a physical simulation hypothesis.
 
-\section{Scope and limitations}
-We do not show that Bostrom's trilemma is false, that simulation is unlikely, or that there is a privileged anthropic reference class. We do not prove probability weight is the only possible observer measure once additional physical or phenomenal structure is admitted. We do not claim that two views identify arbitrary latent-class models. We do not treat ordinary quantum phenomena, computational limits, or apparent ``glitches'' as generic evidence for simulation.
-
-Several results are deliberately elementary. Their role is to expose hidden changes of statistical experiment. The novelty claim of this paper is therefore modest: the integrated identifiability hierarchy and its application to simulation-style anthropic Bayes, together with an executable artifact that makes every finite example and algebraic boundary explicit. A final submission should be judged against the adjacent literatures rather than against project-specific terminology.
-
-\section{Reproducibility and audit contract}\label{sec:audit}
-The accompanying repository contains a frozen paper directory with the manuscript, BibTeX database, machine-readable theorem manifest, and a standard-library Python script that reproduces all numerical examples used in the paper. The script checks the clone-count example, the persistent-latent Bayes-factor example, an explicit one-view gauge witness, and the shared-latent two-view rigidity witness. It writes a deterministic JSON receipt and verifies the expected values exactly using rational arithmetic.
-
-The broader repository keeps theorem, model result, finite check, and open problem as distinct claim types. Passing CI validates the implementation and bounded receipts; it is not treated as proof of novelty or of a physical simulation hypothesis. The publication artifact likewise records literature provenance and nonclaims. This distinction is part of the scientific result: auditability should make assumptions easier to challenge, not make a theorem sound stronger than it is.
-
-\section{Conclusion}
-The simulation debate is often framed as a contest between very large numbers: numbers of simulated minds, civilizations, computations, or observer-moments. Large numbers matter only after the units being counted and the probability measure over those units are well-defined. The same is true of evidence. A long transcript can be highly informative about one persistent world while providing only one draw from a higher-level population of worlds. And an exact observed distribution can leave its latent prior/channel factorization nonidentifiable.
-
-The order of operations is therefore important:
+The order of operations is the central result:
 \[
-\boxed{\text{define the observation experiment}\;\to\;\text{quotient or justify representation}\;\to\;\
+\boxed{\text{observation model}\to\text{representation/measure}\to\text{sampling hierarchy}\to\text{identifiability}\to\text{Bayesian update}.}
+\]
+Bayesian arithmetic is powerful after these objects are defined. It cannot by itself choose the unit of counting, turn one persistent world into many independent worlds, or identify a latent factorization that the observable law leaves ambiguous.
+\bibliographystyle{plainnat}\bibliography{references}\end{document}
