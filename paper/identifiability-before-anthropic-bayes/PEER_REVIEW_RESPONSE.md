@@ -7,156 +7,118 @@ This response accompanies `PEER_REVIEW_LOOP.md`. The referee text is preserved t
 
 ## Review protocol
 
-For every comment we record:
-
-1. whether it changes mathematical correctness, scope, literature positioning, or reproducibility;
-2. whether the requested change is feasible without changing the research question;
-3. whether the change is accepted, modified, or rejected;
-4. the exact artifact changed;
-5. an independent verification target.
-
-A review item is considered resolved only after its verification target passes. The release condition is zero unresolved major items.
+For every comment we record whether it changes mathematical correctness, scope, literature positioning, or reproducibility; whether the requested change is feasible without changing the research question; the disposition; the exact artifact changed; and an independent verification target. A review item is resolved only after its verification target passes. The release condition is zero unresolved major items.
 
 ---
 
 # Round 1 response
 
-| ID | Impact | Feasible | Action taken | Verification |
-|---|---|---:|---|---|
-| A1 | Scope precision | Yes | Added declared transcript sigma-field `F_Y`; theorem and classifier are explicitly interface-relative. | Manuscript scope-guard test. |
-| A2 | Theorem boundary correctness | Yes | Added component-level absolute-continuity assumption and explicit support-mismatch remark/counterexample. | `claims.json`; exact negative test in `receipt.json`. |
-| A3 | Proof completeness | Yes | Promoted known-channel affine-rank identifiability to a formal proposition with both directions proved. | Analytic proof plus rank-deficient exact collision witness. |
-| A4 | Factorization scope | Yes | Made transformed-prior validity explicit and described the gauge as constructive, not exhaustive. | Claim nonclaims plus invalid-prior exact example. |
-| A5 | Proof readability | Yes | Introduced right inverse `R`, wrote `KR=I`, and performed the cancellation `R^T K^T X K R=X`. | Manuscript proof inspection. |
-| A6 | Novelty/scope correctness | Yes | Repeated “inside the row-stochastic gauge” scope in abstract, theorem, discussion, claim ledger, and limitations. | Scope-guard test. |
-| B1 | Conceptual correctness | Yes | Defined observational refinement as redescription and separated it from physical creation of additional measure-bearing observers. | Manuscript definition + limitations. |
-| B2 | Anthropic scope | Yes | Explicitly stated that the framework does not select SSA/SIA/FNC; added Neal/FNC discussion. | Manuscript related-work section. |
-| B3 | Literature positioning | Yes | Added Kipping and deepened Thomas comparison; framed the paper as complementary to Bayesian simulation analyses. | Bibliography + citation provenance. |
-| B4 | Contextual authenticity | Yes | Added Schneider--Olum subjectively-identical/anomalous-observer connection. | Bibliography + representation section. |
-| B5 | Scholarly tone | Yes | Replaced “central result” rhetoric with “organizing audit order/principle.” | Manuscript text test. |
-| C1 | End-to-end reproducibility | Yes | Added dedicated `paper-identifiability` workflow: tests, exact receipt, TeX build, reference checks, PDF preflight, hashes, artifact upload. | GitHub Actions release gate. |
-| C2 | Citation authenticity | Yes | Added `citation_provenance.json`; corrected bibliography metadata against publisher/primary records and preserved secondary-index discrepancies. | Provenance test + bibliography audit. |
-| C3 | Deterministic artifact | Yes | Receipt now contains canonical payload SHA-256 and must regenerate byte-for-byte. | Paper-specific test + clean-diff CI step. |
-| C4 | Stronger finite falsification | Yes | Increased two-state grid to denominator 8 and added exhaustive three-state denominator-3 audit. | Exact receipt: 32/2 and 108/6 admissible/preserving counts. |
-| C5 | False-positive resistance | Yes | Added support mismatch, rank-deficient prior collision, invalid transformed prior, and theorem-assumption boundary documentation. | Reproduction suite. |
-| C6 | Publication artifact integrity | Yes | Added PDF metadata, undefined-reference, overfull-box, release-hash, artifact-upload gates; human visual check remains explicitly separate. | Paper workflow plus manual release checklist. |
-
-**Round-1 disposition:** all substantive comments accepted. The paper changed materially in scope precision, proof completeness, literature positioning, and reproducibility.
+All substantive Round-1 comments were accepted. The revisions added the declared transcript sigma-field, the persistent-latent support boundary, a formal known-channel affine-rank proposition, explicit gauge assumptions, a dimensionally explicit right-inverse step, the narrow gauge-orbit scope of the two-view theorem, the representational-versus-physical duplication distinction, modern anthropic literature, citation provenance, deterministic receipt regeneration, stronger finite falsification, and a dedicated PDF-building release workflow. The full original referee comments and item-level Round-1 plan remain preserved in `PEER_REVIEW_LOOP.md`.
 
 ---
 
 # Round 2 — post-revision adversarial read
 
-Round 2 did not seek new research claims. It tried to falsify the revised theorem statements and proof boundaries.
-
 ## R2.1 — zero case omitted from rational additivity proof
-
-**Finding:** The theorem's domain included `w=0`, while the written proof explicitly handled only positive rational `p/n`.
-
-**Severity:** minor proof-completeness issue.  
-**Impact:** no change to theorem truth, but a literal proof gap.  
-**Feasible:** yes.  
-**Action:** ACCEPTED and applied. The proof now begins from `0=0+0`, yielding `mu(0)=2mu(0)` and hence `mu(0)=0`, before treating positive rationals.
+The theorem included `w=0`, while the proof initially treated positive rationals. **Accepted and fixed:** `0=0+0` gives `mu(0)=2mu(0)`, hence `mu(0)=0`.
 
 ## R2.2 — avoid formal `0/0` notation in persistent-latent identity
+The earlier notation formally ranged over inactive components. **Accepted and fixed:** the theorem defines an active set and sums only over components with positive denominator contribution.
 
-**Finding:** The support condition made the result correct, but the earlier notation summed over all components and treated inactive terms as zero by convention.
-
-**Severity:** minor notation/proof-audit issue.  
-**Impact:** removes an unnecessary formal ambiguity.  
-**Feasible:** yes.  
-**Action:** ACCEPTED and applied. The theorem now defines
-
-`I_b(y) = {m : b_m P_m(y) > 0}`
-
-and sums only over `I_b(y)`. The support condition guarantees every nonzero numerator contribution is in that set.
-
-## R2.3 — verify theorem assumptions are doing real work
-
-**Finding:** The two-view proof uses full row rank to obtain a right inverse, strict positivity to turn a zero sum of nonnegative terms into termwise zeros, and nonnegativity of `A` to prevent cancellation. Removing these assumptions invalidates the proof route.
-
-**Severity:** important scope confirmation, not an error.  
-**Action:** no theorem broadening. The assumptions remain prominent in theorem, claim ledger, audit, and limitations.
+## R2.3 — theorem assumptions do real work
+Full row rank, strict transformed-prior positivity, and nonnegativity of `A` are essential to the two-view proof route. **Disposition:** no broadening; assumptions remain explicit.
 
 ## R2.4 — citation metadata can fail independently of DOI correctness
-
-**Finding:** Bibliographic metadata errors survived valid DOI fields. Richmond's issue/pages were corrected; the publisher archive for *Philosophiques* places Franceschi's volume 43 issue 2 in 2016 despite some secondary indexes using 2014; the final BJPS record for Khawaja supplies pages 313--344.
-
-**Severity:** major scholarly-provenance issue.  
-**Action:** bibliography and `citation_provenance.json` now follow publisher/primary records while explicitly preserving secondary discrepancies.
+Publisher-level checking corrected Richmond and later resolved Franceschi/Khawaja metadata. **Disposition:** bibliography and provenance follow publisher/primary records while preserving secondary discrepancies.
 
 ## R2.5 — CI failures should not be papered over
-
-**Finding:** The new release gate exposed non-mathematical contract defects during iteration: an overly literal test phrase, non-byte-identical JSON formatting despite equal values, and a nonexistent Ubuntu package name.
-
-**Severity:** reproducibility engineering.  
-**Action:** fixes were made to the artifacts/workflow rather than weakening the release criteria. The receipt is byte-identical to its generator, the scope test checks semantic containment, and the TeX install uses valid Ubuntu packages.
+Release engineering exposed phrase-matching, JSON-format, package-name, and typography issues. **Disposition:** artifacts/workflow were fixed rather than weakening gates.
 
 ## R2.6 — novelty statement after literature expansion
+The component results overlap established literatures. **Disposition:** novelty claims remain limited to the integrated identifiability-first synthesis, boundary examples, and auditable artifact.
 
-**Finding:** The component theorems overlap substantially with established probability, anthropic, finite-mixture, multiview, and NMF literatures.
-
-**Severity:** major publication-positioning issue.  
-**Action:** the manuscript explicitly does **not** claim novelty for finite additivity, known-channel affine-rank identification, generic factorization ambiguity, or generic multiview identification. The claimed contribution is the integrated identifiability-first audit framework for simulation-style anthropic Bayes plus its boundary examples and auditable artifact.
-
-**Round-2 disposition:** minor revision. No high-confidence false theorem found inside the final stated assumptions. Two proof/notation issues were found and fixed. No new mathematical claim was added merely to answer review.
+**Round-2 disposition:** minor revision. No high-confidence false theorem found within final stated assumptions.
 
 ---
 
 # Round 3 — production/release review
 
-Round 3 is mechanical and adversarial rather than conceptual. Production failures are recorded as audit evidence rather than hidden.
+## R3.1 — author-metadata edit accidentally truncated manuscript source
+A partial file fetch was accidentally used for a whole-file replacement. **Release-blocking.** The exact pre-edit blob was recovered, the complete source restored, and tests now require late sections, bibliography, and `\end{document}`.
 
-## R3.1 — author-metadata edit accidentally truncated the manuscript source
+## R3.2 — audit documentation diverged from executable build
+`AUDIT.md` said Biber and named the wrong provenance file. **Fixed:** documentation now matches BibTeX and `citation_provenance.json`.
 
-**Finding:** An author-name correction was initially made from a partial file fetch. Because the repository write API replaces the whole file, that edit truncated the manuscript after the beginning of the two-view section.
+## R3.3 — stale author identity across artifacts
+The author correction initially existed only in part of the bundle. **Fixed:** release-bearing artifacts are normalized to **Jaden Fix** and tests reject the old name.
 
-**Severity:** release-blocking source-integrity defect.  
-**Impact:** a release built from that commit would have been incomplete even though the intended mathematical revision was only metadata.  
-**Action:** the exact pre-edit full manuscript blob was recovered by content SHA, restored in full, and then the author was changed to `Jaden Fix`. The release gate now checks author metadata and the paper tests check the presence of late-manuscript sections so a future truncation cannot silently pass.
+## R3.4 — publisher bibliography corrections
+Publisher records fixed Franceschi to volume 43(2), 2016 and Khawaja to pages 313--344. **Fixed and pinned in tests.**
 
-## R3.2 — audit documentation diverged from the executable build
+---
 
-**Finding:** `AUDIT.md` described Biber while the workflow actually used BibTeX, and named `citation_audit.json` although the tracked file is `citation_provenance.json`.
+# Round 4 — probability foundations, novelty, and reproducibility semantics
 
-**Severity:** reproducibility-documentation defect.  
-**Action:** the audit contract was aligned to the executable workflow and actual provenance filename.
+Round 4 targeted conceptual overreach after the production layer was stable.
 
-## R3.3 — author identity was stale in multiple release artifacts
+## R4.1 — “not estimable before identifiable” was too strong
+**Finding:** Bayesian procedures can produce posterior distributions for nonidentified parameters; the actual problem is lack of point-identification from the declared observation law.
 
-**Finding:** manuscript metadata was corrected to Jaden Fix while README, claim/review metadata, workflow assertions, and PR text still contained the previous name.
+**Severity:** important statistical wording correction.  
+**Action:** replaced the sentence with: data cannot point-identify a mixture parameter when distinct parameter values induce the same declared observation law.
 
-**Severity:** publication-integrity defect.  
-**Action:** the bundle is being normalized to `Jaden Fix`; tests reject stale author metadata in release-bearing artifacts.
+## R4.2 — pointwise likelihood notation needed a declared representation
+**Finding:** Writing `P_m(y)` is naturally valid for discrete transcripts but, for continuous transcripts, a pointwise density requires a common dominating measure. Without that declaration, the theorem mixed mass-function and measure notation.
 
-## R3.4 — primary-source bibliography pass changed final metadata
+**Severity:** mathematical scope clarification.  
+**Action:** the manuscript now assumes either a discrete transcript or component laws dominated by one common sigma-finite measure, writes `p_m(y)` for mass/density, and records the domination condition in `claims.json`, `README.md`, `AUDIT.md`, and the limitations section. The observable-equivalence theorem was also upgraded to the representation-free Radon--Nikodym statement `dP_S/dP_B=1` almost surely.
 
-**Finding:** publisher-level records resolved or sharpened metadata that secondary indexes had obscured: Franceschi's issue year is 2016 in the Érudit archive and Khawaja's final BJPS pages are 313--344.
+## R4.3 — local “continuous gauge” claim needed a constructive argument
+**Finding:** the pointwise gauge proposition did not by itself prove that a nontrivial continuum of valid factorizations exists around every intended example.
 
-**Severity:** scholarly-provenance correction.  
-**Action:** bibliography and provenance ledger updated; future tests assert these resolved fields.
+**Severity:** scope/proof-support issue.  
+**Action:** the manuscript now explicitly constructs `A_t=(1-t)I+tB` for a strictly positive prior and a channel with at least two distinct rows, choosing a row-stochastic `B` with `BK != K`. For sufficiently small positive `t`, invertibility and transformed-prior positivity follow by continuity.
 
-## Round-3 release checklist
+## R4.4 — transformed prior normalization can be stated more sharply
+**Finding:** if `A` is invertible and row-stochastic, `A 1=1` implies `A^{-1}1=1`; therefore `pi A^{-1}` automatically sums to one. Nonnegativity, not normalization, is the substantive validity condition.
 
-Round 3 is complete only when all of the following are true on the same final commit:
+**Action:** proof and audit wording corrected.
 
-- [ ] paper-specific Python tests pass;
-- [ ] `reproduce.py` regenerates `receipt.json` byte-for-byte;
-- [ ] ordinary repository CI passes;
-- [ ] full LaTeX/BibTeX build succeeds;
-- [ ] no unresolved citations/references;
-- [ ] no overfull boxes;
-- [ ] PDF title and author metadata are correct;
-- [ ] source, provenance, receipt, review/audit, and PDF hashes are produced;
-- [ ] GitHub Actions uploads the release-candidate PDF artifact;
-- [ ] current final PDF receives human visual inspection;
-- [ ] PR has no unresolved review threads;
-- [ ] zero unresolved major synthetic-review comments.
+## R4.5 — directly adjacent simulation literature was missing
+**Finding:** Bostrom--Kulczycki (2011) explicitly patches a mathematical non sequitur in the original simulation argument, and Fallis--Lewis (2023) directly analyzes simulation as self-location. Both are close to this paper's methodological thesis.
 
-Until every box is checked on the same commit, the paper remains a release candidate rather than a frozen preprint.
+**Severity:** major literature-positioning issue.  
+**Action:** both were publisher-verified, added to the bibliography/provenance ledger, and engaged in the introduction/related-work discussion.
+
+## R4.6 — exact receipt reproducibility differs from PDF reproducibility
+**Finding:** the exact rational JSON receipt can and should be byte-identical. A PDF generated by TeX may contain version/timestamp-dependent bytes, so demanding cross-environment byte identity would overstate reproducibility.
+
+**Severity:** reproducibility semantics.  
+**Action:** CI now records Python/pdfTeX/BibTeX/Poppler and runner provenance in `toolchain.txt`, hashes the release-specific PDF, and continues to require byte-identical regeneration only for `receipt.json`.
+
+**Round-4 disposition:** minor-to-moderate revision. All six findings were feasible and applied. No new substantive simulation-theory claim was introduced.
+
+---
+
+# Release checklist
+
+The release remains fail-closed. On one final commit it must satisfy:
+
+- [ ] paper-specific tests and exact receipt regeneration;
+- [ ] ordinary Python 3.11/3.12/3.13 repository CI;
+- [ ] full LaTeX/BibTeX build;
+- [ ] zero unresolved citations/references and zero overfull boxes;
+- [ ] correct title/author PDF metadata;
+- [ ] toolchain provenance and release hashes;
+- [ ] uploaded release-candidate artifact;
+- [ ] fresh human visual inspection of every page;
+- [ ] zero unresolved GitHub review threads;
+- [ ] zero unresolved major synthetic-review findings.
+
+Until every item holds on the same final commit, the paper remains a release candidate rather than a frozen preprint.
 
 ---
 
 # External-review boundary
 
-This loop is intentionally rigorous but it is still an internal synthetic review. It must not be described as journal peer review or independent expert validation. Before external journal submission, the recommended next step is one adversarial read from a specialist in anthropic/self-locating inference and one from a specialist in finite-mixture or latent-variable identifiability. Their comments should be appended as a new, clearly labeled external-review round rather than overwritten.
+This loop is rigorous but internal and synthetic. It must not be described as journal peer review or independent expert validation. Before journal submission, the recommended next step remains one adversarial read from a specialist in anthropic/self-locating inference and one from a specialist in finite-mixture or latent-variable identifiability. Their comments should be appended as a clearly labeled external-review round rather than overwriting this audit history.
