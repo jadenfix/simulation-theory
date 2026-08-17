@@ -1,7 +1,7 @@
 # Author response to synthetic peer review
 
 **Paper:** *Identifiability Before Anthropic Bayes*  
-**Author:** Jaden Figgs, Tempera — `Jaden@Tempera.dev`
+**Author:** Jaden Fix, Tempera — `Jaden@Tempera.dev`
 
 This response accompanies `PEER_REVIEW_LOOP.md`. The referee text is preserved there verbatim. The reports are synthetic internal adversarial reviews, not external endorsements or journal peer review.
 
@@ -35,7 +35,7 @@ A review item is considered resolved only after its verification target passes. 
 | B4 | Contextual authenticity | Yes | Added Schneider--Olum subjectively-identical/anomalous-observer connection. | Bibliography + representation section. |
 | B5 | Scholarly tone | Yes | Replaced “central result” rhetoric with “organizing audit order/principle.” | Manuscript text test. |
 | C1 | End-to-end reproducibility | Yes | Added dedicated `paper-identifiability` workflow: tests, exact receipt, TeX build, reference checks, PDF preflight, hashes, artifact upload. | GitHub Actions release gate. |
-| C2 | Citation authenticity | Yes | Added `citation_provenance.json`; corrected Richmond metadata and preserved Franceschi date discrepancy. | Provenance test + bibliography audit. |
+| C2 | Citation authenticity | Yes | Added `citation_provenance.json`; corrected bibliography metadata against publisher/primary records and preserved secondary-index discrepancies. | Provenance test + bibliography audit. |
 | C3 | Deterministic artifact | Yes | Receipt now contains canonical payload SHA-256 and must regenerate byte-for-byte. | Paper-specific test + clean-diff CI step. |
 | C4 | Stronger finite falsification | Yes | Increased two-state grid to denominator 8 and added exhaustive three-state denominator-3 audit. | Exact receipt: 32/2 and 108/6 admissible/preserving counts. |
 | C5 | False-positive resistance | Yes | Added support mismatch, rank-deficient prior collision, invalid transformed prior, and theorem-assumption boundary documentation. | Reproduction suite. |
@@ -80,17 +80,17 @@ and sums only over `I_b(y)`. The support condition guarantees every nonzero nume
 
 ## R2.4 — citation metadata can fail independently of DOI correctness
 
-**Finding:** The initial Richmond entry had the wrong issue/pages despite the correct DOI; Franceschi has conflicting year metadata across indexes/reprints.
+**Finding:** Bibliographic metadata errors survived valid DOI fields. Richmond's issue/pages were corrected; the publisher archive for *Philosophiques* places Franceschi's volume 43 issue 2 in 2016 despite some secondary indexes using 2014; the final BJPS record for Khawaja supplies pages 313--344.
 
-**Severity:** major scholarly-provenance issue, already caught during audit.  
-**Action:** corrected Richmond to `Ratio 30(3):221--238`; preserved the Franceschi discrepancy explicitly instead of silently choosing one history; added provenance ledger.
+**Severity:** major scholarly-provenance issue.  
+**Action:** bibliography and `citation_provenance.json` now follow publisher/primary records while explicitly preserving secondary discrepancies.
 
 ## R2.5 — CI failures should not be papered over
 
-**Finding:** The new release gate exposed three non-mathematical contract defects during iteration: an overly literal test phrase, non-byte-identical JSON formatting despite equal values, and a nonexistent Ubuntu package name.
+**Finding:** The new release gate exposed non-mathematical contract defects during iteration: an overly literal test phrase, non-byte-identical JSON formatting despite equal values, and a nonexistent Ubuntu package name.
 
 **Severity:** reproducibility engineering.  
-**Action:** fixes were made to the artifacts/workflow rather than weakening the release criteria. The receipt is now byte-identical to its generator, the scope test checks semantic containment, and the TeX install uses valid Ubuntu packages.
+**Action:** fixes were made to the artifacts/workflow rather than weakening the release criteria. The receipt is byte-identical to its generator, the scope test checks semantic containment, and the TeX install uses valid Ubuntu packages.
 
 ## R2.6 — novelty statement after literature expansion
 
@@ -105,7 +105,40 @@ and sums only over `I_b(y)`. The support condition guarantees every nonzero nume
 
 # Round 3 — production/release review
 
-Round 3 is mechanical and adversarial rather than conceptual. It is complete only when all of the following are true on the same final commit:
+Round 3 is mechanical and adversarial rather than conceptual. Production failures are recorded as audit evidence rather than hidden.
+
+## R3.1 — author-metadata edit accidentally truncated the manuscript source
+
+**Finding:** An author-name correction was initially made from a partial file fetch. Because the repository write API replaces the whole file, that edit truncated the manuscript after the beginning of the two-view section.
+
+**Severity:** release-blocking source-integrity defect.  
+**Impact:** a release built from that commit would have been incomplete even though the intended mathematical revision was only metadata.  
+**Action:** the exact pre-edit full manuscript blob was recovered by content SHA, restored in full, and then the author was changed to `Jaden Fix`. The release gate now checks author metadata and the paper tests check the presence of late-manuscript sections so a future truncation cannot silently pass.
+
+## R3.2 — audit documentation diverged from the executable build
+
+**Finding:** `AUDIT.md` described Biber while the workflow actually used BibTeX, and named `citation_audit.json` although the tracked file is `citation_provenance.json`.
+
+**Severity:** reproducibility-documentation defect.  
+**Action:** the audit contract was aligned to the executable workflow and actual provenance filename.
+
+## R3.3 — author identity was stale in multiple release artifacts
+
+**Finding:** manuscript metadata was corrected to Jaden Fix while README, claim/review metadata, workflow assertions, and PR text still contained the previous name.
+
+**Severity:** publication-integrity defect.  
+**Action:** the bundle is being normalized to `Jaden Fix`; tests reject stale author metadata in release-bearing artifacts.
+
+## R3.4 — primary-source bibliography pass changed final metadata
+
+**Finding:** publisher-level records resolved or sharpened metadata that secondary indexes had obscured: Franceschi's issue year is 2016 in the Érudit archive and Khawaja's final BJPS pages are 313--344.
+
+**Severity:** scholarly-provenance correction.  
+**Action:** bibliography and provenance ledger updated; future tests assert these resolved fields.
+
+## Round-3 release checklist
+
+Round 3 is complete only when all of the following are true on the same final commit:
 
 - [ ] paper-specific Python tests pass;
 - [ ] `reproduce.py` regenerates `receipt.json` byte-for-byte;
