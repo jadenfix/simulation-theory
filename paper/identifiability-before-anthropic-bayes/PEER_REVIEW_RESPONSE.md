@@ -130,6 +130,54 @@ Round 4 targeted conceptual overreach after the production layer was stable.
 
 ---
 
+# Round 6 — measure theory, theorem scope, and release semantics
+
+The complete synthetic review report is preserved in `ROUND6_MEASURE_THEORETIC_AUDIT.md`. The following dispositions record how each finding affects the release candidate.
+
+## R6.1 — density versions are only defined almost everywhere
+**Finding:** in the dominated continuous case, pointwise densities are versions defined only up to dominating-measure null sets.
+
+**Action:** the manuscript and claim ledger now state that the density identity is interpreted for chosen Radon--Nikodym versions and therefore almost everywhere. Null-set density values are not assigned invariant evidential meaning.
+
+## R6.2 — finite component families are always commonly dominated
+**Finding:** for a finite family, `lambda = sum_m P_m` is a finite dominating measure.
+
+**Action:** the claim ledger and review make clear that common domination is a representation device for the pointwise density formula, not an additional empirical restriction on finite mixtures.
+
+## R6.3 — the refinement tensor formula has conditional-IID same-channel scope
+**Finding:** `K^{\otimes T}` assumes conditionally independent observations generated through the same channel after one persistent latent draw.
+
+**Action:** the claim ledger now states that scope and expressly disclaims arbitrary dependent or view-specific observation processes.
+
+## R6.4 — the repeated-view algebra is not an independent priority claim
+**Finding:** the monomiality/permutation step is elementary inside the declared gauge.
+
+**Action:** the claim status now says “elementary scoped gauge-orbit rigidity; no independent priority claim.” The paper's intended contribution remains the integrated audit framework, not the isolated algebraic step.
+
+## R6.5 — the Franceschi citation key is historically stale but the printed record is correct
+**Finding:** the internal key `franceschi2014` no longer matches the publisher issue year 2016.
+
+**Action:** documented but not renamed in this release candidate, because a key-only migration would add repository churn without changing the printed citation or provenance record.
+
+## R6.6 — submission declarations require author-confirmed facts
+**Finding:** funding, competing-interest, data/code availability, and venue-specific declarations should not be fabricated by the audit process.
+
+**Action:** deferred to venue preparation and explicit author confirmation. This is not a mathematical preprint blocker.
+
+## R6.7 — author identity must be release-wide
+**Finding:** attribution errors are release blocking.
+
+**Action:** author identity is pinned as **Jaden Fix** in manuscript source, PDF metadata gate, claims, README, audit/review files, and tests.
+
+## R6.8 — exact JSON and TeX PDFs have different reproducibility semantics
+**Finding:** the rational receipt can be byte-identical; the PDF may vary with toolchain/timestamps.
+
+**Action:** receipt regeneration remains byte-for-byte. The PDF is release-hashed together with source commit and toolchain provenance, and the current PDF must be visually inspected.
+
+**Round-6 disposition:** pass the seven scoped mathematical claims as an internally audited preprint candidate, conditional on a fresh final-commit CI/PDF release run. No unresolved high-confidence mathematical false positive was found. This is still synthetic internal review, not independent peer review.
+
+---
+
 # Release checklist
 
 The release remains fail-closed. On one final commit it must satisfy:
