@@ -1,0 +1,13 @@
+{
+  "paper": "Identifiability Before Anthropic Bayes",
+  "author": "Jaden Figgs",
+  "email": "Jaden@Tempera.dev",
+  "claims": [
+    {"id":"P1-T1","name":"observable-equivalence ceiling","type":"theorem","status":"classical consequence","assumptions":["identical allowed transcript laws"],"nonclaims":["does not imply restricted simulator models are untestable"]},
+    {"id":"P1-T2","name":"shared-latent refinement invariance","type":"theorem","status":"elementary structural lemma","assumptions":["clone weights sum to parent weight","clone conditional laws identical"],"nonclaims":["does not identify a privileged anthropic measure"]},
+    {"id":"P1-T3","name":"rational refinement-additive uniqueness","type":"theorem","status":"elementary rational additivity","assumptions":["local weight-only rule","normalization","finite rational split additivity"],"nonclaims":["does not cover measures using additional physical or phenomenal structure"]},
+    {"id":"P1-T4","name":"persistent-latent likelihood-ratio ceiling","type":"theorem","status":"mixture identity applied to hierarchical sampling","assumptions":["one persistent latent draw","common conditional transcript laws","denominator absolute continuity on realized support"],"nonclaims":["does not prevent identifying the active component from a long transcript"]},
+    {"id":"P1-T5","name":"row-stochastic one-view gauge","type":"proposition","status":"constructive nonidentifiability witness","assumptions":["invertible nonnegative row-stochastic transform","transformed prior remains valid"],"nonclaims":["does not classify every possible latent nonidentifiability"]},
+    {"id":"P1-T6","name":"two-view rigidity inside row-stochastic gauge","type":"theorem","status":"scoped gauge-orbit theorem","assumptions":["full row rank channel","strictly positive transformed prior","nonnegative invertible row-stochastic gauge","same persistent latent across two conditionally independent views"],"nonclaims":["not unrestricted two-view latent-class identifiability"]}
+  ]
+}
