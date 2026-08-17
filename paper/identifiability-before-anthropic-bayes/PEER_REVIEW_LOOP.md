@@ -1,8 +1,10 @@
 # Synthetic peer-review loop
 
 **Paper:** *Identifiability Before Anthropic Bayes: Representation Invariance, Persistent Latents, and Observable Equivalence in Simulation Arguments*  
-**Author:** Jaden Figgs, Tempera — `Jaden@Tempera.dev`  
+**Author:** Jaden Fix, Tempera — `Jaden@Tempera.dev`  
 **Purpose:** internal adversarial review before external circulation. These are simulated referee reports, not external endorsements.
+
+**Preservation note:** the referee comments below are preserved as originally written. Only administrative author metadata has been corrected.
 
 The loop is intentionally fail-closed: comments are preserved even when rejected; every comment receives a severity, expected impact, feasibility assessment, disposition, and post-change verification target.
 
@@ -186,9 +188,9 @@ The loop is intentionally fail-closed: comments are preserved even when rejected
 
 # Response / implementation ledger
 
-This section is updated after the manuscript and artifact are revised. A comment is not marked resolved merely because text changed; its verification target must also pass.
+This is the frozen Round-1 planning ledger. Final dispositions, post-revision findings, and production incidents are recorded in `PEER_REVIEW_RESPONSE.md`.
 
-| ID | Planned change | Verification target | Status |
+| ID | Planned change | Verification target | Status at Round-1 freeze |
 |---|---|---|---|
 | A1 | qualify classifier/statistic by declared transcript sigma-field | theorem text + claims ledger | pending |
 | A2 | explicit common-support assumption and support-mismatch example | proof + reproduction boundary test | pending |
