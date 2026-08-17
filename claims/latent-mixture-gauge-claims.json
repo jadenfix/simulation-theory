@@ -1,0 +1,77 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T254",
+      "title": "Invertible row-stochastic latent gauges preserve a one-view mixture law under the compensating prior transformation",
+      "kind": "THEOREM",
+      "scope": "finite latent mixture q=pi K, invertible row-stochastic A, and transformed prior pi A^{-1} remaining nonnegative",
+      "assumptions": ["component and observed alphabets are finite"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#2-exact-gauge-transformation", "src/simtheory/latent_mixture_gauge.py:exact_latent_mixture_gauge_transform", "tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["observational equivalence is not physical identity"]
+    },
+    {
+      "id": "ST-T255",
+      "title": "An invertible row-stochastic latent gauge preserves affine rank of the component emission rows",
+      "kind": "THEOREM",
+      "scope": "finite categorical channels transformed as K'=AK",
+      "assumptions": ["A is invertible and row-stochastic"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#3-full-affine-rank-survives-the-gauge", "src/simtheory/latent_mixture_gauge.py:affine_row_rank", "tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["conditioning constants need not be preserved"]
+    },
+    {
+      "id": "ST-T256",
+      "title": "Interior finite mixtures admit a local continuum of nontrivial observationally equivalent prior-channel factorizations",
+      "kind": "THEOREM",
+      "scope": "interior latent prior and a channel with at least two affinely independent rows",
+      "assumptions": ["a nonidentity row-stochastic perturbation is chosen sufficiently close to the identity so the transformed prior remains nonnegative"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#4-there-is-a-local-continuum-not-merely-one-counterexample", "tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["the theorem does not characterize every observational equivalence"]
+    },
+    {
+      "id": "ST-T257",
+      "title": "Full affine identifiability conditional on a known channel does not imply joint identifiability of unknown mixing weights and unknown emission rows",
+      "kind": "THEOREM",
+      "scope": "one-view finite latent-mixture observations with both pi and K allowed to vary",
+      "assumptions": ["only the one-view mixture law pi K is observed"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#1-conditional-identifiability-is-not-joint-identifiability", "docs/latent-mixture-gauge-nonidentifiability.md#5-exact-binary-witness", "tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["additional views, labels, interventions, or structural restrictions can restore identifiability"]
+    },
+    {
+      "id": "ST-T258",
+      "title": "Infinite one-view sample size cannot resolve exact latent-mixture gauge equivalence",
+      "kind": "THEOREM",
+      "scope": "two valid factorizations producing exactly the same one-view observed distribution",
+      "assumptions": ["sampling only refines knowledge of that same marginal observed law"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#6-what-breaks-the-gauge", "docs/latent-mixture-gauge-nonidentifiability.md#7-consequence-for-simulation-style-bayesian-arguments"],
+      "nonclaims": ["the result is structural nonidentifiability rather than a statement about finite-sample efficiency"]
+    },
+    {
+      "id": "ST-M75",
+      "title": "A binary nonpermutation gauge changes prior (1/2,1/2) to (2/3,1/3) while preserving observed law (1/2,1/2)",
+      "kind": "MODEL_RESULT",
+      "scope": "binary identity channel and upper-triangular gauge with first row (3/4,1/4)",
+      "assumptions": ["exact rational arithmetic"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#5-exact-binary-witness", "tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["the witness is one member of a continuum"]
+    },
+    {
+      "id": "ST-M76",
+      "title": "A three-component nonpermutation stochastic gauge preserves full affine rank and the uniform observed law while changing both prior and channel",
+      "kind": "MODEL_RESULT",
+      "scope": "identity K3, uniform prior, and the exact upper-triangular gauge in repository tests",
+      "assumptions": ["the transformed prior remains in the simplex"],
+      "evidence": ["tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["the example does not exhaust higher-dimensional gauge freedom"]
+    },
+    {
+      "id": "ST-F46",
+      "title": "Bounded exact latent-mixture gauge audit",
+      "kind": "FINITE_CHECK",
+      "scope": "binary witness, rational near-identity family, three-component full-rank witness, independent same-law factorization, and invalid-gauge rejection",
+      "assumptions": ["all matrices use exact rational arithmetic"],
+      "evidence": ["src/simtheory/latent_mixture_gauge.py", "tests/test_latent_mixture_gauge.py"],
+      "nonclaims": ["bounded examples are not empirical evidence for simulation"]
+    }
+  ]
+}
