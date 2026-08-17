@@ -21,6 +21,8 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     ):
         assert (PAPER / name).is_file()
     claims = json.loads((PAPER / "claims.json").read_text())
+    assert claims["author"] == "Jaden Fix"
+    assert claims["email"] == "Jaden@Tempera.dev"
     assert len(claims["claims"]) == 7
     two_view = next(c for c in claims["claims"] if c["id"] == "P1-T7")
     assert "not unrestricted two-view latent-class identifiability" in two_view["nonclaims"]
@@ -60,6 +62,8 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
 def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
     tex = (PAPER / "paper.tex").read_text()
     bib = (PAPER / "references.bib").read_text()
+    assert "\\author{Jaden Fix" in tex
+    assert "pdfauthor={Jaden Fix}" in tex
     assert "does \\emph{not} state that arbitrary two-view latent-class models are globally identifiable" in tex
     assert "Support mismatch" in tex
     assert "Physical duplication" in tex
@@ -67,6 +71,11 @@ def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
     assert "organizing principle" in tex
     assert "I_b(y)=\\{m:b_mP_m(y)>0\\}" in tex
     assert "First split $0=0+0$" in tex
+    # Source-integrity guards: these late sections must survive whole-file replacements.
+    assert "\\section{Limitations}" in tex
+    assert "\\section{Conclusion}" in tex
+    assert "\\bibliography{references}" in tex
+    assert tex.rstrip().endswith("\\end{document}")
     for key in (
         "bostrom2003",
         "weatherson2003",
@@ -85,6 +94,22 @@ def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
     ):
         assert ("{" + key + ",") in bib
         assert key in tex
+    assert "year={2016}" in bib.split("@article{franceschi2014", 1)[1].split("@article{richmond2017", 1)[0]
+    assert "pages={313--344}" in bib.split("@article{khawaja2026", 1)[1].split("@article{allman2009", 1)[0]
+
+
+def test_release_bearing_artifacts_use_correct_author_identity():
+    release_files = (
+        "paper.tex",
+        "README.md",
+        "AUDIT.md",
+        "PEER_REVIEW_RESPONSE.md",
+        "claims.json",
+    )
+    for name in release_files:
+        text = (PAPER / name).read_text()
+        assert "Jaden Figgs" not in text
+        assert "Jaden Fix" in text
 
 
 def test_citation_provenance_covers_core_references():
@@ -101,6 +126,9 @@ def test_citation_provenance_covers_core_references():
         assert key in entries
         assert entries[key]["verification_status"] in {"publisher_verified", "primary_repository_verified"}
         assert entries[key]["source"]
+    assert entries["franceschi2014"]["verification_status"] == "publisher_verified_with_secondary_discrepancy"
+    assert "2016" in entries["franceschi2014"]["notes"]
+    assert "313-344" in entries["khawaja2026"]["notes"]
 
 
 def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
@@ -111,5 +139,6 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "Round 1 response" in response
     assert "Round 2" in response
     assert "R2.1" in response and "R2.2" in response
+    assert "R3.1" in response and "truncated" in response.lower()
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
