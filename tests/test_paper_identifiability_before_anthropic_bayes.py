@@ -28,8 +28,11 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert "not unrestricted two-view latent-class identifiability" in two_view["nonclaims"]
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
+    assert any("common sigma-finite measure" in x for x in persistent["assumptions"])
     affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
     assert any("known channel" in x for x in affine["assumptions"])
+    gauge = next(c for c in claims["claims"] if c["id"] == "P1-T6")
+    assert any("interior prior" in x for x in gauge["nonclaims"])
 
 
 def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
@@ -59,21 +62,27 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
     assert receipt["known_channel_identifiability"]["rank_deficient_collision_prior_a"] != receipt["known_channel_identifiability"]["rank_deficient_collision_prior_b"]
 
 
-def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
+def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     tex = (PAPER / "paper.tex").read_text()
     bib = (PAPER / "references.bib").read_text()
     assert "\\author{Jaden Fix" in tex
     assert "pdfauthor={Jaden Fix}" in tex
+    assert "\\frac{dP_S}{dP_B}=1" in tex
     assert "does \\emph{not} state that arbitrary two-view latent-class models are globally identifiable" in tex
     assert "Support mismatch" in tex
     assert "Physical duplication" in tex
     assert "Known-channel affine-rank identifiability" in tex
     assert "organizing principle" in tex
-    assert "I_b(y)=\\{m:b_mP_m(y)>0\\}" in tex
+    assert "I_b(y)=\\{m:b_mp_m(y)>0\\}" in tex
+    assert "common $\\sigma$-finite measure" in tex
+    assert "Radon--Nikodym density" in tex
     assert "First split $0=0+0$" in tex
     assert "Data cannot point-identify a mixture parameter" in tex
     assert "not estimable before it is identifiable" not in tex
     assert "A^{-1}\\mathbf 1=\\mathbf 1" in tex
+    assert "A_t=(1-t)I+tB" in tex
+    assert "receipt.json` is required to regenerate byte-for-byte" in tex
+    assert "does not claim that PDF bytes must remain invariant" in tex
     # Source-integrity guards: these late sections must survive whole-file replacements.
     assert "\\section{Limitations}" in tex
     assert "\\section{Conclusion}" in tex
@@ -149,5 +158,16 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "Round 2" in response
     assert "R2.1" in response and "R2.2" in response
     assert "R3.1" in response and "truncated" in response.lower()
+    assert "Round 4" in response
+    for item in ("R4.1", "R4.2", "R4.3", "R4.4", "R4.5", "R4.6"):
+        assert item in response
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
+
+
+def test_workflow_records_toolchain_and_checks_correct_author():
+    workflow = (ROOT / ".github" / "workflows" / "paper-identifiability.yml").read_text()
+    assert "Record toolchain provenance" in workflow
+    assert "toolchain.txt" in workflow
+    assert "Author:.*Jaden Fix" in workflow
+    assert "Jaden Figgs" not in workflow
