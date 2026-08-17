@@ -26,7 +26,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
     affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
-    assert "known channel" in affine["assumptions"]
+    assert any("known channel" in x for x in affine["assumptions"])
 
 
 def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
