@@ -1,13 +1,65 @@
 {
+  "schema": "identifiability-before-anthropic-bayes/claims-v2",
   "paper": "Identifiability Before Anthropic Bayes",
   "author": "Jaden Figgs",
+  "affiliation": "Tempera",
   "email": "Jaden@Tempera.dev",
   "claims": [
-    {"id":"P1-T1","name":"observable-equivalence ceiling","type":"theorem","status":"classical consequence","assumptions":["identical allowed transcript laws"],"nonclaims":["does not imply restricted simulator models are untestable"]},
-    {"id":"P1-T2","name":"shared-latent refinement invariance","type":"theorem","status":"elementary structural lemma","assumptions":["clone weights sum to parent weight","clone conditional laws identical"],"nonclaims":["does not identify a privileged anthropic measure"]},
-    {"id":"P1-T3","name":"rational refinement-additive uniqueness","type":"theorem","status":"elementary rational additivity","assumptions":["local weight-only rule","normalization","finite rational split additivity"],"nonclaims":["does not cover measures using additional physical or phenomenal structure"]},
-    {"id":"P1-T4","name":"persistent-latent likelihood-ratio ceiling","type":"theorem","status":"mixture identity applied to hierarchical sampling","assumptions":["one persistent latent draw","common conditional transcript laws","denominator absolute continuity on realized support"],"nonclaims":["does not prevent identifying the active component from a long transcript"]},
-    {"id":"P1-T5","name":"row-stochastic one-view gauge","type":"proposition","status":"constructive nonidentifiability witness","assumptions":["invertible nonnegative row-stochastic transform","transformed prior remains valid"],"nonclaims":["does not classify every possible latent nonidentifiability"]},
-    {"id":"P1-T6","name":"two-view rigidity inside row-stochastic gauge","type":"theorem","status":"scoped gauge-orbit theorem","assumptions":["full row rank channel","strictly positive transformed prior","nonnegative invertible row-stochastic gauge","same persistent latent across two conditionally independent views"],"nonclaims":["not unrestricted two-view latent-class identifiability"]}
+    {
+      "id": "P1-T1",
+      "name": "observable-equivalence ceiling",
+      "type": "theorem",
+      "status": "classical consequence",
+      "assumptions": ["the competing hypotheses induce identical probability measures on the complete allowed transcript space"],
+      "nonclaims": ["does not imply restricted simulator models are untestable", "Bayes factors on zero-probability events are not assigned the value one"]
+    },
+    {
+      "id": "P1-T2",
+      "name": "shared-latent representational refinement invariance",
+      "type": "theorem",
+      "status": "elementary structural lemma",
+      "assumptions": ["clone weights sum to the parent weight", "clone conditional observable laws are identical", "the refinement is representational rather than the physical creation of additional measure-bearing observers"],
+      "nonclaims": ["does not identify a privileged anthropic measure", "does not say physically creating new conscious observers leaves observer measure unchanged"]
+    },
+    {
+      "id": "P1-T3",
+      "name": "rational refinement-additive uniqueness",
+      "type": "theorem",
+      "status": "elementary rational finite additivity",
+      "assumptions": ["local rule depends only on rational probability weight", "mu(1)=1", "finite split additivity for nonnegative rational weights"],
+      "nonclaims": ["not claimed as mathematically novel", "does not cover observer measures using additional physical or phenomenal structure"]
+    },
+    {
+      "id": "P1-T4",
+      "name": "persistent-latent likelihood-ratio identity and ceiling",
+      "type": "theorem",
+      "status": "elementary finite-mixture identity applied to hierarchical sampling",
+      "assumptions": ["one latent component is drawn once and persists through the transcript", "the two compared hypotheses share conditional transcript laws and differ only in component weights", "the denominator assigns positive weight to every component capable of the realized transcript"],
+      "nonclaims": ["does not prevent a long transcript from identifying the active component", "does not apply unchanged when the hypotheses also differ in within-component transcript laws", "does not give a finite ceiling across support mismatch"]
+    },
+    {
+      "id": "P1-T5",
+      "name": "known-channel affine-rank identification",
+      "type": "theorem",
+      "status": "standard finite-mixture linear geometry",
+      "assumptions": ["the observation channel K is known", "finite latent and observed alphabets"],
+      "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification"]
+    },
+    {
+      "id": "P1-T6",
+      "name": "row-stochastic one-view factorization gauge",
+      "type": "proposition",
+      "status": "constructive nonidentifiability witness",
+      "assumptions": ["A is invertible, nonnegative, and row-stochastic", "the transformed prior pi A^{-1} remains nonnegative"],
+      "nonclaims": ["does not classify all latent-factorization nonuniqueness", "does not imply every unknown prior/channel model has this exact gauge"]
+    },
+    {
+      "id": "P1-T7",
+      "name": "two-view rigidity inside the row-stochastic gauge",
+      "type": "theorem",
+      "status": "scoped gauge-orbit theorem",
+      "assumptions": ["K has full row rank", "A is invertible, nonnegative, and row-stochastic", "pi A^{-1} is strictly positive", "two observations are conditionally independent given the same persistent latent", "the shared-latent two-view law is preserved"],
+      "nonclaims": ["not unrestricted two-view latent-class identifiability", "does not remove latent ambiguities outside the declared gauge", "strict positivity and full row rank are substantive assumptions"]
+    }
   ]
 }
