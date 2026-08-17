@@ -111,7 +111,7 @@ for every rational $w\in[0,1]$.
 \end{theorem}
 
 \begin{proof}
-Split $1$ into $n$ equal rational pieces. Additivity gives $1=n\mu(1/n)$, hence $\mu(1/n)=1/n$. For $w=p/n$, sum $p$ such pieces to obtain $\mu(p/n)=p/n$.
+First split $0=0+0$. Additivity gives $\mu(0)=2\mu(0)$, hence $\mu(0)=0$. For $n\ge1$, split $1$ into $n$ equal rational pieces. Additivity gives $1=n\mu(1/n)$, hence $\mu(1/n)=1/n$. For positive $w=p/n$, sum $p$ such pieces to obtain $\mu(p/n)=p/n$.
 \end{proof}
 
 This theorem is elementary and is not offered as a novelty claim. A measure using consciousness, computational cost, causal depth, observer-moments, or other structure may differ from raw probability weight. The audit requirement is simply that the extra structure be stated and that representation-only refinements not silently create measure.
@@ -120,12 +120,16 @@ This theorem is elementary and is not offered as a novelty claim. A measure usin
 Let $M$ be drawn once from a finite component set. Conditional on $M=m$, an arbitrary transcript $Y$ has law $P_m$. Consider hypotheses $H_a$ and $H_b$ that differ only in the mixture weights $a_m$ and $b_m$, while sharing the conditional component laws $P_m$.
 
 \begin{theorem}[Persistent-latent likelihood-ratio ceiling]\label{thm:persist}
-Fix a transcript value $y$ with $P_b(y)>0$. Assume component-level absolute continuity on the realized support: whenever $a_mP_m(y)>0$, we also have $b_m>0$. Then
+Fix a transcript value $y$ with $P_b(y)>0$, and define the denominator-active set
+\[
+I_b(y)=\{m:b_mP_m(y)>0\}.
+\]
+Assume component-level absolute continuity on the realized support: whenever $a_mP_m(y)>0$, we also have $m\in I_b(y)$. Then
 \[
 \frac{P_a(y)}{P_b(y)}
-=\sum_m P_b(M=m\mid y)\frac{a_m}{b_m},
+=\sum_{m\in I_b(y)} P_b(M=m\mid y)\frac{a_m}{b_m}.
 \]
-where terms with $b_mP_m(y)=0$ contribute zero. Consequently the likelihood ratio lies between the minimum and maximum active component ratios $a_m/b_m$.
+Consequently the likelihood ratio lies between the minimum and maximum ratios $a_m/b_m$ over the posterior-active components in $I_b(y)$.
 \end{theorem}
 
 \begin{proof}
@@ -133,12 +137,12 @@ Write
 \[
 P_a(y)=\sum_ma_mP_m(y),\qquad P_b(y)=\sum_mb_mP_m(y).
 \]
-For active components,
+By the support assumption, every nonzero numerator contribution is indexed by $I_b(y)$. For each $m\in I_b(y)$,
 \[
 \frac{a_mP_m(y)}{P_b(y)}
 =\frac{b_mP_m(y)}{P_b(y)}\frac{a_m}{b_m}.
 \]
-The first factor is exactly $P_b(M=m\mid y)$. Summing gives the identity, and posterior weights form a convex combination.
+The first factor is exactly $P_b(M=m\mid y)$. Summing over $I_b(y)$ gives the identity, and those posterior weights sum to one.
 \end{proof}
 
 \begin{remark}[Support mismatch]
