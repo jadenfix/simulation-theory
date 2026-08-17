@@ -2,278 +2,176 @@
 
 Date: 2026-08-17
 
-## Purpose
+## Audit standard
 
-This document is an adversarial audit of the mathematical research program. It is deliberately stricter than CI. Passing tests establishes that implementations and bounded receipts agree with their declared checks; it does not establish novelty, physical applicability, or the truth of a theorem whose proof has a hidden assumption.
+This review is intentionally stricter than CI. A green test establishes agreement between code and a bounded checker; it does not establish theorem novelty, physical applicability, or freedom from a hidden assumption.
 
-The audit separates five questions:
+Every result is judged on: algebraic correctness, operational semantics, assumption boundaries, adversarial edge cases, and novelty relative to existing literature.
 
-1. **Algebraic correctness:** does the displayed result follow from the stated assumptions?
-2. **Operational correctness:** does the solver implement the same timing, uncertainty, and benchmark semantics as the theorem?
-3. **Boundary correctness:** are finite checks, asymptotic claims, physical interpretations, and statistical confidence kept distinct?
-4. **Adversarial robustness:** do degenerate, zero-mass, nonidentifiable, off-model, and moving-benchmark cases fail closed?
-5. **Novelty:** is the result actually new, or a correct specialization/repackaging of known mathematics?
+## Executive result
 
-## Executive audit status
+I found **no high-confidence false mathematical theorem on the current mainline within its written assumptions** in the families re-derived during this audit. The repo is unusually good about separating theorem/model-result/finite-check/nonclaim.
 
-### High-confidence mathematical core
+That is not the same as peer review. Several results are correct but known, several open PRs are not independently integrated, and several claims need narrower publication wording.
 
-The following families were re-derived from first principles and no mathematical contradiction was found in their declared scopes:
+## High-confidence families
 
-- observational nonidentifiability when two hypotheses induce the same law;
-- TV/classification identities and standard Le Cam/Fano-style finite decision bounds;
-- predictive-equivalence quotienting and finite packing/cover logic;
-- Dobrushin TV contraction and serial contraction;
-- finite confusion-graph zero-error coding;
-- prior-weighted prefix coding by independent-set partitions plus Huffman coding;
-- finite-prior and TV-ball robust one-shot coding, conditional on the declared finite code universe;
-- coupled TV-drift LPs and the distinction between marginal robustification and path-consistent robustification;
-- information-pattern ordering when policy classes are literally nested;
-- Bayesian hidden-state filtering when transition/observation laws are action-independent as declared;
-- fixed-model versus rectangular ambiguity as distinct uncertainty semantics;
-- active experiment value after explicitly matching public-randomization resources;
-- model-informed minimax regret when the oracle timing and experiment costs are held fixed;
-- Bayesian Boolean minority-mass, conditional-bias, influence, Fourier, and adaptive-query identities;
-- fixed-sample prior sensitivity/calibration results under the explicitly declared iid latent-unit sampling model;
+The following survived first-principles re-derivation in their declared scopes:
+
+- identical-law observational nonidentifiability and Bayes-factor equality;
+- TV/classification, Le Cam/Fano-style decision bounds;
+- predictive equivalence, finite packing/cover arguments, and Dobrushin contraction;
+- confusion-graph zero-error coding and prior-weighted Huffman optimization;
+- finite-prior and TV-ball robust coding conditional on the enumerated code universe;
+- coupled TV-drift versus marginal robustification;
+- nested information-pattern inequalities;
+- Bayesian hidden-state filtering under the declared action-independent dynamics;
+- fixed-model versus rectangular ambiguity semantics;
+- active-experiment/public-randomness decompositions;
+- fixed-oracle minimax regret;
+- Bayesian Boolean minority-mass, influence, Fourier, and adaptive-query identities;
+- fixed-sample prior-sensitivity/calibration under iid latent-unit sampling;
 - persistent-latent likelihood-ratio ceilings;
-- finite-mixture affine identifiability conditional on a known emission channel;
-- latent refinement invariance for duplicated identical components.
+- finite-mixture affine identifiability conditional on known emissions;
+- latent-component refinement invariance.
 
-This status means "no false theorem found under the written assumptions," not "peer reviewed" and not "novel."
+## Important corrections / blockers
 
-## Corrections and publication blockers found by the audit
+### 1. Correct does not mean novel
 
-### A1. Novelty must not be inferred from exact certificates
+Robust Huffman coding, Dobrushin contraction, rectangularity in dynamic ambiguity, Boolean influence/Fourier analysis, and branch/refinement indifference all have substantial prior literatures. Exact rational certificates improve reproducibility but do not by themselves make a theorem new.
 
-Several correct results sit directly inside established literatures. Exact rational code and proof receipts are valuable reproducibility machinery, but do not by themselves create theorem novelty.
-
-Examples:
-
-- robust/minimax Huffman coding has a substantial prior literature;
-- Dobrushin/ergodicity coefficients already formalize TV contraction of stochastic matrices;
-- nonrectangular versus rectangular dynamic ambiguity is classical in multiple-priors decision theory and robust MDPs;
-- Boolean influence/Fourier identities are standard analysis-of-Boolean-functions objects;
-- branch/refinement indifference has close analogues in Everettian probability and anthropic measure debates.
-
-Any paper must distinguish **new theorem**, **new exact algorithm/certificate**, **new synthesis**, and **new application**.
-
-### A2. The finite-mixture global TV modulus is closely related to known facial-distance geometry
+### 2. Global mixture TV modulus is close to known facial distance
 
 For affinely independent channel rows, their convex hull is a simplex. The quantity
 
 \[
-\alpha(K)=\inf_{\delta\ne0,\,\mathbf 1^T\delta=0}
-\frac{TV(\delta K)}{TV(\delta)}
+\alpha(K)=\inf_{\delta\ne0,\;1^T\delta=0}\frac{TV(\delta K)}{TV(\delta)}
 \]
 
-can be written as the minimum TV distance between convex hulls of disjoint row subsets. Because adding unused vertices to one side can only decrease set distance, this is a norm-specific facial-distance/minimum-gain quantity for the row simplex. Facial distance/pyramidal width is established in convex-optimization literature.
+is equivalently a minimum distance between disjoint row faces. This is closely related to the established facial-distance / pyramidal-width / minimum-gain literature. Do not market the face-distance identity itself as a new general convex-geometric theorem without a much deeper novelty search.
 
-Therefore the disjoint-face characterization should not currently be advertised as a novel general convex-geometric theorem. The potentially publishable contribution is narrower: exact rational computation in TV norm, mixture-channel conditioning interpretation, row-uncertainty certificates, and statistically composable inverse bounds.
+The potentially new technical contribution is narrower: exact rational TV computation for mixture-channel inversion, rowwise uncertainty certificates, and composition with statistical confidence sets.
 
-### A3. Two-view rigidity is a gauge-orbit theorem, not unrestricted latent-class identifiability
+### 3. Two-view rigidity is a gauge-orbit theorem
 
-The two-view result starts from a specific one-view gauge
+For the declared gauge
 
 \[
-K'=AK,\qquad \pi'=\pi A^{-1}
+K'=AK,\qquad \pi'=\pi A^{-1},
 \]
 
-with invertible nonnegative row-stochastic `A`. Under full row rank, positive `pi'`, and equality of the shared-latent second-view law, the derivation forcing `A` to be a permutation is sound.
+full row rank, positive transformed prior, nonnegative row-stochastic invertible `A`, and equality of the shared-latent two-view law imply
 
-But this proves rigidity **inside that declared stochastic gauge orbit**. It does not, by itself, prove that every alternative two-view factorization of the same joint law must be related by such an `A`. General latent-class/multiview identifiability is a larger literature with additional rank/Kruskal/tensor conditions.
+\[
+A^T D_{\pi'}A=D_\pi.
+\]
 
-Publication wording must say "the continuous row-stochastic gauge collapses to label switching" rather than "two views globally identify every finite latent model."
+Off-diagonal nonnegative sums then force `A` to be a permutation. This derivation is sound.
 
-### A4. Refinement-additive measure uniqueness is correct but elementary
+But it proves rigidity **inside this gauge class**. It does not establish unrestricted global identifiability of every two-view latent-class factorization. Publication wording must preserve that distinction.
 
-If a local rational weight rule satisfies normalization and finite split additivity, then `mu(p/q)=p/q`. This is a direct rational additivity argument. Likewise, equal cloning changes escort score `w^gamma` by `r^(1-gamma)`.
+### 4. Refinement-additive measure uniqueness is correct but elementary
 
-These are correct, but theorem novelty is low. Their value is conceptual: they expose a representation-invariance requirement for observer-counting arguments. A philosophy/foundations paper must engage existing work on reference classes, branching indifference, self-locating credence, and branch counting rather than presenting rational additivity itself as a new mathematical discovery.
+A normalized local rational rule additive under every finite split must satisfy `mu(p/q)=p/q`. Equal `r`-way cloning changes escort score `w^gamma` by `r^(1-gamma)`, so only `gamma=1` is refinement invariant.
 
-### A5. Persistent-latent repetition versus repeated latent draws is correct and important, but causal semantics must stay explicit
+The mathematics is correct. The publishable value is the application to representation-sensitive observer counting, not novelty of rational additivity itself.
 
-For one latent draw `M` followed by an arbitrarily long conditional transcript,
+### 5. Persistent-latent evidence ceiling needs absolute-continuity wording
+
+For one latent draw followed by an arbitrary conditional transcript,
 
 \[
 \frac{P_a(y)}{P_b(y)}
 =\sum_m P_b(M=m\mid y)\frac{a_m}{b_m},
 \]
 
-when the denominator weights needed by the ratio are positive. Hence the Bayes factor is bounded by component prior-weight ratios. This is mathematically sound.
+when the relevant denominator weights are positive. Hence the transcript Bayes factor lies between component prior-weight ratios.
 
-The result fails to give a finite ceiling when the denominator assigns zero weight to a component that the numerator allows; the theorem/implementation must keep absolute-continuity assumptions explicit. More importantly, the result concerns inference about **mixing weights/hyperpriors** after one persistent latent draw. It does not say long within-world transcripts cannot identify which latent model is active.
+This is correct, but there is no finite ceiling if the denominator gives zero mass to a component allowed by the numerator. Also, this limits inference about the **mixing weights/hyperprior** after one persistent draw; it does not prevent a long transcript from identifying which latent model is active.
 
-### A6. Confidence statements are deliberately conservative and must not be sold as optimal
+### 6. Confidence bounds are valid, not efficient
 
-The second-moment/Markov TV radii are valid under their iid assumptions but loose. They are useful because they are exact-rational and fail closed. A paper should compare them against sharper multinomial concentration, exact multinomial confidence regions, method-of-types bounds, or time-uniform confidence sequences. "Certified" must not be conflated with "statistically efficient."
+The exact-rational second-moment/Markov radii are conservative. A paper should compare them with sharper multinomial concentration, exact confidence regions, method-of-types bounds, or confidence sequences. `Certified` must not be used as a synonym for `optimal`.
 
-### A7. Open stacked PRs are not part of the verified mainline
+### 7. Open stacked PRs are not verified mainline mathematics
 
-Research PRs built on unmerged parents can have mathematically correct content while still lacking independent integration verification. Publication claims should cite a commit on `main` or a frozen paper branch, not a moving stacked PR. The earlier branch-history pollution incidents justify this rule.
+A paper should cite a frozen mainline/paper commit, not a moving stacked PR. Earlier ancestry pollution showed why this matters.
 
-### A8. A claim-ledger anchor failure is evidence that metadata is part of the proof surface
+## Adversarial spot checks
 
-The Bayesian Boolean branch correctly failed CI because `Möbius` generated a Unicode-aware Markdown anchor different from the ASCII claim reference. This was not a theorem failure, but it demonstrates that evidence binding must itself be audited. Claim IDs, anchors, source revisions, and theorem scopes should be frozen for any paper artifact.
+- `x/(B+x)` is concave for `B>0`, so the observer-count Jensen warning is correct.
+- Dobrushin TV contraction is correct and classical.
+- Noisy cat parity visibility `(1-2p)^ell`, proper-marginal blindness, and BSC reduction are correct under independent sign flips.
+- The rate-distortion lower bound `I(Z;M)>=m[1-H2(D/c)]` is correct in the documented regime `0<=D<c/2`; the repo correctly drops it to zero beyond that threshold.
+- TV-ball robust expectation is a mass-transport problem; its fixed-vector maximum is piecewise linear and concave in radius.
+- `exists M for all t` is not the same uncertainty model as `for all t exists M_t`; the fixed-model/rectangular distinction is correct but classical in robust decision theory.
+- Bayesian Boolean gap `V(S)=1/2(1-E|E[g|X_S]|)` and leave-one-out `V=Influence/2` are correct under the uniform prior.
+- Known-channel finite-mixture weights are identifiable iff channel rows are affinely independent.
+- Rowwise TV perturbations change the global inverse modulus by at most `2 max_i r_i`; the factor two is attainable.
+- The one-view stochastic gauge preserves `pi K` exactly whenever transformed weights remain a valid prior.
+- Splitting one latent component into positive-weight identical clones preserves every finite conditionally-iid shared-latent view law.
 
-## Adversarial theorem checks
+## Publication candidates
 
-### Identical observable laws
+### P1 — strongest overall
 
-If `P=Q`, every measurable transcript statistic has the same distribution. Bayes factor one follows wherever both likelihoods are positive and equal. No internal test can identify an implementation-level distinction absent from the observable law. Correct.
+**Identifiability Before Anthropic Bayes: Representation Invariance, Persistent Latents, and Observable Equivalence in Simulation Arguments**
 
-### Jensen observer-count warning
+This is the best paper direction. The contribution would be the integrated framework, not a claim that each lemma is new:
 
-For fixed `B>0`, `f(x)=x/(B+x)` is concave on `x>=0`, so
+1. observational equivalence before Bayesian updating;
+2. representation/refinement invariance for observer measures;
+3. one persistent latent draw versus repeated world-level draws;
+4. prior/channel factorization gauges;
+5. multi-view/interventional structures that break specific gauges;
+6. a hierarchy of conditions required before simulation-style Bayes factors are meaningful.
 
-\[
-E[f(X)]\le f(E[X]).
-\]
+**Assessment:** paper-worthy for philosophy of science / foundations if positioned against the simulation-argument, reference-class, anthropic-measure, and branching-indifference literatures.
 
-Correct. It is a sensitivity warning, not an anthropic-measure theorem.
+### P2 — technical note, novelty not yet established
 
-### TV contraction
+**Inverse Total-Variation Conditioning for Finite Mixture Channels**
 
-For a Markov kernel `K`,
+Potential contribution: exact rational global modulus, mixture-channel inverse interpretation, examples where pairwise row separation badly misstates mixture conditioning, row-uncertainty lower moduli, and confidence-set composition.
 
-\[
-TV(\mu K,\nu K)\le \delta(K)TV(\mu,\nu)
-\]
+**Assessment:** mathematically coherent, but facial-distance/minimum-gain prior work is close. Needs theorem-by-theorem literature comparison before calling it novel.
 
-with Dobrushin coefficient `delta(K)=max_{i,j}TV(K_i,K_j)`. Correct and classical.
+### P3 — short decision-theory note
 
-### Noisy cat parity
+**When Better Experiments Increase Minimax Regret**
 
-Independent sign flips multiply the parity expectation, giving `(1-2p)^ell`; proper marginals cancel the parity Fourier term. The BSC reduction and repeated-product formulas are correct under independent readout flips.
+The moving-oracle K4 construction cleanly shows that a richer experiment menu can improve absolute performance while increasing regret against an oracle that receives the same richer menu.
 
-### Rate-distortion bound
+**Assessment:** elegant and teachable; likely a short note unless generalized substantially.
 
-The reduction to binary Hamming distortion is correct for the declared two-point target biases. The lower bound
+### P4 — robust coding/control synthesis
 
-\[
-I(Z;M)\ge m[1-H_2(D/c)]
-\]
+The fixed-model/nonrectangular, partial-observation, public-randomness, drift-coupling, and regret layers form a coherent exact finite laboratory.
 
-requires `0<=D<c/2`; the documentation already states the zero lower bound beyond that regime. Correct within scope.
+**Assessment:** potentially publishable only if centered on a genuinely new theorem/algorithm/complexity result. The conceptual backbone overlaps robust MDP, multiple-priors, POMDP, and robust coding literatures.
 
-### Robust TV coding
+## Not standalone-novel without more
 
-The fixed-vector worst-case expectation over a TV ball is a mass-transport problem. Piecewise linearity and concavity in radius for the maximized value follow from decreasing marginal transport gains. The outer finite code optimization remains exact only because the code universe is explicitly bounded/enumerated. Correct within scope.
+Standard Bell/Fisher/Pinsker calculations, Dobrushin contraction, Fano/random-access bounds, Huffman entropy bounds, rational additivity, Boolean Fourier identities, and bounded exhaustive examples are useful infrastructure but should not be sold as standalone new mathematics.
 
-### Fixed-model versus rectangular ambiguity
+## Required pre-submission gate
 
-`exists M for all t` and `for all t exists M_t` are different uncertainty sets. Rectangular reselection is a relaxation and can be strictly more conservative. Correct; not novel in general robust-control theory.
+Before any claim is described as new:
 
-### Boolean Bayesian geometry
-
-For cell masses `m0,m1`, Bayes error is `min(m0,m1)`. Under uniform prior and `g=(-1)^f`, this gives
-
-\[
-V(S)=\frac12(1-E|E[g\mid X_S]|).
-\]
-
-Leave-one-out cells are cube edges, giving `V([k]\\{i})=Inf_i(f)/2`. Fourier projection and the `B^2<=W<=B` sandwich follow from Jensen and `z^2<=|z|` on `[-1,1]`. Correct.
-
-### Finite-mixture affine identifiability
-
-For known `K`, priors are identifiable iff row differences relative to one reference have rank `m-1`. Rank failure gives a zero-sum latent direction and hence two nearby interior priors with the same observed law. Correct.
-
-### Row-uncertainty modulus
-
-If each row moves by at most TV radius `r_i`, a normalized zero-sum latent direction has positive and negative masses one, so perturbation of its observed signed law is bounded by the weighted positive-side plus negative-side row radii and hence by `2 max_i r_i`. The global `2 epsilon` bound is correct; face-specific penalties can sharpen it.
-
-### One-view gauge
-
-If `A` is invertible row-stochastic, `K'=AK` is stochastic and `pi'=pi A^{-1}` gives `pi'K'=pi K` whenever `pi'` is a valid prior. Correct. The existence of such gauges proves joint nonidentifiability; it does not classify all possible nonidentifiabilities.
-
-### Shared-latent two-view gauge rigidity
-
-Under the declared gauge, full row rank and strictly positive transformed prior, equality of `K^T D_pi K` and `K'^T D_pi' K'` forces `A^T D_pi' A=D_pi`. Nonnegative off-diagonal sums then force each row of `A` to have one positive entry; invertibility makes `A` a permutation. Correct within the gauge class.
-
-### Refinement invariance
-
-Replacing one component `(w,K)` by clones `(w_j,K)` with `sum_j w_j=w` leaves every finite conditionally-iid shared-latent view law unchanged by linearity. Correct. Uniform label counting is therefore representation-sensitive.
-
-## Publication-readiness matrix
-
-### Candidate P1 — strongest conceptual paper
-
-**Working title:** *Identifiability Before Anthropic Bayes: Representation Invariance, Persistent Latents, and Observable Equivalence in Simulation Arguments*
-
-Potential contribution:
-
-1. formalize the distinction between observational hypotheses and implementation labels;
-2. prove representation/refinement invariance requirements for observer measures;
-3. separate one persistent latent draw from repeated draws of a world-level prior;
-4. expose prior/channel factorization gauges;
-5. show how shared-latent multiview observations or interventions can break specific gauges;
-6. provide a disciplined hierarchy for when Bayes factors about simulation-like hypotheses are meaningful.
-
-**Assessment:** paper-worthy as a philosophy-of-science / foundations synthesis if the literature positioning is done carefully. The individual lemmas are mostly elementary or connected to known areas; the contribution is the integrated identifiability framework applied to simulation/anthropic reasoning.
-
-### Candidate P2 — technical note, conditional on novelty search
-
-**Working title:** *Inverse Total-Variation Conditioning for Finite Mixture Channels*
-
-Core object:
-
-\[
-\alpha(K)=\inf_{\delta\ne0,\,1^T\delta=0}\frac{TV(\delta K)}{TV(\delta)}.
-\]
-
-Potential contribution:
-
-- exact rational computation through finite TV games;
-- channel-mixture inverse interpretation;
-- explicit near-affine-dependence examples where pairwise row separation is misleading;
-- robust lower moduli under rowwise uncertainty;
-- composition with observed-law confidence sets.
-
-**Assessment:** mathematically coherent, but novelty is not yet established. Facial-distance/pyramidal-width and minimum-gain literature are close enough that a paper must explicitly prove what is new beyond a TV-norm specialization/application.
-
-### Candidate P3 — decision-theory note
-
-**Working title:** *When Better Experiments Increase Minimax Regret*
-
-The moving-oracle K4 construction shows that enriching an experiment menu can weakly improve absolute robust performance while increasing regret against an oracle that receives the same richer menu.
-
-**Assessment:** clean and teachable. Likely a short note unless generalized substantially. Benchmark instability is a general decision-theoretic phenomenon, so novelty requires literature work.
-
-### Candidate P4 — robust source-coding/control synthesis
-
-The nonrectangular/fixed-model coding, partial observation, public-randomness matching, drift coupling, and regret layers form a coherent exact finite laboratory.
-
-**Assessment:** potentially a paper if reframed around one new theorem or algorithmic complexity result. As currently written, much of the conceptual backbone overlaps robust MDP, multiple-priors, robust coding, and POMDP literatures.
-
-## What is not currently paper-worthy by itself
-
-The following are valuable repo components but should not be sold as standalone novel papers without a new contribution:
-
-- standard Bell/Fisher/Pinsker calculations;
-- standard Dobrushin contraction;
-- standard Fano/random-access lower bounds;
-- standard Huffman entropy bounds;
-- rational additivity alone;
-- Boolean influence/Fourier identities alone;
-- exact finite examples whose only novelty is exhaustive enumeration;
-- CI/proof-receipt infrastructure without a scientific theorem or systems contribution.
-
-## Required pre-submission audit
-
-Before any theorem is described as new in a manuscript:
-
-1. freeze one commit containing the exact theorem statement and proof;
-2. produce a dependency graph of lemmas and assumptions;
-3. re-derive each theorem independently from the implementation;
-4. test all equality cases and assumption boundaries;
-5. search MathSciNet/zbMATH/Google Scholar/arXiv by mathematical object, not project vocabulary;
-6. add explicit nearest-prior-work comparisons theorem by theorem;
-7. separate known lemma, new corollary, new algorithm, and new application;
-8. have at least one external domain expert attempt to break the central theorem;
-9. reproduce every numerical table from a clean checkout;
-10. keep all simulation-level interpretations downstream of an explicit observation/implementation map.
+1. freeze one commit;
+2. build a theorem/lemma dependency graph;
+3. independently re-derive the central theorem;
+4. test equality and assumption-boundary cases;
+5. search literature by mathematical object rather than repo vocabulary;
+6. write a nearest-prior-work comparison for every claimed contribution;
+7. label each result as known lemma, new corollary, new algorithm, or new application;
+8. obtain an external adversarial review from a domain expert;
+9. reproduce all numerical results from a clean checkout;
+10. keep simulation-level interpretations downstream of an explicit observation/implementation map.
 
 ## Bottom line
 
-The repository contains a large amount of mathematically coherent work, but **coherence is not novelty**. The most promising paper is not "a proof that we are simulated." It is a disciplined negative/structural paper about when simulation-style Bayesian and observer-counting arguments are identifiable and representation invariant.
+There is real paper material here, but the strongest paper is **not** a proof that reality is simulated. It is a structural paper showing why identifiability, sampling hierarchy, representation invariance, and causal observation structure must be fixed before anthropic or simulation-style Bayesian conclusions are justified.
 
-The strongest technical subproject is the finite-mixture
+The strongest technical mathematics is the finite-mixture inverse-conditioning program, but its novelty remains provisional until the facial-distance/minimum-gain literature is exhaustively reconciled.
