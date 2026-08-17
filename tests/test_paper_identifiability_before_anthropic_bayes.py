@@ -17,6 +17,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "AUDIT.md",
         "PEER_REVIEW_LOOP.md",
         "PEER_REVIEW_RESPONSE.md",
+        "ROUND6_MEASURE_THEORETIC_AUDIT.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
@@ -24,19 +25,30 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert claims["author"] == "Jaden Fix"
     assert claims["email"] == "Jaden@Tempera.dev"
     assert len(claims["claims"]) == 7
+
+    refinement = next(c for c in claims["claims"] if c["id"] == "P1-T2")
+    assert any("conditionally independent same-channel" in x for x in refinement["assumptions"])
+    assert any("tensor-product" in x for x in refinement["nonclaims"])
+
+    persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
+    assert any("absolute continuity" in x for x in persistent["assumptions"])
+    assert any("dominating finite measure exists" in x for x in persistent["assumptions"])
+    assert any("almost everywhere" in x for x in persistent["assumptions"])
+    assert any("null set" in x for x in persistent["nonclaims"])
+
+    affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
+    assert any("known channel" in x for x in affine["assumptions"])
+    assert any("robust posterior" in x or "identified sets" in x for x in affine["nonclaims"])
+    assert any("finite-sample conditioning" in x for x in affine["nonclaims"])
+
+    gauge = next(c for c in claims["claims"] if c["id"] == "P1-T6")
+    assert any("interior prior" in x for x in gauge["nonclaims"])
+
     two_view = next(c for c in claims["claims"] if c["id"] == "P1-T7")
     assert "not unrestricted two-view latent-class identifiability" in two_view["nonclaims"]
     assert any("same channel K" in x for x in two_view["assumptions"])
     assert any("different view-specific channels" in x for x in two_view["nonclaims"])
-    persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
-    assert any("absolute continuity" in x for x in persistent["assumptions"])
-    assert any("dominating" in x and "measure" in x for x in persistent["assumptions"])
-    assert any("almost everywhere" in x for x in persistent["assumptions"])
-    affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
-    assert any("known channel" in x for x in affine["assumptions"])
-    assert any("robust posterior" in x or "identified sets" in x for x in affine["nonclaims"])
-    gauge = next(c for c in claims["claims"] if c["id"] == "P1-T6")
-    assert any("interior prior" in x for x in gauge["nonclaims"])
+    assert "no independent priority claim" in two_view["status"]
 
 
 def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
@@ -135,6 +147,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "AUDIT.md",
         "PEER_REVIEW_LOOP.md",
         "PEER_REVIEW_RESPONSE.md",
+        "ROUND6_MEASURE_THEORETIC_AUDIT.md",
         "claims.json",
     )
     for name in release_files:
@@ -170,6 +183,7 @@ def test_citation_provenance_covers_core_references():
 def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     review = (PAPER / "PEER_REVIEW_LOOP.md").read_text()
     response = (PAPER / "PEER_REVIEW_RESPONSE.md").read_text()
+    round6 = (PAPER / "ROUND6_MEASURE_THEORETIC_AUDIT.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
     assert "preserved as originally written" in review
@@ -183,8 +197,13 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "Round 5" in response
     for item in ("R5.1", "R5.2", "R5.3", "R5.4"):
         assert item in response
+    assert "Round 6" in response
+    for item in ("R6.1", "R6.2", "R6.3", "R6.4", "R6.5", "R6.6", "R6.7", "R6.8"):
+        assert item in response
+        assert item in round6
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
+    assert "not independent peer review" in round6
 
 
 def test_workflow_records_source_toolchain_and_checks_correct_author():
@@ -196,4 +215,5 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "paper.tex" in workflow and "references.bib" in workflow
     assert "paper.bbl" in workflow and "paper.log" in workflow
     assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
+    assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
     assert "Jaden Figgs" not in workflow
