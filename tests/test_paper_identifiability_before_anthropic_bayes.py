@@ -16,6 +16,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "README.md",
         "AUDIT.md",
         "PEER_REVIEW_LOOP.md",
+        "PEER_REVIEW_RESPONSE.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
@@ -56,7 +57,7 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
     assert receipt["known_channel_identifiability"]["rank_deficient_collision_prior_a"] != receipt["known_channel_identifiability"]["rank_deficient_collision_prior_b"]
 
 
-def test_manuscript_contains_scope_guards_and_all_core_citations():
+def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
     tex = (PAPER / "paper.tex").read_text()
     bib = (PAPER / "references.bib").read_text()
     assert "does \\emph{not} state that arbitrary two-view latent-class models are globally identifiable" in tex
@@ -64,6 +65,8 @@ def test_manuscript_contains_scope_guards_and_all_core_citations():
     assert "Physical duplication" in tex
     assert "Known-channel affine-rank identifiability" in tex
     assert "organizing principle" in tex
+    assert "I_b(y)=\\{m:b_mP_m(y)>0\\}" in tex
+    assert "First split $0=0+0$" in tex
     for key in (
         "bostrom2003",
         "weatherson2003",
@@ -100,8 +103,13 @@ def test_citation_provenance_covers_core_references():
         assert entries[key]["source"]
 
 
-def test_peer_review_loop_has_no_untracked_major_items_after_release_update():
+def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     review = (PAPER / "PEER_REVIEW_LOOP.md").read_text()
+    response = (PAPER / "PEER_REVIEW_RESPONSE.md").read_text()
     assert "Round 1" in review
-    assert "Round 2" in review
     assert "major revision" in review.lower()
+    assert "Round 1 response" in response
+    assert "Round 2" in response
+    assert "R2.1" in response and "R2.2" in response
+    assert "zero unresolved major items" in response
+    assert "synthetic" in response.lower()
