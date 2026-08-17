@@ -30,7 +30,8 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert any("different view-specific channels" in x for x in two_view["nonclaims"])
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
-    assert any("common sigma-finite measure" in x for x in persistent["assumptions"])
+    assert any("dominating" in x and "measure" in x for x in persistent["assumptions"])
+    assert any("almost everywhere" in x for x in persistent["assumptions"])
     affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
     assert any("known channel" in x for x in affine["assumptions"])
     assert any("robust posterior" in x or "identified sets" in x for x in affine["nonclaims"])
@@ -79,12 +80,13 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "I_b(y)=\\{m:b_mp_m(y)>0\\}" in tex
     assert "common $\\sigma$-finite measure" in tex
     assert "Radon--Nikodym density" in tex
+    assert "almost everywhere" in tex
     assert "First split $0=0+0$" in tex
     assert "Data cannot point-identify a mixture parameter" in tex
     assert "not estimable before it is identifiable" not in tex
     assert "A^{-1}\\mathbf 1=\\mathbf 1" in tex
     assert "A_t=(1-t)I+tB" in tex
-    assert "two observations use the same channel $K$" in tex
+    assert "both observations use the same channel $K$" in tex
     assert "same-channel repeated-view rigidity" in tex
     assert "Robust Bayesian methods for set-identified models" in tex
     assert "receipt.json` is required to regenerate byte-for-byte" in tex
