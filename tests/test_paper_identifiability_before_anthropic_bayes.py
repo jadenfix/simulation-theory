@@ -26,11 +26,14 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert len(claims["claims"]) == 7
     two_view = next(c for c in claims["claims"] if c["id"] == "P1-T7")
     assert "not unrestricted two-view latent-class identifiability" in two_view["nonclaims"]
+    assert any("same channel K" in x for x in two_view["assumptions"])
+    assert any("different view-specific channels" in x for x in two_view["nonclaims"])
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
     assert any("common sigma-finite measure" in x for x in persistent["assumptions"])
     affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
     assert any("known channel" in x for x in affine["assumptions"])
+    assert any("robust posterior" in x or "identified sets" in x for x in affine["nonclaims"])
     gauge = next(c for c in claims["claims"] if c["id"] == "P1-T6")
     assert any("interior prior" in x for x in gauge["nonclaims"])
 
@@ -81,6 +84,9 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "not estimable before it is identifiable" not in tex
     assert "A^{-1}\\mathbf 1=\\mathbf 1" in tex
     assert "A_t=(1-t)I+tB" in tex
+    assert "two observations use the same channel $K$" in tex
+    assert "same-channel repeated-view rigidity" in tex
+    assert "Robust Bayesian methods for set-identified models" in tex
     assert "receipt.json` is required to regenerate byte-for-byte" in tex
     assert "does not claim that PDF bytes must remain invariant" in tex
     # Source-integrity guards: these late sections must survive whole-file replacements.
@@ -98,6 +104,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
         "kipping2020",
         "thomas2024",
         "fallislewis2023",
+        "giacomini2021",
         "neal2006",
         "schneiderolum2013",
         "wilson2013",
@@ -110,6 +117,13 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
         assert key in tex
     assert "year={2016}" in bib.split("@article{franceschi2014", 1)[1].split("@article{richmond2017", 1)[0]
     assert "pages={313--344}" in bib.split("@article{khawaja2026", 1)[1].split("@article{allman2009", 1)[0]
+    fallis = bib.split("@article{fallislewis2023", 1)[1].split("@article{giacomini2021", 1)[0]
+    assert "author={Peter J. Lewis and Don Fallis}" in fallis
+    assert "pages={180}" in fallis
+    assert "number={6}" not in fallis
+    giacomini = bib.split("@article{giacomini2021", 1)[1].split("@misc{neal2006", 1)[0]
+    assert "volume={89}" in giacomini and "number={4}" in giacomini
+    assert "pages={1519--1556}" in giacomini
 
 
 def test_release_bearing_artifacts_use_correct_author_identity():
@@ -137,6 +151,7 @@ def test_citation_provenance_covers_core_references():
         "kipping2020",
         "thomas2024",
         "fallislewis2023",
+        "giacomini2021",
         "allman2009",
         "gillis2020",
     ):
@@ -146,6 +161,8 @@ def test_citation_provenance_covers_core_references():
     assert entries["franceschi2014"]["verification_status"] == "publisher_verified_with_secondary_discrepancy"
     assert "2016" in entries["franceschi2014"]["notes"]
     assert "313-344" in entries["khawaja2026"]["notes"]
+    assert "article 180" in entries["fallislewis2023"]["notes"]
+    assert "1519-1556" in entries["giacomini2021"]["notes"]
 
 
 def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
@@ -161,13 +178,20 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "Round 4" in response
     for item in ("R4.1", "R4.2", "R4.3", "R4.4", "R4.5", "R4.6"):
         assert item in response
+    assert "Round 5" in response
+    for item in ("R5.1", "R5.2", "R5.3", "R5.4"):
+        assert item in response
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
 
 
-def test_workflow_records_toolchain_and_checks_correct_author():
+def test_workflow_records_source_toolchain_and_checks_correct_author():
     workflow = (ROOT / ".github" / "workflows" / "paper-identifiability.yml").read_text()
-    assert "Record toolchain provenance" in workflow
+    assert "Record toolchain and source provenance" in workflow
+    assert "git rev-parse HEAD" in workflow
     assert "toolchain.txt" in workflow
     assert "Author:.*Jaden Fix" in workflow
+    assert "paper.tex" in workflow and "references.bib" in workflow
+    assert "paper.bbl" in workflow and "paper.log" in workflow
+    assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
     assert "Jaden Figgs" not in workflow
