@@ -18,8 +18,8 @@
       "name": "shared-latent representational refinement invariance",
       "type": "theorem",
       "status": "elementary structural lemma",
-      "assumptions": ["clone weights sum to the parent weight", "clone conditional observable laws are identical", "the refinement is representational rather than the physical creation of additional measure-bearing observers"],
-      "nonclaims": ["does not identify a privileged anthropic measure", "does not say physically creating new conscious observers leaves observer measure unchanged"]
+      "assumptions": ["clone weights sum to the parent weight", "clone conditional observable laws are identical", "the displayed finite-view formula uses conditionally independent same-channel observations sharing one persistent latent component", "the refinement is representational rather than the physical creation of additional measure-bearing observers"],
+      "nonclaims": ["does not identify a privileged anthropic measure", "does not say physically creating new conscious observers leaves observer measure unchanged", "does not assert a tensor-product observation law when the declared views are not conditionally independent and same-channel"]
     },
     {
       "id": "P1-T3",
@@ -34,8 +34,8 @@
       "name": "persistent-latent likelihood-ratio identity and ceiling",
       "type": "theorem",
       "status": "elementary finite-mixture identity applied to hierarchical sampling",
-      "assumptions": ["one latent component is drawn once and persists through the transcript", "the two compared hypotheses share conditional transcript laws and differ only in component weights", "for the displayed pointwise mass/density formula the transcript is discrete or all component laws are dominated by one common sigma-finite measure", "component-level absolute continuity holds on the realized support: the denominator gives positive weight to every component contributing positive numerator likelihood"],
-      "nonclaims": ["does not prevent a long transcript from identifying the active component", "does not apply unchanged when the hypotheses also differ in within-component transcript laws", "does not give a finite ceiling across support mismatch", "does not assert a pointwise density formula for arbitrary mutually singular component families without a declared dominating representation"]
+      "assumptions": ["one latent component is drawn once and persists through the transcript", "the two compared hypotheses share conditional transcript laws and differ only in component weights", "for a finite family a common dominating finite measure exists, for example the sum of the component laws", "the displayed density identity is interpreted for chosen Radon--Nikodym versions and therefore almost everywhere under the declared dominating measure", "component-level absolute continuity holds on the realized support: the denominator gives positive weight to every component contributing positive numerator likelihood"],
+      "nonclaims": ["does not prevent a long transcript from identifying the active component", "does not apply unchanged when the hypotheses also differ in within-component transcript laws", "does not give a finite ceiling across support mismatch", "does not assign invariant evidential meaning to a density value on a dominating-measure null set"]
     },
     {
       "id": "P1-T5",
@@ -43,7 +43,7 @@
       "type": "theorem",
       "status": "standard finite-mixture linear geometry",
       "assumptions": ["the observation channel K is a known channel", "finite latent and observed alphabets"],
-      "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification", "failure of point identification does not make Bayesian analysis impossible; it calls for explicit prior sensitivity, identified sets, or robust posterior ranges rather than data-unique point certainty"]
+      "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification", "failure of point identification does not make Bayesian analysis impossible; it calls for explicit prior sensitivity, identified sets, or robust posterior ranges rather than data-unique point certainty", "does not by itself provide a finite-sample conditioning guarantee"]
     },
     {
       "id": "P1-T6",
@@ -57,9 +57,9 @@
       "id": "P1-T7",
       "name": "same-channel repeated-view rigidity inside the row-stochastic gauge",
       "type": "theorem",
-      "status": "scoped gauge-orbit theorem",
+      "status": "elementary scoped gauge-orbit rigidity; no independent priority claim",
       "assumptions": ["K has full row rank", "both observations use the same channel K", "the observations are conditionally independent given the same persistent latent", "A is invertible, nonnegative, and row-stochastic", "pi A^{-1} is strictly positive", "the repeated shared-latent two-view law is preserved"],
-      "nonclaims": ["not unrestricted two-view latent-class identifiability", "does not establish the analogous result for two different view-specific channels", "does not remove latent ambiguities outside the declared gauge", "strict positivity and full row rank are substantive assumptions"]
+      "nonclaims": ["not unrestricted two-view latent-class identifiability", "does not establish the analogous result for two different view-specific channels", "does not remove latent ambiguities outside the declared gauge", "strict positivity and full row rank are substantive assumptions", "the algebraic monomiality step is not claimed as a new general theorem"]
     }
   ]
 }
