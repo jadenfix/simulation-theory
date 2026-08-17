@@ -35,7 +35,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-base texlive-latex-recommended texlive-latex-extra \
-            texlive-fonts-recommended bibtex-extra poppler-utils
+            texlive-fonts-recommended poppler-utils
 
       - name: Build manuscript
         working-directory: paper/identifiability-before-anthropic-bayes
