@@ -1,0 +1,73 @@
+name: paper-identifiability
+
+on:
+  pull_request:
+    paths:
+      - 'paper/identifiability-before-anthropic-bayes/**'
+      - 'tests/test_paper_identifiability_before_anthropic_bayes.py'
+      - '.github/workflows/paper-identifiability.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python test dependency
+        run: python -m pip install pytest
+
+      - name: Run exact paper tests
+        run: python -m pytest -q tests/test_paper_identifiability_before_anthropic_bayes.py
+
+      - name: Reproduce exact receipt and require clean diff
+        working-directory: paper/identifiability-before-anthropic-bayes
+        run: |
+          python reproduce.py
+          git diff --exit-code -- receipt.json
+
+      - name: Install TeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended bibtex-extra poppler-utils
+
+      - name: Build manuscript
+        working-directory: paper/identifiability-before-anthropic-bayes
+        run: |
+          pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+          bibtex paper
+          pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+          pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+
+      - name: Fail on unresolved references or overfull boxes
+        working-directory: paper/identifiability-before-anthropic-bayes
+        run: |
+          ! grep -E 'LaTeX Warning: (Citation|Reference).*undefined|There were undefined references|There were undefined citations' paper.log
+          ! grep -E 'Overfull \\hbox|Overfull \\vbox' paper.log
+
+      - name: PDF preflight and release hashes
+        working-directory: paper/identifiability-before-anthropic-bayes
+        run: |
+          test -s paper.pdf
+          pdfinfo paper.pdf | tee pdfinfo.txt
+          grep -q 'Title:.*Identifiability Before Anthropic Bayes' pdfinfo.txt
+          grep -q 'Author:.*Jaden Figgs' pdfinfo.txt
+          sha256sum paper.tex references.bib claims.json citation_provenance.json reproduce.py receipt.json PEER_REVIEW_LOOP.md AUDIT.md paper.pdf > release_hashes.txt
+
+      - name: Upload release-candidate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: identifiability-before-anthropic-bayes
+          path: |
+            paper/identifiability-before-anthropic-bayes/paper.pdf
+            paper/identifiability-before-anthropic-bayes/receipt.json
+            paper/identifiability-before-anthropic-bayes/release_hashes.txt
+            paper/identifiability-before-anthropic-bayes/pdfinfo.txt
+            paper/identifiability-before-anthropic-bayes/AUDIT.md
+            paper/identifiability-before-anthropic-bayes/PEER_REVIEW_LOOP.md
