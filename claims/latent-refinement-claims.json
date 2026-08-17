@@ -1,0 +1,68 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T264",
+      "title": "Splitting a latent component into positive-weight observational clones preserves every finite shared-latent iid view law",
+      "kind": "THEOREM",
+      "scope": "finite latent mixture where clone emission rows are identical and clone weights sum to the original component weight",
+      "assumptions": ["views are conditionally iid given the persistent latent component"],
+      "evidence": ["docs/latent-refinement-invariance.md#2-every-finite-shared-latent-iid-view-law-is-unchanged", "src/simtheory/latent_refinement.py:exact_latent_refinement", "tests/test_latent_refinement.py"],
+      "nonclaims": ["physically distinct copies with different justified measure are not being identified with bookkeeping clones"]
+    },
+    {
+      "id": "ST-T265",
+      "title": "Additive probability-weighted coarse-category mass is invariant under observational clone refinement",
+      "kind": "THEOREM",
+      "scope": "finite latent categories with component probabilities and refinement weights summing to one",
+      "assumptions": ["all clones retain the parent coarse-category label"],
+      "evidence": ["docs/latent-refinement-invariance.md#3-weighted-category-mass-is-refinement-invariant", "src/simtheory/latent_refinement.py:weighted_category_mass", "tests/test_latent_refinement.py"],
+      "nonclaims": ["refinement invariance alone does not uniquely determine an anthropic measure"]
+    },
+    {
+      "id": "ST-T266",
+      "title": "Uniform latent-label counting is not invariant under observationally redundant positive-weight refinement",
+      "kind": "THEOREM",
+      "scope": "finite latent labels with at least two coarse categories and equal mass assigned per represented label",
+      "assumptions": ["one represented label may be split into multiple positive-weight observational clones"],
+      "evidence": ["docs/latent-refinement-invariance.md#4-uniform-label-counting-is-not-invariant", "src/simtheory/latent_refinement.py:uniform_label_category_mass", "tests/test_latent_refinement.py"],
+      "nonclaims": ["the theorem concerns representational label counting, not independently justified physical multiplicity"]
+    },
+    {
+      "id": "ST-T267",
+      "title": "With one label in each of two categories, redundant refinement can drive uniform count mass for either category arbitrarily close to zero or one while preserving all finite observable laws",
+      "kind": "THEOREM",
+      "scope": "two-category finite latent mixture with repeated positive-weight clone refinements",
+      "assumptions": ["clone emission laws equal the refined parent emission law"],
+      "evidence": ["docs/latent-refinement-invariance.md#4-uniform-label-counting-is-not-invariant", "tests/test_latent_refinement.py"],
+      "nonclaims": ["weighted category probability remains unchanged under the same refinement"]
+    },
+    {
+      "id": "ST-M80",
+      "title": "Refining one half-mass simulated component into fifty positive-weight clones changes uniform label mass from one-half to fifty-fifty-firsts while preserving weighted mass one-half",
+      "kind": "MODEL_RESULT",
+      "scope": "the exact two-category binary-emission construction in repository tests",
+      "assumptions": ["equal positive split weights across the fifty clones"],
+      "evidence": ["tests/test_latent_refinement.py"],
+      "nonclaims": ["the number fifty is illustrative"]
+    },
+    {
+      "id": "ST-M81",
+      "title": "Refining the opposite half-mass category into fifty clones changes the same uniform simulated-label mass to one-fifty-first without changing observations",
+      "kind": "MODEL_RESULT",
+      "scope": "the exact two-category binary-emission construction in repository tests",
+      "assumptions": ["equal positive split weights across the refined base-category clones"],
+      "evidence": ["tests/test_latent_refinement.py"],
+      "nonclaims": ["the example changes representation rather than physical multiplicity"]
+    },
+    {
+      "id": "ST-F48",
+      "title": "Bounded exact latent-refinement invariance audit",
+      "kind": "FINITE_CHECK",
+      "scope": "one through five shared-latent views, equal refinements up to fifty clones, unequal positive split weights, both coarse-category directions, and outcome-cap rejection",
+      "assumptions": ["all probabilities use exact rational arithmetic"],
+      "evidence": ["src/simtheory/latent_refinement.py", "tests/test_latent_refinement.py"],
+      "nonclaims": ["bounded checks are not empirical evidence for simulation"]
+    }
+  ]
+}
