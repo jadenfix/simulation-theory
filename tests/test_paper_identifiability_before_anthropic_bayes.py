@@ -71,6 +71,9 @@ def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
     assert "organizing principle" in tex
     assert "I_b(y)=\\{m:b_mP_m(y)>0\\}" in tex
     assert "First split $0=0+0$" in tex
+    assert "Data cannot point-identify a mixture parameter" in tex
+    assert "not estimable before it is identifiable" not in tex
+    assert "A^{-1}\\mathbf 1=\\mathbf 1" in tex
     # Source-integrity guards: these late sections must survive whole-file replacements.
     assert "\\section{Limitations}" in tex
     assert "\\section{Conclusion}" in tex
@@ -78,12 +81,14 @@ def test_manuscript_contains_scope_guards_core_citations_and_round_two_fixes():
     assert tex.rstrip().endswith("\\end{document}")
     for key in (
         "bostrom2003",
+        "bostromkulczycki2011",
         "weatherson2003",
         "crawford2013",
         "franceschi2014",
         "richmond2017",
         "kipping2020",
         "thomas2024",
+        "fallislewis2023",
         "neal2006",
         "schneiderolum2013",
         "wilson2013",
@@ -103,6 +108,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "paper.tex",
         "README.md",
         "AUDIT.md",
+        "PEER_REVIEW_LOOP.md",
         "PEER_REVIEW_RESPONSE.md",
         "claims.json",
     )
@@ -117,9 +123,11 @@ def test_citation_provenance_covers_core_references():
     entries = {entry["key"]: entry for entry in provenance["entries"]}
     for key in (
         "bostrom2003",
+        "bostromkulczycki2011",
         "richmond2017",
         "kipping2020",
         "thomas2024",
+        "fallislewis2023",
         "allman2009",
         "gillis2020",
     ):
@@ -136,6 +144,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     response = (PAPER / "PEER_REVIEW_RESPONSE.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
+    assert "preserved as originally written" in review
     assert "Round 1 response" in response
     assert "Round 2" in response
     assert "R2.1" in response and "R2.2" in response
