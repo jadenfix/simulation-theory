@@ -1,6 +1,6 @@
 # Publication audit: Identifiability Before Anthropic Bayes
 
-**Author:** Jaden Figgs, Tempera — `Jaden@Tempera.dev`  
+**Author:** Jaden Fix, Tempera — `Jaden@Tempera.dev`  
 **Audit status:** preprint-candidate, adversarial internal audit completed; external expert review still recommended before journal submission.
 
 ## Audit philosophy
@@ -44,7 +44,7 @@ The bibliography was checked against journal/publisher or archival metadata. Two
 1. Richmond was initially entered with the wrong issue/pages. Correct journal metadata is **Ratio 30(3), 221-238 (2017)**; first published online 22 March 2016.
 2. Franceschi metadata is unusually inconsistent across indexes: PhilPapers/PhilArchive identify the article as 2014 and list 2016 as a reprint year, while secondary issue metadata often gives the volume 43(2) version as 2016. The paper records that discrepancy rather than silently treating it as settled.
 
-`citation_audit.json` records the verification source and the specific proposition for which each citation is used.
+`citation_provenance.json` records the verification source and the specific proposition for which each citation is used.
 
 ## Novelty audit
 
@@ -76,9 +76,9 @@ The manuscript and CI enforce the following language boundaries:
 A release-quality run must pass, in order:
 
 1. `python reproduce.py`
-2. `python audit.py`
+2. run the paper-specific pytest audit suite
 3. compare the regenerated receipt with the tracked `receipt.json`
-4. build the PDF with `pdflatex -> biber -> pdflatex -> pdflatex`
+4. build the PDF with `pdflatex -> bibtex -> pdflatex -> pdflatex`
 5. verify no unresolved references/citations and no overfull boxes
 6. render every PDF page and inspect for clipping, overlap, or broken glyphs
 7. archive the source hash, receipt hash, PDF hash, and Git commit.
