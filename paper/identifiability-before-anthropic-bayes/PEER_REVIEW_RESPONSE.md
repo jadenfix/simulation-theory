@@ -100,6 +100,36 @@ Round 4 targeted conceptual overreach after the production layer was stable.
 
 ---
 
+# Round 5 — bibliographic, partial-identification, and repeated-view audit
+
+## R5.1 — the Fallis--Lewis DOI was correct but the final publication metadata was not
+**Finding:** secondary indexes describe the paper as issue 6, pages 1--13, and often reverse the author order. The Springer version of record cites Peter J. Lewis and Don Fallis, *Synthese* 202, article 180 (2023).
+
+**Severity:** major bibliographic authenticity issue.  
+**Action:** corrected author order and article-number metadata in `references.bib`, corrected the provenance ledger, and added a regression test that pins the publisher form.
+
+## R5.2 — nonidentification is not a prohibition on Bayesian inference
+**Finding:** the manuscript's revised point-identification language was correct, but it still lacked a direct citation to Bayesian methods designed for set-identified models.
+
+**Severity:** literature and interpretation issue.  
+**Action:** added Giacomini and Kitagawa's robust Bayesian set-identification work and clarified that responsible Bayesian analysis may report posterior sets, lower/upper probabilities, robust credible regions, or sensitivity to unrevisable priors rather than claiming that the data uniquely determine a nonidentified structural posterior.
+
+## R5.3 — “two views” was broader than the displayed model
+**Finding:** the identity `T=K^T D_pi K` assumes two conditionally independent repeated observations generated through the same channel `K`. It does not cover arbitrary view-specific channels.
+
+**Severity:** mathematical scope clarification.  
+**Action:** changed the section, theorem title, abstract, assumptions, claim ledger, and limitations to say **same-channel repeated views**. The paper explicitly leaves different-channel multiview identification outside the theorem.
+
+## R5.4 — release artifacts needed intrinsic source provenance
+**Finding:** GitHub associated an artifact with a commit externally, but the artifact itself did not record the source commit and omitted most of the release source.
+
+**Severity:** reproducibility issue.  
+**Action:** `toolchain.txt` now includes the Git commit. The uploaded artifact now includes manuscript source, resolved bibliography, bibliography source, claims/provenance, reproduction code, tests, workflow, review/audit files, PDF logs, and release hashes.
+
+**Round-5 disposition:** moderate revision. All findings were feasible and applied. The changes narrow claims, correct one publisher-level citation, and improve reproducibility; they do not introduce a new theorem.
+
+---
+
 # Release checklist
 
 The release remains fail-closed. On one final commit it must satisfy:
