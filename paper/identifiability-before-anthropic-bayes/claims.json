@@ -43,7 +43,7 @@
       "type": "theorem",
       "status": "standard finite-mixture linear geometry",
       "assumptions": ["the observation channel K is a known channel", "finite latent and observed alphabets"],
-      "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification"]
+      "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification", "failure of point identification does not make Bayesian analysis impossible; it calls for explicit prior sensitivity, identified sets, or robust posterior ranges rather than data-unique point certainty"]
     },
     {
       "id": "P1-T6",
@@ -55,11 +55,11 @@
     },
     {
       "id": "P1-T7",
-      "name": "two-view rigidity inside the row-stochastic gauge",
+      "name": "same-channel repeated-view rigidity inside the row-stochastic gauge",
       "type": "theorem",
       "status": "scoped gauge-orbit theorem",
-      "assumptions": ["K has full row rank", "A is invertible, nonnegative, and row-stochastic", "pi A^{-1} is strictly positive", "two observations are conditionally independent given the same persistent latent", "the shared-latent two-view law is preserved"],
-      "nonclaims": ["not unrestricted two-view latent-class identifiability", "does not remove latent ambiguities outside the declared gauge", "strict positivity and full row rank are substantive assumptions"]
+      "assumptions": ["K has full row rank", "both observations use the same channel K", "the observations are conditionally independent given the same persistent latent", "A is invertible, nonnegative, and row-stochastic", "pi A^{-1} is strictly positive", "the repeated shared-latent two-view law is preserved"],
+      "nonclaims": ["not unrestricted two-view latent-class identifiability", "does not establish the analogous result for two different view-specific channels", "does not remove latent ambiguities outside the declared gauge", "strict positivity and full row rank are substantive assumptions"]
     }
   ]
 }
