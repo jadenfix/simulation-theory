@@ -114,7 +114,7 @@ for every rational $w\in[0,1]$.
 \end{theorem}
 
 \begin{proof}
-Applying additivity to $0=0+0$ gives $\mu(0)=2\mu(0)$, hence $\mu(0)=0$. Split $1$ into $n$ equal rational pieces. Additivity gives $1=n\mu(1/n)$, hence $\mu(1/n)=1/n$. For $w=p/n$ with $p\ge1$, sum $p$ such pieces to obtain $\mu(p/n)=p/n$.
+First split $0=0+0$. Additivity gives $\mu(0)=2\mu(0)$, hence $\mu(0)=0$. For $n\ge1$, split $1$ into $n$ equal rational pieces. Additivity gives $1=n\mu(1/n)$, hence $\mu(1/n)=1/n$. For positive $w=p/n$, sum $p$ such pieces to obtain $\mu(p/n)=p/n$.
 \end{proof}
 
 This theorem is elementary and is not offered as a novelty claim. A measure using consciousness, computational cost, causal depth, observer-moments, or other structure may differ from raw probability weight. The audit requirement is simply that the extra structure be stated and that representation-only refinements not silently create measure.
@@ -211,4 +211,93 @@ The transformed prior need not be nonnegative for an arbitrary $A$; validity of 
 This proposition gives a constructive continuum of one-view nonidentifiabilities near suitable interior points. It does not classify every possible stochastic factorization ambiguity. Infinite data from the same one-view marginal may identify $q$ exactly while leaving a family of latent factorizations observationally equivalent.
 
 \section{Shared-latent views can change the experiment}
-Suppose now that two observations are conditionally independent given one persistent latent
+Suppose now that two observations are conditionally independent given one persistent latent component. Their joint probability matrix is
+\[
+T=K^\top D_\pi K,
+\]
+where $D_\pi$ is diagonal with entries $\pi_i$. Independent redraws of the latent between the two observations would instead produce $q\otimes q$; these are different experiments.
+
+\begin{theorem}[Two-view rigidity inside the row-stochastic gauge]\label{thm:twoview}
+Assume: (i) $K$ has full row rank; (ii) $A$ is invertible, nonnegative, and row-stochastic; (iii) $K'=AK$; (iv) $\pi'=\pi A^{-1}$ is strictly positive; and (v) the shared-latent two-view law is preserved:
+\[
+K'^\top D_{\pi'}K'=K^\top D_\pi K.
+\]
+Then $A$ is a permutation matrix.
+\end{theorem}
+
+\begin{proof}
+Substituting $K'=AK$ gives
+\[
+K^\top A^\top D_{\pi'}AK=K^\top D_\pi K.
+\]
+Let
+\[
+X=A^\top D_{\pi'}A-D_\pi.
+\]
+Then $K^\top XK=0$. Because $K$ has full row rank, there exists a right inverse $R$ with $KR=I$. Multiplying by $R^\top$ on the left and $R$ on the right yields
+\[
+X=R^\top K^\top XKR=0,
+\]
+so
+\[
+A^\top D_{\pi'}A=D_\pi.
+\]
+For distinct columns $j\ne k$, the $(j,k)$ entry is
+\[
+0=\sum_i\pi'_iA_{ij}A_{ik}.
+\]
+Every term is nonnegative and every $\pi'_i$ is strictly positive. Hence $A_{ij}A_{ik}=0$ for every row $i$ and every $j\ne k$: each row has at most one positive entry. Row stochasticity makes that unique positive entry equal to one. Invertibility prevents two rows from selecting the same column. Thus $A$ is a permutation matrix.
+\end{proof}
+
+The theorem is intentionally narrow. It does \emph{not} state that arbitrary two-view latent-class models are globally identifiable. It states that the continuous row-stochastic gauge of Proposition~\ref{prop:gauge} collapses to label switching when a second conditionally independent view tied to the same persistent latent is also preserved, under the listed rank and positivity assumptions. General latent-structure identification uses additional tensor, rank, or structural conditions \citep{allman2009}.
+
+\section{Relation to anthropic and simulation arguments}
+Bostrom's classic argument links posthuman survival and simulation behavior to the fraction of observers with human-type experiences that are simulated \citep{bostrom2003}. Weatherson, Crawford, Franceschi, and Richmond challenge aspects of indifference, reference classes, evidence, or sampling assumptions \citep{weatherson2003,crawford2013,franceschi2014,richmond2017}. Kipping adds uncertainty about whether ancestor simulations are technically realizable and uses Bayesian model averaging \citep{kipping2020}. Thomas develops a conditional expected simulant-ratio argument designed to avoid dependence on an unknown realized ratio \citep{thomas2024}.
+
+Our framework is complementary rather than substitutive. Model averaging still requires specified models and likelihoods. An expected simulant ratio still requires a definition of the units whose measure is being aggregated. Full non-indexical conditioning still requires a generative model under which the observer's complete evidence has a likelihood \citep{neal2006}. The present audit asks whether those ingredients have stable statistical meaning before a posterior is evaluated.
+
+The refinement result should therefore not be read as “copy counting is always wrong.” If a physical process creates additional conscious observers and a theory assigns them additional measure, the model has changed. The diagnostic is instead: if a transformation is explicitly declared to be representationally redundant and to preserve total measure-bearing structure, a probability assignment needs justification if the transformation alone changes the answer.
+
+\section{An eight-step pre-Bayes audit}
+For a quantitative simulation-style inference, the following questions can be asked before reporting a posterior.
+
+\begin{enumerate}
+\item \textbf{Hypothesis restriction.} What concrete base and simulator models are being compared? A completely unrestricted simulator class can contain models observationally equivalent to the base model.
+\item \textbf{Observation interface.} What transcript or measurement sigma-field supplies the likelihood?
+\item \textbf{Measure-bearing unit.} Are we counting persons, observer-moments, world-histories, computations, or something else?
+\item \textbf{Representation invariance.} Does an observationally null relabeling/refinement change the assigned probability? If so, what additional physical or phenomenal structure makes that change substantive?
+\item \textbf{Sampling hierarchy.} Which latent variable is drawn once, and which quantities are independently redrawn across observations?
+\item \textbf{Conditional identification.} If the observation channel is treated as known, are the latent mixture weights identifiable and sufficiently well-conditioned?
+\item \textbf{Joint identification.} If both prior and channel are inferred, what additional views, interventions, restrictions, or invariances break factorization ambiguity?
+\item \textbf{Anthropic update.} Only after the previous choices are fixed should one apply the selected ordinary or self-locating Bayesian rule.
+\end{enumerate}
+
+These steps do not force agreement about anthropic probability. They expose where disagreement is mathematical, empirical, representational, or philosophical.
+
+\section{Reproducibility and falsification policy}
+The accompanying repository contains the manuscript source, bibliography, machine-readable claim ledger, synthetic peer-review record, citation-provenance record, and a standard-library Python reproduction program using exact rational arithmetic for finite examples. The code checks examples and attempts to falsify theorem boundaries; it is not used as a substitute for the analytic proofs.
+
+The reproduction suite includes: the clone-count instability while additive weight remains fixed; persistent-world versus independent-redraw Bayes factors; a deliberate support-mismatch boundary; full-rank and rank-deficient known-channel examples; several exact one-view gauge transformations; and exhaustive rational-grid searches over bounded two- and three-state row-stochastic gauges for the two-view theorem. A finite search can catch algebra or implementation errors but cannot prove the general theorem.
+
+The paper release workflow is required to regenerate the receipt, run repository tests, compile the PDF, fail on unresolved references or overfull boxes, and upload the PDF as an artifact. A human visual inspection remains a separate release checklist item.
+
+\section{Limitations}
+Several limitations are essential to the interpretation.
+
+First, observational equivalence is relative to the declared interface; a richer experiment can distinguish models that a poorer interface cannot. Second, the refinement theorem concerns representation-only splitting, not physical creation of new observers. Third, the persistent-latent ceiling compares hypotheses that share component transcript laws and differ in mixture weights; changing the component likelihoods changes the problem. Fourth, known-channel affine-rank identifiability says nothing by itself about statistical conditioning or finite-sample efficiency. Fifth, the row-stochastic gauge is a constructive nonidentifiability family, not a complete classification of nonnegative factorizations. Sixth, the two-view theorem is a rigidity result inside that gauge orbit, not generic two-view latent-class identifiability. Finally, none of the theorems determines whether consciousness is substrate independent, whether advanced civilizations run simulations, or which self-locating probability rule is normatively correct.
+
+\section{Conclusion}
+The paper's organizing principle is an order of audit rather than a new posterior formula:
+\[
+\begin{aligned}
+\text{observation model}&\to\text{representation/measure}\to\text{sampling hierarchy}\\
+&\to\text{identifiability}\to\text{Bayesian update}.
+\end{aligned}
+\]
+Bayesian arithmetic is powerful after these objects are defined. It cannot by itself choose the unit of counting, turn one persistent world into many independent draws from a world prior, or identify a latent factorization that the observable law leaves ambiguous.
+
+For simulation arguments, the practical implication is modest but consequential. Before interpreting a numerical probability that ``we are simulated,'' one should be able to say what is being sampled, what carries measure, what observations distinguish the hypotheses, and whether the latent quantities entering the calculation are identifiable under that experiment. If those questions are unanswered, the posterior may be precise arithmetic applied to an underdetermined model.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}
