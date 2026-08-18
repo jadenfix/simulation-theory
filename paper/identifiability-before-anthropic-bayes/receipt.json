@@ -84,7 +84,7 @@
       "175/659"
     ]
   },
-  "sha256_without_hash": "a610ffc454847439e6ae26c1a9507ea2473cf443024f7ce15c39683a11415484",
+  "sha256_without_hash": "36d8280c972d82244edf08dee55a500a0f4831c2d2db5749f5a5aa45fbc20a32",
   "support_mismatch_boundary": {
     "denominator_probability": "0/1",
     "finite_ceiling_applies": false,
@@ -96,9 +96,21 @@
     "only_permutations": true,
     "preserving_count": 2
   },
+  "two_view_grid_audit_2state_extended": {
+    "admissible_count": 512,
+    "denominator": 32,
+    "only_permutations": true,
+    "preserving_count": 2
+  },
   "two_view_grid_audit_3state": {
     "admissible_count": 108,
     "denominator": 3,
+    "only_permutations": true,
+    "preserving_count": 6
+  },
+  "two_view_grid_audit_3state_extended": {
+    "admissible_count": 3492,
+    "denominator": 6,
     "only_permutations": true,
     "preserving_count": 6
   }
