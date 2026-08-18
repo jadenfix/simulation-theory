@@ -1,5 +1,8 @@
 # Field-impact and extension audit
 
+**Paper:** *Identifiability Before Anthropic Bayes*  
+**Author:** Jaden Fix, Tempera — `Jaden@Tempera.dev`
+
 ## Purpose
 
 This document records the external-literature pass used to decide whether the manuscript should be extended before release. It is intentionally separate from the manuscript so that novelty decisions, rejected extensions, and citation checks remain auditable.
@@ -60,7 +63,7 @@ Kipping adds model uncertainty about whether ancestor simulations are technicall
 
 Thomas replaces a high realized simulant ratio with a high conditional expected ratio and states an explicit calibration principle: conditional on only reference-class membership and a ratio of F to G members, the self-locating odds equal that ratio. Thomas also emphasizes that discovering many simulations need not raise the odds that one is simulated.
 
-**Relation:** this is the paper the new extension must engage most directly. The proposed sampling-kernel theorem identifies exactly what calibration means in a finite generative model. Within a fixed world, count calibration is recovered by a uniform self-location kernel. Across uncertain worlds, a raw global count ratio additionally requires a specific world-weighting rule. This is a useful clarification rather than a refutation of Thomas.
+**Relation:** this is the paper the new extension must engage most directly. The sampling-kernel theorem identifies exactly what calibration means in a finite generative model. Within a fixed world, count calibration is recovered by a uniform self-location kernel. Across uncertain worlds, a raw global count ratio additionally requires a particular world-weighting rule. This is a useful clarification rather than a refutation of Thomas.
 
 ## Closest statistical literature
 
@@ -96,9 +99,9 @@ That would collide directly with a mature literature and require substantially s
 
 **Decision: accept. High impact / low-to-moderate complexity.**
 
-This fills the largest conceptual gap in the current manuscript. The paper presently says that measure-bearing units must be specified, but it does not yet show algebraically how a chosen self-location rule converts world populations into posterior odds.
+This fills the largest conceptual gap in the current manuscript. The paper previously said that measure-bearing units must be specified, but it did not yet show algebraically how a chosen self-location rule converts world populations into posterior odds.
 
-Proposed finite model:
+Finite model:
 
 - `W`: a world with prior `rho(w)`;
 - `C_w`: finite candidate centered locations/observers in world `w`;
@@ -126,7 +129,7 @@ Consequences:
    not the raw ratio of total counts across worlds. The latter requires additional world weighting, e.g. weights proportional to reference-class size in the simplest finite construction.
 4. **Refinement invariance.** Splitting one centered possibility into observationally identical representational clones leaves the posterior unchanged when its kernel mass is split among the clones. Re-imposing a uniform-over-label kernel after adding clones changes the sampling model; it is not an evidential update.
 
-This section would directly connect the paper's representation-invariance result to the philosophical indifference/calibration debate without pretending to resolve the normative choice of self-location rule.
+This section directly connects the paper's representation-invariance result to the philosophical indifference/calibration debate without pretending to resolve the normative choice of self-location rule.
 
 ### Candidate D: add a numerical probability that we are simulated
 
