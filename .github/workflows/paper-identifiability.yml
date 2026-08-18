@@ -5,6 +5,7 @@ on:
     paths:
       - 'paper/identifiability-before-anthropic-bayes/**'
       - 'tests/test_paper_identifiability_before_anthropic_bayes.py'
+      - 'tests/test_paper_identifiability_two_view_boundaries.py'
       - '.github/workflows/paper-identifiability.yml'
   workflow_dispatch:
 
@@ -25,7 +26,10 @@ jobs:
         run: python -m pip install pytest
 
       - name: Run exact paper tests
-        run: python -m pytest -q tests/test_paper_identifiability_before_anthropic_bayes.py
+        run: |
+          python -m pytest -q \
+            tests/test_paper_identifiability_before_anthropic_bayes.py \
+            tests/test_paper_identifiability_two_view_boundaries.py
 
       - name: Reproduce exact receipt and require clean diff
         working-directory: paper/identifiability-before-anthropic-bayes
@@ -81,8 +85,10 @@ jobs:
             FIELD_IMPACT_AUDIT.md ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md \
             ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md \
             ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md \
+            ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md \
             AUDIT.md toolchain.txt paper.bbl paper.log pdfinfo.txt paper.pdf \
             ../../tests/test_paper_identifiability_before_anthropic_bayes.py \
+            ../../tests/test_paper_identifiability_two_view_boundaries.py \
             ../../.github/workflows/paper-identifiability.yml \
             > release_hashes.txt
 
@@ -112,5 +118,7 @@ jobs:
             paper/identifiability-before-anthropic-bayes/ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md
             paper/identifiability-before-anthropic-bayes/ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md
             paper/identifiability-before-anthropic-bayes/ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md
+            paper/identifiability-before-anthropic-bayes/ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md
             tests/test_paper_identifiability_before_anthropic_bayes.py
+            tests/test_paper_identifiability_two_view_boundaries.py
             .github/workflows/paper-identifiability.yml
