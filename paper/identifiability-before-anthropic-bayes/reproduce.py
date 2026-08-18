@@ -82,6 +82,77 @@ def clone_example(r=20):
     }
 
 
+def self_location_sampling_kernel_audit():
+    """Exact finite examples for count calibration, world weighting, and refinement.
+
+    There are two worlds.  World 0 has one F and one G center.  World 1 has
+    three F and one G center.  Evidence is deliberately nondiscriminating, so
+    only the world prior and self-location kernel determine the centered odds.
+    """
+
+    rho_equal = (F(1, 2), F(1, 2))
+    # Within-world category masses under uniform self-location kernels.
+    f_mass = (F(1, 2), F(3, 4))
+    g_mass = (F(1, 2), F(1, 4))
+
+    pf_equal = sum(rho_equal[w] * f_mass[w] for w in range(2))
+    pg_equal = sum(rho_equal[w] * g_mass[w] for w in range(2))
+    assert pf_equal == F(5, 8)
+    assert pg_equal == F(3, 8)
+    assert pf_equal / pg_equal == F(5, 3)
+
+    # Raw center counts are 4 F versus 2 G, which is not the same as equal-world
+    # weighting followed by uniform-within-world self-location.
+    raw_count_odds = F(4, 2)
+    assert raw_count_odds == 2
+    assert raw_count_odds != pf_equal / pg_equal
+
+    # Weight worlds by reference-class size (2 versus 4) and uniform within each
+    # world.  Then every centered possibility receives the same global mass and
+    # the raw global count ratio is recovered.
+    rho_size = (F(1, 3), F(2, 3))
+    pf_size = sum(rho_size[w] * f_mass[w] for w in range(2))
+    pg_size = sum(rho_size[w] * g_mass[w] for w in range(2))
+    assert pf_size / pg_size == raw_count_odds == 2
+
+    # Representation-only refinement of the F center in world 0 into three
+    # observationally identical labels.  Conserving the parent's self-location
+    # mass gives 1/6 + 1/6 + 1/6 = 1/2, so the posterior remains unchanged.
+    split_f_world0 = (F(1, 6), F(1, 6), F(1, 6))
+    assert sum(split_f_world0, F(0)) == F(1, 2)
+    refined_f_mass = (sum(split_f_world0, F(0)), F(3, 4))
+    refined_g_mass = (F(1, 2), F(1, 4))
+    pf_refined = sum(rho_equal[w] * refined_f_mass[w] for w in range(2))
+    pg_refined = sum(rho_equal[w] * refined_g_mass[w] for w in range(2))
+    assert pf_refined / pg_refined == F(5, 3)
+
+    # If one instead resets the world-0 kernel to uniform over the four labels
+    # after cloning, the world-0 F mass changes from 1/2 to 3/4.  That is a new
+    # self-location model, and the centered odds change accordingly.
+    relabeled_uniform_f_mass = (F(3, 4), F(3, 4))
+    relabeled_uniform_g_mass = (F(1, 4), F(1, 4))
+    pf_reset = sum(rho_equal[w] * relabeled_uniform_f_mass[w] for w in range(2))
+    pg_reset = sum(rho_equal[w] * relabeled_uniform_g_mass[w] for w in range(2))
+    assert pf_reset / pg_reset == 3
+
+    return {
+        "equal_world_prior_uniform_within_world_odds": fstr(pf_equal / pg_equal),
+        "raw_global_count_odds": fstr(raw_count_odds),
+        "size_weighted_world_prior_odds": fstr(pf_size / pg_size),
+        "mass_conserving_refinement_odds": fstr(pf_refined / pg_refined),
+        "uniform_over_refined_labels_odds": fstr(pf_reset / pg_reset),
+        "equal_world_prior_category_probabilities": {
+            "F": fstr(pf_equal),
+            "G": fstr(pg_equal),
+        },
+        "world_priors": {
+            "equal": [fstr(x) for x in rho_equal],
+            "reference_class_size_weighted": [fstr(x) for x in rho_size],
+        },
+        "interpretation": "raw counts require a declared self-location/world-weighting rule; mass-conserving representational refinement leaves the posterior unchanged",
+    }
+
+
 def persistent_example(T=100):
     a, b = F(3, 4), F(1, 4)
     return {
@@ -234,6 +305,7 @@ def three_state_permutation_audit(denominator=3, expected_admissible=None):
 def main():
     payload = {
         "clone": clone_example(),
+        "sampling_kernel": self_location_sampling_kernel_audit(),
         "persistent": persistent_example(),
         "persistent_identity_audit": persistent_mixture_identity_audit(),
         "support_mismatch_boundary": support_mismatch_boundary(),
