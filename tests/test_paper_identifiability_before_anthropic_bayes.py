@@ -18,17 +18,24 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "PEER_REVIEW_LOOP.md",
         "PEER_REVIEW_RESPONSE.md",
         "ROUND6_MEASURE_THEORETIC_AUDIT.md",
+        "FIELD_IMPACT_AUDIT.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
     claims = json.loads((PAPER / "claims.json").read_text())
     assert claims["author"] == "Jaden Fix"
     assert claims["email"] == "Jaden@Tempera.dev"
-    assert len(claims["claims"]) == 7
+    assert len(claims["claims"]) == 8
 
     refinement = next(c for c in claims["claims"] if c["id"] == "P1-T2")
     assert any("conditionally independent same-channel" in x for x in refinement["assumptions"])
     assert any("tensor-product" in x for x in refinement["nonclaims"])
+
+    sampling = next(c for c in claims["claims"] if c["id"] == "P1-T8")
+    assert any("self-location kernel" in x for x in sampling["assumptions"])
+    assert any("normatively correct" in x for x in sampling["nonclaims"])
+    assert any("world-weighting" in x for x in sampling["nonclaims"])
+    assert any("kernel mass" in x for x in sampling["nonclaims"])
 
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
@@ -62,6 +69,11 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
     assert generated_bytes == expected_bytes
 
     receipt = json.loads(generated_bytes)
+    assert receipt["sampling_kernel"]["equal_world_prior_uniform_within_world_odds"] == "5/3"
+    assert receipt["sampling_kernel"]["raw_global_count_odds"] == "2/1"
+    assert receipt["sampling_kernel"]["size_weighted_world_prior_odds"] == "2/1"
+    assert receipt["sampling_kernel"]["mass_conserving_refinement_odds"] == "5/3"
+    assert receipt["sampling_kernel"]["uniform_over_refined_labels_odds"] == "3/1"
     assert receipt["two_view_grid_audit_2state"] == {
         "admissible_count": 32,
         "denominator": 8,
@@ -100,6 +112,12 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "Support mismatch" in tex
     assert "Physical duplication" in tex
     assert "Known-channel affine-rank identifiability" in tex
+    assert "Self-location kernel decomposition" in tex
+    assert "self-location kernel" in tex.lower()
+    assert "raw global count ratio" in tex
+    assert "mass-conserving" in tex
+    assert "Thomas's Calibration principle" in tex
+    assert "A nine-step pre-Bayes audit" in tex
     assert "organizing principle" in tex
     assert "I_b(y)=\\{m:b_mp_m(y)>0\\}" in tex
     assert "common $\\sigma$-finite measure" in tex
@@ -115,7 +133,6 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "Robust Bayesian methods for set-identified models" in tex
     assert "receipt.json` is required to regenerate byte-for-byte" in tex
     assert "does not claim that PDF bytes must remain invariant" in tex
-    # Source-integrity guards: these late sections must survive whole-file replacements.
     assert "\\section{Limitations}" in tex
     assert "\\section{Conclusion}" in tex
     assert "\\bibliography{references}" in tex
@@ -124,6 +141,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
         "bostrom2003",
         "bostromkulczycki2011",
         "weatherson2003",
+        "elga2004",
         "crawford2013",
         "franceschi2014",
         "richmond2017",
@@ -160,6 +178,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "PEER_REVIEW_LOOP.md",
         "PEER_REVIEW_RESPONSE.md",
         "ROUND6_MEASURE_THEORETIC_AUDIT.md",
+        "FIELD_IMPACT_AUDIT.md",
         "claims.json",
     )
     for name in release_files:
@@ -174,6 +193,8 @@ def test_citation_provenance_covers_core_references():
     for key in (
         "bostrom2003",
         "bostromkulczycki2011",
+        "weatherson2003",
+        "elga2004",
         "richmond2017",
         "kipping2020",
         "thomas2024",
@@ -190,12 +211,14 @@ def test_citation_provenance_covers_core_references():
     assert "313-344" in entries["khawaja2026"]["notes"]
     assert "article 180" in entries["fallislewis2023"]["notes"]
     assert "1519-1556" in entries["giacomini2021"]["notes"]
+    assert "Calibration" in entries["thomas2024"]["notes"]
 
 
 def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     review = (PAPER / "PEER_REVIEW_LOOP.md").read_text()
     response = (PAPER / "PEER_REVIEW_RESPONSE.md").read_text()
     round6 = (PAPER / "ROUND6_MEASURE_THEORETIC_AUDIT.md").read_text()
+    impact = (PAPER / "FIELD_IMPACT_AUDIT.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
     assert "preserved as originally written" in review
@@ -213,6 +236,11 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     for item in ("R6.1", "R6.2", "R6.3", "R6.4", "R6.5", "R6.6", "R6.7", "R6.8"):
         assert item in response
         assert item in round6
+    assert "Round 7" in response
+    for item in ("R7.1", "R7.2", "R7.3", "R7.4"):
+        assert item in response
+    assert "self-location sampling-kernel theorem" in impact
+    assert "Candidate C" in impact and "Decision: accept" in impact
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
     assert "not independent peer review" in round6
