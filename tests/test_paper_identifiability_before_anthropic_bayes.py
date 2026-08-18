@@ -23,9 +23,11 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
         "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
         "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md",
+        "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
+    assert (ROOT / "tests" / "test_paper_identifiability_two_view_boundaries.py").is_file()
     claims = json.loads((PAPER / "claims.json").read_text())
     assert claims["author"] == "Jaden Fix"
     assert claims["email"] == "Jaden@Tempera.dev"
@@ -44,7 +46,9 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert any("kernel mass" in x for x in sampling["nonclaims"])
     assert any("not claimed as novel" in x for x in sampling["nonclaims"])
     assert any("global sampler" in x for x in sampling["nonclaims"])
+    assert any("observer-selection formalization" in x for x in sampling["nonclaims"])
     assert "xerographic" in sampling["status"]
+    assert "observer-selection" in sampling["status"]
     assert "observer-measure specification" in sampling["status"]
 
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
@@ -226,6 +230,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
         "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
         "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md",
+        "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md",
         "claims.json",
     )
     for name in release_files:
@@ -278,6 +283,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     round8 = (PAPER / "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md").read_text()
     round9 = (PAPER / "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md").read_text()
     round10 = (PAPER / "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md").read_text()
+    round11 = (PAPER / "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
     assert "preserved as originally written" in review
@@ -311,6 +317,11 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     for item in ("R10.1", "R10.2", "R10.3", "R10.4"):
         assert item in round10
     assert "Garisto" in round10
+    assert "Round 11" in round11
+    for item in ("R11.1", "R11.2", "R11.3", "R11.4", "R11.5"):
+        assert item in round11
+    assert "full row rank" in round11
+    assert "strict positivity" in round11
     assert "self-location sampling-kernel theorem" in impact
     assert "Candidate C" in impact and "Decision: accept" in impact
     assert "zero unresolved major items" in response
@@ -319,6 +330,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "not independent peer review" in round6
     assert "not independent peer review" in round9
     assert "not independent peer review" in round10
+    assert "not independent peer review" in round11
 
 
 def test_workflow_records_source_toolchain_and_checks_correct_author():
@@ -330,11 +342,13 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "paper.tex" in workflow and "references.bib" in workflow
     assert "paper.bbl" in workflow and "paper.log" in workflow
     assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
+    assert "test_paper_identifiability_two_view_boundaries.py" in workflow
     assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
     assert "FIELD_IMPACT_AUDIT.md" in workflow
     assert "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md" in workflow
     assert "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md" in workflow
     assert "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md" in workflow
+    assert "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md" in workflow
     assert "permissions:" in workflow and "contents: read" in workflow
     assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
     assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
