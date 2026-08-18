@@ -207,7 +207,7 @@ def simplex_rows(total, dimension):
             yield (first,) + rest
 
 
-def three_state_permutation_audit(denominator=3):
+def three_state_permutation_audit(denominator=3, expected_admissible=None):
     rows = [tuple(F(x, denominator) for x in counts) for counts in simplex_rows(denominator, 3)]
     pi = (F(1, 3), F(1, 3), F(1, 3))
     T = diag(pi)
@@ -224,7 +224,8 @@ def three_state_permutation_audit(denominator=3):
         Tp = matmul(matmul(transpose(A), diag(pip)), A)
         if Tp == T:
             preserving.append(A)
-    assert admissible == 108
+    if expected_admissible is not None:
+        assert admissible == expected_admissible
     assert len(preserving) == 6
     assert all(all(sum(x == 1 for x in row) == 1 and all(x in (0, 1) for x in row) for row in A) for A in preserving)
     return {"denominator": denominator, "admissible_count": admissible, "preserving_count": 6, "only_permutations": True}
@@ -239,7 +240,9 @@ def main():
         "known_channel_identifiability": known_channel_identifiability_audit(),
         "gauge": gauge_examples(),
         "two_view_grid_audit_2state": two_state_permutation_audit(),
-        "two_view_grid_audit_3state": three_state_permutation_audit(),
+        "two_view_grid_audit_2state_extended": two_state_permutation_audit(denominator=32),
+        "two_view_grid_audit_3state": three_state_permutation_audit(expected_admissible=108),
+        "two_view_grid_audit_3state_extended": three_state_permutation_audit(denominator=6, expected_admissible=3492),
     }
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     receipt = dict(payload)
