@@ -84,7 +84,29 @@
       "175/659"
     ]
   },
-  "sha256_without_hash": "36d8280c972d82244edf08dee55a500a0f4831c2d2db5749f5a5aa45fbc20a32",
+  "sampling_kernel": {
+    "equal_world_prior_category_probabilities": {
+      "F": "5/8",
+      "G": "3/8"
+    },
+    "equal_world_prior_uniform_within_world_odds": "5/3",
+    "interpretation": "raw counts require a declared self-location/world-weighting rule; mass-conserving representational refinement leaves the posterior unchanged",
+    "mass_conserving_refinement_odds": "5/3",
+    "raw_global_count_odds": "2/1",
+    "size_weighted_world_prior_odds": "2/1",
+    "uniform_over_refined_labels_odds": "3/1",
+    "world_priors": {
+      "equal": [
+        "1/2",
+        "1/2"
+      ],
+      "reference_class_size_weighted": [
+        "1/3",
+        "2/3"
+      ]
+    }
+  },
+  "sha256_without_hash": "8d003e5d309de62ba14728f122b6dcbc5370d6e969630e8d07986e1187cb4560",
   "support_mismatch_boundary": {
     "denominator_probability": "0/1",
     "finite_ceiling_applies": false,
