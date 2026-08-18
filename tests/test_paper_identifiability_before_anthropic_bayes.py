@@ -20,6 +20,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "ROUND6_MEASURE_THEORETIC_AUDIT.md",
         "FIELD_IMPACT_AUDIT.md",
         "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
+        "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
@@ -34,11 +35,15 @@ def test_paper_bundle_is_complete_and_claims_scoped():
 
     sampling = next(c for c in claims["claims"] if c["id"] == "P1-T8")
     assert any("self-location kernel" in x for x in sampling["assumptions"])
+    assert any("nondiscriminating evidence" in x for x in sampling["assumptions"])
+    assert any("positive denominator mass" in x for x in sampling["assumptions"])
     assert any("normatively correct" in x for x in sampling["nonclaims"])
     assert any("world-weighting" in x for x in sampling["nonclaims"])
     assert any("kernel mass" in x for x in sampling["nonclaims"])
     assert any("not claimed as novel" in x for x in sampling["nonclaims"])
+    assert any("global sampler" in x for x in sampling["nonclaims"])
     assert "xerographic" in sampling["status"]
+    assert "observer-measure specification" in sampling["status"]
 
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
@@ -122,6 +127,11 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "raw global count ratio" in tex
     assert "mass-conserving" in tex
     assert "Thomas's Calibration principle" in tex
+    assert "Uchida" in tex
+    assert "uchida2026" in tex
+    assert "nondiscriminating evidence" in tex
+    assert "Under the same fixed-world and constant-likelihood condition" in tex
+    assert "P(G,e)>0" in tex
     assert "A nine-step pre-Bayes audit" in tex
     assert "organizing principle" in tex
     assert "I_b(y)=\\{m:b_mp_m(y)>0\\}" in tex
@@ -158,6 +168,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
         "giacomini2021",
         "neal2006",
         "schneiderolum2013",
+        "uchida2026",
         "wilson2013",
         "dizadji2015",
         "khawaja2026",
@@ -189,6 +200,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "ROUND6_MEASURE_THEORETIC_AUDIT.md",
         "FIELD_IMPACT_AUDIT.md",
         "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
+        "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
         "claims.json",
     )
     for name in release_files:
@@ -226,6 +238,8 @@ def test_citation_provenance_covers_core_references():
     assert "article 180" in entries["fallislewis2023"]["notes"]
     assert "1519-1556" in entries["giacomini2021"]["notes"]
     assert "Calibration" in entries["thomas2024"]["notes"]
+    assert entries["uchida2026"]["verification_status"] == "primary_repository_verified_non_peer_reviewed"
+    assert "global sampler" in entries["uchida2026"]["notes"].lower() or "measure" in entries["uchida2026"]["notes"].lower()
 
 
 def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
@@ -234,6 +248,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     round6 = (PAPER / "ROUND6_MEASURE_THEORETIC_AUDIT.md").read_text()
     impact = (PAPER / "FIELD_IMPACT_AUDIT.md").read_text()
     round8 = (PAPER / "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md").read_text()
+    round9 = (PAPER / "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
     assert "preserved as originally written" in review
@@ -258,12 +273,18 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     for item in ("R8.1", "R8.2", "R8.3", "R8.4"):
         assert item in round8
     assert "xerographic distribution" in round8.lower()
+    assert "Round 9" in round9
+    for item in ("R9.1", "R9.2", "R9.3", "R9.4", "R9.5"):
+        assert item in round9
+    assert "nondiscriminating-evidence" in round9
+    assert "Uchida" in round9
     assert "self-location sampling-kernel theorem" in impact
     assert "Candidate C" in impact and "Decision: accept" in impact
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
     assert "not external peer review" in round8.lower()
     assert "not independent peer review" in round6
+    assert "not independent peer review" in round9
 
 
 def test_workflow_records_source_toolchain_and_checks_correct_author():
@@ -278,6 +299,7 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
     assert "FIELD_IMPACT_AUDIT.md" in workflow
     assert "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md" in workflow
+    assert "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md" in workflow
     assert "permissions:" in workflow and "contents: read" in workflow
     assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
     assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
