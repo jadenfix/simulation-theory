@@ -79,6 +79,7 @@ jobs:
             reproduce.py receipt.json README.md PEER_REVIEW_LOOP.md \
             PEER_REVIEW_RESPONSE.md ROUND6_MEASURE_THEORETIC_AUDIT.md \
             FIELD_IMPACT_AUDIT.md ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md \
+            ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md \
             AUDIT.md toolchain.txt paper.bbl paper.log pdfinfo.txt paper.pdf \
             ../../tests/test_paper_identifiability_before_anthropic_bayes.py \
             ../../.github/workflows/paper-identifiability.yml \
@@ -108,5 +109,6 @@ jobs:
             paper/identifiability-before-anthropic-bayes/ROUND6_MEASURE_THEORETIC_AUDIT.md
             paper/identifiability-before-anthropic-bayes/FIELD_IMPACT_AUDIT.md
             paper/identifiability-before-anthropic-bayes/ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md
+            paper/identifiability-before-anthropic-bayes/ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md
             tests/test_paper_identifiability_before_anthropic_bayes.py
             .github/workflows/paper-identifiability.yml
