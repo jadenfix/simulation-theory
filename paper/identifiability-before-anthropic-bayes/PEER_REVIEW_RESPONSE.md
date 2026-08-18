@@ -178,6 +178,42 @@ The complete synthetic review report is preserved in `ROUND6_MEASURE_THEORETIC_A
 
 ---
 
+# Round 7 — field-impact and self-location bridge
+
+Round 7 asked a different question: after the mathematics survived six internal review rounds, would adding more results improve the paper's impact, or merely make it longer? The external-literature comparison is preserved in `FIELD_IMPACT_AUDIT.md`.
+
+## R7.1 — the paper lacked a formal bridge from observer counts to centered odds
+**Finding:** the manuscript argued that measure-bearing units and representation invariance matter, but it did not explicitly model the self-location step converting a world containing candidate observers into a centered credence. This left the paper vulnerable to the criticism that it criticized count ratios without specifying where counts legitimately enter Bayes.
+
+**Impact:** high conceptual impact; low mathematical novelty.  
+**Feasibility:** high.  
+**Action:** added a finite self-location kernel `s(c|w)`, an evidence likelihood `L(e|w,c)`, and the exact centered-odds decomposition. The claim ledger labels the result an elementary Bayes decomposition rather than a new normative theory.
+
+## R7.2 — Thomas's Calibration should be engaged directly, not merely cited
+**Finding:** Thomas explicitly states Calibration: conditional on reference-class membership and an `F:G` ratio, centered odds track that ratio. A serious paper in this area should say whether its framework contradicts, assumes, or reconstructs that principle.
+
+**Impact:** major literature-positioning issue.  
+**Feasibility:** high.  
+**Action:** the manuscript now shows that, in the finite generative model, count calibration follows from a uniform self-location kernel over the declared candidate centers when the relevant evidence does not discriminate among them. The paper explicitly says this is a generative clarification, not a refutation of Thomas's principle.
+
+## R7.3 — across-world raw counts hide an additional weighting assumption
+**Finding:** uniformity within each possible world is not enough to make the ratio of all `F` labels across worlds equal the observer's odds. With world prior `rho(w)`, the aggregate odds use `rho(w)|F_w|/|C_w|` and `rho(w)|G_w|/|C_w|`. Recovering raw global counts requires an additional world-weighting convention.
+
+**Impact:** high; this is the cleanest mathematical link between self-location and the paper's hierarchy.  
+**Feasibility:** high.  
+**Action:** added the exact corollary and an executable two-world example. Equal world weights give odds `5/3` while raw global counts give `2`; weighting worlds by reference-class size recovers `2`.
+
+## R7.4 — representational refinement should preserve the self-location kernel, not merely the observation law
+**Finding:** the earlier cloning theorem preserved additive latent weight and conditional laws. Once self-location is explicit, a representation-only clone operation should also conserve the parent's centered sampling mass. If a uniform-over-label rule is reimposed after cloning, the self-location model has changed.
+
+**Impact:** high coherence improvement.  
+**Feasibility:** high.  
+**Action:** the new proposition proves posterior invariance under mass-conserving clone refinement. The reproduction suite verifies that the example stays at odds `5/3` under a mass split but moves to `3` when the refined labels are assigned a new uniform kernel.
+
+**Round-7 disposition:** accept the self-location extension and reject further mathematical expansion for this manuscript. The extension turns the earlier diagnostics into one generative chain without claiming to resolve the normative self-location debate. Additional mixture-conditioning, robust-control, or multiview theorems are reserved for companion work.
+
+---
+
 # Release checklist
 
 The release remains fail-closed. On one final commit it must satisfy:
