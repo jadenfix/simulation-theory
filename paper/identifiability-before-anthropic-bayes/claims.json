@@ -1,0 +1,73 @@
+{
+  "schema": "identifiability-before-anthropic-bayes/claims-v2",
+  "paper": "Identifiability Before Anthropic Bayes",
+  "author": "Jaden Fix",
+  "affiliation": "Tempera",
+  "email": "Jaden@Tempera.dev",
+  "claims": [
+    {
+      "id": "P1-T1",
+      "name": "observable-equivalence ceiling",
+      "type": "theorem",
+      "status": "classical consequence",
+      "assumptions": ["the competing hypotheses induce identical probability measures on the complete allowed transcript space"],
+      "nonclaims": ["does not imply restricted simulator models are untestable", "Bayes factors on zero-probability events are not assigned the value one"]
+    },
+    {
+      "id": "P1-T2",
+      "name": "shared-latent representational refinement invariance",
+      "type": "theorem",
+      "status": "elementary structural lemma",
+      "assumptions": ["clone weights sum to the parent weight", "clone conditional observable laws are identical", "the displayed finite-view formula uses conditionally independent same-channel observations sharing one persistent latent component", "the refinement is representational rather than the physical creation of additional measure-bearing observers"],
+      "nonclaims": ["does not identify a privileged anthropic measure", "does not say physically creating new conscious observers leaves observer measure unchanged", "does not assert a tensor-product observation law when the declared views are not conditionally independent and same-channel"]
+    },
+    {
+      "id": "P1-T3",
+      "name": "rational refinement-additive uniqueness",
+      "type": "theorem",
+      "status": "elementary rational finite additivity",
+      "assumptions": ["local rule depends only on rational probability weight", "mu(1)=1", "finite split additivity for nonnegative rational weights"],
+      "nonclaims": ["not claimed as mathematically novel", "does not cover observer measures using additional physical or phenomenal structure"]
+    },
+    {
+      "id": "P1-T8",
+      "name": "self-location conditional-kernel decomposition and refinement invariance",
+      "type": "proposition",
+      "status": "elementary Bayes decomposition; finite conditional-kernel formulation of established xerographic/self-location, observer-selection, and observer-measure specification ideas",
+      "assumptions": ["finite world and candidate-center sets for the displayed formula", "a normalized world prior and a normalized conditional self-location kernel are declared", "evidence likelihoods are specified for each world-center pair", "simulant and non-simulant categories are disjoint subsets of candidate centers", "the count-calibration and kernel-mass-ratio corollaries require a fixed world, nondiscriminating evidence over the declared candidate class, and positive denominator mass"],
+      "nonclaims": ["the self-location kernel or location-distribution idea is not claimed as novel", "observer-selection formalization, observer-measure role separation, and the absence of a required literal global sampler are not claimed as novel", "does not select a normatively correct self-location kernel", "does not assert that a physical global sampler literally selects an observer", "does not refute indifference or Thomas-style calibration", "raw count ratios arise only under additional uniformity, nondiscriminating-evidence, and world-weighting assumptions", "representation-only cloning is invariant only when the parent kernel mass is conserved across clones"]
+    },
+    {
+      "id": "P1-T4",
+      "name": "persistent-latent likelihood-ratio identity and ceiling",
+      "type": "theorem",
+      "status": "elementary finite-mixture identity applied to hierarchical sampling",
+      "assumptions": ["one latent component is drawn once and persists through the transcript", "the two compared hypotheses share conditional transcript laws and differ only in component weights", "for a finite family a common dominating finite measure exists, for example the sum of the component laws", "the displayed density identity is interpreted for chosen Radon--Nikodym versions and therefore almost everywhere under the declared dominating measure", "component-level absolute continuity holds on the realized support: the denominator gives positive weight to every component contributing positive numerator likelihood"],
+      "nonclaims": ["does not prevent a long transcript from identifying the active component", "does not apply unchanged when the hypotheses also differ in within-component transcript laws", "does not give a finite ceiling across support mismatch", "does not assign invariant evidential meaning to a density value on a dominating-measure null set"]
+    },
+    {
+      "id": "P1-T5",
+      "name": "known-channel affine-rank identification",
+      "type": "theorem",
+      "status": "standard finite-mixture linear geometry",
+      "assumptions": ["the observation channel K is a known channel", "finite latent and observed alphabets"],
+      "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification", "failure of point identification does not make Bayesian analysis impossible; it calls for explicit prior sensitivity, identified sets, or robust posterior ranges rather than data-unique point certainty", "does not by itself provide a finite-sample conditioning guarantee"]
+    },
+    {
+      "id": "P1-T6",
+      "name": "row-stochastic one-view factorization gauge",
+      "type": "proposition",
+      "status": "constructive nonidentifiability witness",
+      "assumptions": ["A is invertible, nonnegative, and row-stochastic", "the transformed prior pi A^{-1} remains nonnegative"],
+      "nonclaims": ["does not classify all latent-factorization nonuniqueness", "does not imply every unknown prior/channel model has this exact gauge", "a genuine local continuum additionally needs an interior prior and a nontrivial row-stochastic perturbation that changes K"]
+    },
+    {
+      "id": "P1-T7",
+      "name": "same-channel repeated-view rigidity inside the row-stochastic gauge",
+      "type": "theorem",
+      "status": "elementary scoped gauge-orbit rigidity; no independent priority claim",
+      "assumptions": ["K has full row rank", "both observations use the same channel K", "the observations are conditionally independent given the same persistent latent", "A is invertible, nonnegative, and row-stochastic", "pi A^{-1} is strictly positive", "the repeated shared-latent two-view law is preserved"],
+      "nonclaims": ["not unrestricted two-view latent-class identifiability", "does not establish the analogous result for two different view-specific channels", "does not remove latent ambiguities outside the declared gauge", "strict positivity and full row rank are substantive assumptions", "the algebraic monomiality step is not claimed as a new general theorem"]
+    }
+  ]
+}
