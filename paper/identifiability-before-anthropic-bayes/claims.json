@@ -30,6 +30,14 @@
       "nonclaims": ["not claimed as mathematically novel", "does not cover observer measures using additional physical or phenomenal structure"]
     },
     {
+      "id": "P1-T8",
+      "name": "self-location sampling-kernel decomposition and refinement invariance",
+      "type": "proposition",
+      "status": "elementary Bayes decomposition used to expose the sampling assumption behind observer counts",
+      "assumptions": ["finite world and candidate-center sets for the displayed formula", "a normalized world prior and a normalized conditional self-location kernel are declared", "evidence likelihoods are specified for each world-center pair", "simulant and non-simulant categories are disjoint subsets of candidate centers"],
+      "nonclaims": ["does not select a normatively correct self-location kernel", "does not refute indifference or Thomas-style calibration", "raw count ratios arise only under additional uniformity and world-weighting assumptions", "representation-only cloning is invariant only when the parent kernel mass is conserved across clones"]
+    },
+    {
       "id": "P1-T4",
       "name": "persistent-latent likelihood-ratio identity and ceiling",
       "type": "theorem",
