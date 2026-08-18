@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'paper/identifiability-before-anthropic-bayes/**'
-      - 'tests/test_paper_identifiability_before_anthropic-bayes.py'
+      - 'tests/test_paper_identifiability_before-anthropic-bayes.py'
       - '.github/workflows/paper-identifiability.yml'
   workflow_dispatch:
 
@@ -78,8 +78,8 @@ jobs:
             paper.tex references.bib claims.json citation_provenance.json \
             reproduce.py receipt.json README.md PEER_REVIEW_LOOP.md \
             PEER_REVIEW_RESPONSE.md ROUND6_MEASURE_THEORETIC_AUDIT.md \
-            FIELD_IMPACT_AUDIT.md AUDIT.md toolchain.txt paper.bbl paper.log \
-            pdfinfo.txt paper.pdf \
+            FIELD_IMPACT_AUDIT.md ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md \
+            AUDIT.md toolchain.txt paper.bbl paper.log pdfinfo.txt paper.pdf \
             ../../tests/test_paper_identifiability_before_anthropic_bayes.py \
             ../../.github/workflows/paper-identifiability.yml \
             > release_hashes.txt
@@ -107,5 +107,6 @@ jobs:
             paper/identifiability-before-anthropic-bayes/PEER_REVIEW_RESPONSE.md
             paper/identifiability-before-anthropic-bayes/ROUND6_MEASURE_THEORETIC_AUDIT.md
             paper/identifiability-before-anthropic-bayes/FIELD_IMPACT_AUDIT.md
+            paper/identifiability-before-anthropic-bayes/ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md
             tests/test_paper_identifiability_before_anthropic_bayes.py
             .github/workflows/paper-identifiability.yml
