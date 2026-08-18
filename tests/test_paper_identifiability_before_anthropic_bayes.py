@@ -19,6 +19,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "PEER_REVIEW_RESPONSE.md",
         "ROUND6_MEASURE_THEORETIC_AUDIT.md",
         "FIELD_IMPACT_AUDIT.md",
+        "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
@@ -36,7 +37,8 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert any("normatively correct" in x for x in sampling["nonclaims"])
     assert any("world-weighting" in x for x in sampling["nonclaims"])
     assert any("kernel mass" in x for x in sampling["nonclaims"])
-    assert "elementary Bayes decomposition" in sampling["status"]
+    assert any("not claimed as novel" in x for x in sampling["nonclaims"])
+    assert "xerographic" in sampling["status"]
 
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
@@ -186,6 +188,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "PEER_REVIEW_RESPONSE.md",
         "ROUND6_MEASURE_THEORETIC_AUDIT.md",
         "FIELD_IMPACT_AUDIT.md",
+        "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
         "claims.json",
     )
     for name in release_files:
@@ -230,6 +233,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     response = (PAPER / "PEER_REVIEW_RESPONSE.md").read_text()
     round6 = (PAPER / "ROUND6_MEASURE_THEORETIC_AUDIT.md").read_text()
     impact = (PAPER / "FIELD_IMPACT_AUDIT.md").read_text()
+    round8 = (PAPER / "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
     assert "preserved as originally written" in review
@@ -250,12 +254,15 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "Round 7" in response
     for item in ("R7.1", "R7.2", "R7.3", "R7.4"):
         assert item in response
-    assert "Round 8" in response
-    assert "R8.1" in response and "R8.2" in response
+    assert "Round 8" in round8
+    for item in ("R8.1", "R8.2", "R8.3", "R8.4"):
+        assert item in round8
+    assert "xerographic distribution" in round8.lower()
     assert "self-location sampling-kernel theorem" in impact
     assert "Candidate C" in impact and "Decision: accept" in impact
     assert "zero unresolved major items" in response
     assert "synthetic" in response.lower()
+    assert "not external peer review" in round8.lower()
     assert "not independent peer review" in round6
 
 
@@ -270,6 +277,7 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
     assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
     assert "FIELD_IMPACT_AUDIT.md" in workflow
+    assert "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md" in workflow
     assert "permissions:" in workflow and "contents: read" in workflow
     assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
     assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
