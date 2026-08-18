@@ -36,6 +36,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
     assert any("normatively correct" in x for x in sampling["nonclaims"])
     assert any("world-weighting" in x for x in sampling["nonclaims"])
     assert any("kernel mass" in x for x in sampling["nonclaims"])
+    assert "elementary Bayes decomposition" in sampling["status"]
 
     persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
     assert any("absolute continuity" in x for x in persistent["assumptions"])
@@ -114,6 +115,8 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "Known-channel affine-rank identifiability" in tex
     assert "Self-location kernel decomposition" in tex
     assert "self-location kernel" in tex.lower()
+    assert "xerographic distribution" in tex.lower()
+    assert "selection fallacy" in tex.lower()
     assert "raw global count ratio" in tex
     assert "mass-conserving" in tex
     assert "Thomas's Calibration principle" in tex
@@ -142,6 +145,8 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
         "bostromkulczycki2011",
         "weatherson2003",
         "elga2004",
+        "hartlesrednicki2007",
+        "srednickihartle2013",
         "crawford2013",
         "franceschi2014",
         "richmond2017",
@@ -168,6 +173,8 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     giacomini = bib.split("@article{giacomini2021", 1)[1].split("@misc{neal2006", 1)[0]
     assert "volume={89}" in giacomini and "number={4}" in giacomini
     assert "pages={1519--1556}" in giacomini
+    xerographic = bib.split("@article{srednickihartle2013", 1)[1].split("@article{crawford2013", 1)[0]
+    assert "volume={462}" in xerographic and "pages={012050}" in xerographic
 
 
 def test_release_bearing_artifacts_use_correct_author_identity():
@@ -195,6 +202,7 @@ def test_citation_provenance_covers_core_references():
         "bostromkulczycki2011",
         "weatherson2003",
         "elga2004",
+        "hartlesrednicki2007",
         "richmond2017",
         "kipping2020",
         "thomas2024",
@@ -206,6 +214,9 @@ def test_citation_provenance_covers_core_references():
         assert key in entries
         assert entries[key]["verification_status"] in {"publisher_verified", "primary_repository_verified"}
         assert entries[key]["source"]
+    assert "srednickihartle2013" in entries
+    assert entries["srednickihartle2013"]["verification_status"] == "primary_repository_and_doi_verified"
+    assert "xerographic" in entries["srednickihartle2013"]["notes"].lower()
     assert entries["franceschi2014"]["verification_status"] == "publisher_verified_with_secondary_discrepancy"
     assert "2016" in entries["franceschi2014"]["notes"]
     assert "313-344" in entries["khawaja2026"]["notes"]
@@ -239,6 +250,8 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "Round 7" in response
     for item in ("R7.1", "R7.2", "R7.3", "R7.4"):
         assert item in response
+    assert "Round 8" in response
+    assert "R8.1" in response and "R8.2" in response
     assert "self-location sampling-kernel theorem" in impact
     assert "Candidate C" in impact and "Decision: accept" in impact
     assert "zero unresolved major items" in response
@@ -256,6 +269,7 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "paper.bbl" in workflow and "paper.log" in workflow
     assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
     assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
+    assert "FIELD_IMPACT_AUDIT.md" in workflow
     assert "permissions:" in workflow and "contents: read" in workflow
     assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
     assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
