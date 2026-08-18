@@ -1,5 +1,6 @@
 import json
 import runpy
+from fractions import Fraction as F
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -108,6 +109,23 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
     }
     assert receipt["support_mismatch_boundary"]["finite_ceiling_applies"] is False
     assert receipt["known_channel_identifiability"]["rank_deficient_collision_prior_a"] != receipt["known_channel_identifiability"]["rank_deficient_collision_prior_b"]
+
+
+def test_self_location_mass_ratio_requires_nondiscriminating_evidence():
+    # One F center and one G center with nonuniform self-location masses.
+    # Bare mass odds are 1/2, but discriminating evidence changes Bayes odds to 2.
+    s_f, s_g = F(1, 3), F(2, 3)
+    l_f, l_g = F(1), F(1, 4)
+    bare_mass_odds = s_f / s_g
+    likelihood_weighted_odds = (s_f * l_f) / (s_g * l_g)
+    assert bare_mass_odds == F(1, 2)
+    assert likelihood_weighted_odds == F(2)
+    assert likelihood_weighted_odds != bare_mass_odds
+
+    # Under nondiscriminating evidence, the likelihood cancels exactly.
+    common_likelihood = F(3, 7)
+    nondiscriminating_odds = (s_f * common_likelihood) / (s_g * common_likelihood)
+    assert nondiscriminating_odds == bare_mass_odds
 
 
 def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
