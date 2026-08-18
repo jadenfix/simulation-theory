@@ -22,6 +22,7 @@ def test_paper_bundle_is_complete_and_claims_scoped():
         "FIELD_IMPACT_AUDIT.md",
         "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
         "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
+        "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md",
         "citation_provenance.json",
     ):
         assert (PAPER / name).is_file()
@@ -112,8 +113,6 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
 
 
 def test_self_location_mass_ratio_requires_nondiscriminating_evidence():
-    # One F center and one G center with nonuniform self-location masses.
-    # Bare mass odds are 1/2, but discriminating evidence changes Bayes odds to 2.
     s_f, s_g = F(1, 3), F(2, 3)
     l_f, l_g = F(1), F(1, 4)
     bare_mass_odds = s_f / s_g
@@ -122,7 +121,6 @@ def test_self_location_mass_ratio_requires_nondiscriminating_evidence():
     assert likelihood_weighted_odds == F(2)
     assert likelihood_weighted_odds != bare_mass_odds
 
-    # Under nondiscriminating evidence, the likelihood cancels exactly.
     common_likelihood = F(3, 7)
     nondiscriminating_odds = (s_f * common_likelihood) / (s_g * common_likelihood)
     assert nondiscriminating_odds == bare_mass_odds
@@ -147,6 +145,8 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "Thomas's Calibration principle" in tex
     assert "Uchida" in tex
     assert "uchida2026" in tex
+    assert "Garisto" in tex
+    assert "garisto2020" in tex
     assert "nondiscriminating evidence" in tex
     assert "Under the same fixed-world and constant-likelihood condition" in tex
     assert "P(G,e)>0" in tex
@@ -154,6 +154,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "organizing principle" in tex
     assert "I_b(y)=\\{m:b_mp_m(y)>0\\}" in tex
     assert "common $\\sigma$-finite measure" in tex
+    assert "\\lambda=\\sum_m P_m" in tex
     assert "Radon--Nikodym density" in tex
     assert "almost everywhere" in tex
     assert "First split $0=0+0$" in tex
@@ -177,6 +178,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
         "elga2004",
         "hartlesrednicki2007",
         "srednickihartle2013",
+        "garisto2020",
         "crawford2013",
         "franceschi2014",
         "richmond2017",
@@ -195,6 +197,10 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     ):
         assert ("{" + key + ",") in bib
         assert key in tex
+    garisto = bib.split("@article{garisto2020", 1)[1].split("@article{crawford2013", 1)[0]
+    assert "volume={2}" in garisto and "number={3}" in garisto
+    assert "pages={033464}" in garisto
+    assert "10.1103/PhysRevResearch.2.033464" in garisto
     assert "year={2016}" in bib.split("@article{franceschi2014", 1)[1].split("@article{richmond2017", 1)[0]
     assert "pages={313--344}" in bib.split("@article{khawaja2026", 1)[1].split("@article{allman2009", 1)[0]
     fallis = bib.split("@article{fallislewis2023", 1)[1].split("@article{giacomini2021", 1)[0]
@@ -204,7 +210,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     giacomini = bib.split("@article{giacomini2021", 1)[1].split("@misc{neal2006", 1)[0]
     assert "volume={89}" in giacomini and "number={4}" in giacomini
     assert "pages={1519--1556}" in giacomini
-    xerographic = bib.split("@article{srednickihartle2013", 1)[1].split("@article{crawford2013", 1)[0]
+    xerographic = bib.split("@article{srednickihartle2013", 1)[1].split("@article{garisto2020", 1)[0]
     assert "volume={462}" in xerographic and "pages={012050}" in xerographic
 
 
@@ -219,6 +225,7 @@ def test_release_bearing_artifacts_use_correct_author_identity():
         "FIELD_IMPACT_AUDIT.md",
         "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
         "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
+        "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md",
         "claims.json",
     )
     for name in release_files:
@@ -236,6 +243,7 @@ def test_citation_provenance_covers_core_references():
         "weatherson2003",
         "elga2004",
         "hartlesrednicki2007",
+        "garisto2020",
         "richmond2017",
         "kipping2020",
         "thomas2024",
@@ -247,6 +255,8 @@ def test_citation_provenance_covers_core_references():
         assert key in entries
         assert entries[key]["verification_status"] in {"publisher_verified", "primary_repository_verified"}
         assert entries[key]["source"]
+    assert entries["garisto2020"]["doi"] == "10.1103/PhysRevResearch.2.033464"
+    assert "observer-selection" in entries["garisto2020"]["notes"].lower()
     assert "srednickihartle2013" in entries
     assert entries["srednickihartle2013"]["verification_status"] == "primary_repository_and_doi_verified"
     assert "xerographic" in entries["srednickihartle2013"]["notes"].lower()
@@ -267,6 +277,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     impact = (PAPER / "FIELD_IMPACT_AUDIT.md").read_text()
     round8 = (PAPER / "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md").read_text()
     round9 = (PAPER / "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md").read_text()
+    round10 = (PAPER / "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md").read_text()
     assert "Round 1" in review
     assert "major revision" in review.lower()
     assert "preserved as originally written" in review
@@ -296,6 +307,10 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
         assert item in round9
     assert "nondiscriminating-evidence" in round9
     assert "Uchida" in round9
+    assert "Round 10" in round10
+    for item in ("R10.1", "R10.2", "R10.3", "R10.4"):
+        assert item in round10
+    assert "Garisto" in round10
     assert "self-location sampling-kernel theorem" in impact
     assert "Candidate C" in impact and "Decision: accept" in impact
     assert "zero unresolved major items" in response
@@ -303,6 +318,7 @@ def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
     assert "not external peer review" in round8.lower()
     assert "not independent peer review" in round6
     assert "not independent peer review" in round9
+    assert "not independent peer review" in round10
 
 
 def test_workflow_records_source_toolchain_and_checks_correct_author():
@@ -318,6 +334,7 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "FIELD_IMPACT_AUDIT.md" in workflow
     assert "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md" in workflow
     assert "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md" in workflow
+    assert "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md" in workflow
     assert "permissions:" in workflow and "contents: read" in workflow
     assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
     assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
