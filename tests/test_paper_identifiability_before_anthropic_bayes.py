@@ -68,9 +68,21 @@ def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
         "only_permutations": True,
         "preserving_count": 2,
     }
+    assert receipt["two_view_grid_audit_2state_extended"] == {
+        "admissible_count": 512,
+        "denominator": 32,
+        "only_permutations": True,
+        "preserving_count": 2,
+    }
     assert receipt["two_view_grid_audit_3state"] == {
         "admissible_count": 108,
         "denominator": 3,
+        "only_permutations": True,
+        "preserving_count": 6,
+    }
+    assert receipt["two_view_grid_audit_3state_extended"] == {
+        "admissible_count": 3492,
+        "denominator": 6,
         "only_permutations": True,
         "preserving_count": 6,
     }
@@ -216,4 +228,8 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "paper.bbl" in workflow and "paper.log" in workflow
     assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
     assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
+    assert "permissions:" in workflow and "contents: read" in workflow
+    assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
+    assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
+    assert "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02" in workflow
     assert "Jaden Figgs" not in workflow
