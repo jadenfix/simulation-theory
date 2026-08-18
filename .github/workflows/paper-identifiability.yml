@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'paper/identifiability-before-anthropic-bayes/**'
-      - 'tests/test_paper_identifiability_before-anthropic-bayes.py'
+      - 'tests/test_paper_identifiability_before_anthropic_bayes.py'
       - '.github/workflows/paper-identifiability.yml'
   workflow_dispatch:
 
