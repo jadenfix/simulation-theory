@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from math import exp, log
+from math import exp, isnan, log
 from typing import Iterable, Sequence
 
 
@@ -31,14 +31,17 @@ def bayes_factor(likelihood_sim: float, likelihood_base: float) -> float:
 
 
 def posterior_from_bayes_factor(prior_sim: float, bf: float) -> float:
+    """Update a strict prior from a nonnegative Bayes factor.
+
+    Positive infinity is accepted as the limiting case of decisive evidence.
+    NaN is rejected because it is neither evidence nor an ordered endpoint.
+    """
     _check_probability(prior_sim)
-    if bf < 0.0:
-        raise ValueError("Bayes factor must be nonnegative")
+    if isnan(bf) or bf < 0.0:
+        raise ValueError("Bayes factor must be nonnegative and not NaN")
     if bf == 0.0:
         return 0.0
-    odds = prior_sim / (1.0 - prior_sim)
-    post_odds = odds * bf
-    return post_odds / (1.0 + post_odds)
+    return logistic(log_odds(prior_sim) + log(bf))
 
 
 def evidence_ceiling(prior_sim: float, epsilon: float) -> tuple[float, float]:

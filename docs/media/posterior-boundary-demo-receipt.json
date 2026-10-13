@@ -1,0 +1,43 @@
+{
+  "after": [
+    "posterior(0.9, 1e308)  ->  1.0",
+    "posterior(0.5, inf)  ->  1.0",
+    "posterior(0.5, nan)  ->  ValueError: Bayes factor must be nonnegative and not NaN",
+    "interval((0.1, 0.9), (0.5, inf))  ->  (0.05263157894736843, 1.0)"
+  ],
+  "base_revision": "4e88e771e33bddca3ce3e718da7ed4b531c987d2",
+  "before": [
+    "posterior(0.9, 1e308)  ->  nan",
+    "posterior(0.5, inf)  ->  nan",
+    "posterior(0.5, nan)  ->  nan",
+    "interval((0.1, 0.9), (0.5, inf))  ->  (0.052631578947368425, nan)"
+  ],
+  "captured_calls": [
+    "posterior_from_bayes_factor(0.9, 1e308)",
+    "posterior_from_bayes_factor(0.5, float('inf'))",
+    "posterior_from_bayes_factor(0.5, float('nan'))",
+    "robust_posterior_interval((0.1, 0.9), (0.5, float('inf')))"
+  ],
+  "media": [
+    "posterior-boundary-demo.gif",
+    "posterior-boundary-demo.mp4"
+  ],
+  "schema": "posterior-boundary-demo-v1",
+  "scientific_limitation": "This demonstrates numerical boundary behavior only; it does not validate a likelihood model or provide evidence for any simulation hypothesis.",
+  "source_revision": "ec2ad8caeeabbba28252b799cf5ca8101881b641",
+  "test_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-o",
+    "addopts=",
+    "tests/test_inference.py"
+  ],
+  "test_stdout_tail": "tests/test_inference.py .......                                          [100%]\n============================== 7 passed in 0.04s ===============================\n",
+  "verified_paths": [
+    "src/simtheory/inference.py",
+    "tests/test_inference.py"
+  ]
+}
