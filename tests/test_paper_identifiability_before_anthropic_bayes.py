@@ -1,0 +1,356 @@
+import json
+import runpy
+from fractions import Fraction as F
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PAPER = ROOT / "paper" / "identifiability-before-anthropic-bayes"
+
+
+def test_paper_bundle_is_complete_and_claims_scoped():
+    for name in (
+        "paper.tex",
+        "references.bib",
+        "claims.json",
+        "reproduce.py",
+        "receipt.json",
+        "README.md",
+        "AUDIT.md",
+        "PEER_REVIEW_LOOP.md",
+        "PEER_REVIEW_RESPONSE.md",
+        "ROUND6_MEASURE_THEORETIC_AUDIT.md",
+        "FIELD_IMPACT_AUDIT.md",
+        "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
+        "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
+        "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md",
+        "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md",
+        "citation_provenance.json",
+    ):
+        assert (PAPER / name).is_file()
+    assert (ROOT / "tests" / "test_paper_identifiability_two_view_boundaries.py").is_file()
+    claims = json.loads((PAPER / "claims.json").read_text())
+    assert claims["author"] == "Jaden Fix"
+    assert claims["email"] == "Jaden@Tempera.dev"
+    assert len(claims["claims"]) == 8
+
+    refinement = next(c for c in claims["claims"] if c["id"] == "P1-T2")
+    assert any("conditionally independent same-channel" in x for x in refinement["assumptions"])
+    assert any("tensor-product" in x for x in refinement["nonclaims"])
+
+    sampling = next(c for c in claims["claims"] if c["id"] == "P1-T8")
+    assert any("self-location kernel" in x for x in sampling["assumptions"])
+    assert any("nondiscriminating evidence" in x for x in sampling["assumptions"])
+    assert any("positive denominator mass" in x for x in sampling["assumptions"])
+    assert any("normatively correct" in x for x in sampling["nonclaims"])
+    assert any("world-weighting" in x for x in sampling["nonclaims"])
+    assert any("kernel mass" in x for x in sampling["nonclaims"])
+    assert any("not claimed as novel" in x for x in sampling["nonclaims"])
+    assert any("global sampler" in x for x in sampling["nonclaims"])
+    assert any("observer-selection formalization" in x for x in sampling["nonclaims"])
+    assert "xerographic" in sampling["status"]
+    assert "observer-selection" in sampling["status"]
+    assert "observer-measure specification" in sampling["status"]
+
+    persistent = next(c for c in claims["claims"] if c["id"] == "P1-T4")
+    assert any("absolute continuity" in x for x in persistent["assumptions"])
+    assert any("dominating finite measure exists" in x for x in persistent["assumptions"])
+    assert any("almost everywhere" in x for x in persistent["assumptions"])
+    assert any("null set" in x for x in persistent["nonclaims"])
+
+    affine = next(c for c in claims["claims"] if c["id"] == "P1-T5")
+    assert any("known channel" in x for x in affine["assumptions"])
+    assert any("robust posterior" in x or "identified sets" in x for x in affine["nonclaims"])
+    assert any("finite-sample conditioning" in x for x in affine["nonclaims"])
+
+    gauge = next(c for c in claims["claims"] if c["id"] == "P1-T6")
+    assert any("interior prior" in x for x in gauge["nonclaims"])
+
+    two_view = next(c for c in claims["claims"] if c["id"] == "P1-T7")
+    assert "not unrestricted two-view latent-class identifiability" in two_view["nonclaims"]
+    assert any("same channel K" in x for x in two_view["assumptions"])
+    assert any("different view-specific channels" in x for x in two_view["nonclaims"])
+    assert "no independent priority claim" in two_view["status"]
+
+
+def test_paper_reproduction_is_byte_identical(tmp_path, monkeypatch):
+    script = (PAPER / "reproduce.py").read_text()
+    p = tmp_path / "reproduce.py"
+    p.write_text(script)
+    monkeypatch.chdir(tmp_path)
+    runpy.run_path(str(p), run_name="__main__")
+    generated_bytes = (tmp_path / "receipt.json").read_bytes()
+    expected_bytes = (PAPER / "receipt.json").read_bytes()
+    assert generated_bytes == expected_bytes
+
+    receipt = json.loads(generated_bytes)
+    assert receipt["sampling_kernel"]["equal_world_prior_uniform_within_world_odds"] == "5/3"
+    assert receipt["sampling_kernel"]["raw_global_count_odds"] == "2/1"
+    assert receipt["sampling_kernel"]["size_weighted_world_prior_odds"] == "2/1"
+    assert receipt["sampling_kernel"]["mass_conserving_refinement_odds"] == "5/3"
+    assert receipt["sampling_kernel"]["uniform_over_refined_labels_odds"] == "3/1"
+    assert receipt["two_view_grid_audit_2state"] == {
+        "admissible_count": 32,
+        "denominator": 8,
+        "only_permutations": True,
+        "preserving_count": 2,
+    }
+    assert receipt["two_view_grid_audit_2state_extended"] == {
+        "admissible_count": 512,
+        "denominator": 32,
+        "only_permutations": True,
+        "preserving_count": 2,
+    }
+    assert receipt["two_view_grid_audit_3state"] == {
+        "admissible_count": 108,
+        "denominator": 3,
+        "only_permutations": True,
+        "preserving_count": 6,
+    }
+    assert receipt["two_view_grid_audit_3state_extended"] == {
+        "admissible_count": 3492,
+        "denominator": 6,
+        "only_permutations": True,
+        "preserving_count": 6,
+    }
+    assert receipt["support_mismatch_boundary"]["finite_ceiling_applies"] is False
+    assert receipt["known_channel_identifiability"]["rank_deficient_collision_prior_a"] != receipt["known_channel_identifiability"]["rank_deficient_collision_prior_b"]
+
+
+def test_self_location_mass_ratio_requires_nondiscriminating_evidence():
+    s_f, s_g = F(1, 3), F(2, 3)
+    l_f, l_g = F(1), F(1, 4)
+    bare_mass_odds = s_f / s_g
+    likelihood_weighted_odds = (s_f * l_f) / (s_g * l_g)
+    assert bare_mass_odds == F(1, 2)
+    assert likelihood_weighted_odds == F(2)
+    assert likelihood_weighted_odds != bare_mass_odds
+
+    common_likelihood = F(3, 7)
+    nondiscriminating_odds = (s_f * common_likelihood) / (s_g * common_likelihood)
+    assert nondiscriminating_odds == bare_mass_odds
+
+
+def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
+    tex = (PAPER / "paper.tex").read_text()
+    bib = (PAPER / "references.bib").read_text()
+    assert "\\author{Jaden Fix" in tex
+    assert "pdfauthor={Jaden Fix}" in tex
+    assert "\\frac{dP_S}{dP_B}=1" in tex
+    assert "does \\emph{not} state that arbitrary two-view latent-class models are globally identifiable" in tex
+    assert "Support mismatch" in tex
+    assert "Physical duplication" in tex
+    assert "Known-channel affine-rank identifiability" in tex
+    assert "Self-location kernel decomposition" in tex
+    assert "self-location kernel" in tex.lower()
+    assert "xerographic distribution" in tex.lower()
+    assert "selection fallacy" in tex.lower()
+    assert "raw global count ratio" in tex
+    assert "mass-conserving" in tex
+    assert "Thomas's Calibration principle" in tex
+    assert "Uchida" in tex
+    assert "uchida2026" in tex
+    assert "Garisto" in tex
+    assert "garisto2020" in tex
+    assert "nondiscriminating evidence" in tex
+    assert "Under the same fixed-world and constant-likelihood condition" in tex
+    assert "P(G,e)>0" in tex
+    assert "A nine-step pre-Bayes audit" in tex
+    assert "organizing principle" in tex
+    assert "I_b(y)=\\{m:b_mp_m(y)>0\\}" in tex
+    assert "common $\\sigma$-finite measure" in tex
+    assert "\\lambda=\\sum_m P_m" in tex
+    assert "Radon--Nikodym density" in tex
+    assert "almost everywhere" in tex
+    assert "First split $0=0+0$" in tex
+    assert "Data cannot point-identify a mixture parameter" in tex
+    assert "not estimable before it is identifiable" not in tex
+    assert "A^{-1}\\mathbf 1=\\mathbf 1" in tex
+    assert "A_t=(1-t)I+tB" in tex
+    assert "both observations use the same channel $K$" in tex
+    assert "same-channel repeated-view rigidity" in tex
+    assert "Robust Bayesian methods for set-identified models" in tex
+    assert "receipt.json` is required to regenerate byte-for-byte" in tex
+    assert "does not claim that PDF bytes must remain invariant" in tex
+    assert "\\section{Limitations}" in tex
+    assert "\\section{Conclusion}" in tex
+    assert "\\bibliography{references}" in tex
+    assert tex.rstrip().endswith("\\end{document}")
+    for key in (
+        "bostrom2003",
+        "bostromkulczycki2011",
+        "weatherson2003",
+        "elga2004",
+        "hartlesrednicki2007",
+        "srednickihartle2013",
+        "garisto2020",
+        "crawford2013",
+        "franceschi2014",
+        "richmond2017",
+        "kipping2020",
+        "thomas2024",
+        "fallislewis2023",
+        "giacomini2021",
+        "neal2006",
+        "schneiderolum2013",
+        "uchida2026",
+        "wilson2013",
+        "dizadji2015",
+        "khawaja2026",
+        "allman2009",
+        "gillis2020",
+    ):
+        assert ("{" + key + ",") in bib
+        assert key in tex
+    garisto = bib.split("@article{garisto2020", 1)[1].split("@article{crawford2013", 1)[0]
+    assert "volume={2}" in garisto and "number={3}" in garisto
+    assert "pages={033464}" in garisto
+    assert "10.1103/PhysRevResearch.2.033464" in garisto
+    assert "year={2016}" in bib.split("@article{franceschi2014", 1)[1].split("@article{richmond2017", 1)[0]
+    assert "pages={313--344}" in bib.split("@article{khawaja2026", 1)[1].split("@article{allman2009", 1)[0]
+    fallis = bib.split("@article{fallislewis2023", 1)[1].split("@article{giacomini2021", 1)[0]
+    assert "author={Peter J. Lewis and Don Fallis}" in fallis
+    assert "pages={180}" in fallis
+    assert "number={6}" not in fallis
+    giacomini = bib.split("@article{giacomini2021", 1)[1].split("@misc{neal2006", 1)[0]
+    assert "volume={89}" in giacomini and "number={4}" in giacomini
+    assert "pages={1519--1556}" in giacomini
+    xerographic = bib.split("@article{srednickihartle2013", 1)[1].split("@article{garisto2020", 1)[0]
+    assert "volume={462}" in xerographic and "pages={012050}" in xerographic
+
+
+def test_release_bearing_artifacts_use_correct_author_identity():
+    release_files = (
+        "paper.tex",
+        "README.md",
+        "AUDIT.md",
+        "PEER_REVIEW_LOOP.md",
+        "PEER_REVIEW_RESPONSE.md",
+        "ROUND6_MEASURE_THEORETIC_AUDIT.md",
+        "FIELD_IMPACT_AUDIT.md",
+        "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md",
+        "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md",
+        "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md",
+        "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md",
+        "claims.json",
+    )
+    for name in release_files:
+        text = (PAPER / name).read_text()
+        assert "Jaden Figgs" not in text
+        assert "Jaden Fix" in text
+
+
+def test_citation_provenance_covers_core_references():
+    provenance = json.loads((PAPER / "citation_provenance.json").read_text())
+    entries = {entry["key"]: entry for entry in provenance["entries"]}
+    for key in (
+        "bostrom2003",
+        "bostromkulczycki2011",
+        "weatherson2003",
+        "elga2004",
+        "hartlesrednicki2007",
+        "garisto2020",
+        "richmond2017",
+        "kipping2020",
+        "thomas2024",
+        "fallislewis2023",
+        "giacomini2021",
+        "allman2009",
+        "gillis2020",
+    ):
+        assert key in entries
+        assert entries[key]["verification_status"] in {"publisher_verified", "primary_repository_verified"}
+        assert entries[key]["source"]
+    assert entries["garisto2020"]["doi"] == "10.1103/PhysRevResearch.2.033464"
+    assert "observer-selection" in entries["garisto2020"]["notes"].lower()
+    assert "srednickihartle2013" in entries
+    assert entries["srednickihartle2013"]["verification_status"] == "primary_repository_and_doi_verified"
+    assert "xerographic" in entries["srednickihartle2013"]["notes"].lower()
+    assert entries["franceschi2014"]["verification_status"] == "publisher_verified_with_secondary_discrepancy"
+    assert "2016" in entries["franceschi2014"]["notes"]
+    assert "313-344" in entries["khawaja2026"]["notes"]
+    assert "article 180" in entries["fallislewis2023"]["notes"]
+    assert "1519-1556" in entries["giacomini2021"]["notes"]
+    assert "Calibration" in entries["thomas2024"]["notes"]
+    assert entries["uchida2026"]["verification_status"] == "primary_repository_verified_non_peer_reviewed"
+    assert "global sampler" in entries["uchida2026"]["notes"].lower() or "measure" in entries["uchida2026"]["notes"].lower()
+
+
+def test_peer_review_artifacts_preserve_reports_and_applied_response_loop():
+    review = (PAPER / "PEER_REVIEW_LOOP.md").read_text()
+    response = (PAPER / "PEER_REVIEW_RESPONSE.md").read_text()
+    round6 = (PAPER / "ROUND6_MEASURE_THEORETIC_AUDIT.md").read_text()
+    impact = (PAPER / "FIELD_IMPACT_AUDIT.md").read_text()
+    round8 = (PAPER / "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md").read_text()
+    round9 = (PAPER / "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md").read_text()
+    round10 = (PAPER / "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md").read_text()
+    round11 = (PAPER / "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md").read_text()
+    assert "Round 1" in review
+    assert "major revision" in review.lower()
+    assert "preserved as originally written" in review
+    assert "Round 1 response" in response
+    assert "Round 2" in response
+    assert "R2.1" in response and "R2.2" in response
+    assert "R3.1" in response and "truncated" in response.lower()
+    assert "Round 4" in response
+    for item in ("R4.1", "R4.2", "R4.3", "R4.4", "R4.5", "R4.6"):
+        assert item in response
+    assert "Round 5" in response
+    for item in ("R5.1", "R5.2", "R5.3", "R5.4"):
+        assert item in response
+    assert "Round 6" in response
+    for item in ("R6.1", "R6.2", "R6.3", "R6.4", "R6.5", "R6.6", "R6.7", "R6.8"):
+        assert item in response
+        assert item in round6
+    assert "Round 7" in response
+    for item in ("R7.1", "R7.2", "R7.3", "R7.4"):
+        assert item in response
+    assert "Round 8" in round8
+    for item in ("R8.1", "R8.2", "R8.3", "R8.4"):
+        assert item in round8
+    assert "xerographic distribution" in round8.lower()
+    assert "Round 9" in round9
+    for item in ("R9.1", "R9.2", "R9.3", "R9.4", "R9.5"):
+        assert item in round9
+    assert "nondiscriminating-evidence" in round9
+    assert "Uchida" in round9
+    assert "Round 10" in round10
+    for item in ("R10.1", "R10.2", "R10.3", "R10.4"):
+        assert item in round10
+    assert "Garisto" in round10
+    assert "Round 11" in round11
+    for item in ("R11.1", "R11.2", "R11.3", "R11.4", "R11.5"):
+        assert item in round11
+    assert "full row rank" in round11
+    assert "strict positivity" in round11
+    assert "self-location sampling-kernel theorem" in impact
+    assert "Candidate C" in impact and "Decision: accept" in impact
+    assert "zero unresolved major items" in response
+    assert "synthetic" in response.lower()
+    assert "not external peer review" in round8.lower()
+    assert "not independent peer review" in round6
+    assert "not independent peer review" in round9
+    assert "not independent peer review" in round10
+    assert "not independent peer review" in round11
+
+
+def test_workflow_records_source_toolchain_and_checks_correct_author():
+    workflow = (ROOT / ".github" / "workflows" / "paper-identifiability.yml").read_text()
+    assert "Record toolchain and source provenance" in workflow
+    assert "git rev-parse HEAD" in workflow
+    assert "toolchain.txt" in workflow
+    assert "Author:.*Jaden Fix" in workflow
+    assert "paper.tex" in workflow and "references.bib" in workflow
+    assert "paper.bbl" in workflow and "paper.log" in workflow
+    assert "test_paper_identifiability_before_anthropic_bayes.py" in workflow
+    assert "test_paper_identifiability_two_view_boundaries.py" in workflow
+    assert "ROUND6_MEASURE_THEORETIC_AUDIT.md" in workflow
+    assert "FIELD_IMPACT_AUDIT.md" in workflow
+    assert "ROUND8_XEROGRAPHIC_PRIOR_ART_AUDIT.md" in workflow
+    assert "ROUND9_CONTEMPORANEOUS_PRIOR_ART_AND_SCOPE_AUDIT.md" in workflow
+    assert "ROUND10_OBSERVER_SELECTION_PRIOR_ART_AUDIT.md" in workflow
+    assert "ROUND11_TWO_VIEW_BOUNDARY_AUDIT.md" in workflow
+    assert "permissions:" in workflow and "contents: read" in workflow
+    assert "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" in workflow
+    assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
+    assert "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02" in workflow
+    assert "Jaden Figgs" not in workflow

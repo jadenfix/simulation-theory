@@ -1,0 +1,139 @@
+{
+  "clone": {
+    "clone_base": "1/21",
+    "clone_sim": "20/21",
+    "initial": "1/2",
+    "weighted": "1/2"
+  },
+  "gauge": {
+    "invalid_transformed_prior": [
+      "3/2",
+      "-1/2"
+    ],
+    "valid_examples": [
+      {
+        "A": [
+          [
+            "3/4",
+            "1/4"
+          ],
+          [
+            "1/4",
+            "3/4"
+          ]
+        ],
+        "one_view_equal": true,
+        "transformed_prior": [
+          "1/2",
+          "1/2"
+        ],
+        "two_view_equal": false
+      },
+      {
+        "A": [
+          [
+            "2/3",
+            "1/3"
+          ],
+          [
+            "1/3",
+            "2/3"
+          ]
+        ],
+        "one_view_equal": true,
+        "transformed_prior": [
+          "1/2",
+          "1/2"
+        ],
+        "two_view_equal": false
+      }
+    ]
+  },
+  "known_channel_identifiability": {
+    "common_observed_law": [
+      "1/2",
+      "1/2"
+    ],
+    "full_rank_reconstruction": [
+      "1/2",
+      "1/3",
+      "1/6"
+    ],
+    "rank_deficient_collision_prior_a": [
+      "1/2",
+      "1/2",
+      "0/1"
+    ],
+    "rank_deficient_collision_prior_b": [
+      "0/1",
+      "0/1",
+      "1/1"
+    ]
+  },
+  "persistent": {
+    "T": 100,
+    "persistent_bayes_factor": "3/1",
+    "redraw_bayes_factor": "515377520732011331036461129765621272702107522001/1"
+  },
+  "persistent_identity_audit": {
+    "likelihood_ratio": "1934/1977",
+    "posterior_weighted_ratio": "1934/1977",
+    "posterior_weights": [
+      "154/659",
+      "330/659",
+      "175/659"
+    ]
+  },
+  "sampling_kernel": {
+    "equal_world_prior_category_probabilities": {
+      "F": "5/8",
+      "G": "3/8"
+    },
+    "equal_world_prior_uniform_within_world_odds": "5/3",
+    "interpretation": "raw counts require a declared self-location/world-weighting rule; mass-conserving representational refinement leaves the posterior unchanged",
+    "mass_conserving_refinement_odds": "5/3",
+    "raw_global_count_odds": "2/1",
+    "size_weighted_world_prior_odds": "2/1",
+    "uniform_over_refined_labels_odds": "3/1",
+    "world_priors": {
+      "equal": [
+        "1/2",
+        "1/2"
+      ],
+      "reference_class_size_weighted": [
+        "1/3",
+        "2/3"
+      ]
+    }
+  },
+  "sha256_without_hash": "8d003e5d309de62ba14728f122b6dcbc5370d6e969630e8d07986e1187cb4560",
+  "support_mismatch_boundary": {
+    "denominator_probability": "0/1",
+    "finite_ceiling_applies": false,
+    "numerator_probability": "1/1"
+  },
+  "two_view_grid_audit_2state": {
+    "admissible_count": 32,
+    "denominator": 8,
+    "only_permutations": true,
+    "preserving_count": 2
+  },
+  "two_view_grid_audit_2state_extended": {
+    "admissible_count": 512,
+    "denominator": 32,
+    "only_permutations": true,
+    "preserving_count": 2
+  },
+  "two_view_grid_audit_3state": {
+    "admissible_count": 108,
+    "denominator": 3,
+    "only_permutations": true,
+    "preserving_count": 6
+  },
+  "two_view_grid_audit_3state_extended": {
+    "admissible_count": 3492,
+    "denominator": 6,
+    "only_permutations": true,
+    "preserving_count": 6
+  }
+}
