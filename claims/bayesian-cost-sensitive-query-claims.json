@@ -17,14 +17,14 @@
       "scope": "finite-horizon adaptive experiment problems with future query choice contingent on the current observation",
       "assumptions": ["future experiment scheduling may depend on current query outcomes"],
       "evidence": ["docs/bayesian-cost-sensitive-query-stopping.md#nonmyopic-option-value", "tests/test_bayesian_cost_sensitive_queries.py"],
-      "nonclaims": ["negative myopic value does not imply negative dynamic value"]
+      "nonclaims": ["does not assert that negative-myopic-value queries are generally optimal"]
     },
     {
       "id": "ST-M63",
       "title": "Uniform three-bit multiplexer has exact equal-cost dynamic query threshold one quarter",
       "kind": "MODEL_RESULT",
       "scope": "uniform three-bit multiplexer, two-query budget, equal rational cost c per coordinate query",
-      "assumptions": ["the selector is queried first in the two-step contingent plan", "terminal K3 Bayes gap without information is one half"],
+      "assumptions": ["equal cost c>=0 for each coordinate query", "budget two", "terminal K3 Bayes gap without information is one half"],
       "evidence": ["docs/bayesian-cost-sensitive-query-stopping.md#nonmyopic-option-value", "tests/test_bayesian_cost_sensitive_queries.py"],
       "nonclaims": ["the threshold is specific to this finite construction"]
     },

@@ -32,11 +32,19 @@ Yet with two queries remaining, `x_0` has option value because it determines whi
 2c.
 \]
 
-Stopping has value `1/2`. Therefore the dynamic threshold is
+Stopping has value `1/2`; querying a payload bit first (then continuing optimally) has value `c+1/4`. Hence
+
+\[
+J_2=\min\{1/2,\;2c,\;c+1/4\},
+\]
+
+and querying is optimal iff
 
 \[
 \boxed{c<1/4.}
 \]
+
+For `0<=c<1/4`, `2c<c+1/4`, so the selector-first plan is the unique optimum. Option value appears in which query is chosen first, not in the threshold, which payload-first plans share.
 
 For every `0<c<1/4`, the optimal first query is `x_0` even though its myopic net value is negative. At `c=1/4`, stopping and the two-query plan tie; the implementation uses stopping as the canonical tie-break.
 
