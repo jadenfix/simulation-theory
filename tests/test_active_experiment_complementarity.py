@@ -145,3 +145,27 @@ def test_candidate_experiments_must_have_new_distinct_names():
         exact_active_experiment_complementarity(graph, family, (none,), bit_a, duplicate, 2)
     with pytest.raises(ValueError):
         exact_active_experiment_complementarity(graph, family, (none,), none, bit_a, 2)
+
+
+def test_fixed_benchmark_and_slack_identity():
+    graph = _complete_graph(3)
+    family = _two_bit_family()
+    result = exact_active_experiment_complementarity(
+        graph,
+        family,
+        (_none(family),),
+        _bit_experiment(family, 0, "bit-a"),
+        _bit_experiment(family, 1, "bit-b"),
+        2,
+    )
+    menus = (result.baseline, result.with_a, result.with_b, result.with_both)
+    # ST-T192: one shared benchmark vector, and every gap is nonnegative.
+    assert all(value.mixed.benchmark == result.benchmark for value in menus)
+    assert all(value.deterministic_gap >= 0 and value.mixed_gap >= 0 for value in menus)
+    # ST-T193: slack = V(B) + V(B+a+b) - V(B+a) - V(B+b) = -complementarity.
+    det = [value.deterministic_gap for value in menus]
+    mix = [value.mixed_gap for value in menus]
+    assert result.deterministic_submodularity_slack == det[0] + det[3] - det[1] - det[2]
+    assert result.deterministic_submodularity_slack == -result.deterministic_complementarity
+    assert result.mixed_submodularity_slack == mix[0] + mix[3] - mix[1] - mix[2]
+    assert result.mixed_submodularity_slack == -result.mixed_complementarity

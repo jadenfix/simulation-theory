@@ -25,7 +25,7 @@
       "kind": "THEOREM",
       "scope": "four nested experiment policy classes all evaluated by subtracting one full-menu model-informed oracle vector",
       "assumptions": ["the full-menu oracle is feasible as a benchmark lower bound for every restricted-menu controller", "the same model family, horizon, code universe, and cost accounting are used throughout"],
-      "evidence": ["docs/active-experiment-complementarity.md#1-four-policy-classes", "src/simtheory/active_experiment_complementarity.py:exact_active_experiment_complementarity"],
+      "evidence": ["docs/active-experiment-complementarity.md#1-four-policy-classes", "src/simtheory/active_experiment_complementarity.py:exact_active_experiment_complementarity", "tests/test_active_experiment_complementarity.py"],
       "nonclaims": ["this benchmark choice is one declared estimand rather than the only possible notion of experiment value", "the oracle is not future-path clairvoyant"]
     },
     {
@@ -34,7 +34,7 @@
       "kind": "THEOREM",
       "scope": "any four finite policy-class values V(B), V(B+a), V(B+b), and V(B+a+b) under the declared minimization convention",
       "assumptions": ["marginal gain is defined as V(S)-V(S+e)", "complementarity is gain_b(B+a)-gain_b(B)"],
-      "evidence": ["docs/active-experiment-complementarity.md#2-marginal-experiment-value", "src/simtheory/active_experiment_complementarity.py:ActiveExperimentComplementarityCertificate.valid"],
+      "evidence": ["docs/active-experiment-complementarity.md#2-marginal-experiment-value", "src/simtheory/active_experiment_complementarity.py:ActiveExperimentComplementarityCertificate.valid", "tests/test_active_experiment_complementarity.py"],
       "nonclaims": ["the algebraic equivalence does not establish the sign of the slack in arbitrary problems"]
     },
     {
@@ -42,7 +42,7 @@
       "title": "Two persistent latent bits give deterministic K3 complementarity margin one",
       "kind": "MODEL_RESULT",
       "scope": "four globally fixed two-period models indexed by two latent bits, K3 source mapping 0,1,1,2 in the second period, and one experiment revealing each bit",
-      "assumptions": ["the first-period source is common and known", "each bit observation persists through the public history", "the full-menu oracle cost is two for every model"],
+      "assumptions": ["the first-period source is common and known", "each bit observation persists through the public history", "horizon two, known initial state, deterministic hidden transition, and zero-cost bit experiments"],
       "evidence": ["docs/active-experiment-complementarity.md#4-deterministic-complementarity", "tests/test_active_experiment_complementarity.py"],
       "nonclaims": ["the unit margin is specific to this exact finite construction"]
     },
@@ -51,7 +51,7 @@
       "title": "The two-bit K3 complementarity margin remains one-third after public-seed convexification",
       "kind": "MODEL_RESULT",
       "scope": "the same persistent two-bit K3 construction after independent public mixing over complete deterministic policies",
-      "assumptions": ["baseline mixed benchmark gap is two-thirds", "one-bit mixed gaps are one-half", "the both-bit mixed gap is zero"],
+      "assumptions": ["same horizon-two two-bit construction as ST-M53", "an independent public seed mixes complete deterministic policy trees", "zero-cost bit experiments"],
       "evidence": ["docs/active-experiment-complementarity.md#5-complementarity-survives-public-randomness-matching", "tests/test_active_experiment_complementarity.py"],
       "nonclaims": ["the one-third value is not a universal interaction coefficient"]
     },

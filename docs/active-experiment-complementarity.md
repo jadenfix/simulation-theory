@@ -83,10 +83,12 @@ Equivalently, define the cost-form submodularity slack
 \[
 S
 =
-V(B\cup\{a\})+V(B\cup\{b\})-V(B)-V(B\cup\{a,b\}).
+\Delta_b(B)-\Delta_b(B\cup\{a\})
+=
+V(B)+V(B\cup\{a,b\})-V(B\cup\{a\})-V(B\cup\{b\}).
 \]
 
-Then
+Then `S>=0` is diminishing returns and
 
 \[
 \boxed{

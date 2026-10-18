@@ -19,7 +19,7 @@ For a value V(S) interpreted as minimax benchmark gap, the gain from adding b is
 Diminishing returns would require gain_b(B) >= gain_b(B+a).  Complementarity is
 the reverse inequality.  Equivalently, the cost-form submodularity slack
 
-    V(B+a) + V(B+b) - V(B) - V(B+a+b)
+    V(B) + V(B+a+b) - V(B+a) - V(B+b)
 
 is negative exactly when the two experiments are complementary.
 
@@ -108,6 +108,11 @@ class ActiveExperimentComplementarityCertificate:
             != self.deterministic_gain_b_after_a - self.deterministic_gain_b_empty
             or self.deterministic_submodularity_slack
             != -self.deterministic_complementarity
+            or self.deterministic_submodularity_slack
+            != self.baseline.deterministic_gap
+            + self.with_both.deterministic_gap
+            - self.with_a.deterministic_gap
+            - self.with_b.deterministic_gap
             or self.mixed_gain_b_empty
             != self.baseline.mixed_gap - self.with_b.mixed_gap
             or self.mixed_gain_b_after_a
@@ -116,6 +121,12 @@ class ActiveExperimentComplementarityCertificate:
             != self.mixed_gain_b_after_a - self.mixed_gain_b_empty
             or self.mixed_submodularity_slack
             != -self.mixed_complementarity
+            or self.mixed_submodularity_slack
+            != self.baseline.mixed_gap
+            + self.with_both.mixed_gap
+            - self.with_a.mixed_gap
+            - self.with_b.mixed_gap
+            or any(value.mixed.benchmark != self.benchmark for value in menus)
         ):
             return False
         # Menu inclusion means controller value cannot worsen when an experiment
@@ -267,11 +278,11 @@ def exact_active_experiment_complementarity(
         det_b0,
         det_ba,
         det_comp,
-        -det_comp,
+        v0.deterministic_gap + vab.deterministic_gap - va.deterministic_gap - vb.deterministic_gap,
         mix_b0,
         mix_ba,
         mix_comp,
-        -mix_comp,
+        v0.mixed_gap + vab.mixed_gap - va.mixed_gap - vb.mixed_gap,
     )
     if not certificate.valid:
         raise AssertionError("active-experiment complementarity certificate failed validation")
