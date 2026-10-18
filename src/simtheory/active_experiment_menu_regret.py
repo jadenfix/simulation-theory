@@ -92,6 +92,9 @@ class ActiveExperimentMenuRegretShift:
             or not self.enriched_under_enriched_benchmark.valid
             or not self.baseline_mixed_own.valid
             or not self.enriched_mixed_own.valid
+            or self.enriched_under_enriched_benchmark.deterministic_value
+            != self.enriched.minimax_regret
+            or self.baseline_mixed_own.deterministic_value != self.baseline.minimax_regret
             or self.deterministic_fixed_benchmark_gain < 0
             or self.mixed_fixed_benchmark_gain < 0
             or not (

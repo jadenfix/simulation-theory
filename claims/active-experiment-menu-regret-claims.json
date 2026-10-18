@@ -44,23 +44,23 @@
       "scope": "finite active fixed-model decision problems where menu expansion can improve the model-informed oracle more than the shared controller",
       "assumptions": ["regret is recomputed against each menu's own model-informed oracle", "the new experiments remain optional for the shared controller"],
       "evidence": ["docs/active-experiment-menu-regret-shifts.md#5-exact-k4-counterexample", "tests/test_active_experiment_menu_regret.py"],
-      "nonclaims": ["absolute robust cost cannot increase under the same menu expansion", "the theorem does not say regret is an invalid metric; it says benchmark movement matters"]
+      "nonclaims": ["the theorem does not assert that absolute robust cost can increase (by ST-T186 it cannot)", "the theorem does not say regret is an invalid metric; it says benchmark movement matters"]
     },
     {
       "id": "ST-M50",
       "title": "Specialized K4 sensing leaves robust cost at two while doubling deterministic own-oracle regret from one-half to one",
       "kind": "MODEL_RESULT",
-      "scope": "two disjoint-support two-hidden-state K4 models, one no-signal baseline experiment, and two symmetric model-specialized hidden-state experiments",
+      "scope": "one-period (horizon-one) instance with two disjoint-support two-hidden-state K4 models, one no-signal baseline experiment, and two symmetric model-specialized hidden-state experiments",
       "assumptions": ["each specialized experiment perfectly reveals hidden state under its target model and emits a fair hidden-state-independent coin under the other model", "experiment costs are zero"],
       "evidence": ["docs/active-experiment-menu-regret-shifts.md#5-exact-k4-counterexample", "tests/test_active_experiment_menu_regret.py"],
-      "nonclaims": ["the numerical values are specific to the declared finite K4 construction"]
+      "nonclaims": ["the numerical values are specific to the declared finite K4 construction", "the values are not asserted for longer horizons; with static hidden states at horizon two the baseline own-regret is already one, not one-half"]
     },
     {
       "id": "ST-M51",
       "title": "Public mixing softens but does not remove the specialized K4 moving-benchmark regret increase",
       "kind": "MODEL_RESULT",
-      "scope": "the same specialized K4 menu-expansion instance after an independent public seed convexifies complete deterministic policy trees",
-      "assumptions": ["the baseline mixed own-regret is one-half", "the enriched fixed-benchmark mixed controller gain is one-quarter", "the oracle shift is uniformly one-half"],
+      "scope": "the same horizon-one specialized K4 menu-expansion instance after an independent public seed convexifies complete deterministic policy trees",
+      "assumptions": ["same horizon-one specialized K4 instance as ST-M50", "an independent public seed mixes complete deterministic policy trees", "experiment costs are zero"],
       "evidence": ["docs/active-experiment-menu-regret-shifts.md#5-exact-k4-counterexample", "tests/test_active_experiment_menu_regret.py"],
       "nonclaims": ["public mixing is an explicit assistance resource", "the mixed value three-quarters is not a deterministic policy value"]
     },

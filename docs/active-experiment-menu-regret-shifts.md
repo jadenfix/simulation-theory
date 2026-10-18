@@ -173,7 +173,7 @@ This is not a paradox. Regret is a relative quantity.
 
 ## 5. Exact K4 counterexample
 
-Consider complete confusion `K4` and two globally fixed models.
+Consider a one-period (horizon-one) problem on complete confusion `K4` with two globally fixed models.
 
 - Model `L` has two static hidden states, emitting source symbols `0` and `1` equiprobably.
 - Model `R` has two static hidden states, emitting source symbols `2` and `3` equiprobably.
