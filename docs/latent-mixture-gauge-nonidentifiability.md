@@ -94,7 +94,7 @@ So the ambiguity is not caused by using an internally nonidentifiable channel. B
 
 ## 4. There is a local continuum, not merely one counterexample
 
-Suppose `pi` is in the interior of the latent simplex and `K` has at least two affinely independent rows. Choose a nonidentity row-stochastic matrix `B` and form
+Suppose `pi` is in the interior of the latent simplex and `K` has two distinct rows `K_i != K_j`. Choose a row-stochastic `B` with `(B-I)K != 0`, for example `B = I + e_i(e_j-e_i)^T` (component `i` moved onto component `j`), and form
 
 \[
 A_t=(1-t)I+tB.
@@ -119,6 +119,8 @@ Hence there is a continuum of nontrivial observationally equivalent factorizatio
 \pi_tK_t=\pi K.
 }
 \]
+
+With that choice, row `i` of `K_t` is `K_i + t(K_j-K_i)`, so distinct `t` give distinct channels. The condition `(B-I)K != 0` cannot be dropped: with rows `(1,0),(1,0),(0,1)`, `pi=(1/4,1/4,1/2)` and `B` averaging the first two components, `(pi A_t^{-1}, A_tK) = (pi,K)` for every `t`.
 
 This is a local structural nonidentifiability, not a finite-sample problem.
 

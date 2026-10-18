@@ -24,7 +24,7 @@
       "title": "Interior finite mixtures admit a local continuum of nontrivial observationally equivalent prior-channel factorizations",
       "kind": "THEOREM",
       "scope": "interior latent prior and a channel with at least two affinely independent rows",
-      "assumptions": ["a nonidentity row-stochastic perturbation is chosen sufficiently close to the identity so the transformed prior remains nonnegative"],
+      "assumptions": ["pi is strictly positive and K has two distinct rows K_i != K_j", "A_t=(1-t)I+tB with B row-stochastic and (B-I)K != 0 (for example B=I+e_i(e_j-e_i)^T)", "0<t small enough that A_t is invertible and pi A_t^{-1} >= 0"],
       "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#4-there-is-a-local-continuum-not-merely-one-counterexample", "tests/test_latent_mixture_gauge.py"],
       "nonclaims": ["the theorem does not characterize every observational equivalence"]
     },
@@ -42,8 +42,8 @@
       "title": "Infinite one-view sample size cannot resolve exact latent-mixture gauge equivalence",
       "kind": "THEOREM",
       "scope": "two valid factorizations producing exactly the same one-view observed distribution",
-      "assumptions": ["sampling only refines knowledge of that same marginal observed law"],
-      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#6-what-breaks-the-gauge", "docs/latent-mixture-gauge-nonidentifiability.md#7-consequence-for-simulation-style-bayesian-arguments"],
+      "assumptions": ["the n observations are iid draws from q, with the latent component redrawn independently for each draw (repeated draws sharing one latent are multi-view data)"],
+      "evidence": ["docs/latent-mixture-gauge-nonidentifiability.md#6-what-breaks-the-gauge", "docs/latent-mixture-gauge-nonidentifiability.md#7-consequence-for-simulation-style-bayesian-arguments", "tests/test_latent_mixture_gauge.py"],
       "nonclaims": ["the result is structural nonidentifiability rather than a statement about finite-sample efficiency"]
     },
     {

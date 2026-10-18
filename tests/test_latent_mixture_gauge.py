@@ -78,3 +78,35 @@ def test_invalid_or_noninvertible_gauges_fail_closed():
             pass
         else:
             raise AssertionError("invalid gauge should be rejected")
+
+
+def test_iid_one_view_samples_of_any_length_have_identical_laws():
+    # ST-T258: with the latent redrawn for each draw, every finite sample law is a
+    # product of the common one-view law, so no sample size separates the pair.
+    from itertools import product
+
+    p1, k1 = (F(1, 2), F(1, 2)), ((F(3, 4), F(1, 4)), (F(1, 4), F(3, 4)))
+    p2, k2 = (F(1, 4), F(3, 4)), ((1, 0), (F(1, 3), F(2, 3)))
+    q1, q2 = observed_law(p1, k1), observed_law(p2, k2)
+    for n in range(1, 5):
+        for ys in product(range(2), repeat=n):
+            left = right = F(1)
+            for y in ys:
+                left *= q1[y]
+                right *= q2[y]
+            assert left == right
+
+
+def test_gauge_perturbation_must_move_the_channel():
+    # ST-T256: a B with (B - I) K = 0 and pi B = pi gives a trivial family.
+    prior = (F(1, 4), F(1, 4), F(1, 2))
+    channel = ((1, 0), (1, 0), (0, 1))
+    t = F(1, 5)
+    averaging = ((F(1, 2), F(1, 2), 0), (F(1, 2), F(1, 2), 0), (0, 0, 1))
+    gauge = tuple(
+        tuple((1 - t) * (1 if r == c else 0) + t * averaging[r][c] for c in range(3))
+        for r in range(3)
+    )
+    cert = exact_latent_mixture_gauge_transform(prior, channel, gauge)
+    assert cert.transformed_prior == prior
+    assert cert.transformed_channel == tuple(tuple(F(x) for x in row) for row in channel)
