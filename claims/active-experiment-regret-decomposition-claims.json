@@ -16,7 +16,7 @@
       "kind": "THEOREM",
       "scope": "finite modelwise cost vectors under minimization of the worst expected coordinate after arbitrary public mixing",
       "assumptions": ["a dominated policy has another available policy no worse in every model coordinate", "mixture weights are source-independent"],
-      "evidence": ["docs/active-experiment-regret-value-decomposition.md#2-deterministic-and-mixed-benchmark-gaps", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#2-deterministic-and-mixed-benchmark-gaps", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap", "tests/test_active_experiment_regret_decomposition.py"],
       "nonclaims": ["Pareto pruning does not bound the frontier size polynomially", "the argument concerns expected cost vectors rather than arbitrary nonlinear policy statistics"]
     },
     {
@@ -34,7 +34,7 @@
       "kind": "THEOREM",
       "scope": "actual and information-erased versions of the same active experiment menu under one globally fixed model",
       "assumptions": ["the actual singleton-model oracle may ignore its observations", "actual and erased experiment menus have identical acquisition costs and causal timing", "the oracle and shared policies use the same zero-error code universe"],
-      "evidence": ["docs/active-experiment-regret-value-decomposition.md#1-fixed-benchmark", "docs/active-experiment-regret-value-decomposition.md#6-why-a-fixed-oracle-matters", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap"],
+      "evidence": ["docs/active-experiment-regret-value-decomposition.md#1-fixed-benchmark", "docs/active-experiment-regret-value-decomposition.md#6-why-a-fixed-oracle-matters", "src/simtheory/active_experiment_regret_decomposition.py:exact_mixed_benchmark_gap", "tests/test_active_experiment_regret_decomposition.py"],
       "nonclaims": ["the fixed benchmark is one declared estimand rather than the only possible experiment-value definition", "the oracle is not path-clairvoyant"]
     },
     {

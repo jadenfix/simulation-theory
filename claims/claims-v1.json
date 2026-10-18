@@ -11,7 +11,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#unrestricted-indistinguishability",
-        "src/simtheory/inference.py"
+        "src/simtheory/inference.py",
+        "tests/test_inference.py"
       ],
       "nonclaims": [
         "does not show that simulations exist",
@@ -28,7 +29,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#evidence-ceiling-and-robust-posterior-bounds",
-        "src/simtheory/inference.py:evidence_ceiling"
+        "src/simtheory/inference.py:evidence_ceiling",
+        "tests/test_inference.py"
       ],
       "nonclaims": [
         "does not supply or verify the physical likelihood model"
@@ -45,7 +47,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#observer-measure-and-the-jensen-gap",
-        "src/simtheory/observer_measure.py"
+        "src/simtheory/observer_measure.py",
+        "tests/test_properties.py"
       ],
       "nonclaims": [
         "does not establish the correct anthropic measure"
@@ -79,7 +82,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#approximate-predictive-state-packing",
-        "src/simtheory/lazy_rendering.py:approximate_state_packing_lower_bound"
+        "src/simtheory/lazy_rendering.py:approximate_state_packing_lower_bound",
+        "tests/test_lazy_rendering.py"
       ],
       "nonclaims": [
         "finite packing checks do not prove an asymptotic physical lower bound"
@@ -96,7 +100,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#multi-architecture-fano-bound",
-        "src/simtheory/minimax.py"
+        "src/simtheory/minimax.py",
+        "tests/test_minimax.py"
       ],
       "nonclaims": [
         "does not define the correct architecture family or prior"
@@ -112,7 +117,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#selection-and-intervention-identifiability",
-        "src/simtheory/causal.py"
+        "src/simtheory/causal.py",
+        "tests/test_causal.py"
       ],
       "nonclaims": [
         "does not assert that a simulator uses outcome-dependent retention"
@@ -186,7 +192,8 @@
       ],
       "evidence": [
         "docs/formal-results.md#local-physics-versus-parent-physics",
-        "src/simtheory/physics.py"
+        "src/simtheory/physics.py",
+        "tests/test_physics.py"
       ],
       "nonclaims": [
         "does not constrain unknown parent physics without a transfer assumption"
