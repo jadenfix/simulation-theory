@@ -50,6 +50,7 @@ from itertools import combinations, product
 from math import prod
 from typing import Hashable, Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .network_coding import (
     FieldVector,
     LinearMulticastCertificate,
@@ -431,7 +432,20 @@ class LinearFunctionCodeCertificate:
 
     @property
     def valid(self) -> bool:
-        return all(decoder.recoverable for decoder in self.sink_decoders)
+        # Decoder coefficients and ranks are recomputed from the network, the
+        # code, and the declared demands; empty or forged decoders fail.
+        return (
+            len(self.sink_decoders) == len(self.problem.demands)
+            and all(decoder.recoverable for decoder in self.sink_decoders)
+            and matches_rebuild(
+                self,
+                lambda: evaluate_linear_function_code(
+                    self.propagation.network,
+                    self.propagation.code,
+                    self.problem,
+                ),
+            )
+        )
 
     def decoder(self, sink: str) -> FunctionalSinkDecoder:
         target = str(sink)
@@ -814,6 +828,14 @@ class SideInformationBroadcastSeparation:
 
     @property
     def valid(self) -> bool:
+        # rerun the summaries, the code, and the bounded exhaustive searches
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: side_information_broadcast_separation(),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         return (
             self.no_side_summary.complete
             and self.no_side_summary.dimension == 2

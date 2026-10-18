@@ -64,6 +64,12 @@ def prior_ratio_bounds(numerator: Sequence[Fraction], denominator: Sequence[Frac
 
 @dataclass(frozen=True)
 class PersistentEvidenceCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     numerator_weights: tuple[Fraction, ...]
     denominator_weights: tuple[Fraction, ...]
     outcome: int

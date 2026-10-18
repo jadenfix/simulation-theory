@@ -36,6 +36,8 @@ from itertools import product
 from math import prod
 from typing import Mapping, Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .adaptive_drift_games import (
     FeedbackDynamicCodeCertificate,
     FiniteLawTransitionModel,
@@ -323,6 +325,14 @@ class CoarsenedObservationGameCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_coarsened_observation_game(self.graph, self.transition_model, self.partition, tuple(index for index in range(self.transition_model.law_count) if self.initial_possible_mask >> index & 1), self.horizon, switching_penalty=self.switching_penalty, max_nodes=self.max_nodes, max_policy_combinations=self.max_policy_combinations, max_frontier_entries=self.max_frontier_entries, max_frontier_dominance_pairs=self.max_dominance_pairs, **enumeration_rebuild_caps(self.enumeration, dominance_key='max_code_dominance_pairs')),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         model = self.transition_model
         candidates = self.enumeration.candidates
         code_count = len(candidates)

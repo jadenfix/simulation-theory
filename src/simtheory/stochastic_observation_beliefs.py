@@ -33,6 +33,8 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .prior_weighted_codes import RationalInput
 from .robust_prior_codes import (
@@ -529,6 +531,14 @@ class BayesianCodingGameCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_bayesian_coding_game(self.graph, self.model, self.kernel, self.initial_prior, self.horizon, switching_penalty=self.switching_penalty, max_belief_nodes=self.max_belief_nodes, max_observation_branches=self.max_observation_branches, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         candidates = self.enumeration.candidates
         code_count = len(candidates)
         sentinel = code_count

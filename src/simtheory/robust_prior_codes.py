@@ -36,6 +36,7 @@ from itertools import combinations, product
 from math import comb
 from typing import Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .confusion_graphs import (
     ChromaticCertificate,
     ConfusionGraph,
@@ -340,6 +341,22 @@ class RobustCandidateEnumeration:
                 for left_index, left in enumerate(self.candidates)
                 for right_index, right in enumerate(self.candidates)
                 if left_index != right_index
+            )
+            # Completeness of the nondominated list and the counters are
+            # re-established by rerunning the bounded enumeration: dropping a
+            # candidate (which can erase a shared-randomness gain) fails here.
+            and matches_rebuild(
+                self,
+                lambda: enumerate_robust_code_candidates(
+                    self.graph,
+                    self.priors,
+                    max_vertices=self.max_vertices,
+                    max_partitions=self.max_partitions,
+                    max_candidates=self.max_candidates,
+                    max_prefix_assignments=10**9,
+                    max_prefix_shapes=10**7,
+                    max_dominance_pairs=self.max_dominance_pairs,
+                ),
             )
         )
 
@@ -1154,3 +1171,24 @@ def k4_nonoracle_minimax_example() -> FinitePriorRobustCodeCertificate:
             ),
         ),
     )
+
+
+def enumeration_rebuild_caps(
+    enumeration: RobustCandidateEnumeration,
+    *,
+    dominance_key: str = "max_dominance_pairs",
+) -> dict[str, int]:
+    """Caps that reproduce ``enumeration`` when a dependent solver is rerun.
+
+    The prefix caps are not stored on the enumeration; they only bound work,
+    so generous values reproduce any enumeration that completed.
+    """
+
+    return {
+        "max_vertices": enumeration.max_vertices,
+        "max_partitions": enumeration.max_partitions,
+        "max_candidates": enumeration.max_candidates,
+        "max_prefix_assignments": 10**9,
+        "max_prefix_shapes": 10**7,
+        dominance_key: enumeration.max_dominance_pairs,
+    }

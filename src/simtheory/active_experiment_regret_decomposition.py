@@ -61,7 +61,10 @@ from .stochastic_observation_beliefs import observation_kernel
 
 @dataclass(frozen=True)
 class MixedBenchmarkGapCertificate:
-    """Exact convexified policy value relative to one fixed benchmark vector."""
+    """Exact convexified policy value relative to one fixed benchmark vector.
+
+    Scope of ``valid``: it checks that the stored numbers are arithmetically consistent with one another (an inequality-level receipt). It does not recompute them from an instance, so it is not an independent verification of the reported values.
+    """
 
     benchmark: tuple[Fraction, ...]
     deterministic_value: Fraction

@@ -38,6 +38,12 @@ def prior_total_variation(left: Sequence[Fraction], right: Sequence[Fraction]) -
 
 @dataclass(frozen=True)
 class ValueSensitivityCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     observed: tuple[int, ...]
     left_value: Fraction
     right_value: Fraction

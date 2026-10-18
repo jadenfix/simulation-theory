@@ -27,6 +27,7 @@ from itertools import product
 from math import log2
 from typing import Sequence
 
+from .rebuild import matches_rebuild
 from .prior_weighted_codes import PrefixCodeCertificate, RationalInput, optimal_binary_prefix_code
 
 
@@ -91,6 +92,14 @@ class BlockPrefixCodeCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the product law and its Huffman code from the source prior
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_iid_block_prefix_code(self.source_prior, self.block_length, max_sequences=max(1, len(self.block_prior))),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         m = self.block_length
         return (
             m >= 1

@@ -38,6 +38,7 @@ from itertools import product
 from math import prod
 from typing import Hashable, Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .predictive_networks import CausalCapacityNetwork, FiniteQueryFamily
 
 FieldVector = tuple[int, ...]
@@ -407,7 +408,17 @@ class LinearMulticastCertificate:
 
     @property
     def valid(self) -> bool:
-        return all(decoder.decodes_all for decoder in self.decoders)
+        # One decoder per sink, every decoder full rank, and the global
+        # vectors, ranks, and decoder equations recomputed over GF(p) from the
+        # network and the local coefficients (stored ranks are not trusted).
+        return (
+            len(self.decoders) == len(self.code.sinks)
+            and all(decoder.decodes_all for decoder in self.decoders)
+            and matches_rebuild(
+                self,
+                lambda: evaluate_scalar_linear_code(self.network, self.code),
+            )
+        )
 
     @property
     def sink_ranks(self) -> dict[str, int]:
@@ -701,6 +712,14 @@ class ButterflySeparationCertificate:
 
     @property
     def valid(self) -> bool:
+        # rerun the cut computation, the linear code, and the bounded exhaustive routing search
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: butterfly_separation_certificate(),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         return (
             self.cut_certificate.necessary_cuts_hold
             and self.linear_certificate.valid
@@ -752,6 +771,14 @@ class PredictiveMulticastCertificate:
 
     @property
     def valid(self) -> bool:
+        # bind the record embedding to the query family
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: predictive_multicast_certificate(self.family, self.linear_certificate),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         return self.linear_certificate.valid and len(
             {vector for _, vector in self.record_symbol_vectors}
         ) == self.family.class_count

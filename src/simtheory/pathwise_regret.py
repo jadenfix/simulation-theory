@@ -40,6 +40,8 @@ from fractions import Fraction
 from itertools import product
 from typing import Iterable, Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .coupled_drift_sequences import (
     CostVector,
@@ -209,6 +211,14 @@ class PathwiseRegretCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_pathwise_regret_game(self.polytope.nominal_prior, self.polytope.drift_per_step, self.decisions, self.comparators, max_path_bases=self.polytope.max_bases, max_game_bases=self.shared_game.configured_basis_cap),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if (
             not self.polytope.valid
             or not self.decisions
@@ -512,6 +522,14 @@ class CodeSequenceRegretCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_code_sequence_regret(self.graph, self.nominal_prior, self.drift_per_step, self.horizon, switching_penalty=self.switching_penalty, decision_max_switches=self.decision_max_switches, comparator_max_switches=self.comparator_max_switches, max_sequences=10**8, max_path_bases=self.regret.polytope.max_bases, max_game_bases=self.regret.shared_game.configured_basis_cap, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         candidates = self.enumeration.candidates
         expected_decisions = tuple(
             _sequence_decision(

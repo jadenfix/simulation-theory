@@ -34,6 +34,7 @@ from itertools import combinations
 from math import comb
 from typing import Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .distributionally_robust_codes import (
     TVExpectationCertificate,
@@ -105,6 +106,14 @@ class TVBallVertexCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the event inequalities and the complete vertex list; a truncated vertex list fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: enumerate_tv_ball_vertices(self.nominal_distribution, self.radius, max_states=self.max_states, max_bases=self.max_bases),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         count = len(self.nominal_distribution)
         if (
             count == 0

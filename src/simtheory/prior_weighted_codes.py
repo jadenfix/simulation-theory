@@ -35,10 +35,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
-from heapq import heappop, heappush
+from heapq import heapify, heappop, heappush
 from math import lcm, log2
 from typing import Iterable, Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .confusion_graphs import (
     ChromaticCertificate,
     ConfusionGraph,
@@ -277,7 +278,23 @@ class PrefixCodeCertificate:
                 Fraction(0),
             )
             and self.expected_length == self.merge_cost
+            # Huffman optimality: the merge cost is recomputed from the
+            # probabilities, so a valid but suboptimal prefix code fails.
+            and self.merge_cost == huffman_merge_cost(self.probabilities)
         )
+
+
+def huffman_merge_cost(probabilities: Sequence[Fraction]) -> Fraction:
+    """Total Huffman merge cost, which equals the optimal expected length."""
+
+    weights = [Fraction(probability) for probability in probabilities]
+    heapify(weights)
+    total = Fraction(0)
+    while len(weights) > 1:
+        merged = heappop(weights) + heappop(weights)
+        total += merged
+        heappush(weights, merged)
+    return total
 
 
 def optimal_binary_prefix_code(
@@ -554,6 +571,14 @@ class PriorWeightedCodeCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the partition enumeration: the expected-optimal code, the minimum coloring entropy, and the message-count frontier are recomputed
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_prior_weighted_prefix_code(self.graph, self.prior, max_vertices=self.max_vertices, max_partitions=self.max_partitions),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         expected = float(self.expected_length)
         entropy = self.minimum_coloring_entropy_bits
         frontier_counts = tuple(

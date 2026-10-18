@@ -145,6 +145,17 @@ class RationalSimplexGrid:
                     > self.drift_per_step
                 ):
                     return False
+        # Completeness: every law within the drift radius must be a successor.
+        # A trimmed transition graph would understate the adversary.
+        for left, neighbors in enumerate(self.transitions):
+            expected = tuple(
+                right
+                for right in range(self.law_count)
+                if total_variation_distance(self.laws[left], self.laws[right])
+                <= self.drift_per_step
+            )
+            if neighbors != expected:
+                return False
         return True
 
 

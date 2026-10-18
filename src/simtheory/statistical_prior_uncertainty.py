@@ -38,6 +38,7 @@ from fractions import Fraction
 from typing import Sequence
 
 from .confusion_graphs import ConfusionGraph
+from .rebuild import matches_rebuild
 from .distributionally_robust_codes import TVRobustCodeCertificate, exact_tv_robust_prefix_code
 
 
@@ -78,6 +79,17 @@ class TVConfidenceRadiusCertificate:
             and self.rational_denominator >= 1
             and 0 <= self.radius <= 1
             and self.radius.denominator <= self.rational_denominator
+            # Recompute the outward-rounded radius: a radius below the
+            # concentration bound (for example zero) must not validate.
+            and matches_rebuild(
+                self,
+                lambda: weissman_tv_confidence_radius(
+                    self.counts,
+                    self.failure_probability,
+                    rational_denominator=self.rational_denominator,
+                    decimal_precision=self.decimal_precision,
+                ),
+            )
         )
 
 

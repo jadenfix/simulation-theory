@@ -247,6 +247,12 @@ class FiniteOutcomeChannel:
 
 @dataclass(frozen=True)
 class ChannelContractionCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     before: Fraction
     after: Fraction
     coefficient: Fraction
@@ -322,6 +328,12 @@ def channel_chain_dobrushin_product_fraction(
 
 @dataclass(frozen=True)
 class ChannelChainCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     composed_coefficient: Fraction
     product_bound: Fraction
 
@@ -377,6 +389,12 @@ def _conditional_tv_fraction(
 
 @dataclass(frozen=True)
 class QueryChannelContractionCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     before: Fraction
     after: Fraction
     querywise_bound: Fraction
@@ -452,6 +470,12 @@ def query_channel_contraction_certificate(
 
 @dataclass(frozen=True)
 class PredictiveComplexityContractionCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     before_exact_classes: int
     after_exact_classes: int
     before_packing: int

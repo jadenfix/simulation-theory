@@ -33,6 +33,7 @@ from itertools import combinations
 from math import comb
 from typing import Iterable, Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .prior_weighted_codes import RationalInput
 from .robust_prior_codes import (
@@ -137,6 +138,14 @@ class RationalPriorPolytope:
 
     @property
     def valid(self) -> bool:
+        # rebuild the transformed halfspaces and the complete vertex list (an emptied or truncated vertex list fails)
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: enumerate_prior_polytope(self.state_count, self.constraints, max_bases=self.max_bases),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if self.state_count < 1 or self.bases_examined != self.candidate_bases:
             return False
         if len(set(self.distributions)) != len(self.vertices):
@@ -279,7 +288,11 @@ class PolyhedralExpectationCertificate:
 
     @property
     def valid(self) -> bool:
-        if self.polytope.empty or len(self.values) != self.polytope.state_count:
+        if (
+            self.polytope.empty
+            or len(self.values) != self.polytope.state_count
+            or not self.polytope.valid
+        ):
             return False
         expected = tuple(
             sum((q * value for q, value in zip(vertex.distribution, self.values)), Fraction(0))
@@ -384,9 +397,15 @@ class PolyhedralRobustCodeCertificate:
             return False
         if self.enumeration.priors != self.polytope.distributions:
             return False
+        # The polytope's vertex list and the code enumeration (scenario costs,
+        # completeness) are both recomputed from their stored instances.
+        if not self.polytope.valid or not self.enumeration.valid:
+            return False
         if len(self.oracle_costs) != len(self.polytope.vertices) or not self.game.valid:
             return False
         candidates = self.enumeration.candidates
+        if self.deterministic_candidate not in candidates:
+            return False
         expected_oracles = tuple(
             min(candidate.scenario_costs[r] for candidate in candidates)
             for r in range(len(self.polytope.vertices))
