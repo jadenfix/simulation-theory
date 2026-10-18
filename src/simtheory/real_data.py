@@ -267,7 +267,29 @@ def running_chsh(trials: Sequence[BellTrial]) -> list[tuple[int, float, float]]:
     return path
 
 
-def load_delft_summary(path: str | Path = DELFT_SUMMARY_PATH) -> tuple[dict[str, Any], list[BellTrial]]:
+# Receipts pinned in code. A digest stored only inside the data file it
+# authenticates is self-referential: an edited file can carry an edited digest
+# and edited "published" values. The values below are fixed independently of
+# the data file: the SHA-256 of the committed valid-trial list (reproduced from
+# the 4TU archive by ``real_data_fetch``) and the statistic published by
+# Hensen et al., Nature 526, 682-686 (2015): S = 2.42 +- 0.20, p = 0.039.
+DELFT_TRIALS_SHA256 = "ca9dd1475a652340487c10e9402073bac7ea994846888f875b7e5af5d55bda5f"
+DELFT_PUBLISHED_VALUES = {"trials": 245, "S": 2.42, "S_error": 0.20, "p_value": 0.039}
+TSIRELSON_BOUND = 2.0 * sqrt(2.0)
+
+
+def load_delft_summary(
+    path: str | Path = DELFT_SUMMARY_PATH,
+    *,
+    pinned: bool = True,
+) -> tuple[dict[str, Any], list[BellTrial]]:
+    """Load the committed valid-trial summary.
+
+    With ``pinned=True`` (the default) the trial digest must equal the code
+    constant ``DELFT_TRIALS_SHA256``, so an edited file is rejected even if it
+    carries a matching self-reported digest.
+    """
+
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     if payload.get("schema") != "simulation-theory.real-data.bell-trials/v1":
         raise ValueError("unsupported Bell-trial summary schema")
@@ -277,6 +299,8 @@ def load_delft_summary(path: str | Path = DELFT_SUMMARY_PATH) -> tuple[dict[str,
     digest = trial_digest(trials)
     if digest != payload["trials_sha256"]:
         raise ValueError("Bell-trial summary digest mismatch")
+    if pinned and digest != DELFT_TRIALS_SHA256:
+        raise ValueError("Bell-trial digest differs from the digest pinned in code")
     return payload, trials
 
 
@@ -321,12 +345,34 @@ def beacon_bits(pulses: Sequence[Mapping[str, Any]]) -> list[int]:
     return bits
 
 
-def load_beacon_summary(path: str | Path = BEACON_SUMMARY_PATH) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+# SHA-512 of the committed pulse list (canonical JSON, sorted keys). The hash
+# chain only shows internal consistency: a fabricated chain is also consistent.
+# Pinning the list ties the offline receipt to the pulses downloaded from NIST
+# (re-checked by ``real_data_fetch beacon`` with ``--online``). NIST's RSA
+# signatures are not verified, so this is consistency, not authenticity.
+BEACON_PULSES_SHA512 = (
+    "1f0503aad30d68571b209b8e8cbf8b709132910a75a7b51ceadc2bb3bcc6a7cc"
+    "2f85bb6927017724220665033fad13d64380724eca8ff8fc911df32c9c87ba2e"
+)
+
+
+def beacon_pulses_digest(pulses: Sequence[Mapping[str, Any]]) -> str:
+    text = json.dumps(list(pulses), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha512(text.encode("utf-8")).hexdigest()
+
+
+def load_beacon_summary(
+    path: str | Path = BEACON_SUMMARY_PATH,
+    *,
+    pinned: bool = True,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     if payload.get("schema") != "simulation-theory.real-data.nist-beacon/v1":
         raise ValueError("unsupported beacon summary schema")
     pulses = payload["pulses"]
     verify_beacon_precommitments(pulses)
+    if pinned and beacon_pulses_digest(pulses) != BEACON_PULSES_SHA512:
+        raise ValueError("beacon pulse list differs from the digest pinned in code")
     return payload, pulses
 
 

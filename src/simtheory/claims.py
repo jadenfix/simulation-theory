@@ -99,6 +99,10 @@ def validate_local_evidence_paths(
             elif ":" in path_text:
                 path_text, _ = path_text.split(":", 1)
             path = root / path_text
+            # Evidence must live inside the repository: absolute paths and
+            # ``..`` segments that escape the root are rejected.
+            if not path.resolve().is_relative_to(root.resolve()):
+                raise ValueError(f"evidence path escapes the repository for {claim['id']}: {path_text}")
             if not path.is_file():
                 raise ValueError(f"missing evidence file for {claim['id']}: {path_text}")
             if anchor is not None:
