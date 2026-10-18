@@ -122,6 +122,7 @@
         "tests/test_convex_sparsification.py"
       ],
       "nonclaims": [
+        "(standard: Caratheodory's theorem, 1907) not claimed as new; only its application to shared codebook and least-favorable prior mixtures is claimed",
         "support size does not equal the Shannon entropy or exact random-bit cost of the shared seed",
         "the bounds preserve barycenters and payoffs but need not preserve the original finite-game basic support"
       ]

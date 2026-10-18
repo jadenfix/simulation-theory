@@ -544,6 +544,26 @@ showing why lower and upper bounds should be developed together.
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Binary symplectic representation, normalizer quotient and code distance
+  (ST-T26): D. Gottesman, *Stabilizer Codes and Quantum Error Correction*, PhD
+  thesis, Caltech (1997), arXiv:quant-ph/9705052; A. R. Calderbank, E. M. Rains,
+  P. W. Shor and N. J. A. Sloane, Quantum error correction via codes over
+  GF(4), IEEE Trans. Inf. Theory 44 (1998) 1369-1387.
+- Local indistinguishability below the distance (ST-T27) and the quantum
+  Singleton bound `n - k >= 2(d - 1)` (ST-T28): E. Knill and R. Laflamme,
+  Theory of quantum error-correcting codes, Phys. Rev. A 55 (1997) 900-911. The
+  two-erasure proof in section 6 is the textbook argument.
+- The five-qubit perfect code: R. Laflamme, C. Miquel, J. P. Paz and W. H.
+  Zurek, Phys. Rev. Lett. 77 (1996) 198; C. H. Bennett, D. P. DiVincenzo,
+  J. A. Smolin and W. K. Wootters, Phys. Rev. A 54 (1996) 3824.
+
+What this note adds is the reading of these facts as predictive-law locality
+for an on-demand renderer, and exact finite certificates.
+
 ## Nonclaims
 
 - Quantum code distance is not evidence for simulation.

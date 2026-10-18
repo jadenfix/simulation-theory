@@ -606,6 +606,20 @@ There is no architecture-free statement that â€œthe universe needs m bits here.â
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- The deterministic zero-error bound (ST-T30) is an elementary injectivity
+  argument for one-way INDEX; the randomized `Omega(m)` bound for one-way
+  INDEX is I. Kremer, N. Nisan and D. Ron, On randomized one-round
+  communication complexity, Computational Complexity 8 (1999) 21-49. See also
+  E. Kushilevitz and N. Nisan, *Communication Complexity*, Cambridge (1997).
+- The bounded-error bound `m (1 - H_2(eps))` (ST-T31) is the coordinatewise
+  Fano bound for random-access codes; A. Nayak (FOCS 1999,
+  arXiv:quant-ph/9904093) proves it even for quantum messages.
+- Indexed parity reconciliation (ST-T35) is a reduction to one-way INDEX.
+
 ## Nonclaims
 
 - The one-way INDEX model is not asserted to describe the actual universe.

@@ -16,6 +16,7 @@
         "tests/test_stabilizer_codes.py"
       ],
       "nonclaims": [
+        "(standard: the binary symplectic representation of stabilizer codes and the distance as the minimum weight of N(S) minus S, Gottesman 1997, arXiv:quant-ph/9705052; Calderbank-Rains-Shor-Sloane 1998) not claimed as new; only the exact finite certificate in this repository is claimed",
         "binary normalizer dimension is not a parent-substrate storage cost",
         "distance depends on the declared physical Pauli weight"
       ]
@@ -35,6 +36,7 @@
         "tests/test_stabilizer_codes.py"
       ],
       "nonclaims": [
+        "(standard: a consequence of the Knill-Laflamme error-correction conditions, Knill-Laflamme 1997: every Pauli E of weight below d satisfies P E P = c_E P for the code projector P, so fewer than d qubits carry no logical information) not claimed as new; only the restatement as one-shot local predictive indistinguishability is claimed",
         "an adaptive protocol aggregating multiple local measurements may implement a higher-weight logical observable",
         "does not imply the logical state is expensive to represent in an unknown parent substrate"
       ]
@@ -54,6 +56,7 @@
         "tests/test_stabilizer_codes.py"
       ],
       "nonclaims": [
+        "(standard: the quantum Singleton bound n - k >= 2(d - 1), Knill-Laflamme 1997, with the textbook two-erasure argument) not claimed as new",
         "the bound constrains internal quantum-code parameters rather than unknown parent physics",
         "satisfying the numerical inequality alone does not prove that supplied generators define a valid code"
       ]

@@ -8,7 +8,7 @@
       "scope": "N independent categorical latent-model draws over k observed labels",
       "assumptions": ["latent labels are observed", "draws are iid from one stationary categorical law", "k is the number of categories fixed in advance (zero-count categories included) and the support of the law lies within them", "N is fixed before sampling"],
       "evidence": ["docs/independent-latent-prior-confidence.md#exact-second-moment-bound", "src/simtheory/independent_latent_prior_confidence.py:independent_latent_tv_confidence_radius", "tests/test_independent_latent_prior_confidence.py"],
-      "nonclaims": ["lower-level repeated observations within one persistent latent unit are not counted as independent latent draws"]
+      "nonclaims": ["(standard: Cauchy-Schwarz plus the multinomial variance sum_i p_i(1 - p_i)/N <= (1 - 1/k)/N) not claimed as new", "lower-level repeated observations within one persistent latent unit are not counted as independent latent draws"]
     },
     {
       "id": "ST-T230",

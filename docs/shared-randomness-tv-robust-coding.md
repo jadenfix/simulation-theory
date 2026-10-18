@@ -877,3 +877,12 @@ The next exact extensions should:
 the adversary geometry;
 4. quantify exact seed entropy and finite random-bit generation;
 5. move from zero-error graphs to allowed-error loss structures.
+
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Support compression (ST-T109): C. Caratheodory, Math. Ann. 64 (1907)
+  95-115.
+- Game values and least-favorable priors: J. von Neumann, Math. Ann. 100
+  (1928) 295-320; A. Wald, *Statistical Decision Functions* (1950).

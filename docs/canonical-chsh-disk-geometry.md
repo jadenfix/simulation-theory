@@ -123,3 +123,14 @@ The important point is dimensional: the one-parameter visibility family had pack
 ## Scope
 
 This theorem concerns predictive states needed to approximate this bounded observable family under the canonical CHSH schedule. It does not imply that a parent simulator uses classical bits, and it does not establish a lower bound for arbitrary quantum field theories or the universe as a whole.
+
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- The canonical schedule is the CHSH schedule (J. F. Clauser, M. A. Horne,
+  A. Shimony and R. A. Holt, Phys. Rev. Lett. 23 (1969) 880), whose quantum
+  optimum is B. S. Tsirelson's bound (Lett. Math. Phys. 4 (1980) 93-100).
+- The norm identity (ST-T12) and the grid packing (ST-T13) are elementary
+  computations on that schedule. We did not search exhaustively for earlier
+  statements in this predictive-TV form, and no priority is claimed.

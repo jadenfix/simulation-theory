@@ -15,6 +15,7 @@
         "tests/test_inference.py"
       ],
       "nonclaims": [
+        "(elementary: equal observable laws give every test the same acceptance probability and give Bayes factor 1) not claimed as new; only its statement for a simulator class containing an observationally identical member is recorded",
         "does not show that simulations exist",
         "does not make restricted simulator architectures untestable"
       ]
@@ -33,6 +34,7 @@
         "tests/test_inference.py"
       ],
       "nonclaims": [
+        "(elementary: Bayes' rule in log-odds form with a bounded likelihood ratio) not claimed as new; only its reading as an evidence ceiling for near-equivalent simulator laws is recorded",
         "does not supply or verify the physical likelihood model"
       ]
     },
@@ -104,6 +106,7 @@
         "tests/test_minimax.py"
       ],
       "nonclaims": [
+        "(standard: Fano's inequality, R. M. Fano, Transmission of Information, 1961, in the usual mutual-information form of Fano's method) not claimed as new; only the specialization to identifying one of M declared simulator architectures is claimed",
         "does not define the correct architecture family or prior"
       ]
     },
@@ -139,6 +142,7 @@
         "tests/test_sequential.py"
       ],
       "nonclaims": [
+        "(standard: the likelihood-ratio martingale of Wald's sequential probability ratio test, Wald 1945, with Ville's maximal inequality, Ville 1939; the supermartingale property under a one-sided composite Bernoulli null is a routine check) not claimed as new; only the specialization to a declared restricted-signature Bernoulli test is recorded",
         "an anomaly indicator is not generic evidence for simulation",
         "the repository does not verify IID sampling for external data"
       ]
@@ -177,6 +181,7 @@
         "tests/test_bell_predictive.py"
       ],
       "nonclaims": [
+        "(standard: the KL chain rule for adaptively chosen experiments and Pinsker's inequality, Pinsker 1964) not claimed as new; only the specialization to adaptively chosen Werner Bell setting pairs is claimed",
         "the returned trial count is necessary rather than sufficient",
         "does not establish a universal quantum query lower bound"
       ]

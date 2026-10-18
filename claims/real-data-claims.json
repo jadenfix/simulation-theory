@@ -72,7 +72,7 @@
     },
     {
       "id": "ST-T271",
-      "title": "Composite Bayes-factor detection rate for a biased Bernoulli simulator",
+      "title": "(standard) Composite Bayes-factor detection rate: expectation of the Krichevsky-Trofimov regret bound",
       "kind": "THEOREM",
       "scope": "IID bits, a fair base law, and a restricted simulation hypothesis with unknown bias under a Beta(1/2,1/2) prior",
       "assumptions": [
@@ -86,6 +86,7 @@
         "tests/test_real_data.py"
       ],
       "nonclaims": [
+        "the pathwise regret bound is Krichevsky-Trofimov 1981 (see also Willems-Shtarkov-Tjalkens 1995); not claimed as new; only taking its expectation under a biased Bernoulli source is recorded here, and a self-contained proof is in ST-T272",
         "the bound E[log BF_n] >= n KL(q || 1/2) - (1/2) ln n - ln 2 says nothing about simulators that reproduce the fair law exactly",
         "the theorem does not cover dependent, adaptive, or adversarially chosen bit sources"
       ]

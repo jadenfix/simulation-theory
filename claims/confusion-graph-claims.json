@@ -18,6 +18,7 @@
         "tests/test_confusion_graphs.py"
       ],
       "nonclaims": [
+        "(standard: zero-error coding with side information as coloring of the confusion graph, Witsenhausen 1976, IEEE Trans. Inf. Theory 22) not claimed as new; only the specialization to predictive demands is claimed",
         "the theorem does not cover interaction, allowed error, quantum messages, or asymptotic block coding",
         "graph colors are message labels rather than physical states of an unknown parent substrate"
       ]
@@ -37,6 +38,7 @@
         "tests/test_confusion_graphs.py"
       ],
       "nonclaims": [
+        "(standard: the one-shot zero-error message alphabet equals the chromatic number of the confusion graph, Witsenhausen 1976) not claimed as new",
         "chromatic number is not asserted to equal an expected variable-length rate under a source prior",
         "one-shot fixed-length cost is not an asymptotic graph-entropy theorem"
       ]
@@ -56,6 +58,7 @@
         "tests/test_confusion_graphs.py"
       ],
       "nonclaims": [
+        "(standard graph theory: chromatic number is at least the clique number and at least |V| divided by the independence number) not claimed as new",
         "either lower bound can be loose for a selected graph",
         "the bounded exact clique and independent-set algorithms are not claimed efficient on arbitrary large graphs"
       ]

@@ -762,6 +762,21 @@ This lane therefore narrows claims rather than broadening them. It identifies
 exactly which compression follows from a declared prior and framing model, and
 which stronger physical or network conclusion does not follow.
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Optimal prefix codes for one partition (ST-T85): D. A. Huffman, Proc. IRE 40
+  (1952) 1098-1101, with the Kraft-McMillan inequality (L. G. Kraft, MIT
+  thesis, 1949; B. McMillan, IRE Trans. Inf. Theory 2 (1956) 115-116).
+- Chromatic entropy and its one-bit sandwich (ST-T87): N. Alon and A. Orlitsky,
+  Source coding and graph entropies, IEEE Trans. Inf. Theory 42 (1996)
+  1329-1339. Coloring as zero-error side-information coding: H. S.
+  Witsenhausen, IEEE Trans. Inf. Theory 22 (1976) 592-593.
+
+What this note adds is exact bounded optimization over proper partitions and
+the bookkeeping for zero-mass declared classes.
+
 ## Nonclaims
 
 This work does not establish:

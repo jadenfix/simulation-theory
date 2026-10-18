@@ -676,6 +676,19 @@ mathematical claim.
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- The total-variation contraction coefficient and its submultiplicativity
+  under composition (ST-T58, ST-T60): R. L. Dobrushin, Central limit theorem
+  for nonstationary Markov chains I, II, Theory Probab. Appl. 1 (1956) 65-80,
+  329-383. The binary symmetric and erasure coefficients (ST-M14) are standard
+  examples.
+- Contraction coefficients for KL divergence differ from the TV coefficient in
+  general (R. Ahlswede and P. Gacs, Ann. Probab. 4 (1976) 925-939); this note
+  only uses TV.
+
 ## Nonclaims
 
 - A channel model is not evidence that reality is simulated.

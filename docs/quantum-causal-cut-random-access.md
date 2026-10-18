@@ -583,6 +583,29 @@ For an internal on-demand renderer, this means:
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Accessible information: A. S. Holevo, Probl. Peredachi Inf. 9 (1973) 3-11.
+- Unassisted random-access bound `m (1 - H_2(eps)) <= q` (ST-T36) and its
+  inversion (ST-T39, unassisted case): A. Nayak, Optimal lower bounds for
+  quantum automata and random access codes, FOCS 1999, arXiv:quant-ph/9904093,
+  building on A. Ambainis, A. Nayak, A. Ta-Shma and U. Vazirani, Dense quantum
+  coding and quantum finite automata, J. ACM 49 (2002) 496-511,
+  arXiv:quant-ph/9804043.
+- Entanglement-assisted factor two (ST-T37, and ST-T39 assisted case):
+  A. Nayak and J. Salzman, Limits on the ability of quantum states to convey
+  classical messages, J. ACM 53 (2006) 184-206.
+- Exact dense coding (ST-T38): C. H. Bennett and S. J. Wiesner, Phys. Rev.
+  Lett. 69 (1992) 2881.
+- The two-to-one and three-to-one qubit codes are the standard examples
+  (Ambainis, Nayak, Ta-Shma and Vazirani 2002; the three-to-one code is usually
+  credited to I. Chuang).
+
+What this note adds is the causal-cut reading for a post-message query
+interface and the weighted-query optimization (ST-T40) layered on these bounds.
+
 ## Nonclaims
 
 - The proof assumes ordinary finite-dimensional quantum entropy and data

@@ -102,9 +102,14 @@ exactly, then `P_sim = P_base` and every Bayes factor between them is 1
 (ST-T01); `log BF_n` against a composite alternative drifts down only like
 `-(1/2) ln n`.
 
-**Detection rate.** The KT regret bound
+**Detection rate (standard).** The KT regret bound
 `log P_KT(x^n) >= max_q log q^n(x^n) - (1/2) ln n - ln 2` holds for every
-sequence. Taking expectations under the true q,
+sequence. It is classical: Krichevsky and Trofimov, IEEE Trans. Inf. Theory 27
+(1981) 199-207; see also Willems, Shtarkov and Tjalkens, IEEE Trans. Inf.
+Theory 41 (1995) 653-664. A self-contained proof is the upper half of ST-T272
+([evidence-scaling-dichotomy](evidence-scaling-dichotomy.md#theorem-st-t272-pathwise-sandwich)).
+ST-T271 is only its expectation and is not claimed as new. Taking expectations
+under the true q,
 
 ```text
 E_q[log BF_n] >= n KL(q || 1/2) - (1/2) ln n - ln 2.
@@ -117,7 +122,10 @@ expectation bound exactly up to n = 16.
 **Coarsened observation.** If the observer sees each bit through a binary
 symmetric channel with flip probability f, the bias about 1/2 contracts by
 exactly `1 - 2f`, the channel's Dobrushin coefficient (ST-M14), and the rate
-becomes `KL(f + (1 - 2f) q || 1/2)`, which is smaller. Lossy observation slows
+becomes `KL(f + (1 - 2f) q || 1/2)`, which is smaller (ST-M83). The rate itself
+is not multiplied by `1 - 2f`: near q = 1/2 it is about
+`(1 - 2f)^2 KL(q || 1/2)`. The detection frontier widens by `1/(1 - 2f)`
+(ST-M84). Lossy observation slows
 detection; it cannot create it.
 
 **Real-bit check.** On the 131072 beacon bits, `log BF_n` stays between -6.1

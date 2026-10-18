@@ -38,9 +38,12 @@ all, an observer could tell it apart. For example:
 
 - **Evidence grows at a KL rate.** A simulated bit source with bias q is
   separated from fair bits at expected log Bayes factor at least
-  `n KL(q || 1/2) - (1/2) ln n - ln 2` (ST-T271). If its output is viewed through
-  a noisy channel, the rate shrinks by the channel's contraction coefficient
-  (ST-M14, ST-M83).
+  `n KL(q || 1/2) - (1/2) ln n - ln 2` (ST-T271, the expectation of the
+  classical Krichevsky-Trofimov regret bound). If its output is viewed through
+  a binary symmetric channel with flip probability f, the bias shrinks by the
+  channel's Dobrushin coefficient 1 - 2f, so the rate drops to
+  `KL(f + (1-2f) q || 1/2)` and the detection frontier widens by 1/(1-2f)
+  (ST-M14, ST-M83, ST-M84).
 - **Evidence has a ceiling.** If the likelihood ratio is confined to
   `[e^-eps, e^eps]`, the posterior log odds move by at most `eps` (ST-T02).
 - **A local classical simulator cannot reproduce Bell correlations.** On the
@@ -50,8 +53,10 @@ all, an observer could tell it apart. For example:
   loophole-free Bell test recompute to `S = 2.42 +- 0.20`, `p = 0.039`, a point
   right of that chord (ST-F50, ST-F51). Read anytime-validly, the same 245
   trials are weak evidence: no mixture of constant bets on the CHSH win
-  indicator reaches the 5% threshold at any prefix, so they constrain no
-  signalling or setting-dependence escape route (ST-F56, a negative result).
+  indicator reaches the 5% threshold at any prefix, so the anytime-valid
+  confidence sets for the signalling and setting-dependence budgets built from
+  that class are the full ranges; other e-processes are not covered (ST-F56, a
+  negative result).
 - **Rendering on demand is not a signature by itself.** Lazy generation that
   samples each answer from the exact conditional law has the same transcript
   law as a pre-generated world
@@ -74,8 +79,14 @@ claims in 60 manifests:
 | Open problem (`ST-O`) | 8 | a research target, not a conclusion |
 
 Theorems that restate or specialize known results (for example the
-data-processing inequality, the Clarke-Barron constant, Knuth-Yao sampling, or
-the Le Cam randomization criterion) say so in their title or nonclaims.
+data-processing inequality, the Clarke-Barron constant, Knuth-Yao sampling, the
+Le Cam randomization criterion, Fano, Dobrushin, Blackwell, Witsenhausen,
+Knill-Laflamme or Nayak) are meant to say so in their title or nonclaims, with
+citations in the derivation doc. The attribution sweep
+covered the mixture-conditioning lanes, the lanes added with the evidence-scaling
+results, and the classical results a recheck found in the older lanes. An older
+lane may still contain an unmarked standard result; that is a ledger bug, not a
+novelty claim.
 
 A passing test validates code and a bounded receipt. It never promotes a finite
 check into a universal theorem.

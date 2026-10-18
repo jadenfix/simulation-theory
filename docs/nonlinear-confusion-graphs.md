@@ -799,6 +799,20 @@ simulator. Both must obey the same finite internal communication constraints.
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Zero-error coding with decoder side information as coloring of the
+  confusion graph, and the one-shot alphabet as the chromatic number (ST-T77,
+  ST-T78): H. S. Witsenhausen, The zero-error side information problem and
+  chromatic numbers, IEEE Trans. Inf. Theory 22 (1976) 592-593.
+- Clique and independence-number lower bounds on the chromatic number (ST-T79)
+  are standard graph theory.
+- Related asymptotic theory, not used here: graph entropy (J. Korner, 1973) and
+  functional compression with side information (A. Orlitsky and J. R. Roche,
+  Coding for computing, IEEE Trans. Inf. Theory 47 (2001) 903-917).
+
 ## Nonclaims
 
 - The result is one-shot, deterministic, common-message, finite, and zero-error.
