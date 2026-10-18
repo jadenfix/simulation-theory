@@ -114,7 +114,7 @@ A paper should cite a frozen mainline/paper commit, not a moving stacked PR. Ear
 
 ## Publication candidates
 
-### P1 — strongest overall
+### P1: strongest overall
 
 **Identifiability Before Anthropic Bayes: Representation Invariance, Persistent Latents, and Observable Equivalence in Simulation Arguments**
 
@@ -129,7 +129,7 @@ This is the best paper direction. The contribution would be the integrated frame
 
 **Assessment:** paper-worthy for philosophy of science / foundations if positioned against the simulation-argument, reference-class, anthropic-measure, and branching-indifference literatures.
 
-### P2 — technical note, novelty not yet established
+### P2: technical note, novelty not yet established
 
 **Inverse Total-Variation Conditioning for Finite Mixture Channels**
 
@@ -137,7 +137,7 @@ Potential contribution: exact rational global modulus, mixture-channel inverse i
 
 **Assessment:** mathematically coherent, but facial-distance/minimum-gain prior work is close. Needs theorem-by-theorem literature comparison before calling it novel.
 
-### P3 — short decision-theory note
+### P3: short decision-theory note
 
 **When Better Experiments Increase Minimax Regret**
 
@@ -145,7 +145,7 @@ The moving-oracle K4 construction cleanly shows that a richer experiment menu ca
 
 **Assessment:** elegant and teachable; likely a short note unless generalized substantially.
 
-### P4 — robust coding/control synthesis
+### P4: robust coding/control synthesis
 
 The fixed-model/nonrectangular, partial-observation, public-randomness, drift-coupling, and regret layers form a coherent exact finite laboratory.
 
