@@ -276,7 +276,7 @@ Pinsker then gives
 \boxed{
 \operatorname{TV}(P_x,P_u)
 \le
-\sqrt{rac12
+\sqrt{\frac12
 D_{\mathrm{KL}}(P_x\|P_u)}.
 }
 \]

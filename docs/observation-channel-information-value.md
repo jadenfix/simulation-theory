@@ -542,7 +542,7 @@ The source information value beyond public randomization is
 \boxed{
 \Delta_{\rm info}
 =
-\frac53-rac{31}{20}
+\frac53-\frac{31}{20}
 =
 \frac7{60}.
 }
@@ -609,7 +609,7 @@ At sensing cost
 the total is
 
 \[
-\frac{31}{20}+rac1{10}
+\frac{31}{20}+\frac1{10}
 =
 \boxed{\frac{33}{20}}
 <

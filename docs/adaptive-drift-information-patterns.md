@@ -572,7 +572,7 @@ V_{\rm open}^{\rm continuous}.
 }
 \]
 
-The grid result is thus a lower bound on the continuous adversarial value—not a
+The grid result is thus a lower bound on the continuous adversarial value, not a
 conservative upper bound.
 
 For the uniform `K3`, `D=6`, `eta=1/6`, `T=2` example, the exact grid open-loop
