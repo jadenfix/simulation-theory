@@ -1,0 +1,32 @@
+Le Cam deficiency of a visibility-contracted Bell simulator: exact receipt
+TV = half L1; setting-preserving kernels unless stated; v in [0,1]; lam on grid k/8
+[T2a] every deterministic setting-wise relabeling is dominated by one of {A,B,D} on all (C,lam) in [0,1]^2: 256 maps, 786 arrangement vertices checked exactly (piecewise-linear certificate)
+--- schedule: canonical CHSH |c|=1/sqrt2, uniform
+lam=   0  delta=0.176777  s=0.353553  identity=0.353553  naive=0.176777  det_max=0.250000  det_avg=0.250000  hull=0.250000
+lam= 1/8  delta=0.161832  s=0.323663  identity=0.309359  naive=0.154680  det_max=0.250000  det_avg=0.248267  hull=0.233333
+lam= 1/4  delta=0.145438  s=0.290875  identity=0.265165  naive=0.132583  det_max=0.250000  det_avg=0.220646  hull=0.214286
+lam= 3/8  delta=0.127373  s=0.254746  identity=0.220971  naive=0.110485  det_max=0.220971  det_avg=0.193024  hull=0.192308
+lam= 1/2  delta=0.107369  s=0.214737  identity=0.176777  naive=0.088388  det_max=0.176777  det_avg=0.169194  hull=0.166667
+lam= 5/8  delta=0.085095  s=0.170189  identity=0.132583  naive=0.066291  det_max=0.132583  det_avg=0.132583  hull=0.132583
+lam= 3/4  delta=0.060142  s=0.120283  identity=0.088388  naive=0.044194  det_max=0.088388  det_avg=0.088388  hull=0.088388
+lam= 7/8  delta=0.031995  s=0.063990  identity=0.044194  naive=0.022097  det_max=0.044194  det_avg=0.044194  hull=0.044194
+lam=   1  delta=0.000000  s=0.000000  identity=0.000000  naive=0.000000  det_max=0.000000  det_avg=0.000000  hull=0.000000
+    primal (mixing kernel) == dual (two-point test) == formula, exactly, on every grid lam;
+    the dual over ALL kernels on the joint (setting, outcome) record also equals the formula (avg aggregation)
+--- schedule: rational |c|=3/5, weights 1/2,1/4,1/8,1/8
+lam=   0  delta=0.150000  s=0.300000  identity=0.300000  naive=0.150000  det_max=0.250000  det_avg=0.250000  hull=0.250000
+lam= 1/8  delta=0.136364  s=0.272727  identity=0.262500  naive=0.131250  det_max=0.250000  det_avg=0.235156  hull=0.233333
+lam= 1/4  delta=0.121622  s=0.243243  identity=0.225000  naive=0.112500  det_max=0.225000  det_avg=0.215625  hull=0.214286
+lam= 3/8  delta=0.105634  s=0.211268  identity=0.187500  naive=0.093750  det_max=0.187500  det_avg=0.187500  hull=0.187500
+lam= 1/2  delta=0.088235  s=0.176471  identity=0.150000  naive=0.075000  det_max=0.150000  det_avg=0.150000  hull=0.150000
+lam= 5/8  delta=0.069231  s=0.138462  identity=0.112500  naive=0.056250  det_max=0.112500  det_avg=0.112500  hull=0.112500
+lam= 3/4  delta=0.048387  s=0.096774  identity=0.075000  naive=0.037500  det_max=0.075000  det_avg=0.075000  hull=0.075000
+lam= 7/8  delta=0.025424  s=0.050847  identity=0.037500  naive=0.018750  det_max=0.037500  det_avg=0.037500  hull=0.037500
+lam=   1  delta=0.000000  s=0.000000  identity=0.000000  naive=0.000000  det_max=0.000000  det_avg=0.000000  hull=0.000000
+    primal (mixing kernel) == dual (two-point test) == formula, exactly, on every grid lam;
+    the dual over ALL kernels on the joint (setting, outcome) record also equals the formula (avg aggregation)
+canonical lam=1/2: delta = (1/62 + 2/31*sqrt2) = 0.107369 = (1-lam)/(2(2 sqrt2 - lam)) -> 0.107369
+delta(E,F) = 0: depolarizing kernel lam*Id + (1-lam)*Unif maps P_v to P_{lam v} exactly
+joint deterministic map that relabels settings (rational schedule, lam=1/4): errors (1/8, 23/160), value 23/160 < setting-preserving hull 3/14; still > delta = 9/74
+Corollary 1a (unequal magnitudes, worst setting): c=(1/2,-1/10,3/5), every grid lam: max_i errors of the mixing kernels == dual at C_max == V(3/5)
+ALL CHECKS PASSED  sha256(receipt body)=bd9063d954c4526b4b2fa88215db59a5527551747b60e9ca765cf1e5c14164de
