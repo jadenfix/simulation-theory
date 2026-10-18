@@ -1,779 +1,196 @@
 # simulation-theory
 
-A first-principles mathematical and computational investigation of simulation
-hypotheses.
+What can an observer inside a world actually learn about whether that world is
+simulated? This repository answers that question with proofs, exact
+computations, and machine-checked claim manifests, and it says exactly where
+the answer stops.
 
-This repository does **not** assume that reality is simulated. It asks a more
-scientifically useful question:
+It does not assume that reality is simulated, and nothing in it is evidence
+that it is or is not.
 
-> What can be inferred, proved, tested, or ruled out once the observation
-> interface, observer measure, source law, causal architecture, approximation
-> metric, communication resources, and physical implementation assumptions are
-> all stated explicitly?
+## The core result
 
-## Core boundary
-
-A generic claim that “some external process generates our observations” is not
-internally identifiable when that process is allowed to reproduce exactly the
-same observable probability law as an ordinary physical model.
-
-If
-
-\[
-P_{\mathrm{sim}}=P_{\mathrm{base}},
-\]
-
-then every internal statistic has the same law under both models and
-
-\[
-BF_{\mathrm{sim}:\mathrm{base}}=1.
-\]
-
-No classifier, Bayesian update, larger AI model, or additional computation can
-recover information absent from the observable distribution.
-
-The productive research program is therefore:
-
-1. define a **restricted** hypothesis;
-2. derive its observable law;
-3. establish identifiability before estimation;
-4. define the future-query and intervention interface;
-5. separate converse bounds from constructive protocols;
-6. build exact or independently replayable certificates;
-7. preserve every assumption and nonclaim next to the result.
-
-## Research discipline
-
-Every claim is typed as one of:
-
-- **Theorem** — follows from stated mathematical assumptions.
-- **Model result** — exact inside one declared model or finite example.
-- **Finite check** — reproducible computation on an explicitly bounded domain.
-- **Open problem** — a research target, not an established conclusion.
-
-Machine-readable manifests under [`claims/`](claims/) record stable IDs, scope,
-assumptions, evidence paths, and nonclaims. A passing test or CI run validates
-code and bounded receipts; it does not promote a finite check into a universal
-theorem.
-
-## First-principles dependency chain
-
-The central technical program can be read as a sequence:
-
-\[
-\text{allowed observations and future queries}
-\]
-
-\[
-\Downarrow
-\]
-
-\[
-\text{observable laws and predictive equivalence}
-\]
-
-\[
-\Downarrow
-\]
-
-\[
-\text{exact classes, approximate packings, covers, or confusion graphs}
-\]
-
-\[
-\Downarrow
-\]
-
-\[
-\text{state, message, or center index requirements}
-\]
-
-\[
-\Downarrow
-\]
-
-\[
-\text{causal-cut, network, source-coding, and robustness constraints}.
-\]
-
-Changing any interface can change every downstream result. Raw hidden-state
-count, Hilbert-space dimension, or internal mass is never used as a substitute
-for the declared observable problem.
-
-# Result map
-
-## 1. Identification, evidence ceilings, and model uncertainty
-
-The statistical foundations include:
-
-- unrestricted observational indistinguishability;
-- Bayes-factor equality for identical laws;
-- posterior movement bounds from bounded likelihood ratios;
-- equal-prior optimal classification
-
-  \[
-  A^\star=\frac{1+\operatorname{TV}(P,Q)}2;
-  \]
-
-- Le Cam two-point lower bounds;
-- Fano multi-model identification bounds;
-- finite sample-size necessities for restricted architecture families;
-- hierarchical feasibility mixtures;
-- robust posterior intervals;
-- anytime-valid likelihood-ratio e-processes for specified signatures;
-- exact finite-horizon optional-stopping audits.
-
-The governing rule is: **identification comes before estimation**.
-
-## 2. Observer measure and anthropic sensitivity
-
-Observer counting is decomposed instead of hidden inside one dramatic number.
-The model keeps separate:
-
-- civilization survival and technical feasibility;
-- deployment policy;
-- number of simulated environments;
-- observers versus observer-moments;
-- consciousness assumptions;
-- compatibility with the observer's complete evidence;
-- duration and duplication conventions.
-
-For uncertain simulated measure \(X\),
-
-\[
-E\!\left[\frac{X}{B+X}\right]
-\le
-\frac{E[X]}{B+E[X]},
-\]
-
-so inserting an expected count into a nonlinear ratio can overstate the
-properly averaged result. Finite SSA-, SIA-, and FNC-style conditioning rules
-are implemented as sensitivity models rather than silently collapsed into a
-single universal prior.
-
-## 3. Adaptive rendering and predictive state
-
-Exact lazy generation is transcript-equivalent to pre-generating a hidden world
-when each answer is sampled from the exact target conditional:
-
-\[
-P(A_{1:T}\mid Q_{1:T})
-=
-\prod_{t=1}^TP(A_t\mid H_t,Q_t).
-\]
-
-Approximate renderers have adaptive transcript bounds from per-step total
-variation and conditional KL.
-
-Predictive equivalence is defined by the allowed future interface:
-
-\[
-h\sim h'
-\iff
-P(\text{all allowed futures}\mid h)
-=
-P(\text{all allowed futures}\mid h').
-\]
-
-If there are \(K\) exact future-law classes, an exact finite renderer needs
-exactly \(K\) predictive states and at least
-
-\[
-\lceil\log_2K\rceil
-\]
-
-fixed-length bits.
-
-For approximation, strict \(2\epsilon\)-packings provide converse lower bounds,
-while target-centered and arbitrary-center covers provide constructive upper
-bounds. The gap is kept explicit unless an exact geometry closes it.
-
-## 4. Stochastic future laws, arbitrary centers, and observation channels
-
-Finite stochastic query families assign a full conditional outcome law to each
-record-query pair. Under an exogenous query schedule, joint TV and KL are the
-query-weighted sums of their conditional counterparts.
-
-For one query with exactly three outcomes,
-
-\[
-\operatorname{TV}(p,u)=\max_j|p_j-u_j|.
-\]
-
-This yields exact common-center feasibility, a closed one-state minimax radius,
-and exact unrestricted arbitrary-center covering by finite subset enumeration
-plus minimum set cover. For the three simplex vertices, the exact state count is:
-
-- three for \(\epsilon<1/2\);
-- two for \(1/2\le\epsilon<2/3\);
-- one uniform state for \(\epsilon\ge2/3\).
-
-The max-coordinate identity is special to three outcomes and is not generalized
-by analogy.
-
-For a shared record-independent outcome channel \(K\), the exact Dobrushin
-coefficient is
-
-\[
-\delta(K)
-=
-\max_{a,b}
-\operatorname{TV}
-\bigl(K(\cdot\mid a),K(\cdot\mid b)\bigr),
-\]
-
-and
-
-\[
-\operatorname{TV}(\mu K,\nu K)
-\le
-\delta(K)\operatorname{TV}(\mu,
-u).
-\]
-
-Exact classes can only coarsen, and strict packings and target-centered covers
-cannot grow. Serial coefficients are submultiplicative. Binary symmetric and
-erasure channels have exact coefficients.
-
-Lossy observation can weaken evidence. It cannot create distinguishability that
-was absent before the channel.
-
-## 5. Physical and quantum predictive geometry
-
-Physical-query lower bounds are derived from explicit measurement families,
-not from raw Hilbert-space dimension.
-
-Implemented examples include:
-
-- Werner/singlet Bell visibility laws;
-- exact Bell TV, Fisher information, and adaptive KL bounds;
-- visibility-plus-phase geometry;
-- the canonical CHSH disk identity
-
-  \[
-  \operatorname{TV}(P_q,P_{q'})
-  =
-  \frac{\|q-q'\|_\infty}{2\sqrt2};
-  \]
-
-- constructive two-dimensional physical packings;
-- exact computational-basis coordinate-query scaling;
-- continuous product-qubit \(L_1\) geometry;
-- subsystem-count versus accessible-resolution packings;
-- exact finite adaptive phase-drift transcript laws.
-
-The local-physics module separately implements Landauer, Margolus–Levitin,
-Bekenstein, mass-energy, Schwarzschild, and mass-limited operation expressions.
-The cross-level boundary is preserved:
-
-\[
-\text{internal physical quantity}
-\not\Rightarrow
-\text{parent implementation cost}
-\]
-
-without an implementation map and law-transfer assumption.
-
-## 6. Relational information, noise, and quantum codes
-
-Graph and cat-state constructions isolate information stored in correlations
-rather than low-order marginals.
-
-For cycle graph states with at least five qubits:
-
-- every one- and two-qubit reduction is maximally mixed across all graph-basis
-  labels;
-- weight-three stabilizer queries recover the labels;
-- uniform generator-query distance is normalized Hamming distance.
-
-For phase-labeled cat blocks, every proper local-X transcript is phase blind,
-while the complete transcript obeys one global parity constraint. After
-\(\ell-1\) outcomes in each of \(m\) open blocks, exact continuation has
-\(2^m\) predictive classes and needs one parity bit per block.
-
-With independent flip probability \(p\), parity visibility is
-
-\[
-c_\ell(p)=(1-2p)^\ell,
-\]
-
-and the average predictive rate-distortion lower bound is
-
-\[
-I(Z;M)
-\ge
-m\left[1-H_2(D/c)\right].
-\]
-
-The stabilizer-code lane implements exact binary-symplectic rank, normalizer,
-distance, logical cosets, projectors, and reduced-state checks. It proves local
-indistinguishability below code distance and independently verifies the
-five-qubit \([[5,1,3]]\) code.
-
-## 7. Causal cuts, query timing, and quantum communication
-
-For an \(m\)-bit record sent before an unresolved coordinate query, exact
-one-way answering requires an injective message:
-
-\[
-|\mathcal M|\ge2^m.
-\]
-
-Under uniform average error \(\epsilon\),
-
-\[
-I(X;M)
-\ge
-m[1-H_2(\epsilon)].
-\]
-
-The repository includes:
-
-- resident-state versus later-communication tradeoffs;
-- weighted future-query error allocation;
-- indexed parity-reconciliation equivalence;
-- isolated-region replication bounds;
-- progressive query revelation and exact shared/branch capacity regions;
-- explicit finite upper protocols.
-
-Without entanglement assistance, an unresolved \(m\)-bit random-access record
-encoded into \(q\) qubits obeys
-
-\[
-q\ge m[1-H_2(\epsilon)].
-\]
-
-Receiver-side preshared entanglement changes the coefficient by at most a factor
-of two. Exact dense coding attains the assisted zero-error full-record rate.
-Canonical two-to-one and three-to-one one-qubit random-access codes are checked
-on every record-query pair.
-
-Query timing is a resource: revealing the requested coordinate before encoding
-can reduce linear communication to one answer symbol.
-
-## 8. Predictive networks and multicast coding
-
-For one sink, a finite exact predictive-class label can be routed through a
-directed integer-capacity network exactly when the declared source-sink min-cut
-can carry its fixed-length index. Approximate stochastic networks report three
-states:
-
-- **impossible** below a packing lower bound;
-- **constructively feasible** above a cover-index upper bound;
-- **unresolved** in between.
-
-Per-sink min-cuts are necessary but not generally jointly sufficient for
-multiple sinks.
-
-The finite multicast lane implements exact scalar linear coding over prime
-fields. In the declared binary butterfly network:
-
-- both sinks have min-cut two;
-- all 4096 local binary scalar assignments are checked;
-- no routing-only assignment serves both sinks;
-- sending \(x_1+x_2\) through the shared bottleneck lets both decode.
-
-The project proves this bounded result and does not silently claim the full
-general multicast theorem.
-
-## 9. Sink-specific linear and nonlinear function computation
-
-A receiver need not reconstruct the entire source. For source
-\(x\in\mathbb F_p^h\), incoming rows \(G_t\), local side-information rows
-\(S_t\), and desired rows \(B_t\), exact recovery is equivalent to
-
-\[
-\operatorname{rowspan}(B_t)
-\subseteq
-\operatorname{rowspan}
-\begin{pmatrix}G_t\\S_t\end{pmatrix}.
-\]
-
-The new linear information required across a cut is
-
-\[
-\operatorname{rank}
-\begin{pmatrix}S_t\\B_t\end{pmatrix}
--
-\operatorname{rank}(S_t).
-\]
-
-Complementary side information can make one XOR symbol serve two different
-receivers.
-
-For arbitrary finite nonlinear target and side-information functions, define a
-confusion edge
-
-\[
-x\sim_c y
-\iff
-\exists t:
-s_t(x)=s_t(y)
-\text{ and }
-f_t(x)\ne f_t(y).
-\]
-
-Zero-error common-message encoders are exactly proper colorings of this graph.
-Therefore
-
-\[
-|\mathcal M|_{\min}=\chi(G),
-\qquad
-b_{\min}=\lceil\log_2\chi(G)\rceil.
-\]
-
-The implementation includes exact bounded chromatic, clique, independent-set,
-decoder, realization, monotonicity, and randomized-support checks. Every simple
-finite graph can be realized as a finite side-information function problem.
-All 64 labeled four-vertex graphs are independently audited.
-
-## 10. Prior-weighted zero-error source coding
-
-Chromatic number minimizes the hard message alphabet, not expected bits under a
-nonuniform source law.
-
-For a proper independent-set partition
-
-\[
-\mathcal P=\{C_1,\ldots,C_k\},
-\]
-
-and rational prior \(\pi\), class probabilities are
-
-\[
-p_j(\mathcal P)=\sum_{x\in C_j}\pi_x.
-\]
-
-For that partition, Huffman coding gives the exact minimum binary-prefix mean.
-The global one-shot optimum is
-
-\[
-\boxed{
-L^*(G,\pi)
-=
-\min_{\mathcal P\in\operatorname{IndPart}(G)}
-L_H\bigl(p(\mathcal P)\bigr).
-}
-\]
-
-The bounded solver enumerates every unlabeled proper partition and complete
-prefix certificate. It reports the exact message-count frontier, mean length,
-peak length, and minimum coloring entropy.
-
-For rational probabilities, coloring entropies are ordered exactly through
-
-\[
-Q_D(p)=\prod_jp_j^{Dp_j}=2^{-D H_2(p)}.
-\]
-
-The universal one-shot entropy sandwich, including zero-mass declared classes,
-is
-
-\[
-H_{\mathrm{col}}(G,\pi)
-\le
-L^*(G,\pi)
-\le
-H_{\mathrm{col}}(G,\pi)+1,
-\]
-
-with a strict upper inequality under full support.
-
-Important exact examples:
-
-- skew \(K_4\): mean \(3/2\), fixed length two, peak length three;
-- uniform \(C_5\): mean \(8/5\);
-- one five-vertex graph has \(\chi=3\) but its mean-optimal code uses four
-  message classes;
-- declared-state versus positive-support-only zero error can differ
-  discontinuously at zero prior mass.
-
-## 11. Finite-prior robust coding and shared codebook randomness
-
-For finite prior scenarios
-
-\[
-\Pi=\{\pi^{(1)},\ldots,\pi^{(R)}\},
-\]
-
-the deterministic robust value is
-
-\[
-V_{\mathrm{det}}
-=
-\min_c\max_rL_r(c).
-\]
-
-Scenario-specific oracle costs
-
-\[
-L_r^*=\min_cL_r(c)
-\]
-
-define minimax regret
-
-\[
-R_{\mathrm{det}}
-=
-\min_c\max_r[L_r(c)-L_r^*].
-\]
-
-The complete bounded code universe includes every proper partition and every
-full binary prefix shape. A deterministic minimax tree need not be Huffman-
-optimal for any one scenario, and minimax length need not select the same code
-as minimax regret.
-
-With a source-independent seed shared by encoder and all decoders, one may mix
-complete deterministic codebooks:
-
-\[
-V_{\mathrm{mix}}
-=
-\min_q\max_r\sum_cq_cL_r(c).
-\]
-
-The finite rational zero-sum game is solved by exact primal and dual support
-enumeration with zero rational gap. An optimum needs at most \(R\) codebooks in
-its support.
-
-The dual scenario mixture defines a least-favorable barycenter prior, and
-
-\[
-V_{\mathrm{mix}}
-=
-\max_{\bar\pi\in\operatorname{conv}(\Pi)}L^*(G,\bar\pi).
-\]
-
-For a declared \(K_3\) example, deterministic minimax is \(19/10\), while a
-shared 50/50 codebook mixture achieves \(31/20\). The zero-error alphabet is
-unchanged; the gain is in worst-prior expected length and consumes shared
-codebook randomness.
-
-## 12. Continuous TV-ball distributional robustness
-
-A finite prior list is not the only uncertainty model. For nominal prior \(p\)
-and radius \(\rho\), define
-
-\[
-\mathcal U_{\mathrm{TV}}(p,\rho)
-=
-\{q:\operatorname{TV}(q,p)\le\rho\}.
-\]
-
-For a fixed value vector \(f\), total variation is exactly moved probability
-mass. The robust maximum is obtained by moving mass from the lowest-value donors
-to a maximum-value state:
-
-\[
-\boxed{
-\sup_{q\in\mathcal U_{\mathrm{TV}}}E_q[f]
-=
-E_p[f]
-+
-\sum_t m_t(f_{j_t}-f_{i_t}).
-}
-\]
-
-The minimum reverses the transport order. Every transfer, extremal distribution,
-and expectation is rational.
-
-The same inner problem has an exact fractional-knapsack dual:
-
-\[
-\boxed{
-\min_{\lambda\ge0}
-\left[
-\rho\lambda
-+
-\sum_i p_i(g_i-\lambda)_+
-\right],
-}
-\]
-
-with exact complementary-slackness receipts and zero rational gap.
-
-Fixed-code robust expectation is continuous, monotone, piecewise linear, and
-concave in radius for maximization. It saturates once all nonmaximum mass reaches
-the maximum-value face. The range bound
-
-\[
-|E_q[f]-E_p[f]|
-\le
-\operatorname{TV}(q,p)
-\operatorname{range}(f)
-\]
-
-has an explicit tightness window.
-
-The outer exact deterministic coding problem is
-
-\[
-V_{\mathrm{TV}}(G,p,\rho)
-=
-\min_c
-\sup_{q:\operatorname{TV}(q,p)\le\rho}E_q[\ell_c].
-\]
-
-It exhausts every bounded proper partition and complete prefix shape. Exact
-endpoints are
-
-\[
-V_{\mathrm{TV}}(G,p,0)=L^*(G,p),
-\]
-
-and
-
-\[
-V_{\mathrm{TV}}(G,p,1)
-=
-\lceil\log_2\chi(G)\rceil.
-\]
-
-For skew \(K_4\), the robust code changes from an unbalanced tree to the
-balanced two-bit tree at exact radius \(1/4\). Huber contamination is implemented
-separately and is generally a strict subset of the equal-radius TV ball.
-
-## 13. Algorithmic priors and implementation multiplicity
-
-Many programs can implement one observable law. The algorithmic lane separates:
-
-- raw program mass;
-- observational-law class mass;
-- shortest-description mass;
-- multiplicity inflation;
-- finite normalization;
-- Kraft admissibility;
-- dependence on the selected prefix machine and representation.
-
-Grouping implementations prevents syntactic variants from being presented as
-separate observable universes, but does not create a machine-independent
-universal prior.
-
-# Repository map
-
-## Claim manifests
+If a simulation produces exactly the same observable probability law as an
+ordinary physical model,
 
 ```text
-claims/claims-v1.json
-claims/quantum-phase-claims.json
-claims/stabilizer-relational-claims.json
-claims/noisy-relational-claims.json
-claims/stabilizer-code-claims.json
-claims/distributed-consistency-claims.json
-claims/quantum-causal-cut-claims.json
-claims/progressive-query-claims.json
-claims/predictive-network-claims.json
-claims/stochastic-predictive-claims.json
-claims/stochastic-channel-claims.json
-claims/multicast-network-coding-claims.json
-claims/ternary-predictive-claims.json
-claims/functional-network-claims.json
-claims/confusion-graph-claims.json
-claims/prior-weighted-code-claims.json
-claims/robust-prior-code-claims.json
-claims/distributionally-robust-code-claims.json
+P_sim = P_base,
 ```
 
-## Proof and derivation map
+then every statistic an internal observer can compute has the same
+distribution under both, every test has power equal to its size, and
 
 ```text
-docs/formal-results.md
-docs/bell-predictive-bounds.md
-docs/quantum-phase-predictive-bounds.md
-docs/canonical-chsh-disk-geometry.md
-docs/quantum-sequential-bounds.md
-docs/manybody-predictive-bounds.md
-docs/stabilizer-relational-consistency.md
-docs/noisy-relational-rate-distortion.md
-docs/stabilizer-code-locality.md
-docs/distributed-causal-consistency.md
-docs/quantum-causal-cut-random-access.md
-docs/progressive-query-revelation.md
-docs/predictive-network-mincuts.md
-docs/stochastic-predictive-covers.md
-docs/stochastic-channel-contraction.md
-docs/multicast-network-coding.md
-docs/functional-network-computation.md
-docs/nonlinear-confusion-graphs.md
-docs/ternary-predictive-centers.md
-docs/prior-weighted-zero-error-coding.md
-docs/finite-prior-robust-coding.md
-docs/distributionally-robust-tv-coding.md
-docs/tv-transport-dual.md
-docs/research-program.md
-docs/sources.md
-docs/tempera-math-bridge.md
+BF_sim:base = 1   on every possible data set.
 ```
 
-## Code layout
+Posterior odds equal prior odds. No amount of data, computation, or cleverness
+recovers information that is absent from the observable law
+([formal-results.md](docs/formal-results.md#unrestricted-indistinguishability),
+claim ST-T01).
 
-```text
-src/simtheory/    theorem models, exact algorithms, and deterministic experiments
-tests/            unit, property, exhaustive, and independent finite checks
-claims/           machine-readable scope, evidence, assumptions, and nonclaims
-docs/             derivations, examples, quality boundaries, and research roadmap
-```
+So the generic hypothesis "some external process generates our observations"
+is not identifiable. Everything else in the repository works on the other side
+of that boundary: declare a *restricted* simulator (finite memory, finite
+precision, coarsened observations, bounded communication, a classical stand-in
+for a quantum system), derive the law it can produce, and ask how fast, if at
+all, an observer could tell it apart. For example:
 
-The mathematical core uses only the Python standard library.
+- **Evidence grows at a KL rate.** A simulated bit source with bias q is
+  separated from fair bits at expected log Bayes factor at least
+  `n KL(q || 1/2) - (1/2) ln n - ln 2` (ST-T271). If its output is viewed through
+  a noisy channel, the rate shrinks by the channel's contraction coefficient
+  (ST-M14, ST-M83).
+- **Evidence has a ceiling.** If the likelihood ratio is confined to
+  `[e^-eps, e^eps]`, the posterior log odds move by at most `eps` (ST-T02).
+- **A local classical simulator cannot reproduce Bell correlations.** On the
+  canonical CHSH schedule the quantum family is a disk with an exact predictive
+  metric, `TV = ||q - q'||_inf / (2 sqrt 2)` (ST-T12), and the local bound
+  `S <= 2` is a chord across it. The released data of the Delft 2015
+  loophole-free Bell test recompute to `S = 2.42 +- 0.20`, `p = 0.039`, a point
+  right of that chord (ST-F50, ST-F51).
+- **Rendering on demand is not a signature by itself.** Lazy generation that
+  samples each answer from the exact conditional law has the same transcript
+  law as a pre-generated world
+  ([formal-results.md](docs/formal-results.md#exact-lazy-rendering-equivalence)).
+  Approximate rendering costs at most `1 - prod_t (1 - eps_t)` in transcript TV
+  (ST-T04), and any renderer within `eps` of `K` future laws separated by more
+  than `2 eps` needs at least `K` states (ST-T05).
 
-## Run locally
+## Results by type
+
+Every result carries a stable ID, a type, a scope, assumptions, evidence paths,
+and explicit nonclaims in a manifest under [`claims/`](claims/). There are 397
+claims in 53 manifests:
+
+| type | count | meaning |
+| --- | --- | --- |
+| Theorem (`ST-T`) | 262 | follows from the stated assumptions |
+| Model result (`ST-M`) | 83 | exact inside one declared model or finite example |
+| Finite check (`ST-F`) | 51 | reproducible computation on an explicitly bounded domain or fixed data set |
+| Open problem (`ST-O`) | 1 | a research target, not a conclusion |
+
+A passing test validates code and a bounded receipt. It never promotes a finite
+check into a universal theorem.
+
+| lane | what it establishes | derivation | manifest |
+| --- | --- | --- | --- |
+| identification and evidence | indistinguishability, evidence ceilings, Le Cam and Fano bounds, anytime-valid e-processes, observer-measure Jensen gap | [formal-results](docs/formal-results.md) | [claims-v1](claims/claims-v1.json) |
+| real data | Delft 2015 CHSH recomputation, CHSH-disk placement, NIST beacon precommitments, KL detection rate | [real-data-checks](docs/real-data-checks.md) | [real-data](claims/real-data-claims.json) |
+| Bell and quantum geometry | Werner and visibility-phase predictive laws, the canonical CHSH disk, quadratic packings | [bell-predictive-bounds](docs/bell-predictive-bounds.md), [canonical-chsh-disk-geometry](docs/canonical-chsh-disk-geometry.md), [quantum-phase-predictive-bounds](docs/quantum-phase-predictive-bounds.md) | [quantum-phase](claims/quantum-phase-claims.json) |
+| relational information and codes | graph-state and cat-state consistency, noisy parity rate-distortion, stabilizer-code locality | [stabilizer-relational-consistency](docs/stabilizer-relational-consistency.md), [noisy-relational-rate-distortion](docs/noisy-relational-rate-distortion.md), [stabilizer-code-locality](docs/stabilizer-code-locality.md) | [stabilizer-relational](claims/stabilizer-relational-claims.json), [noisy-relational](claims/noisy-relational-claims.json), [stabilizer-code](claims/stabilizer-code-claims.json) |
+| causal cuts and communication | random-access message bounds, quantum causal cuts, progressive query revelation, distributed consistency | [quantum-causal-cut-random-access](docs/quantum-causal-cut-random-access.md), [progressive-query-revelation](docs/progressive-query-revelation.md), [distributed-causal-consistency](docs/distributed-causal-consistency.md) | [quantum-causal-cut](claims/quantum-causal-cut-claims.json), [progressive-query](claims/progressive-query-claims.json), [distributed-consistency](claims/distributed-consistency-claims.json) |
+| predictive state and channels | stochastic covers, ternary centers, Dobrushin contraction, observation-channel value | [stochastic-predictive-covers](docs/stochastic-predictive-covers.md), [ternary-predictive-centers](docs/ternary-predictive-centers.md), [stochastic-channel-contraction](docs/stochastic-channel-contraction.md), [observation-channel-information-value](docs/observation-channel-information-value.md) | [stochastic-predictive](claims/stochastic-predictive-claims.json), [ternary-predictive](claims/ternary-predictive-claims.json), [stochastic-channel](claims/stochastic-channel-claims.json), [observation-channel](claims/observation-channel-information-claims.json) |
+| networks | predictive min-cuts, multicast network coding, sink-specific function computation | [predictive-network-mincuts](docs/predictive-network-mincuts.md), [multicast-network-coding](docs/multicast-network-coding.md), [functional-network-computation](docs/functional-network-computation.md) | [predictive-network](claims/predictive-network-claims.json), [multicast](claims/multicast-network-coding-claims.json), [functional-network](claims/functional-network-claims.json) |
+| zero-error coding | confusion graphs and chromatic number, prior-weighted Huffman optima, finite-prior and TV-ball robust codes, shared randomness | [nonlinear-confusion-graphs](docs/nonlinear-confusion-graphs.md), [prior-weighted-zero-error-coding](docs/prior-weighted-zero-error-coding.md), [finite-prior-robust-coding](docs/finite-prior-robust-coding.md), [distributionally-robust-tv-coding](docs/distributionally-robust-tv-coding.md), [shared-randomness-tv-robust-coding](docs/shared-randomness-tv-robust-coding.md) | [confusion-graph](claims/confusion-graph-claims.json), [prior-weighted](claims/prior-weighted-code-claims.json), [robust-prior](claims/robust-prior-code-claims.json), [distributionally-robust](claims/distributionally-robust-code-claims.json), [shared-tv](claims/shared-tv-robust-code-claims.json) |
+| robust priors and drift | polyhedral duals and regret confidence, prior drift, coupled drift sequences, adaptive drift information | [polyhedral-dual-certificates](docs/polyhedral-dual-certificates.md), [polyhedral-regret-confidence](docs/polyhedral-regret-confidence.md), [prior-drift-path-robustness](docs/prior-drift-path-robustness.md), [coupled-drift-code-sequences](docs/coupled-drift-code-sequences.md), [adaptive-drift-information-patterns](docs/adaptive-drift-information-patterns.md) | [polyhedral-dual](claims/polyhedral-dual-claims.json), [polyhedral-regret](claims/polyhedral-regret-confidence-claims.json), [prior-drift](claims/prior-drift-claims.json), [coupled-drift](claims/coupled-drift-code-sequence-claims.json), [adaptive-drift](claims/adaptive-drift-information-claims.json) |
+| regret and active experiments | pathwise and feedback regret, observed-law coding, coarsened and stochastic law observation, fixed-model ambiguity, active experiment value, menu-expansion regret shifts, experiment complementarity, observation-lattice interactions | [pathwise-dynamic-regret](docs/pathwise-dynamic-regret.md), [feedback-information-regret](docs/feedback-information-regret.md), [observed-law-dynamic-coding](docs/observed-law-dynamic-coding.md), [coarsened-law-observation-games](docs/coarsened-law-observation-games.md), [stochastic-law-observation-beliefs](docs/stochastic-law-observation-beliefs.md), [fixed-model-ambiguity-frontiers](docs/fixed-model-ambiguity-frontiers.md), [active-fixed-model-experiments](docs/active-fixed-model-experiments.md), [active-fixed-model-minimax-regret](docs/active-fixed-model-minimax-regret.md), [active-experiment-regret-value-decomposition](docs/active-experiment-regret-value-decomposition.md), [active-experiment-menu-regret-shifts](docs/active-experiment-menu-regret-shifts.md), [active-experiment-complementarity](docs/active-experiment-complementarity.md), [experiment-observation-lattice-interactions](docs/experiment-observation-lattice-interactions.md) | [pathwise-regret](claims/pathwise-regret-claims.json), [feedback-regret](claims/feedback-information-regret-claims.json), [observed-law](claims/observed-law-dynamic-coding-claims.json), [coarsened-law](claims/coarsened-law-observation-claims.json), [stochastic-law](claims/stochastic-law-observation-belief-claims.json), [fixed-model-ambiguity](claims/fixed-model-ambiguity-claims.json), [active-experiment](claims/active-fixed-model-experiment-claims.json), [active-regret](claims/active-fixed-model-minimax-regret-claims.json), [active-decomposition](claims/active-experiment-regret-decomposition-claims.json), [menu-regret](claims/active-experiment-menu-regret-claims.json), [complementarity](claims/active-experiment-complementarity-claims.json), [observation-lattice](claims/experiment-observation-lattice-claims.json) |
+| Bayesian Boolean experiments | K3 Bayes gap as posterior minority mass, influence and Walsh-Fourier bounds, adaptive query option value, cost-sensitive stopping, prior-robust value and ranking | [bayesian-boolean-experiment-geometry](docs/bayesian-boolean-experiment-geometry.md), [bayesian-boolean-fourier-geometry](docs/bayesian-boolean-fourier-geometry.md), [bayesian-adaptive-boolean-queries](docs/bayesian-adaptive-boolean-queries.md), [bayesian-cost-sensitive-query-stopping](docs/bayesian-cost-sensitive-query-stopping.md), [bayesian-boolean-prior-robustness](docs/bayesian-boolean-prior-robustness.md) | [boolean-experiment](claims/bayesian-boolean-experiment-claims.json), [boolean-fourier](claims/bayesian-boolean-fourier-claims.json), [adaptive-query](claims/bayesian-adaptive-boolean-query-claims.json), [cost-sensitive](claims/bayesian-cost-sensitive-query-claims.json), [prior-robustness](claims/bayesian-boolean-prior-robustness-claims.json) |
+| latent priors and mixtures | evidence ceilings for one persistent latent draw, confidence from independent latent draws, binary and finite-mixture identifiability with known channels, the exact TV conditioning modulus and its row-uncertainty bounds, the prior-channel gauge and its two-view rigidity inside the nonnegative gauge class, refinement invariance | [persistent-latent-prior-evidence-ceilings](docs/persistent-latent-prior-evidence-ceilings.md), [independent-latent-prior-confidence](docs/independent-latent-prior-confidence.md), [binary-latent-mixture-identifiability](docs/binary-latent-mixture-identifiability.md), [finite-mixture-channel-identifiability](docs/finite-mixture-channel-identifiability.md), [finite-mixture-global-tv-modulus](docs/finite-mixture-global-tv-modulus.md), [finite-mixture-row-uncertainty](docs/finite-mixture-row-uncertainty.md), [latent-mixture-gauge-nonidentifiability](docs/latent-mixture-gauge-nonidentifiability.md), [latent-mixture-two-view-rigidity](docs/latent-mixture-two-view-rigidity.md), [latent-refinement-invariance](docs/latent-refinement-invariance.md), [refinement-measure-uniqueness](docs/refinement-measure-uniqueness.md) | [persistent-latent](claims/persistent-latent-prior-claims.json), [latent-confidence](claims/independent-latent-prior-confidence-claims.json), [binary-mixture](claims/binary-latent-mixture-identifiability-claims.json), [finite-mixture](claims/finite-mixture-channel-identifiability-claims.json), [global-tv](claims/finite-mixture-global-tv-claims.json), [row-uncertainty](claims/finite-mixture-row-uncertainty-claims.json), [gauge](claims/latent-mixture-gauge-claims.json), [two-view](claims/latent-mixture-two-view-claims.json), [refinement](claims/latent-refinement-claims.json), [refinement-measure](claims/refinement-measure-claims.json) |
+
+The paper draft [Identifiability Before Anthropic Bayes](paper/identifiability-before-anthropic-bayes/)
+keeps its own ledger of 8 claims, which `verify` checks against its tests. An
+adversarial review of the mathematics and its publication readiness, with a record
+of how each finding was addressed, is in
+[docs/math-audit-publication-readiness.md](docs/math-audit-publication-readiness.md).
+
+A guided tour of the mathematics, with the main formulas, is in
+[docs/result-map.md](docs/result-map.md). The open problem (ST-O01) and the
+research agenda are in [docs/research-program.md](docs/research-program.md) and
+[formal-results.md](docs/formal-results.md#current-open-problems).
+
+## Reproduce
+
+Requires [uv](https://docs.astral.sh/uv/) and Python 3.11 or newer. The
+mathematical core uses only the standard library; pytest is the only
+development dependency.
 
 ```bash
-python -m pip install -e . pytest
-python -m compileall -q src
-python -m pytest
-python -m simtheory.experiments
+uv sync
+uv run python -m simtheory verify          # everything, about 12 minutes
+uv run python -m simtheory verify --quick  # skips 9 slow exhaustive tests, under a minute
+make verify                                # same as the first command
 ```
 
-GitHub Actions runs editable installation, bytecode compilation, the complete
-test suite, and the deterministic experiment smoke suite on Python 3.11, 3.12,
-and 3.13.
+`verify` runs, in order:
 
-# What would count as evidence?
+1. byte-compilation of `src/`;
+2. validation of every `claims/*.json`: schema, globally unique IDs, evidence
+   files and Markdown anchors, and every `file.py:symbol` reference;
+3. the real-data receipts: the Delft 2015 statistic recomputed from the
+   committed trials and checked against the published `S = 2.42 +- 0.20`,
+   `p = 0.039`, and all 256 NIST beacon precommitment links;
+4. the deterministic experiment suite, compared with
+   [`receipts/experiments.txt`](receipts/experiments.txt);
+5. the test suite, then a per-claim report that every test file each claim
+   cites has passed.
+
+`--online` also downloads the Delft archive (hash-checked) and the beacon
+pulses again and confirms they reduce to the committed summaries in
+[`data/real/`](data/real/). CI runs `verify` on Python 3.11, 3.12, and 3.13.
+
+## Scope
+
+- Results concern **observable laws available to an internal investigator**.
+  No theorem assumes a simulator exists, and none estimates the probability
+  that one does.
+- Theorems hold under their stated assumptions. Model results hold inside one
+  declared model. Finite checks hold on their declared domain or data set.
+  Nonclaims in each manifest say what does not follow.
+- Internal physical quantities (mass, energy, Hilbert-space dimension) are not
+  converted into costs for a parent substrate without an explicit
+  implementation map; see
+  [formal-results.md](docs/formal-results.md#local-physics-versus-parent-physics).
+- Quantization, randomness, Bell violation, entanglement, error-correcting
+  structure, and information bounds are not evidence of simulation. Ordinary
+  physics and ordinary distributed systems contain all of them.
+- The real-data checks reproduce one published Bell statistic and test one
+  public random source under one composite hypothesis. They test the
+  machinery, not the world.
+
+## What would count as evidence
 
 Evidence must favor a **restricted simulator model** over serious alternative
 physical, measurement, selection, and intervention models. A useful proposal
-must predeclare:
+must declare in advance:
 
 1. null and alternative observable laws;
 2. nuisance parameters;
 3. measurement and selection channels;
-4. query or intervention protocol;
-5. likelihood, e-process, confidence sequence, or other inferential rule;
+4. the query or intervention protocol;
+5. the inferential rule (likelihood, e-process, confidence sequence);
 6. calibration, power, and stopping behavior;
-7. ordinary-physics alternatives and how they are excluded;
+7. the ordinary-physics alternatives and how they are excluded;
 8. which broader simulator classes remain untouched.
 
-Quantization, randomness, mathematical laws, Bell violation, entanglement,
-stabilizer structure, quantum coding, graph coloring, Huffman coding, robust
-optimization, network coding, max flow, min cuts, predictive equivalence, or
-information bounds are not generic evidence for simulation. Ordinary physical
-theories and ordinary distributed systems can contain all of those structures.
+## Repository layout
 
-# Current frontier
+```text
+src/simtheory/   theorem models, exact algorithms, real-data reductions, verify entry point
+tests/           unit, property, exhaustive, and real-data checks
+claims/          machine-readable scope, evidence, assumptions, and nonclaims
+docs/            derivations, examples, scope boundaries, and the research program
+data/real/       committed real-data summaries with provenance and hashes
+receipts/        expected output of the deterministic experiment suite
+```
 
-The highest-value next campaigns are:
+## Data credits
 
-- shared-randomness minimax coding against a continuous TV adversary;
-- exact rational robust LP duals for general polyhedral prior sets;
-- finite-sample and time-uniform confidence sets that feed robust code design;
-- KL- and Wasserstein-ball coding with certified rather than floating bounds;
-- allowed-error function computation, where the unweighted confusion graph no
-  longer contains the full risk information;
-- block graph products and asymptotic source-coding rates;
-- queueing, buffer, and tail-delay consequences of variable-length messages;
-- progressive query revelation embedded in causal networks;
-- noisy edge coding with source, channel, and network coding kept separate;
-- scalable CSS, concatenated, and topological code families;
-- dynamic update-time and cell-probe lower bounds;
-- preregistered tests of one restricted physical architecture at a time.
+- B. Hensen et al. (2015): Loophole-free Bell-inequality violation using
+  electron spins separated by 1.3 kilometres. 4TU.ResearchData.
+  https://doi.org/10.4121/uuid:6e19e9b2-4a2d-40b5-8dd3-a660bf3c0a31. Used under
+  the 4TU General Terms of Use (attribution, non-commercial reuse); any further
+  distribution of `data/real/delft2015-bell-trials.json` must carry this
+  acknowledgement. Paper: Nature 526, 682-686 (2015).
+- NIST Randomness Beacon 2.0, chain 2, pulses 1987000 to 1987256,
+  https://beacon.nist.gov/.
 
-## Tempera Math boundary
+## Related
 
 `tempera-math` may be used as an external content-addressed proof and receipt
-harness. This repository remains the canonical research home.
+harness; see [docs/tempera-math-bridge.md](docs/tempera-math-bridge.md). This
+repository remains the canonical research home. A script run, CI pass, or
+content hash never promotes a bounded result into an unbounded theorem.
 
-A script run, CI pass, content hash, or structural validation never promotes a
-bounded result into an unbounded theorem. Any bridge must preserve claim type,
-assumptions, nonclaims, source revision, checker command, finite domain, and the
-difference between structural validation and mathematical execution.
+Code is MIT licensed ([LICENSE](LICENSE)); the data files under `data/real/`
+keep their sources' terms.

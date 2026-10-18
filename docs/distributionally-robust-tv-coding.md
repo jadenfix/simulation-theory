@@ -309,7 +309,8 @@ In particular,
 \[
 \sup_{\operatorname{TV}(q,p)\le\rho}E_q[f]
 \le
-E_p[f]+ho\operatorname{range}(f),
+E_p[f]+
+ho\operatorname{range}(f),
 \]
 
 and
@@ -317,7 +318,8 @@ and
 \[
 \inf_{\operatorname{TV}(q,p)\le\rho}E_q[f]
 \ge
-E_p[f]-ho\operatorname{range}(f).
+E_p[f]-
+ho\operatorname{range}(f).
 \]
 
 The bound is exactly tight while probability can be moved directly from a
@@ -730,7 +732,7 @@ length-three state:
 \boxed{
 \sup E_q[\ell]
 =
-\frac32+rac1{10}(3-1)
+\frac32+\frac1{10}(3-1)
 =
 \frac{17}{10}.
 }
@@ -743,7 +745,7 @@ length-one state:
 \boxed{
 \inf E_q[\ell]
 =
-\frac32-rac1{10}(3-1)
+\frac32-\frac1{10}(3-1)
 =
 \frac{13}{10}.
 }
@@ -803,7 +805,7 @@ because the chosen contamination state already has nominal mass \(1/10\).
 The full radius-\(1/10\) TV ball allows the more targeted transfer and reaches
 
 \[
-\frac{17}{10}>rac{33}{20}.
+\frac{17}{10}>\frac{33}{20}.
 \]
 
 This finite example shows concretely that equal numerical radii do not define

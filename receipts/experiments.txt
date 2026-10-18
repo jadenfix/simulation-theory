@@ -1,0 +1,151 @@
+== robust Bayesian evidence ==
+ceiling (0.19803641261849736, 0.31032244201237047)
+prior+BF uncertainty (0.02564102564102564, 0.8)
+
+== hierarchical feasibility uncertainty ==
+posterior_average 0.1999998000002
+measure_plugin 0.9999950000249999
+
+== observer-measure Jensen gap ==
+model_averaged 0.496513
+plug_in 1.0
+
+== anthropic conditioning sensitivity ==
+{'scale': 1.0, 'ssa': 0.5, 'sia': 0.5, 'fnc_presence': 0.5}
+{'scale': 10.0, 'ssa': 0.5, 'sia': 0.9090909090909091, 'fnc_presence': 0.6126890631341596}
+{'scale': 1000.0, 'ssa': 0.5, 'sia': 0.999000999000999, 'fnc_presence': 0.6126998367802821}
+
+== adaptive approximate rendering ==
+conditional_tv [0.05000000000000002, 0.05000000000000002]
+exact_transcript_tv 0.0625
+coupling_bound 0.09750000000000003
+packing_states 3
+packing_bits 2
+
+== physically derived Bell predictive bounds ==
+TV_v0.2_v0.8 0.2121320343559643
+CHSH_v0.8 2.2627416997969525
+packing_states_eps0.02 9
+packing_bits_eps0.02 4
+Fisher_v0.6 0.6097560975609756
+adaptive_trials_for_TV0.8_v0.4_v0.6 110
+
+== multidimensional quantum predictive geometry ==
+phase_TV 0.3572047095877925
+phase_TV_closed_form 0.35720470958779255
+phase_Fisher Fisher2(vv=0.7561532787471447, vphi=0.07253959619298793, phiphi=0.30103729564108855)
+phase_Fisher_eigenvalues (0.28975510519893866, 0.7674354691892946)
+constructive_states_eps0.04 49
+constructive_bits_eps0.04 6
+
+== adaptive quantum phase transcripts ==
+pair_TV_h1 0.6010407640085653
+pair_TV_h3 0.6028774130251621
+transcript_bits_h3_eps0.04 4
+
+== explicit many-body scaling ==
+basis_bits_n12 12
+product_L1_TV 0.3333333333333333
+qary_bits_d8_L4 16
+
+== graph-state relational information ==
+cycle_stabilizer_distance 3
+cycle_all_two_local_mixed True
+graph_label_TV 0.375
+gilbert_bits_n100_eps0.05 56
+gilbert_rate_eps0.05 0.5310044064107188
+
+== distributed cat-state consistency ==
+proper_partial_TV 0.0
+completed_block_TV 1.0
+checkpoint_TV 0.5
+checkpoint_exact_bits_m20 20
+checkpoint_average_bits_m100_eps0.05 56
+
+== distributed causal-cut consistency ==
+exact_INDEX_bits_m100 100
+uniform_INDEX_information_m100_eps0.1 53.10044064107188
+weighted_error_allocation (0.005260064693891749, 0.3210598490475859, 0.3210598490475859, 0.3210598490475859)
+weighted_information_bound 1.236018084843372
+additional_communication_resident20 34
+three_isolated_regions_bits 162
+parity_reconciliation_information 53.10044064107188
+prefix_protocol_error_s80 0.1
+
+== quantum random-access causal cuts ==
+exact_unassisted_qubits_m101 101
+exact_assisted_qubits_m101 51
+unassisted_qubits_m100_eps0.1 54
+assisted_qubits_m100_eps0.1 27
+one_qubit_converse_m2 0.11002786443835955
+one_qubit_converse_m3 0.1739523314093953
+canonical_2_to_1_success 0.8535533905932737
+canonical_2_to_1_enumerated 0.8535533905932738
+canonical_3_to_1_success 0.7886751345948129
+canonical_3_to_1_enumerated 0.7886751345948128
+weighted_assisted_qubits 0.618009042421686
+
+== progressive query revelation ==
+exact_shared_bits_branch5 50
+exact_per_run_bits_after_hint 10
+bounded_per_run_bits_eps0.1 5.3100440641071875
+assisted_exact_per_run_qubits 5
+classical_deficit_shared40_branch5 10.0
+finite_progressive_protocol_verified True
+
+== predictive-equivalence network min-cuts ==
+coordinate_classes_m4 16
+coordinate_predictive_bits_m4 4
+parity_classes_m4 2
+parity_predictive_bits_m4 1
+network_min_cut_units 3
+coordinate_family_exact_feasible False
+parity_family_exact_feasible True
+weighted_signature_TV 0.4
+coordinate_packing_m4_eps0.2 8
+packing_cut_deficit 1
+network_certificate_required 3
+network_certificate_cut 3
+network_certificate_routed 3
+
+== stochastic predictive covers and networks ==
+stochastic_packing_eps0.2 2
+stochastic_target_cover_eps0.2 2
+stochastic_network_status constructively-feasible
+stochastic_network_routed 1
+endpoint_packing_eps0.5 1
+endpoint_target_cover_eps0.5 2
+endpoint_arbitrary_centers_eps0.5 (0.5,)
+bernoulli_minimax_center (0.5, 0.4)
+stochastic_TV_low_high 0.6000000000000001
+stochastic_KL_low_high 0.8317766166719345
+
+== multi-architecture minimax bounds ==
+samples 0 fano_error_lower_bound 0.5
+samples 1 fano_error_lower_bound 0.3599865470109874
+samples 2 fano_error_lower_bound 0.21997309402197496
+samples 5 fano_error_lower_bound 0.0
+samples 10 fano_error_lower_bound 0.0
+necessary_for_10pct 3
+
+== selection and intervention sensitivity ==
+selected 0.1739130434782609 gamma 4.0
+raw_bounds (0.05000000000000002, 0.4571428571428572)
+minimum_intervention_rate 0.15789473684210528
+
+== anytime-valid restricted-signature check ==
+E_null_fixed_time 0.9999999999999996
+P_null_cross_by_50 0.022200685763852295
+
+== local physical envelope (not parent-physics inference) ==
+landauer_1e12_bits_300K_J 2.870978885078724e-09
+one_kg_ops_per_second 5.4255699586085285e+50
+one_kg_schwarzschild_radius_m 1.4852320538237331e-27
+one_joule_10cm_bekenstein_bits 2.8671970642933027e+25
+
+== representation multiplicity ==
+{'law-A': 1.75, 'law-B': 1.0}
+
+== binary distinguishability ==
+0.525
+nested_budget_rho_0.3 0.4285714285714286

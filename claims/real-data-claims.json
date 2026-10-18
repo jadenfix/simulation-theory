@@ -1,0 +1,114 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-F50",
+      "title": "Delft 2015 CHSH statistic recomputed from the released data",
+      "kind": "FINITE_CHECK",
+      "scope": "the 4746 released heralding attempts of the Delft 2015 loophole-free Bell test and the authors' published valid-trial filter",
+      "assumptions": [
+        "the 4TU archive matches md5 342f29f8288c46575818acd2acebd535 and the committed sha256",
+        "the valid-trial filter and readout windows are those of the authors' published analysis script",
+        "the local-model win bound is 3/4 + 3(tau + tau^2) with the paper's setting-predictability bound tau = 1.08e-5"
+      ],
+      "evidence": [
+        "docs/real-data-checks.md#1-delft-2015-bell-test",
+        "src/simtheory/real_data.py:delft_valid_trials",
+        "src/simtheory/real_data.py:chsh_summary",
+        "src/simtheory/real_data.py:binomial_upper_tail",
+        "src/simtheory/real_data_fetch.py:build_delft_summary",
+        "data/real/delft2015-bell-trials.json",
+        "tests/test_real_data.py"
+      ],
+      "nonclaims": [
+        "the check reproduces n = 245, k = 196, S = 2.42 +- 0.20 and p = 0.039; it does not re-derive the filter from detector physics",
+        "the check does not assess the experiment's loophole analysis beyond the published bound",
+        "a Bell violation is not evidence for or against a simulation hypothesis"
+      ]
+    },
+    {
+      "id": "ST-F51",
+      "title": "Delft correlations on the canonical CHSH disk",
+      "kind": "FINITE_CHECK",
+      "scope": "the equal-weight least-squares visibility-phase point of the four recomputed Delft correlations",
+      "assumptions": [
+        "the Delft schedule equals the canonical CHSH schedule with every setting difference shifted by pi",
+        "the correlations are read through the repository's singlet law E = -v cos(theta - phi)"
+      ],
+      "evidence": [
+        "docs/real-data-checks.md#2-the-delft-point-on-the-canonical-chsh-disk",
+        "src/simtheory/real_data.py:canonical_disk_point",
+        "src/simtheory/real_data.py:classical_chord_tv",
+        "docs/canonical-chsh-disk-geometry.md#exact-norm-identity",
+        "tests/test_real_data.py"
+      ],
+      "nonclaims": [
+        "the fitted point q = (0.856, -0.094) is a least-squares summary, not a maximum-likelihood state estimate",
+        "local models need not lie in the visibility-phase family; only the coordinate x = S / (2 sqrt 2) is compared with the chord"
+      ]
+    },
+    {
+      "id": "ST-F52",
+      "title": "NIST beacon bits keep the composite simulation Bayes factor below the Ville threshold",
+      "kind": "FINITE_CHECK",
+      "scope": "131072 bits from NIST Randomness Beacon 2.0 chain 2 pulses 1987000 to 1987255, with pulse 1987256 used only for verification",
+      "assumptions": [
+        "the committed localRandomValue fields pass all 256 SHA-512 precommitment links",
+        "the test is the Krichevsky-Trofimov composite Bayes factor against fair IID bits"
+      ],
+      "evidence": [
+        "docs/real-data-checks.md#3-nist-randomness-beacon-bits",
+        "src/simtheory/real_data.py:verify_beacon_precommitments",
+        "src/simtheory/real_data.py:beacon_bits",
+        "src/simtheory/real_data_fetch.py:fetch_beacon_pulses",
+        "data/real/nist-beacon-chain2-pulses.json",
+        "tests/test_real_data.py"
+      ],
+      "nonclaims": [
+        "NIST signatures and output-value hashes are not verified",
+        "passing one composite test is not a randomness certification",
+        "fair-looking bits do not show that the world is or is not simulated"
+      ]
+    },
+    {
+      "id": "ST-T271",
+      "title": "Composite Bayes-factor detection rate for a biased Bernoulli simulator",
+      "kind": "THEOREM",
+      "scope": "IID bits, a fair base law, and a restricted simulation hypothesis with unknown bias under a Beta(1/2,1/2) prior",
+      "assumptions": [
+        "observations are IID Bernoulli under each hypothesis",
+        "the simulation hypothesis is restricted to a Bernoulli signature declared in advance"
+      ],
+      "evidence": [
+        "docs/real-data-checks.md#4-composite-bayes-factor-for-a-biased-simulator",
+        "src/simtheory/real_data.py:kt_log_bayes_factor_path",
+        "src/simtheory/real_data.py:kt_expected_log_bayes_factor_lower_bound",
+        "tests/test_real_data.py"
+      ],
+      "nonclaims": [
+        "the bound E[log BF_n] >= n KL(q || 1/2) - (1/2) ln n - ln 2 says nothing about simulators that reproduce the fair law exactly",
+        "the theorem does not cover dependent, adaptive, or adversarially chosen bit sources"
+      ]
+    },
+    {
+      "id": "ST-M83",
+      "title": "Binary symmetric coarsening slows restricted-signature detection",
+      "kind": "MODEL_RESULT",
+      "scope": "a Bernoulli(q) simulated source observed through one binary symmetric channel with flip probability f in [0, 1/2]",
+      "assumptions": [
+        "the channel acts independently on every bit and is known to the observer"
+      ],
+      "evidence": [
+        "docs/real-data-checks.md#4-composite-bayes-factor-for-a-biased-simulator",
+        "src/simtheory/real_data.py:coarsened_probability",
+        "src/simtheory/real_data.py:bernoulli_kl",
+        "docs/stochastic-channel-contraction.md",
+        "tests/test_real_data.py"
+      ],
+      "nonclaims": [
+        "the result concerns one declared channel and does not bound arbitrary observation coarsenings",
+        "slower detection is not evidence that a source is unsimulated"
+      ]
+    }
+  ]
+}

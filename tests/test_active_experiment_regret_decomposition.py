@@ -8,6 +8,7 @@ from simtheory.active_experiment_regret_decomposition import (
 from simtheory.active_fixed_model_experiments import active_experiment
 from simtheory.confusion_graphs import ConfusionGraph
 from simtheory.fixed_model_ambiguity import fixed_model_family, fixed_model_scenario
+from simtheory.robust_prior_codes import solve_exact_zero_sum_game
 from simtheory.stochastic_observation_beliefs import bayesian_law_model, observation_kernel
 
 
@@ -162,3 +163,28 @@ def test_information_erasure_preserves_experiment_name_cost_and_hidden_dimension
         kernel.hidden_state_count for kernel in experiment.kernels
     )
     assert all(kernel.probabilities == ((1,),) for kernel in erased.kernels)
+
+
+def test_dominated_policy_vectors_do_not_change_the_mixed_value():
+    """ST-T181: adding componentwise-dominated policies leaves the public-seed game value unchanged."""
+    graph = _complete_graph(3)
+    family = _point_model_family(3)
+    for experiment in (_revealing(family), _public_coin(family), _no_signal(family)):
+        result = exact_active_experiment_regret_decomposition(graph, family, (experiment,), 1)
+        for mixed in (result.actual_mixed, result.erased_mixed):
+            gaps = list(mixed.policy_gaps)
+            gaps += [tuple(value + Fraction(k, 3) for value in row) for k, row in enumerate(gaps, start=1)]
+            matrix = tuple(tuple(row[model] for row in gaps) for model in range(len(mixed.benchmark)))
+            assert solve_exact_zero_sum_game(matrix).value == mixed.mixed_value
+
+
+def test_actual_oracle_is_a_valid_benchmark_for_erased_policies():
+    """ST-T183: no erased policy beats the actual model-informed oracle in any model coordinate."""
+    graph = _complete_graph(3)
+    family = _point_model_family(3)
+    for experiment in (_revealing(family), _public_coin(family), _noisy_model_signal(family)):
+        result = exact_active_experiment_regret_decomposition(graph, family, (experiment,), 1)
+        oracle = result.actual.oracle_values
+        assert result.erased_mixed.benchmark == oracle
+        for costs in result.erased_mixed.policy_costs:
+            assert all(cost >= base for cost, base in zip(costs, oracle))

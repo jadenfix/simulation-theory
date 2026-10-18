@@ -23,3 +23,13 @@ def test_all_machine_readable_claim_ids_are_globally_unique():
         if len(paths) > 1
     }
     assert not duplicates, f"claim IDs must be globally unique: {duplicates}"
+
+
+def test_every_manifest_validates_with_existing_evidence():
+    from simtheory.claims import load_claim_manifest, validate_local_evidence_paths
+
+    root = Path(__file__).parents[1]
+    paths = sorted((root / "claims").glob("*.json"))
+    assert paths
+    for path in paths:
+        validate_local_evidence_paths(load_claim_manifest(path), root)

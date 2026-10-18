@@ -235,8 +235,7 @@ For a shared record-independent channel \(K\),
 \[
 \operatorname{TV}(\mu K,\nu K)
 \le
-\delta(K)\operatorname{TV}(\mu,
-u).
+\delta(K)\operatorname{TV}(\mu,\nu).
 \]
 
 Completed work includes exact rational certificates, query-specific
@@ -583,8 +582,8 @@ Targets:
 
 ## Campaign L: restricted empirical architectures
 
-For each proposed physical architecture—lattice, finite precision, constrained
-randomness, approximate rendering, or limited communication—require:
+For each proposed physical architecture (lattice, finite precision, constrained
+randomness, approximate rendering, or limited communication), require:
 
 1. declared null and alternative laws;
 2. nuisance parameters and ordinary alternatives;

@@ -19,6 +19,7 @@ def _complete_graph(vertex_count: int) -> ConfusionGraph:
     )
 
 
+@pytest.mark.slow
 def test_zero_switch_current_information_matches_the_path_oracle():
     certificate = exact_drift_information_regret(
         _complete_graph(3),
@@ -36,6 +37,7 @@ def test_zero_switch_current_information_matches_the_path_oracle():
     assert certificate.randomization_gain_over_open_loop >= 0
 
 
+@pytest.mark.slow
 def test_positive_switching_cost_makes_current_information_imperfect():
     certificate = exact_drift_information_regret(
         _complete_graph(3),
@@ -68,6 +70,7 @@ def test_zero_drift_collapses_every_regret_pattern_to_zero():
     assert len(certificate.paths) == 1
 
 
+@pytest.mark.slow
 def test_regret_certificate_keeps_absolute_and_regret_values_distinct():
     certificate = exact_drift_information_regret(
         _complete_graph(3),

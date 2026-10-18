@@ -304,7 +304,7 @@ If two histories `h,g` share the state, the triangle inequality gives
 TV(P_h,P_g) <= TV(P_h,R_s)+TV(R_s,P_g) <= 2 epsilon.
 ```
 
-Therefore every family of target future laws separated pairwise by more than `2 epsilon` requires distinct renderer states. The maximum size of such a separated subset—the `2 epsilon` packing number—is a state-count lower bound.
+Therefore every family of target future laws separated pairwise by more than `2 epsilon` requires distinct renderer states. The maximum size of such a separated subset (the `2 epsilon` packing number) is a state-count lower bound.
 
 The repository computes the exact packing number for finite studies as a maximum-clique problem, capped at 60 laws. A bounded packing computation is not an asymptotic physical theorem.
 
