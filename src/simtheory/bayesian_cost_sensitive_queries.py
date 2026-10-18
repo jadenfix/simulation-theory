@@ -13,6 +13,7 @@ from fractions import Fraction
 from functools import lru_cache
 from typing import Sequence
 
+from .rebuild import matches_rebuild
 from .bayesian_boolean_experiments import uniform_boolean_prior
 
 
@@ -44,9 +45,20 @@ class CostSensitiveQueryCertificate:
     value: Fraction
     root_coordinate: int | None
     nodes: tuple[CostSensitiveQueryNode, ...]
+    # The instance, stored so that ``valid`` can recompute the dynamic program.
+    truth_table: tuple[int, ...] = ()
+    prior: tuple[Fraction, ...] = ()
 
     @property
     def valid(self) -> bool:
+        # recompute the dynamic program from the stored truth table, prior, costs, and budget
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_cost_sensitive_boolean_query_design(self.truth_table, self.query_costs, self.budget, self.prior),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         return (
             self.bit_count >= 0
             and self.budget >= 0
@@ -125,7 +137,7 @@ def exact_cost_sensitive_boolean_query_design(
         node for node in sorted(records.values(), key=lambda n: (-n.remaining, len(n.cell), n.cell))
         if node != root_node
     )
-    result = CostSensitiveQueryCertificate(k, h0, costs, value, root_node.selected_coordinate, nodes)
+    result = CostSensitiveQueryCertificate(k, h0, costs, value, root_node.selected_coordinate, nodes, table, p)
     if not result.valid:
         raise AssertionError("cost-sensitive query certificate failed validation")
     return result

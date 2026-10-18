@@ -41,6 +41,7 @@ from fractions import Fraction
 from itertools import product
 from typing import Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .prior_weighted_codes import RationalInput, validate_rational_prior
 from .robust_prior_codes import (
@@ -233,6 +234,14 @@ class ObservationPolicyEnumeration:
 
     @property
     def valid(self) -> bool:
+        # rebuild the nondominated policy set; dropped policies would overstate observation value
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: enumerate_observation_policies(self.channel, self.code_enumeration, max_policies=self.max_policies, max_dominance_pairs=self.max_dominance_pairs),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if (
             not self.channel.valid
             or not self.code_enumeration.valid
@@ -578,6 +587,12 @@ def exact_observation_channel_value(
 
 @dataclass(frozen=True)
 class SensingDecisionCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     baseline_shared_value: Fraction
     observation_shared_value: Fraction
     sensing_cost: Fraction
@@ -655,6 +670,9 @@ class BlackwellComparisonCertificate:
             and self.garbled_value.valid
             and self.informative_value.graph == self.garbled_value.graph
             and self.informative_value.scenarios == self.garbled_value.scenarios
+            # Each value certificate must be the value of its own channel.
+            and self.informative_value.channel == self.informative_channel
+            and self.garbled_value.channel == self.garbled_channel
             and garble_observation_channel(
                 self.informative_channel,
                 self.garbling_matrix,

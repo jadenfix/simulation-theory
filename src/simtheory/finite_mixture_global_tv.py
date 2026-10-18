@@ -12,6 +12,13 @@ an exact finite zero-sum game using TV(p,q)=max_A[p(A)-q(A)].
 This layer computes the globally optimal inverse modulus C*=1/alpha when alpha
 is positive, rather than the conservative coordinate-minor bound of the affine
 identifiability layer.
+
+Prior art: for affinely independent rows alpha is the TV-norm facial distance of
+Gutman and Pena (arXiv:1802.00271, Proposition 1); the Euclidean facial distance
+and its equality with the pyramidal width are Pena and Rodriguez (Math. Oper.
+Res. 2019). In general alpha is the zero-sum restriction of the Kleinberg and
+Sandler (2008) l1 condition number. The contribution here is the exact rational
+primal-dual certificate, not the identity.
 """
 
 from __future__ import annotations

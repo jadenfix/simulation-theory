@@ -31,6 +31,8 @@ from fractions import Fraction
 from itertools import combinations
 from typing import Iterable, Mapping, Sequence
 
+from .rebuild import matches_rebuild
+
 
 def _subsets(bit_count: int) -> tuple[tuple[int, ...], ...]:
     return tuple(
@@ -166,6 +168,14 @@ class BayesianBooleanGeometry:
 
     @property
     def valid(self) -> bool:
+        # recompute every subset value from the stored truth table and prior
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_bayesian_boolean_geometry(self.truth_table, self.prior),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         subsets = _subsets(self.bit_count)
         values = self.values
         coeffs = self.coefficients

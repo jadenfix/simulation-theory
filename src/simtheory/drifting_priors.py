@@ -37,6 +37,8 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .distributionally_robust_codes import (
     TVExpectationCertificate,
@@ -204,6 +206,14 @@ class StaticDriftRobustCodeCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_static_drift_robust_prefix_code(self.graph, self.nominal_prior, self.drift_per_step, self.horizon, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         candidates = self.enumeration.candidates
         if (
             self.graph.vertex_count != len(self.nominal_prior)
@@ -319,6 +329,12 @@ def exact_static_drift_robust_prefix_code(
 
 @dataclass(frozen=True)
 class DriftInflatedConfidenceRadius:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     statistical_radius: Fraction
     declared_drift_budget: Fraction
     inflated_radius: Fraction

@@ -1,0 +1,138 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T306",
+      "title": "Exact Le Cam deficiency of a visibility-contracted Bell simulator with equal correlation magnitudes: delta = C(1 - lam)/(2(2 - C lam)), also against arbitrary kernels on the joint record under schedule averaging",
+      "kind": "THEOREM",
+      "scope": "one-trial fixed-phase visibility family P_v(a,b|i) = (1 + v ab c_i)/4, v in [0,1], |c_i| = C for every setting pair, simulator P_{lam v}; setting-preserving kernels under schedule-average or worst-setting TV, and arbitrary Markov kernels on the joint (setting, outcome) record under schedule-average TV",
+      "assumptions": [
+        "the setting pair is public and the kernel may depend on it",
+        "lam in [0,1] is fixed and known",
+        "TV is half the L1 distance",
+        "the post-processing is central: it sees both settings and both outcomes; it is not restricted to Bell-local (LOSR) operations",
+        "every setting pair has the same correlation magnitude C in [0,1] and the schedule has full support"
+      ],
+      "evidence": [
+        "docs/le-cam-deficiency-bell-simulator.md#3-theorem-st-t306-exact-randomized-deficiency",
+        "src/simtheory/le_cam_deficiency.py:primal_certificate",
+        "src/simtheory/le_cam_deficiency.py:dual_certificate",
+        "src/simtheory/le_cam_deficiency.py:joint_dual_certificate",
+        "tests/test_le_cam_deficiency_bell_simulator.py",
+        "receipts/le-cam-deficiency-bell-simulator.txt"
+      ],
+      "nonclaims": [
+        "deficiency, the Le Cam distance and the randomization criterion are classical (Le Cam 1964, 1986); after the endpoint and sufficiency reductions the value is a deficiency between Bernoulli dichotomies governed by Torgersen's dichotomy theory (Torgersen 1970, 1991); only the closed form for this Bell family and its packaging are claimed",
+        "the value is not claimed for schedule-averaged TV with unequal correlation magnitudes (ST-O08)",
+        "deficiency under Bell-local (LOSR) post-processing is not computed; it is at least delta, and a float LP probe during review (not a certificate) gave 0.136730 versus 0.107369 at canonical lam = 1/2",
+        "the n-trial product-experiment deficiency is not computed",
+        "small deficiency does not imply identical implementation and is not evidence about simulation"
+      ]
+    },
+    {
+      "id": "ST-T307",
+      "title": "Worst-setting deficiency for unequal magnitudes: delta = V(max_i |c_i|) with V(C) = C(1 - lam)/(2(2 - C lam))",
+      "kind": "THEOREM",
+      "scope": "the declared interface with arbitrary finite magnitudes |c_i| under worst-setting aggregation",
+      "assumptions": [
+        "the setting pair is public and the kernel may depend on it",
+        "lam in [0,1] is fixed and known",
+        "TV is half the L1 distance",
+        "the post-processing is central: it sees both settings and both outcomes; it is not restricted to Bell-local (LOSR) operations",
+        "worst-setting aggregation"
+      ],
+      "evidence": [
+        "docs/le-cam-deficiency-bell-simulator.md#4-theorem-st-t307-worst-setting-value-for-unequal-magnitudes",
+        "src/simtheory/le_cam_deficiency.py:unequal_worst_setting",
+        "tests/test_le_cam_deficiency_bell_simulator.py",
+        "receipts/le-cam-deficiency-bell-simulator.txt"
+      ],
+      "nonclaims": [
+        "elementary given ST-T306",
+        "no statement for schedule-averaged TV with unequal magnitudes (ST-O08)"
+      ]
+    },
+    {
+      "id": "ST-T308",
+      "title": "(standard) Risk transfer: |risk gap| <= 2 delta ||L|| for every bounded loss and decision rule, tight under equal magnitudes",
+      "kind": "THEOREM",
+      "scope": "every bounded-loss decision problem on the declared interface; tightness under equal magnitudes with delta from ST-T306 (a decision may depend on the setting)",
+      "assumptions": [
+        "the setting pair is public and the kernel may depend on it",
+        "lam in [0,1] is fixed and known",
+        "TV is half the L1 distance",
+        "the post-processing is central: it sees both settings and both outcomes; it is not restricted to Bell-local (LOSR) operations",
+        "losses are bounded and decision rules act on the post-processed record",
+        "equal magnitudes for the tightness statement"
+      ],
+      "evidence": [
+        "docs/le-cam-deficiency-bell-simulator.md#5-theorem-st-t308-risk-transfer-standard",
+        "tests/test_le_cam_deficiency_bell_simulator.py",
+        "receipts/le-cam-deficiency-bell-simulator.txt"
+      ],
+      "nonclaims": [
+        "a direct instance of Le Cam's randomization criterion (Le Cam 1964; Torgersen 1991), not new",
+        "with unequal magnitudes the bound 2 delta_max ||L|| holds but is not claimed tight",
+        "risk transfer is uniform over v in [0,1] on this interface only; no statement about decision problems that see hidden implementation variables"
+      ]
+    },
+    {
+      "id": "ST-T309",
+      "title": "Deterministic setting-wise relabelings cannot match the randomized deficiency of a visibility-contracted Bell simulator for 0 < C < 1 (worst setting also at C = 1, 0 < lam < 1)",
+      "kind": "THEOREM",
+      "scope": "deterministic setting-preserving relabelings of the equal-magnitude visibility family; the dominating set {A,B,D} of per-setting error pairs over all (C,lam) in [0,1]^2 via an exact arrangement-vertex certificate; worst-setting value min(C(1-lam)/2,1/4); schedule-averaged lower bound along the segment AD; strict gap for 0 < C < 1 and 0 <= lam < 1",
+      "assumptions": [
+        "the setting pair is public and the kernel may depend on it",
+        "lam in [0,1] is fixed and known",
+        "TV is half the L1 distance",
+        "the post-processing is central: it sees both settings and both outcomes; it is not restricted to Bell-local (LOSR) operations",
+        "each setting's kernel is a 0/1 relabeling of that setting's outcomes with no auxiliary randomness (setting-preserving)",
+        "the dominating-set step is a computer-assisted exact proof: exact rational evaluation at all arrangement vertices, covering all parameters by piecewise linearity"
+      ],
+      "evidence": [
+        "docs/le-cam-deficiency-bell-simulator.md#6-theorem-st-t309-deterministic-setting-wise-relabelings-and-the-randomization-gap",
+        "src/simtheory/le_cam_deficiency.py:frontier_proof_all_parameters",
+        "src/simtheory/le_cam_deficiency.py:det_values",
+        "tests/test_le_cam_deficiency_bell_simulator.py",
+        "receipts/le-cam-deficiency-bell-simulator.txt"
+      ],
+      "nonclaims": [
+        "deterministic maps that may relabel the setting on the joint record are not covered; they can beat delta_hull (23/160 < 3/14 on the rational schedule at lam = 1/4); whether they can reach delta is open",
+        "no strict schedule-averaged gap is claimed at C = 1",
+        "with an admitted auxiliary random coin the deterministic and randomized values coincide",
+        "the general separation between information and randomization resources is classical in spirit (Blackwell 1951; Le Cam 1964) and is recorded in ST-T174; only the explicit frontier and values for this family are claimed"
+      ]
+    },
+    {
+      "id": "ST-F60",
+      "title": "Exact deficiency audit on canonical CHSH, a rational schedule, a setting-relabeling map, and an unequal-magnitude schedule",
+      "kind": "FINITE_CHECK",
+      "scope": "canonical uniform CHSH (C = 1/sqrt2, exact in Q(sqrt2)) and C = 3/5 with weights (1/2,1/4,1/8,1/8), lam in {k/8}, v grid {k/10}; joint-kernel dual; the joint deterministic map at lam = 1/4; c = (1/2,-1/10,3/5) under worst-setting aggregation",
+      "assumptions": [
+        "exact Fraction and Q(sqrt2) arithmetic; no floating-point line is part of the receipt"
+      ],
+      "evidence": [
+        "docs/le-cam-deficiency-bell-simulator.md#7-finite-check-st-f60-exact",
+        "src/simtheory/le_cam_deficiency.py:run",
+        "receipts/le-cam-deficiency-bell-simulator.txt",
+        "tests/test_le_cam_deficiency_bell_simulator.py"
+      ],
+      "nonclaims": [
+        "the averaged deterministic values are certified only on the listed schedules and grid"
+      ]
+    },
+    {
+      "id": "ST-O08",
+      "title": "Closed form for the setting-preserving schedule-averaged deficiency with unequal magnitudes",
+      "kind": "OPEN_PROBLEM",
+      "scope": "visibility family with distinct |c_i| under schedule-averaged TV, setting-preserving kernels; the unrestricted joint-kernel Le Cam deficiency in this case is a separate open question",
+      "assumptions": [],
+      "evidence": [
+        "docs/le-cam-deficiency-bell-simulator.md#9-nonclaims"
+      ],
+      "nonclaims": [
+        "float LP probes during review (not certificates): 0.041353 for setting-preserving kernels and 1/26 = 0.038462 for unrestricted joint kernels at C = (1/2, 1/10), equal weights, lam = 1/2; no conjectured formula is asserted"
+      ]
+    }
+  ]
+}

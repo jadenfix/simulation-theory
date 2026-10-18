@@ -1,0 +1,121 @@
+receipt: two-view-orthogonal-fiber-identified-set
+arithmetic: fractions.Fraction (exact); floats only for endpoint location and KL report
+[A_k2_witness]
+  O_orthogonal = True
+  A_matches_expected = True
+  A_rows_sum_to_one = True
+  A_has_negative_entry = True
+  A_not_permutation = True
+  pi_prime_matches = True
+  weighted_orthogonality = True
+  K_prime_strictly_positive_stochastic = True
+  one_view_equal = True
+  two_view_equal = True
+  three_view_differ = True
+  three_view_000 = ('259/5400', '42413/772200')
+  converse_recovers_A_and_O = True
+  two_view_BF_identically_one = True
+  three_view_KL_per_triple_nats = 0.002927349
+  three_view_KL_positive = True
+  T = [['97/900', '29/360', '59/600'], ['29/360', '337/3600', '31/240'], ['59/600', '31/240', '73/400']]
+  K_prime = [['47/66', '13/66', '1/11'], ['53/234', '149/468', '71/156']]
+[A_k3_witness]
+  rank_K = 3
+  O_orthogonal = True
+  admissible = True
+  A_has_negative_entry = True
+  A_rows_sum_to_one = True
+  K_prime_strictly_positive_stochastic = True
+  pi_prime = ['7228230361/73661759649', '30590709604/73661759649', '35842819684/73661759649']
+  pi_prime_differs = True
+  two_view_equal = True
+  three_view_differ = True
+  converse_recovers_A = True
+  all_three_skew_directions_admissible = True
+[A_prime_different_channels]
+  K1_ne_K2 = True
+  A_rows_sum_to_one = True
+  B_rows_sum_to_one = True
+  A_has_negative_entry = True
+  B_ne_A = True
+  pi_prime_positive = True
+  K1p_K2p_stochastic = True
+  cross_view_equal = True
+  identity_AtDB_eq_Dpi = True
+  pi_prime = ['1/3', '2/3']
+  B = [['38/35', '-3/35'], ['2/35', '33/35']]
+  two_param_grid_admissible = 49/49
+  product_rigidity_survivors = [(True, True), (True, True)]
+  product_rigidity_only_same_permutation = True
+[B_k2_identified_interval]
+  x_star_y_star = (0, 2)
+  L = 144/1825
+  U = 1849/2425
+  L_float = 0.078904
+  U_float = 0.762474
+  L_expected = True
+  U_expected = True
+  true_pi1_inside = True
+  witness_pi1_prime_inside = True
+  U_model_valid = True
+  L_model_valid = True
+  U_model_K = [['97/258', '145/516', '59/172'], ['0', '3/8', '5/8']]
+  L_model_K = [['5/6', '1/6', '0'], ['59/246', '155/492', '73/164']]
+  grid_points = 201
+  grid_admissible = 79
+  admissible_grid_contiguous = True
+  admissible_contains_zero = True
+  all_admissible_in_[L,U] = True
+  pi1_strictly_decreasing_in_t = True
+  inner_range_from_grid = (0.080303, 0.758856)
+  endpoint_probes_inside_ok_outside_fail = {'lo': (True, True), 'hi': (True, True)}
+  arc_theta_float = (-0.41822433, 0.35877067)
+  ell = 144/1825
+  ell_equals_min_L_1mU = True
+  label_free_set = [144/1825,1849/2425] union [576/2425,1681/1825]
+[B_anchor_cases]
+  two_anchors_point = True
+  two_anchors_no_small_rotation = True
+  one_anchor_interval = ('9/25', '289/325')
+  one_anchor_L_is_pi1_and_U_gt_pi1 = True
+  pr68_interval = ('1/5', '4/5')
+  pr68_pair_is_L_endpoint = True
+[C_ladder]
+  anchored_k3_nonidentity_admissible = 0/728
+  anchored_identity_admissible = True
+  anchored_permutation_admissible_and_relabels = True
+  anchor_formula_recovers_pi = True
+[k3_inner_outer]
+  grid_points = 9261
+  grid_admissible = 197
+  grid_reproduces_T = True
+  exact_first_weights_min_max_label_free = ('784/23409', '1369/2025')
+  exact_first_weights_min_max_float = (0.033491, 0.676049)
+  grid_adjacency_components = 4
+  identity_component_first_weight_range_float = (0.033491, 0.604938)
+  ell_floor = 4/153
+  ell_floor_float = 0.026144
+  outer_pi_i_range = (0.026144, 0.947712)
+  floor_violations_on_grid = 0
+  ell_le_min_true_pi = True
+  floor_ray_nu = ['1/24', '-1/96', '0']
+  floor_slice_feasible_rays = 2
+  floor_attained_label_free = True
+  T_rank = 3
+[no_anchor_scattered]
+  rank_K = 3
+  row_stochastic = True
+  no_anchor_column = True
+  dual_cone_extreme_rays = [['-1/3', '1', '1'], ['0', '0', '1'], ['0', '1', '0'], ['1', '-1/3', '1'], ['1', '0', '0'], ['1', '1', '-1/3']]
+  rays_satisfy_sum_ge_norm_strict_off_axes = True
+  cayley_grid_nonpermutation_admissible = 0/2196
+[incomparable_supports]
+  nested_support_row1_in_row0 = True
+  small_rotation_admissible = True
+  prior_changes = True
+  two_view_equal = True
+  pi_prime = ['50367409/156375025', '106007616/156375025']
+  upper_endpoint_by_eps = {'1/100': '1/2', '1/1000': '1/2', '0': '4/5'}
+  upper_endpoint_jumps_at_zero = True
+payload_sha256 = 41ba438eb5ec92caed271b6e1d226ec8d3bad25483ba078522a9e1243bc04241
+VERDICT = PASS

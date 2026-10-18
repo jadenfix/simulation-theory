@@ -29,6 +29,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Mapping, Sequence
 
+from .rebuild import matches_rebuild
 from .confusion_graphs import (
     ChromaticCertificate,
     ConfusionGraph,
@@ -277,6 +278,30 @@ class TVExpectationCertificate:
             and self.unused_radius >= 0
             and self.range_bound_slack >= 0
             and tight_if_small
+            and self.saturation_radius
+            == _extremal_saturation_radius(
+                self.nominal_distribution,
+                self.state_values,
+                maximize=self.maximize,
+            )
+            and self.full_range_tight_radius
+            == _full_range_tight_radius(
+                self.nominal_distribution,
+                self.state_values,
+                maximize=self.maximize,
+            )
+            # The greedy transport is optimal; bind the reported extremum,
+            # transfers, and radii to it so a non-greedy or zero-radius
+            # certificate cannot validate.
+            and matches_rebuild(
+                self,
+                lambda: _extremize_expectation_tv_ball(
+                    self.nominal_distribution,
+                    self.state_values,
+                    self.radius,
+                    maximize=self.maximize,
+                ),
+            )
         )
 
 
@@ -512,6 +537,12 @@ class TVExpectationSegment:
 
 @dataclass(frozen=True)
 class TVExpectationProfile:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     nominal_distribution: tuple[Fraction, ...]
     state_values: tuple[Fraction, ...]
     maximize: bool
@@ -861,6 +892,21 @@ class TVRobustCodeCertificate:
             and self.total_robust_gap
             == self.price_of_robustness + self.uncertainty_uplift
             and endpoint_valid
+            # Optimality over every proper partition and complete prefix shape
+            # is re-established by rerunning the bounded exact enumeration.
+            and matches_rebuild(
+                self,
+                lambda: exact_tv_robust_prefix_code(
+                    self.graph,
+                    self.nominal_prior,
+                    self.radius,
+                    max_vertices=self.max_vertices,
+                    max_partitions=self.max_partitions,
+                    max_candidates=self.max_candidates,
+                    max_prefix_assignments=10**9,
+                    max_prefix_shapes=10**7,
+                ),
+            )
         )
 
 

@@ -90,8 +90,13 @@ class IndependentLatentTVConfidence:
             and self.raw_squared_radius
             == Fraction(self.alphabet_size - 1, 4 * self.sample_count) / self.failure_probability
             and self.grid_denominator >= 1
-            and 0 <= self.radius <= 1
-            and (self.clipped_at_one or self.radius * self.radius >= self.raw_squared_radius)
+            and self.clipped_at_one
+            == (_ceil_sqrt_fraction_on_grid(self.raw_squared_radius, self.grid_denominator) > 1)
+            and self.radius
+            == min(
+                Fraction(1),
+                _ceil_sqrt_fraction_on_grid(self.raw_squared_radius, self.grid_denominator),
+            )
         )
 
 

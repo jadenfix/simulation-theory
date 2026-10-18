@@ -37,6 +37,8 @@ from itertools import product
 from math import prod
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .fixed_model_ambiguity import FixedModelFamily, MultiModelBeliefState
 from .prior_weighted_codes import RationalInput
@@ -216,6 +218,14 @@ class ActiveExperimentCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_active_fixed_model_experiment_design(self.graph, self.family, self.experiments, self.horizon, max_nodes=self.max_nodes, max_combinations=self.max_combinations, max_frontier_entries=self.max_frontier_entries, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if (
             not self.family.valid
             or self.graph.vertex_count != self.family.source_symbol_count

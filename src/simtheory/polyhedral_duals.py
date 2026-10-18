@@ -37,6 +37,7 @@ from math import comb
 from typing import Sequence
 
 from .polyhedral_priors import (
+    _transformed_halfspaces,
     PolyhedralExpectationCertificate,
     RationalPriorPolytope,
     _solve_square,
@@ -73,7 +74,12 @@ class FarkasInfeasibilityCertificate:
             not self.polytope.empty
             or len(self.multipliers) != len(rows)
             or any(weight < 0 for weight in self.multipliers)
-            or self.normalization != sum(self.multipliers, Fraction(0)) != 1
+            or self.normalization != sum(self.multipliers, Fraction(0))
+            or self.normalization != 1
+            # Only the true constraint rows may be combined: an appended row
+            # such as 0 <= -1 would make any polytope look infeasible.
+            or rows
+            != _transformed_halfspaces(self.polytope.state_count, self.polytope.constraints)
             or self.transpose_product != (Fraction(0),) * d
             or self.bound_product >= 0
             or self.bases_examined > self.candidate_bases
@@ -244,6 +250,16 @@ class PolyhedralExpectationDualCertificate:
             or self.transpose_product != self.transformed_objective
             or self.original_dual_value != self.primal.optimum
             or self.transformed_dual_value != self.sign * self.primal.optimum
+            or self.sign != (1 if self.primal.maximize else -1)
+            or rows != _transformed_halfspaces(polytope.state_count, polytope.constraints)
+            # The dual objective is rebuilt from the primal values, so a zero
+            # objective with an arbitrary constant cannot validate.
+            or self.transformed_constant != self.sign * self.primal.values[-1]
+            or self.transformed_objective
+            != tuple(
+                self.sign * (self.primal.values[j] - self.primal.values[-1])
+                for j in range(d)
+            )
             or self.bases_examined > self.candidate_bases
             or self.candidate_bases > self.max_bases
         ):

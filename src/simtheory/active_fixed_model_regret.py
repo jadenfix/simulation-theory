@@ -25,6 +25,8 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .active_fixed_model_experiments import (
     ActiveExperiment,
     ActiveExperimentCertificate,
@@ -68,6 +70,20 @@ class ActiveExperimentRegretCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the base design and every model-informed oracle; forged oracle values fail
+        try:
+            arithmetic = self._arithmetic_valid
+        except AssertionError:
+            # A negative regret (an oracle above a shared policy) is invalid
+            # data, not a crash.
+            return False
+        return arithmetic and matches_rebuild(
+            self,
+            lambda: exact_active_fixed_model_minimax_regret(self.base.graph, self.base.family, self.base.experiments, self.base.horizon, max_nodes=self.base.max_nodes, max_combinations=self.base.max_combinations, max_frontier_entries=self.base.max_frontier_entries, **enumeration_rebuild_caps(self.base.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if (
             not self.base.valid
             or len(self.oracles) != self.base.family.model_count

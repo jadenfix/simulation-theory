@@ -33,6 +33,8 @@ from itertools import product
 from math import prod
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .prior_weighted_codes import RationalInput
 from .robust_prior_codes import (
@@ -528,6 +530,14 @@ class FixedModelAmbiguityCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_fixed_model_ambiguity_game(self.graph, self.family, self.horizon, switching_penalty=self.switching_penalty, max_frontier_nodes=self.max_frontier_nodes, max_policy_combinations=self.max_policy_combinations, max_frontier_entries=self.max_frontier_entries, max_frontier_dominance_pairs=10**12, **enumeration_rebuild_caps(self.enumeration, dominance_key='max_code_dominance_pairs')),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         return (
             self.family.valid
             and self.graph.vertex_count == self.family.source_symbol_count

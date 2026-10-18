@@ -15,6 +15,7 @@ from functools import lru_cache
 from itertools import combinations
 from typing import Sequence
 
+from .rebuild import matches_rebuild
 from .bayesian_boolean_experiments import bayesian_boolean_gap, uniform_boolean_prior
 
 
@@ -59,6 +60,14 @@ class AdaptiveBooleanQueryCertificate:
 
     @property
     def valid(self) -> bool:
+        # recompute every node of the dynamic program from the stored instance
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_adaptive_boolean_query_design(self.truth_table, self.budget, self.prior),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         return (
             self.budget >= 0
             and self.adaptive_value >= 0

@@ -89,7 +89,11 @@ Enlarging `P` or `N` only enlarges the hulls, so the minimum is attained on comp
 
 The dangerous direction can therefore be a **mixture versus mixture** ambiguity. Minimum pairwise row distance is not enough once there are at least three latent components.
 
-**Prior art.** This identity is an elementary consequence of the Jordan decomposition of a zero-sum vector. For affinely independent rows it is the total-variation (half-`l1`) version of the facial distance of the simplex `conv{K_i}`, the minimum distance between complementary faces (Pena and Rodriguez, *Math. Oper. Res.* 2019), which is closely related to the pyramidal width of Lacoste-Julien and Jaggi (NeurIPS 2015). `alpha(K)` is the minimum `l1` gain of `delta -> delta K` on the zero-sum subspace, the lower counterpart of the Dobrushin coefficient `max_{i,j} TV(K_i,K_j) = sup TV(delta K)/TV(delta)`. The identity is not claimed as a new convex-geometric result; the contribution of this layer is the exact rational computation and its use for mixture-channel inversion.
+**Prior art.** This identity is an elementary consequence of the Jordan decomposition of a zero-sum vector. For affinely independent rows, `alpha(K)` is the facial distance of the simplex `conv{K_i}` taken in the TV norm. Gutman and Pena define the facial distance for an arbitrary norm, and their Proposition 1 ("The condition of a function relative to a polytope", arXiv:1802.00271; later "The condition number of a function relative to a set", arXiv:1901.08359, Math. Program.) gives, with the `l1` norm on the weights, exactly this minimum-ratio characterization `min 2||Ax - u|| / dist_1(x, Z(u))`; its diameter companion `max 2||A(x - y)||/||x - y||_1` is here the Dobrushin coefficient `max_{i,j} TV(K_i,K_j) = sup TV(delta K)/TV(delta)`. So the identity, and the "lower counterpart of Dobrushin" remark, are a direct special case of that published general-norm proposition. Pena and Rodriguez (*Math. Oper. Res.* 2019, doi:10.1287/moor.2017.0910) introduced the facial distance in the Euclidean norm (their Theorem 1 is the face characterization) and proved that, in the Euclidean norm, it equals the pyramidal width of Lacoste-Julien and Jaggi (NeurIPS 2015, "On the Global Linear Convergence of Frank-Wolfe Optimization Variants") (their Theorem 2). No TV-norm pyramidal-width equality is claimed.
+
+`alpha(K)` is also the restriction to zero-sum (prior-difference) directions of the `l1` condition number of Kleinberg and Sandler ("Using mixture models for collaborative filtering", J. Comput. Syst. Sci. 74 (2008) 49-69), the smallest `kappa` with `||x K||_1 >= ||x||_1 / kappa` for all `x`; Arora, Ge, Koehler, Ma and Moitra ("Provable algorithms for inference in topic models", ICML 2016) use it to invert known-topic mixtures, the setting of this layer, and note that no efficient algorithm is known for computing it, consistent with the exponential face enumeration here. *Elementary remark (new, verified):* for row-stochastic `K`, `alpha/(2 + alpha) <= 1/kappa(K) <= alpha`. The upper bound restricts to zero-sum `x`. For the lower bound write `x = a u - b v` with disjoint-support probability vectors and `a, b >= 0`; then `||x K||_1 >= |a - b|` (row sums are one) and `||x K||_1 >= 2 alpha min(a, b) - |a - b|`, and minimizing `max(d, 2 alpha m - d)/(2m + d)` over `d, m >= 0` gives `alpha/(2 + alpha)`. So the inverse constant `C_*` is equivalent to the Kleinberg-Sandler condition number up to a factor of about 3.
+
+`alpha(K) = 0` exactly when the rows are affinely dependent, while the facial distance of `conv(K)` stays positive there, so the facial-distance identification holds only in the affinely independent case. The qualitative criterion (positive `alpha` iff affinely independent rows, i.e. known-component identifiability) is classical (Teicher 1963; Yakowitz and Spragins, Ann. Math. Statist. 39 (1968) 209-214) and bears on ST-T238. The identity is not claimed as a new convex-geometric result; the contribution of this layer is the exact rational primal-dual face and event certificates and their use for mixture-channel inversion.
 
 ## 3. Turning one face distance into a finite zero-sum game
 
@@ -239,7 +243,7 @@ rho_{latent}
 }
 \]
 
-If `rho_obs` only bounds the distance to an off-model empirical law, replace `rho_obs` by `2 rho_obs`.
+If `rho_obs` only bounds the distance to an off-model empirical law `\hat p`, replace `rho_obs` by `2 rho_obs`; this is valid when `\hat\pi` is a TV minimum-distance fit (or any fit with `TV(\hat\pi K, \hat p) <= rho_obs`).
 
 Thus sample complexity inherits a conditioning penalty. Under second-moment radii scaling as `N^{-1/2}`, the sample size sufficient under this transfer to maintain a fixed latent-prior radius scales as
 
@@ -247,12 +251,12 @@ Thus sample complexity inherits a conditioning penalty. Under second-moment radi
 \boxed{C_*(K)^2=\alpha(K)^{-2}.}
 \]
 
-Near affine dependence this diverges even though every individual component pair may still look easy to classify. This is an upper-bound cost, not a minimax lower bound.
+Near affine dependence this diverges even though every individual component pair may still look easy to classify. This is an upper-bound cost, not a minimax lower bound. The Euclidean (`sigma_min`) analogues of this `alpha^-2` cost are standard in label-shift estimation through a confusion matrix, including estimated-matrix error (Lipton, Wang and Smola, "Detecting and correcting for label shift with black box predictors", ICML 2018), and in the condition-number factors of Kleinberg and Sandler (2008) and Arora et al. (2016).
 
 ## Nonclaims
 
 - Channel rows are known exactly in this layer.
-- The disjoint-face identity is not claimed as a new convex-geometric result; it is the TV-norm facial distance / minimum-gain quantity of the cited literature.
+- The disjoint-face identity is not claimed as a new convex-geometric result; for affinely independent rows it is the TV-norm facial distance of Gutman and Pena (Prop. 1), and in general the zero-sum restriction of the Kleinberg-Sandler `l1` condition number.
 - The face/event enumeration is exponential and bounded by explicit caps.
 - `alpha(K)` is an inverse-conditioning quantity, not a posterior probability.
 - A small `alpha(K)` does not imply that the latent models are physically similar; it says mixtures of their declared emission laws can be observationally close.

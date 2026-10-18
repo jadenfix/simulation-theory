@@ -101,6 +101,30 @@ class TVKnapsackDualCertificate:
             )
         )
         budget_complementarity = self.threshold * self.budget_slack == 0
+        # Bind the knapsack data to the transport instance: the gains must be
+        # the distances to the extreme value, the removed masses must be the
+        # donor masses of the transfers, and the primal gain must be the
+        # transport's expectation change.
+        values = self.transport.state_values
+        extreme_value = max(values) if self.transport.maximize else min(values)
+        expected_gains = tuple(
+            extreme_value - value if self.transport.maximize else value - extreme_value
+            for value in values
+        )
+        removed = [Fraction(0)] * count
+        for transfer in self.transport.transfers:
+            removed[transfer.donor_index] += transfer.mass
+        transport_gain = (
+            self.transport.extremal_expectation - self.transport.nominal_expectation
+            if self.transport.maximize
+            else self.transport.nominal_expectation - self.transport.extremal_expectation
+        )
+        if (
+            self.gain_vector != expected_gains
+            or self.removed_mass_by_state != tuple(removed)
+            or self.primal_gain != transport_gain
+        ):
+            return False
         return (
             dual_feasible
             and upper_complementarity

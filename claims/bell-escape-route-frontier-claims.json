@@ -1,0 +1,186 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T281",
+      "title": "(standard) Conditional-null extension of ST-T08 with an exact uniform-mixture closed form: betting e-processes for the CHSH win-rate null P(W_i = 1 | past) <= f",
+      "kind": "THEOREM",
+      "scope": "binary win indicators W_i adapted to a filtration F_i, null H(f): P(W_i = 1 | F_{i-1}) <= f for every i, with f in (0,1); data-independent mixtures over bets in [f,1] and predictable bets",
+      "assumptions": [
+        "the null holds conditionally on the full past, not only on average",
+        "the mixing measure on [f,1] does not depend on the data, or the bet is chosen predictably",
+        "the trial order used is the physical time order and is not chosen after seeing the data"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#theorem-st-t281-anytime-valid-test-for-every-resource-level",
+        "src/simtheory/bell_escape_routes.py:bet_conditional_mean",
+        "src/simtheory/bell_escape_routes.py:uniform_mixture_e_value",
+        "src/simtheory/bell_escape_routes.py:crossing_probability",
+        "tests/test_bell_escape_route_frontiers.py",
+        "receipts/bell-escape-route-frontiers.txt"
+      ],
+      "nonclaims": [
+        "the multiplier identity and mixture closure are ST-T08; the supermartingale and Ville step and the beta-mixture form are standard (Gill 2003, 2014; Zhang-Glancy-Knill 2011; Robbins 1970; Shafer et al. 2011; Howard et al. 2021; Waudby-Smith-Ramdas 2024); new here is only the exact rational closed form used by the check",
+        "the theorem does not say which f is physically correct for a given escape route",
+        "a valid e-process is not a powerful one; power is bounded by ST-T285"
+      ]
+    },
+    {
+      "id": "ST-T282",
+      "title": "One-way signalling CHSH frontiers: win <= 3/4 + c/2 on [0,1/2] with free informative silence (S <= 2 + 4c), and win <= 3/4 + c/4 with an x-independent send flag (S <= 2 + 2c, reproducing Pironio 2003); one always-sent bit reproduces every behaviour whose Alice marginal is free of y",
+      "kind": "THEOREM",
+      "scope": "CHSH game with uniform settings independent of the shared randomness, one-way Alice-to-Bob messages; cost = probability that a non-silent message is sent (accounting a), or that the send flag is on (accounting b); worst-case fixed-length accounting for the one-bit statement",
+      "assumptions": [
+        "settings are uniform and independent of the shared randomness and of the past",
+        "silence is a designated free symbol (accounting a), or the send flag is a function of the shared randomness only (accounting b)",
+        "private randomness is absorbed into the shared randomness"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#theorem-st-t282-one-way-signalling-frontiers",
+        "src/simtheory/bell_escape_routes.py:signalling_strategies",
+        "src/simtheory/bell_escape_routes.py:flag_strategies",
+        "src/simtheory/bell_escape_routes.py:upper_concave_hull",
+        "tests/test_bell_escape_route_frontiers.py",
+        "receipts/bell-escape-route-frontiers.txt"
+      ],
+      "nonclaims": [
+        "frontier (b) reproduces Pironio, Phys. Rev. A 68, 062102 (2003), Prop. 1; frontier (a) is the same game under an accounting where silence is free and informative and is treated as possibly known; the one-bit statement is a trivial finite analogue of Toner-Bacon 2003",
+        "the frontiers concern expected-cost accounting, not Shannon entropy of the message (ST-O03)",
+        "under accounting (a), expected cost 1/2 already suffices for every behaviour whose Alice marginal is free of y; one bit is the worst-case cost only",
+        "two-way and multi-round communication are not treated"
+      ]
+    },
+    {
+      "id": "ST-T283",
+      "title": "Exact certificate for the Puetz et al. 2014 measurement-dependence CHSH bound: win <= 1 - l, attained with uniform observed settings (S <= 4 - 8l under uniform observed settings)",
+      "kind": "THEOREM",
+      "scope": "local deterministic responses given lambda, settings law p(x,y | lambda) >= l for every x, y, lambda, with l in [0, 1/4]",
+      "assumptions": [
+        "outcomes are local functions of (own setting, lambda); all non-locality is carried by the setting law",
+        "the S-value form S <= 4 - 8l is stated only when the observed setting marginal is uniform"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#theorem-st-t283-measurement-dependence-frontier-puetz-et-al",
+        "src/simtheory/bell_escape_routes.py:losing_pairs",
+        "src/simtheory/bell_escape_routes.py:measurement_dependence_model",
+        "tests/test_bell_escape_route_frontiers.py",
+        "receipts/bell-escape-route-frontiers.txt"
+      ],
+      "nonclaims": [
+        "win <= 1 - l (S <= 4 - 8l under uniform observed settings) is Puetz et al., Phys. Rev. Lett. 113, 190402 (2014); see also Puetz-Gisin 2016, Hall 2010 and 2011 for other measures, and Koh et al. 2012 for setting bias; new here are the exact 16-strategy dual certificate and the explicit attaining model with uniform observed settings",
+        "bounds on general mutual-information measures of setting dependence are not derived",
+        "the corollary 1 - (1/2 - tau)^2 <= xi assumes each setting bit has conditional bias at most tau given lambda and the other bit; it does not replace the Delft paper's own xi"
+      ]
+    },
+    {
+      "id": "ST-M85",
+      "title": "Exact Q(sqrt2) certificate of the Garg-Mermin detection threshold eta* = 2/(1 + sqrt2) for local reproduction of the maximal-entanglement CHSH law",
+      "kind": "MODEL_RESULT",
+      "scope": "the 2x2-setting behaviour with outcomes {+1,-1,no-click}, Tsirelson correlations on coincidences, independent outcome-independent detection with efficiency eta on each side",
+      "assumptions": [
+        "losses are independent across sides and independent of settings and of the would-be outcome",
+        "the local model must reproduce the full 36-entry behaviour including no-click events"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#model-result-st-m85-exact-certificate-of-the-garg-mermin-detection-threshold",
+        "src/simtheory/bell_escape_routes.py:DETECTION_MODEL",
+        "src/simtheory/bell_escape_routes.py:ch_value_behaviour",
+        "tests/test_bell_escape_route_frontiers.py",
+        "receipts/bell-escape-route-frontiers.txt"
+      ],
+      "nonclaims": [
+        "the threshold and the tightness of a local model are Garg-Mermin, Phys. Rev. D 35, 3831 (1987), and Larsson, Phys. Rev. A 57, 3304 (1998); the contribution is an explicit 17-strategy local model in exact Q(sqrt2) arithmetic and the CH certificate",
+        "other settings, more settings, asymmetric efficiencies, or non-maximally entangled states (Eberhard 1993) are not treated",
+        "the Delft experiment is event-ready and is not subject to this frontier"
+      ]
+    },
+    {
+      "id": "ST-T284",
+      "title": "Uniform-setting statistical strength of the isotropic CHSH family: min over local laws of D(P_v || L) = d((1 + v/sqrt2)/2 || 3/4) for v >= 1/sqrt2 and 0 otherwise (the v = 1 value reproduces van Dam-Gill-Gruenwald 2005)",
+      "kind": "THEOREM",
+      "scope": "joint law P_v of (x,y,a,b) with uniform settings and P(win | x,y) = (1 + v/sqrt2)/2 uniformly spread on winning and losing output pairs, v in [0,1]; minimum over local laws with uniform settings independent of the shared randomness",
+      "assumptions": [
+        "settings are uniform and independent of the shared randomness under both the true law and every local alternative"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#theorem-st-t284-optimal-per-trial-exponent-under-uniform-settings",
+        "src/simtheory/bell_escape_routes.py:isotropic_box_exact",
+        "src/simtheory/bell_escape_routes.py:local_mixture_law_exact",
+        "src/simtheory/bell_escape_routes.py:kl_joint",
+        "tests/test_bell_escape_route_frontiers.py",
+        "receipts/bell-escape-route-frontiers.txt"
+      ],
+      "nonclaims": [
+        "the v = 1 value 0.0462738 bits is the van Dam-Gill-Gruenwald (IEEE Trans. Inf. Theory 51 (2005) 2812) uniform-setting value, reproduced and not new; only the v-family and the data-processing proof are new",
+        "the logarithmic constants are floats checked with tolerance 1e-14",
+        "optimisation over non-uniform setting distributions is not treated"
+      ]
+    },
+    {
+      "id": "ST-T285",
+      "title": "(standard) Kelly growth ceiling and Wald expected-sample-size floor applied to CHSH win-rate e-processes",
+      "kind": "THEOREM",
+      "scope": "e-variables or e-processes on the win sequence valid against the IID Bernoulli(f) member of the null; true law IID Bernoulli(p) with p in (0,1)",
+      "assumptions": [
+        "the e-variable is valid at least against IID Bernoulli(f), which H(f) contains",
+        "for the sample-size floor: the rejection time is almost surely finite with finite mean under the true law"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#theorem-st-t285-growth-ceiling-and-sample-size-floor-standard",
+        "src/simtheory/bell_escape_routes.py:kl_bern",
+        "tests/test_bell_escape_route_frontiers.py",
+        "receipts/bell-escape-route-frontiers.txt"
+      ],
+      "nonclaims": [
+        "both inequalities are classical (Kelly 1956; Wald 1945; Hoeffding 1960; Shafer 2021; Gruenwald-de Heide-Koolen 2024); new here are only the CHSH and Delft numbers 93.5 and 428.4",
+        "E_p[log E] <= n d(p || f) bounds expected log evidence, not realised evidence on one data set",
+        "the floor is a lower bound on expected sample size under a hypothetical IID truth; the 428-trial comparison with the 245 Delft trials is heuristic, not a pathwise impossibility",
+        "extension to full-data e-processes uses ST-T284 and holds only for the IID isotropic true law against the IID local null with f = 3/4"
+      ]
+    },
+    {
+      "id": "ST-F56",
+      "title": "Negative Delft 2015 finite check: no mixture of constant bets on the CHSH win indicator reaches 1/alpha = 20 at any prefix for any f >= 3/4 (realised ceiling 7.7797 at n = 241), so the confidence sets for the signalling budgets and the dependence floor built from that class are the full ranges",
+      "kind": "FINITE_CHECK",
+      "scope": "the 245 committed Delft valid trials (ST-F50) in timestamp order, 196 wins; xi = 3/4 + 3(tau + tau^2) with tau = 27/2500000; the default uniform mixture gives E_245 in [1.3669, 1.3670] and running supremum in [2.7815, 2.7817] against xi, anytime p about 0.36",
+      "assumptions": [
+        "the committed trials of ST-F50, with the trial digest pinned in code",
+        "each trial satisfies the conditional null P(win | past) <= f(r) of the stated escape route",
+        "timestamp order is the physical order; the uniform mixture is a default, data-independent choice made after the data were public, without tuning (not preregistered)"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#finite-check-st-f56-delft-2015-negative",
+        "src/simtheory/bell_escape_routes.py:load_delft",
+        "src/simtheory/bell_escape_routes.py:uniform_mixture_e_value",
+        "src/simtheory/bell_escape_routes.py:constant_bet_ceiling",
+        "src/simtheory/bell_escape_routes.py:plugin_bet_running_sup",
+        "receipts/bell-escape-route-frontiers.txt",
+        "tests/test_bell_escape_route_frontiers.py"
+      ],
+      "nonclaims": [
+        "only mixtures of constant bets on the win indicator against the relaxed null H(f(r)) are covered; e-processes valid only for the narrower escape-route model classes, full-data test factors, and predictable adaptive bets are not covered (explored adaptive bets reached at most 4.47, which is not a proof)",
+        "the p = 0.36 is illustrative for one default mixture; the negative conclusion rests on the realised ceiling, which covers every constant-bet mixture",
+        "it says nothing against the published fixed-n analysis, which is valid if n = 245 was fixed independently of the data; that stopping rule is not verified here",
+        "'evidence-limited, not loophole-limited' is a heuristic reading, not a theorem",
+        "setting independence of the random-number generators is assumed through tau, not tested",
+        "a Bell violation, or its absence, is not evidence for or against a simulation hypothesis"
+      ]
+    },
+    {
+      "id": "ST-O03",
+      "title": "Shannon-entropy communication frontier for CHSH",
+      "kind": "OPEN_PROBLEM",
+      "scope": "the maximum CHSH win probability as a function of the Shannon entropy (or mutual information) of a one-way message, rather than its expected non-silent cost",
+      "assumptions": [
+        "uniform independent settings and shared randomness"
+      ],
+      "evidence": [
+        "docs/bell-escape-route-frontiers.md#open-problems"
+      ],
+      "nonclaims": [
+        "open within this program; no literature search for mutual-information or entropy-cost CHSH frontiers was done",
+        "no frontier for entropy-based cost is claimed"
+      ]
+    }
+  ]
+}

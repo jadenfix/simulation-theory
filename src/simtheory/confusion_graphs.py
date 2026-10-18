@@ -36,6 +36,7 @@ from math import ceil, log2
 from typing import Callable, Hashable, Mapping, Sequence
 
 from .network_coding import FieldVector, LinearMulticastCertificate
+from .rebuild import matches_rebuild
 
 State = Hashable
 Value = Hashable
@@ -545,6 +546,12 @@ def encoder_is_zero_error(
 
 @dataclass(frozen=True)
 class ColoringEquivalenceCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     graph_proper: bool
     encoder_zero_error: bool
     decoder_constructed: bool
@@ -784,6 +791,16 @@ class ChromaticCertificate:
             and self.lower_bound <= self.chromatic_number <= self.greedy_upper_bound
             and len(self.maximum_clique_vertices) == self.clique_lower_bound
             and len(self.maximum_independent_vertices) > 0
+            # The clique, independent set, greedy bound, and the absence of a
+            # coloring with fewer colors are all recomputed: a forged lower
+            # bound (and hence a forged impossibility claim) cannot validate.
+            and matches_rebuild(
+                self,
+                lambda: exact_chromatic_certificate(
+                    self.graph,
+                    max_vertices=max(36, self.graph.vertex_count),
+                ),
+            )
         )
 
 
@@ -1097,10 +1114,24 @@ class ConfusionMonotonicityCertificate:
 
     @property
     def valid(self) -> bool:
-        return (
+        if self.original_graph.vertex_count != self.transformed_graph.vertex_count:
+            return False
+        if not (
             self.edges_contract
             and self.transformed_chromatic_number
             <= self.original_chromatic_number
+        ):
+            return False
+        # Recompute both chromatic numbers rather than trusting stored integers.
+        cap = max(36, self.original_graph.vertex_count)
+        try:
+            original = exact_chromatic_certificate(self.original_graph, max_vertices=cap)
+            transformed = exact_chromatic_certificate(self.transformed_graph, max_vertices=cap)
+        except ValueError:
+            return False
+        return (
+            original.chromatic_number == self.original_chromatic_number
+            and transformed.chromatic_number == self.transformed_chromatic_number
         )
 
 

@@ -149,6 +149,8 @@ def check_paper_ledgers(report: Report, repository_ids: dict[str, str]) -> dict[
 
 def check_real_data(report: Report, online: bool) -> None:
     from .real_data import (
+        DELFT_PUBLISHED_VALUES,
+        TSIRELSON_BOUND,
         beacon_bits,
         binomial_upper_tail,
         canonical_disk_point,
@@ -161,20 +163,25 @@ def check_real_data(report: Report, online: bool) -> None:
 
     report.step("real-data receipts")
     try:
+        # load_delft_summary checks the trial digest against the digest pinned
+        # in code, and the comparison uses the published values pinned in code,
+        # not values read from the data file being checked.
         payload, trials = load_delft_summary()
         summary = chsh_summary(trials)
-        published = payload["source"]["published_values"]
+        published = DELFT_PUBLISHED_VALUES
         p_value = binomial_upper_tail(summary.wins, summary.trials, local_win_probability_bound())
         matches = (
             summary.trials == published["trials"]
             and round(summary.s_value, 2) == published["S"]
             and round(summary.s_error, 2) == published["S_error"]
             and round(p_value, 3) == published["p_value"]
+            and abs(summary.s_value) <= TSIRELSON_BOUND
+            and payload["source"]["published_values"] == published
         )
         x, y = canonical_disk_point(summary.correlations)
         message = (
             f"Delft 2015: n={summary.trials} k={summary.wins} S={summary.s_value:.3f}+-{summary.s_error:.3f} "
-            f"p={p_value:.4f} disk q=({x:.3f},{y:.3f}) [published S=2.42+-0.20, p=0.039]"
+            f"p={p_value:.4f} disk q=({x:.3f},{y:.3f}) [pinned trial digest; published S=2.42+-0.20, p=0.039]"
         )
         (report.ok if matches else report.fail)(message)
     except (OSError, ValueError, KeyError) as error:
@@ -185,8 +192,9 @@ def check_real_data(report: Report, online: bool) -> None:
         path = kt_log_bayes_factor_path(bits)
         below = max(path) < math.log(100)
         message = (
-            f"NIST beacon: {len(pulses) - 1} precommitment links verified, {len(bits)} bits, "
-            f"max log BF {max(path):.2f} < ln 100"
+            f"NIST beacon: pinned pulse list, {len(pulses) - 1} precommitment links consistent "
+            f"(hash-chain consistency, not authenticity; NIST signatures are not checked), "
+            f"{len(bits)} bits, max log BF {max(path):.2f} < ln 100"
         )
         (report.ok if below else report.fail)(message)
     except (OSError, ValueError, KeyError) as error:

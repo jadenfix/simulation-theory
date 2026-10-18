@@ -37,6 +37,8 @@ from itertools import combinations, product
 from math import comb
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .distributionally_robust_codes import (
     TVExpectationCertificate,
@@ -207,6 +209,14 @@ class DriftPathPolytope:
 
     @property
     def valid(self) -> bool:
+        # rebuild the halfspaces and the complete vertex list from (nominal prior, drift, horizon)
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: enumerate_drift_path_polytope(self.nominal_prior, self.drift_per_step, self.horizon, max_bases=self.max_bases),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if (
             self.horizon < 1
             or not 0 <= self.drift_per_step <= 1
@@ -465,6 +475,14 @@ class CoupledDriftCostCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_coupled_drift_cost(self.polytope.nominal_prior, self.period_costs, self.polytope.drift_per_step, max_path_bases=self.polytope.max_bases, max_dual_bases=self.max_dual_bases),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         rows = self.polytope.constraints
         dimension = self.polytope.dimension
         if (
@@ -728,6 +746,14 @@ class PrecommittedCodeSequenceCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_precommitted_code_sequence(self.graph, self.nominal_prior, self.drift_per_step, self.horizon, switching_penalty=self.switching_penalty, max_sequences=10**8, max_path_bases=self.selected_path_certificate.polytope.max_bases, max_dual_bases=self.selected_path_certificate.max_dual_bases, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         candidates = self.enumeration.candidates
         if (
             self.horizon < 1

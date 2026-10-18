@@ -46,6 +46,12 @@ def binary_mixture_law(theta: Fraction, row0: Sequence[Fraction], row1: Sequence
 
 @dataclass(frozen=True)
 class BinaryMixtureIdentifiabilityCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     theta: Fraction
     eta: Fraction
     row_separation: Fraction

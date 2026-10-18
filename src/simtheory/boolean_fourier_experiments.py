@@ -90,6 +90,12 @@ def captured_spectral_weight(
 
 @dataclass(frozen=True)
 class FourierExperimentCertificate:
+    """Scope of ``valid``: it checks that the stored numbers are arithmetically
+    consistent with one another (an inequality-level receipt). It does not
+    recompute them from an instance, so it is not an independent
+    verification of the reported values.
+    """
+
     observed: tuple[int, ...]
     bayes_gap: Fraction
     absolute_bias: Fraction

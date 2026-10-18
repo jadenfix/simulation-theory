@@ -1,0 +1,35 @@
+(a) exact polar areas
+    CHSH (4 settings == 2 classes, support identical: True): area(Zpolar) = 32, area(Z) = 1/4, Mahler = 8
+    regular 3-direction: area(Zpolar) = 18*sqrt(3) ~ 31.176915, Mahler = 9
+    regular 4-direction: area(Zpolar) = -512 + 384*sqrt(2) ~ 31.058008  (certified pi^3 < A_4 < 18 sqrt3)
+    pi^3 ~ 31.006277
+    centre Fisher matrix sum_j w_j s_j s_j^T = I/2 exactly for CHSH, regular-3, regular-4
+(b) CHSH renderer count bracket, eps = 1/n (exact integer counts)
+      n   lower=ceil(pi n^2/32)   in-family<=G+3Gbd   G(meet)   G/(pi n^2/32)
+      40        158                   372              192   1.22231
+      80        629                  1040              692   1.10135
+     120       1414                  2028             1512   1.06952
+     160       2514                  3320             2636   1.04883
+     200       3927                  4932             4080   1.03896
+     240       5655                  6840             5820   1.02920
+     280       7697                  9092             7904   1.02691
+     320      10054                 11632            10276   1.02217
+     360      12724                 14516            12992   1.02111
+     400      15708                 17680            15988   1.01783
+    clipped-centre cover: 2465 exact (cell, point in D) pairs, max TV/eps = 1
+(c) CHSH served-set areas: 120 random rational off-plane c, exact area == (t^2-dU^2-dV^2)/2, max area/(32 eps^2) = 387/400
+    random rational 3/4-direction schedules: 40 cases, central area == eps^2 area(Zpolar), max off-centre/central = 0.9999
+(T3) 60 random rational schedules (2..6 classes): all area(Zpolar) > pi^3 (exact vs rational pi upper bound); min ~ 32.3813
+(d) hexagon: 80 random rational 3-schedules: shoelace == closed form, tiling covolume |det(p1+p2,p2+p3)| == area, area^2 > 972
+    rational grid: 62468 (direction triple, weight) cases, all area^2 > 972 = (18 sqrt3)^2; min area ~ 31.179190 vs 18 sqrt3 ~ 31.176915
+    polynomial lemma 243 X1X2X3 sum X_i q_j q_k <= (sum q)^2 (sum X)^4 and the final symmetric inequality 64 s^4 p2 >= 243 ((x+y)(y+z)(z+x))^2: 2000 exact random cases, equality at X=q=(1,1,1)
+    trine product schedule (alpha, beta uniform on {0, pi/3, 2pi/3}): class weights (1/3, 1/3, 1/3) = the regular 3-class law; its CHSH sub-test (Alice {0, 60}, Bob {0, 120}) has |S| = 5/2 v at phi = 0
+    finite eps: at eps = 3/25 the ST-T13 construction count ceil(1/(4eps))^2 = 9 exceeds pi/(32 eps^2) ~ 6.818; the valid finite-eps lower bound is the maximum of the two
+(const) asymptotic renderer constants  lim N eps^2  (decimal, for reading)
+    ST-T13 constructive packing  1/16          = 0.06250
+    CHSH exact                   pi/32         = 0.09817
+    regular-3 exact              pi/(18 sqrt3) = 0.10077
+    regular-4 lower              pi/A_4        = 0.10115
+    area-converse ceiling        1/pi^2        = 0.10132
+    universal upper (Fejes Toth, symmetric) 2/(sqrt27 pi) = 0.12252
+ALL CHECKS PASSED

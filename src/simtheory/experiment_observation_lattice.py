@@ -36,6 +36,8 @@ from fractions import Fraction
 from itertools import combinations
 from typing import Mapping, Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .prior_weighted_codes import RationalInput
 from .robust_prior_codes import (
@@ -132,6 +134,14 @@ class ObservationLatticeCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_observation_lattice_values(self.graph, self.model_laws, self.experiments, max_experiments=self.max_experiments, max_subsets=self.max_subsets, max_game_bases=self.max_game_bases, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         if (
             not self.model_laws
             or not self.experiments

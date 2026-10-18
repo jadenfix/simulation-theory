@@ -34,6 +34,8 @@ from fractions import Fraction
 from itertools import product
 from typing import Sequence
 
+from .robust_prior_codes import enumeration_rebuild_caps
+from .rebuild import matches_rebuild
 from .confusion_graphs import ConfusionGraph
 from .distributionally_robust_codes import total_variation_distance
 from .prior_weighted_codes import RationalInput
@@ -218,6 +220,14 @@ class OpenLoopDynamicCodeCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_open_loop_dynamic_code(self.graph, self.transition_model, self.initial_law_index, self.horizon, switching_penalty=self.switching_penalty, max_sequences=self.max_sequences, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         candidates = self.enumeration.candidates
         code_count = len(candidates)
         if (
@@ -415,6 +425,14 @@ class FeedbackDynamicCodeCertificate:
 
     @property
     def valid(self) -> bool:
+        # rebuild the exact solver on the stored instance; a swapped enumeration, a non-optimal selection or a forged frontier fails
+        return self._arithmetic_valid and matches_rebuild(
+            self,
+            lambda: exact_feedback_dynamic_code(self.graph, self.transition_model, self.initial_law_index, self.horizon, switching_penalty=self.switching_penalty, **enumeration_rebuild_caps(self.enumeration)),
+        )
+
+    @property
+    def _arithmetic_valid(self) -> bool:
         model = self.transition_model
         candidates = self.enumeration.candidates
         code_count = len(candidates)

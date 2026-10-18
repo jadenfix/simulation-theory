@@ -1,0 +1,70 @@
+random-bit price of shared codebook randomness: exact receipt
+==================================================================
+
+[T1] K3 public-randomness game, b fair public bits, b = 0..12
+  b= 0  V_b=           2  V_b-5/3=       1/3
+  b= 1  V_b=           2  V_b-5/3=       1/3
+  b= 2  V_b=         7/4  V_b-5/3=      1/12
+  b= 3  V_b=         7/4  V_b-5/3=      1/12
+  b= 4  V_b=       27/16  V_b-5/3=      1/48
+  b= 5  V_b=       27/16  V_b-5/3=      1/48
+  b= 6  V_b=      107/64  V_b-5/3=     1/192
+  b= 7  V_b=      107/64  V_b-5/3=     1/192
+  b= 8  V_b=     427/256  V_b-5/3=     1/768
+  b= 9  V_b=     427/256  V_b-5/3=     1/768
+  b=10  V_b=   1707/1024  V_b-5/3=    1/3072
+  b=11  V_b=   1707/1024  V_b-5/3=    1/3072
+  b=12  V_b=   6827/4096  V_b-5/3=   1/12288
+  closed form V_b = 2 - floor(2^b/3)/2^b = 5/3 + 1/(3*4^floor(b/2)) verified; gap > 0 for all b <= 12
+  generic all-dyadic-vector enumeration agrees for b <= 8; K3 min-weight reduction enumerated exhaustively for b <= 12
+
+[T2] dyadic dichotomy and two-sided gap bounds on committed instances, b = 0..10
+  ST-M21 minimax         V*=31/20  w*=(1/2, 1/2) |vert(O)|=1 dyadic_O=True first_exact_b=1 lower_const=1/200
+  ST-M21 regret          V*=7/20   w*=(1/2, 1/2) |vert(O)|=1 dyadic_O=True first_exact_b=1 lower_const=1/200
+  K4 nonoracle minimax   V*=9/5    w*=(1/2, 0, 1/2) |vert(O)|=1 dyadic_O=True first_exact_b=1 lower_const=1/50
+  ST-M26 full-TV K3      V*=5/3    w*=(1/3, 1/3, 1/3) |vert(O)|=1 dyadic_O=False first_exact_b=None lower_const=1/3
+  ST-M45 K3 regret       V*=2/3    w*=(1/3, 1/3, 1/3) |vert(O)|=1 dyadic_O=False first_exact_b=None lower_const=1/3
+  ST-M27 radius 2/5      V*=8/5    w*=(0, 1, 0) |vert(O)|=1 dyadic_O=True first_exact_b=0 lower_const=1/50
+  ST-M27 radius 7/15     V*=5/3    w*=(0, 1, 0) |vert(O)|=2 dyadic_O=True first_exact_b=0 lower_const=1/90
+  ST-M27 radius 1/2      V*=5/3    w*=(1/3, 1/3, 1/3) |vert(O)|=1 dyadic_O=False first_exact_b=None lower_const=1/30
+  gap curve ST-M26 full-TV K3: 1/3, 1/3, 1/12, 1/12, 1/48, 1/48, 1/192, 1/192, 1/768, 1/768, 1/3072
+  gap curve ST-M27 radius 1/2: 1/30, 1/30, 1/120, 1/120, 1/480, 1/480, 1/1920, 1/1920, 1/7680, 1/7680, 1/30720
+  every instance: V_b nonincreasing, V_b - V* in {0} U [2^-b/(D_A q), Delta floor(s/2) 2^-b];
+  V_b reaches V* within b<=10 exactly when O contains a dyadic point (decided independently)
+
+[T2r] random integer games (seeded), R in 2..4 rows, n in 2..3 columns, b = 0..6
+  300 games: 219 with a dyadic optimal point (219 exact by b<=6, 0 needing b>6), 81 without (never exact for b<=6, as forced); all bounds hold
+
+[T3] variable budget: Knuth-Yao optimal expected public bits
+  K3 uniform: E[T_KY] = 8/3 = 2.666667 bits;  H = log2 3 = 1.584963;  H <= E[T] < H+2 margin 0.918296
+  K3 DDG tail P(T>t) = (2^t mod 3)/2^t equals the universal lower bound for every t <= 40
+  200 random rational laws: periodic closed form == digit series == DDG tail series; H <= E[T] < H+2 (min margin 0.1793); DDG terminates by depth 80 iff dyadic
+
+[T4] one toss of a uniform L-ary public coin, L = 1..12
+  L= 1  K3 V=     2  (=5/3: False)   ST-M27 r=1/2 V=  17/10
+  L= 2  K3 V=     2  (=5/3: False)   ST-M27 r=1/2 V=  17/10
+  L= 3  K3 V=   5/3  (=5/3: True)   ST-M27 r=1/2 V=    5/3
+  L= 4  K3 V=   7/4  (=5/3: False)   ST-M27 r=1/2 V=  67/40
+  L= 5  K3 V=   9/5  (=5/3: False)   ST-M27 r=1/2 V=  42/25
+  L= 6  K3 V=   5/3  (=5/3: True)   ST-M27 r=1/2 V=    5/3
+  L= 7  K3 V=  12/7  (=5/3: False)   ST-M27 r=1/2 V= 117/70
+  L= 8  K3 V=   7/4  (=5/3: False)   ST-M27 r=1/2 V=  67/40
+  L= 9  K3 V=   5/3  (=5/3: True)   ST-M27 r=1/2 V=    5/3
+  L=10  K3 V= 17/10  (=5/3: False)   ST-M27 r=1/2 V=167/100
+  L=11  K3 V= 19/11  (=5/3: False)   ST-M27 r=1/2 V=  92/55
+  L=12  K3 V=   5/3  (=5/3: True)   ST-M27 r=1/2 V=    5/3
+  K3: V* attained by one toss iff 3 | L; never attained by t tosses with 3 not dividing L (L^t <= 1000 checked)
+  ST-M21 and K4 (optimum (1/2,1/2)): one toss attains V* iff 2 | L, L <= 12
+
+[X] cross-check against repository exact solvers
+  ST-M21 minimax         matrix and value match repo certificate (value 31/20)
+  ST-M21 regret          matrix and value match repo certificate (value 7/20)
+  K4 nonoracle minimax   matrix and value match repo certificate (value 9/5)
+  ST-M26 full-TV K3      matrix and value match repo certificate (value 5/3)
+  ST-M27 radius 2/5      matrix and value match repo certificate (value 8/5)
+  ST-M27 radius 7/15     matrix and value match repo certificate (value 5/3)
+  ST-M27 radius 1/2      matrix and value match repo certificate (value 5/3)
+  ST-M45 K3 regret: the hand-written matrix A - 1 is solved by the repo solver with value 2/3 (seven matrices are matched against repo certificates; for ST-M45 only the value is)
+  ST-M27 radius sweep r = k/30, k = 0..15: shared and deterministic values both equal 6/5 + r (zero bits needed) for every r <= 7/15, and differ at r = 1/2
+
+ALL CHECKS PASSED
