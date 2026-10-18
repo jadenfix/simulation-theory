@@ -1,0 +1,639 @@
+{
+  "schema": "simulation-theory/paper-ledger-v1",
+  "slug": "identifiability-and-randomness-as-resources",
+  "paper": "Identification, evidence caps, and the price of shared randomness",
+  "subtitle": "Orthogonal two-view fibers, persistent-latent evidence, and exact fair-bit costs in finite games",
+  "author": "Jaden Fix",
+  "affiliation": "Tempera",
+  "email": "Jaden@Tempera.dev",
+  "pages": 19,
+  "source_commit": "aa61193",
+  "pdf": "main.pdf",
+  "types": [
+    "theorem",
+    "standard result",
+    "cited theorem",
+    "model result",
+    "finite check",
+    "open problem"
+  ],
+  "claims": [
+    {
+      "id": "P4-01",
+      "name": "fiber classification",
+      "type": "theorem",
+      "status": "part (1) already in the repository; the orthogonal ambiguity is the standard symmetric-NMF fact; new: the stochastic reparametrization",
+      "section": "3.1",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws",
+        "the same channel K for both views"
+      ],
+      "nonclaims": [
+        "alternatives with more than k latent states are not classified",
+        "an observer of a single world draw never sees the two-view law T"
+      ],
+      "repo_claims": [
+        "ST-T297"
+      ]
+    },
+    {
+      "id": "P4-02",
+      "name": "strictly positive channels are not even locally identified",
+      "type": "theorem",
+      "status": "corollary of ST-T297",
+      "section": "3.1",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws",
+        "K > 0 entrywise and k >= 2"
+      ],
+      "nonclaims": [
+        "no finite-sample estimator or confidence set is given"
+      ],
+      "repo_claims": [
+        "ST-T298"
+      ]
+    },
+    {
+      "id": "P4-03",
+      "name": "what the earlier rigidity theorem excludes",
+      "type": "theorem",
+      "status": "corollary; re-reads ST-T261 and P1-T7 of the companion paper",
+      "section": "3.1",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws"
+      ],
+      "nonclaims": [
+        "does not change the scope of ST-T261, which remains correct as stated"
+      ],
+      "repo_claims": [
+        "ST-T299",
+        "ST-T261"
+      ]
+    },
+    {
+      "id": "P4-04",
+      "name": "different channels per view",
+      "type": "theorem",
+      "status": "part (a) and its dimension count are known (Henry-Kitamura-Salanie; Hall-Zhou); only (b) product-gauge rigidity is claimed",
+      "section": "3.1",
+      "assumptions": [
+        "two views with row-stochastic channels K_1, K_2 of full row rank k",
+        "strictly positive prior"
+      ],
+      "nonclaims": [
+        "part (a) is not new"
+      ],
+      "repo_claims": [
+        "ST-T300"
+      ]
+    },
+    {
+      "id": "P4-05",
+      "name": "sharp identified set, k = 2",
+      "type": "theorem",
+      "status": "known bounds specialized: specializes the sharp two-component bounds of Henry, Kitamura and Salanie (Thm. 1) to a shared channel; feasible-band construction of Lawton and Sylvestre; only the explicit closed form is offered, no priority claimed",
+      "section": "3.2",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws",
+        "k = 2",
+        "label convention: latent 1 favored by the extreme outcome x*"
+      ],
+      "nonclaims": [
+        "no finite-sample confidence interval for [L, U]"
+      ],
+      "repo_claims": [
+        "ST-T301"
+      ]
+    },
+    {
+      "id": "P4-06",
+      "name": "an exact witness with a strictly positive alternative channel",
+      "type": "model result",
+      "status": "exact witness",
+      "section": "3.2",
+      "assumptions": [
+        "the declared pi = (9/25, 16/25) and 2 x 3 channel K"
+      ],
+      "nonclaims": [
+        "one instance; not a general bound"
+      ],
+      "repo_claims": [
+        "ST-M87"
+      ]
+    },
+    {
+      "id": "P4-07",
+      "name": "weight floor",
+      "type": "theorem",
+      "status": "new",
+      "section": "3.3",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws"
+      ],
+      "nonclaims": [
+        "the upper bound 1 - (k - 1) l(T) is not claimed sharp"
+      ],
+      "repo_claims": [
+        "ST-T302"
+      ]
+    },
+    {
+      "id": "P4-08",
+      "name": "three latent states",
+      "type": "model result",
+      "status": "exact instance",
+      "section": "3.3",
+      "assumptions": [
+        "the declared pi = (1/9, 4/9, 4/9) and 3 x 4 channel"
+      ],
+      "nonclaims": [
+        "the k = 3 sharp set is not computed (open problem ST-O07); float estimates are uncertified"
+      ],
+      "repo_claims": [
+        "ST-M88"
+      ]
+    },
+    {
+      "id": "P4-09",
+      "name": "two views plus anchors identify",
+      "type": "theorem",
+      "status": "known mechanism: separability (anchor-word) mechanism of Donoho-Stodden and Arora-Ge-Kannan-Moitra; no priority claimed",
+      "section": "3.3",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws",
+        "each latent has an anchor outcome in the true channel"
+      ],
+      "nonclaims": [
+        "anchor sufficiency is known",
+        "for k >= 3 anchors are not necessary (ST-M89)"
+      ],
+      "repo_claims": [
+        "ST-T303"
+      ]
+    },
+    {
+      "id": "P4-10",
+      "name": "point identification without anchors",
+      "type": "model result",
+      "status": "exact instance",
+      "section": "3.3",
+      "assumptions": [
+        "pi uniform on three states and the declared 3 x 6 channel"
+      ],
+      "nonclaims": [
+        "does not characterize point identification for k >= 3"
+      ],
+      "repo_claims": [
+        "ST-M89"
+      ]
+    },
+    {
+      "id": "P4-11",
+      "name": "a necessary condition for point identification",
+      "type": "theorem",
+      "status": "new",
+      "section": "3.3",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws"
+      ],
+      "nonclaims": [
+        "necessary, not sufficient, for k >= 3"
+      ],
+      "repo_claims": [
+        "ST-T305"
+      ]
+    },
+    {
+      "id": "P4-12",
+      "name": "three views identify (Kruskal)",
+      "type": "cited theorem",
+      "status": "cited (Kruskal 1977; see Allman et al.; Anandkumar et al.); not reproved",
+      "section": "3.3",
+      "assumptions": [
+        "three conditionally independent views through the same channel",
+        "factor matrices of Kruskal rank k, k >= 2"
+      ],
+      "nonclaims": [
+        "cited, not proved in the repository or the paper"
+      ],
+      "repo_claims": []
+    },
+    {
+      "id": "P4-13",
+      "name": "the third view separates the witness pair",
+      "type": "model result",
+      "status": "exact instance",
+      "section": "3.3",
+      "assumptions": [
+        "the k = 2 witness pair of ST-M87"
+      ],
+      "nonclaims": [
+        "one instance; Kruskal's theorem is cited for the general statement"
+      ],
+      "repo_claims": [
+        "ST-M86"
+      ]
+    },
+    {
+      "id": "P4-14",
+      "name": "Bayes factor one inside the fiber",
+      "type": "standard result",
+      "status": "standard 'no learning about non-identified directions' fact (Dawid; Poirier); only its location inside the two-view fiber is new",
+      "section": "3.4",
+      "assumptions": [
+        "n IID two-view pairs"
+      ],
+      "nonclaims": [
+        "not new",
+        "the Giacomini-Kitagawa posterior limit is cited, not proved"
+      ],
+      "repo_claims": [
+        "ST-T304"
+      ]
+    },
+    {
+      "id": "P4-15",
+      "name": "exact fiber audit",
+      "type": "finite check",
+      "status": "bounded",
+      "section": "3.4",
+      "assumptions": [
+        "rational arithmetic on declared grids and instances"
+      ],
+      "nonclaims": [
+        "finite checks corroborate proofs on bounded instances; they are not proofs"
+      ],
+      "repo_claims": [
+        "ST-F59"
+      ]
+    },
+    {
+      "id": "P4-16",
+      "name": "persistent cap",
+      "type": "standard result",
+      "status": "data-processing inequality; not new; contribution is the application to world-level weights",
+      "section": "4",
+      "assumptions": [
+        "shared kernel K",
+        "experimenter policy does not depend on the hypothesis label",
+        "N-unit form: independent world draws"
+      ],
+      "nonclaims": [
+        "bounds an expectation, not every transcript (that is ST-T226)",
+        "vacuous when a is not absolutely continuous with respect to b",
+        "does not limit learning which world is active"
+      ],
+      "repo_claims": [
+        "ST-T277"
+      ]
+    },
+    {
+      "id": "P4-17",
+      "name": "saturation identity",
+      "type": "theorem",
+      "status": "identity is the KL chain rule and the zero-gap condition specializes the Kullback-Leibler equality condition; only the finite-M ratio form is new",
+      "section": "4",
+      "assumptions": [
+        "KL(a || b) finite",
+        "finite M with component densities for the zero-gap condition"
+      ],
+      "nonclaims": [
+        "the converse of 'M a function of Y implies zero gap' fails in general"
+      ],
+      "repo_claims": [
+        "ST-T278"
+      ]
+    },
+    {
+      "id": "P4-18",
+      "name": "gap bound and decay",
+      "type": "theorem",
+      "status": "MAP-error exponent classical; only the (r_max / r_min - 1) factor and the support-mismatch term are new",
+      "section": "4",
+      "assumptions": [
+        "finite M with a absolutely continuous with respect to b",
+        "conditionally IID transcripts for the decay statement",
+        "relevant component pairs have distinct laws"
+      ],
+      "nonclaims": [
+        "the gap decays at least as fast as the stated exponent; the exponent is not shown tight"
+      ],
+      "repo_claims": [
+        "ST-T279"
+      ]
+    },
+    {
+      "id": "P4-19",
+      "name": "different kernels",
+      "type": "standard result",
+      "status": "chain rule plus data processing; standard",
+      "section": "4",
+      "assumptions": [
+        "the hypotheses may use different kernels"
+      ],
+      "nonclaims": [
+        "no matching lower bound"
+      ],
+      "repo_claims": [
+        "ST-T280"
+      ]
+    },
+    {
+      "id": "P4-20",
+      "name": "exact persistent-latent audit",
+      "type": "finite check",
+      "status": "bounded",
+      "section": "4",
+      "assumptions": [
+        "exact laws over sufficient count vectors with 60-digit logarithms, declared examples up to n = 64"
+      ],
+      "nonclaims": [
+        "bounded corroboration, not a proof"
+      ],
+      "repo_claims": [
+        "ST-F55"
+      ]
+    },
+    {
+      "id": "P4-21",
+      "name": "realizable laws",
+      "type": "standard result",
+      "status": "elementary; no repository claim of its own",
+      "section": "5.1",
+      "assumptions": [
+        "b fair bits, or t uniform L-ary tosses, with L >= 2"
+      ],
+      "nonclaims": [
+        "not new"
+      ],
+      "repo_claims": []
+    },
+    {
+      "id": "P4-22",
+      "name": "dyadic dichotomy",
+      "type": "theorem",
+      "status": "elementary",
+      "section": "5.2",
+      "assumptions": [
+        "finite rational game; public seed seen before the source (A1)",
+        "adversary oblivious to the seed (A2)",
+        "rational payoffs with common denominator (A4)",
+        "fixed budget of b fair bits (A3)"
+      ],
+      "nonclaims": [
+        "extracting fair bits from a biased or physical source is not addressed"
+      ],
+      "repo_claims": [
+        "ST-T310"
+      ]
+    },
+    {
+      "id": "P4-23",
+      "name": "two-sided gap without nondegeneracy assumptions",
+      "type": "theorem",
+      "status": "new",
+      "section": "5.2",
+      "assumptions": [
+        "finite rational game; public seed seen before the source (A1)",
+        "adversary oblivious to the seed (A2)",
+        "rational payoffs with common denominator (A4)",
+        "fixed budget of b fair bits (A3)"
+      ],
+      "nonclaims": [
+        "the upper constant is not claimed tight"
+      ],
+      "repo_claims": [
+        "ST-T311"
+      ]
+    },
+    {
+      "id": "P4-24",
+      "name": "optimal exact sampling (Knuth-Yao)",
+      "type": "standard result",
+      "status": "classical (Knuth and Yao 1976; entropy bounds from Cover and Thomas); reproved in the repository derivation behind the bit-price claims; not new",
+      "section": "5.3",
+      "assumptions": [
+        "exact sampling of a rational law from fair bits"
+      ],
+      "nonclaims": [
+        "classical; not claimed as new"
+      ],
+      "repo_claims": []
+    },
+    {
+      "id": "P4-25",
+      "name": "the price of the value",
+      "type": "theorem",
+      "status": "new: composition of the Knuth-Yao cost with the optimal set",
+      "section": "5.3",
+      "assumptions": [
+        "finite rational game; public seed seen before the source (A1)",
+        "adversary oblivious to the seed (A2)",
+        "rational payoffs with common denominator (A4)",
+        "variable budget: IID fair bit stream and an almost surely finite stopping time (A3)"
+      ],
+      "nonclaims": [
+        "the minimum over a non-singleton optimal set is attained but not computed in general",
+        "private encoder randomness is not covered"
+      ],
+      "repo_claims": [
+        "ST-T312"
+      ]
+    },
+    {
+      "id": "P4-26",
+      "name": "coins with L sides",
+      "type": "theorem",
+      "status": "new",
+      "section": "5.3",
+      "assumptions": [
+        "finite rational game; public seed seen before the source (A1)",
+        "adversary oblivious to the seed (A2)",
+        "rational payoffs with common denominator (A4)",
+        "integer L >= 2; t independent uniform L-sided tosses"
+      ],
+      "nonclaims": [
+        "no fairness of any real coin is certified"
+      ],
+      "repo_claims": [
+        "ST-T313"
+      ]
+    },
+    {
+      "id": "P4-27",
+      "name": "the K3 value curve",
+      "type": "model result",
+      "status": "exact instance",
+      "section": "5.4",
+      "assumptions": [
+        "the K3 game: three point-mass scenarios and the three complete prefix codes with lengths a permutation of (1, 2, 2)"
+      ],
+      "nonclaims": [
+        "one game"
+      ],
+      "repo_claims": [
+        "ST-M90"
+      ]
+    },
+    {
+      "id": "P4-28",
+      "name": "the skew total-variation game at radius one half",
+      "type": "model result",
+      "status": "exact instance",
+      "section": "5.4",
+      "assumptions": [
+        "the ST-M27 game: K3 graph, nominal prior (4/5, 1/10, 1/10), total-variation radius 1/2"
+      ],
+      "nonclaims": [
+        "one game"
+      ],
+      "repo_claims": [
+        "ST-M91",
+        "ST-M27"
+      ]
+    },
+    {
+      "id": "P4-29",
+      "name": "Knuth-Yao prices of the committed instances",
+      "type": "model result",
+      "status": "exact instances; the 8/3-bit cost of a uniform ternary choice is classical",
+      "section": "5.4",
+      "assumptions": [
+        "the reduced games of the committed instances"
+      ],
+      "nonclaims": [
+        "the 8/3-bit cost is not new; only its identification as the exact coordination price of these games is offered"
+      ],
+      "repo_claims": [
+        "ST-M92",
+        "ST-M21",
+        "ST-M22",
+        "ST-M26",
+        "ST-M27",
+        "ST-M45"
+      ]
+    },
+    {
+      "id": "P4-30",
+      "name": "one L-sided toss",
+      "type": "model result",
+      "status": "exact instance; bounded L",
+      "section": "5.4",
+      "assumptions": [
+        "L <= 12 (and L^t <= 1000 for the K3 game when 3 does not divide L)"
+      ],
+      "nonclaims": [
+        "the general criterion is ST-T313; the instance checks are bounded"
+      ],
+      "repo_claims": [
+        "ST-M93"
+      ]
+    },
+    {
+      "id": "P4-31",
+      "name": "exact certification of the bit price",
+      "type": "finite check",
+      "status": "bounded",
+      "section": "5.4",
+      "assumptions": [
+        "declared enumeration bounds (b <= 12 for K3, b <= 10 for committed matrices, seeded random games and laws, L <= 12)"
+      ],
+      "nonclaims": [
+        "bounded corroboration, not a proof; the congruence decision procedure is exact but bounded in the checker"
+      ],
+      "repo_claims": [
+        "ST-F61"
+      ]
+    },
+    {
+      "id": "P4-32",
+      "name": "point identification and sharp sets for k >= 3",
+      "type": "open problem",
+      "status": "open",
+      "section": "7",
+      "assumptions": [
+        "finite alphabets, k latent states with k fixed and known",
+        "prior pi strictly positive; row-stochastic channel K of full row rank k",
+        "exact population law of the two views across independent world draws",
+        "k >= 3"
+      ],
+      "nonclaims": [
+        "a target, not a conclusion"
+      ],
+      "repo_claims": [
+        "ST-O07"
+      ]
+    },
+    {
+      "id": "P4-33",
+      "name": "second-order term of the evidence constant",
+      "type": "open problem",
+      "status": "open; formal expansion and numerics only",
+      "section": "7",
+      "assumptions": [
+        "interior beta"
+      ],
+      "nonclaims": [
+        "the remainder bounds are not written; numerical agreement is not a proof"
+      ],
+      "repo_claims": [
+        "ST-O02"
+      ]
+    }
+  ],
+  "context_repo_claims": [
+    "ST-F47",
+    "ST-M41",
+    "ST-M47",
+    "ST-M66",
+    "ST-M67",
+    "ST-M77",
+    "ST-M78",
+    "ST-M79",
+    "ST-T01",
+    "ST-T95",
+    "ST-T109",
+    "ST-T152",
+    "ST-T171",
+    "ST-T174",
+    "ST-T182",
+    "ST-T184",
+    "ST-T225",
+    "ST-T226",
+    "ST-T227",
+    "ST-T228",
+    "ST-T233",
+    "ST-T254",
+    "ST-T255",
+    "ST-T256",
+    "ST-T257",
+    "ST-T258",
+    "ST-T259",
+    "ST-T263",
+    "ST-T272",
+    "ST-T273",
+    "ST-T274",
+    "ST-T275",
+    "ST-T276"
+  ],
+  "context_note": "cited in prose or in Appendix A as context; stated in the repository, not restated as a result block here",
+  "paper_nonclaims": [
+    "nothing in the paper is evidence for or against simulation",
+    "reading a latent state as simulated versus base is an interpretation of the mixture model, not a finding",
+    "novelty is claimed only for the stated forms, with no claim of priority"
+  ]
+}

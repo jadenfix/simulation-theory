@@ -1,0 +1,80 @@
+name: paper-typst
+
+# Builds the Typst paper bundles under paper/. For each paper it runs the
+# paper's ledger tests, regenerates every figure from the repository modules
+# (figures.py asserts agreement with the committed receipts before drawing),
+# rebuilds the PDF with Typst's bundled fonts, and requires the rebuilt PDF to
+# have the same pages and text as the committed main.pdf.
+
+on:
+  pull_request:
+    paths:
+      - 'paper/evidence-a-simulator-can-leave/**'
+      - 'paper/pricing-a-bell-simulator/**'
+      - 'paper/identifiability-and-randomness-as-resources/**'
+      - 'tests/typst_paper_checks.py'
+      - 'tests/test_paper_*.py'
+      - 'scripts/compare_paper_pdf_text.py'
+      - 'src/simtheory/**'
+      - 'claims/**'
+      - 'data/**'
+      - 'receipts/**'
+      - '.github/workflows/paper-typst.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'paper/**'
+      - 'src/simtheory/**'
+      - '.github/workflows/paper-typst.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        paper:
+          - evidence-a-simulator-can-leave
+          - pricing-a-bell-simulator
+          - identifiability-and-randomness-as-resources
+    runs-on: ubuntu-latest
+    env:
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      PAPER: ${{ matrix.paper }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: astral-sh/setup-uv@v6
+
+      - run: uv sync --locked --python 3.12
+
+      - name: Paper ledger and bundle tests
+        run: |
+          slug_module="$(printf '%s' "$PAPER" | tr '-' '_')"
+          uv run --locked python -m pytest -q "tests/test_paper_${slug_module}.py"
+
+      - name: Regenerate figures from the repository modules
+        working-directory: paper/${{ matrix.paper }}
+        run: uv run --locked --with matplotlib==3.11.2 --with numpy==2.5.4 python figures.py
+
+      - name: Build the PDF with Typst
+        working-directory: paper/${{ matrix.paper }}
+        run: uv run --locked --with typst==0.15.0 python build.py "$RUNNER_TEMP/$PAPER.pdf"
+
+      - name: Rebuilt PDF matches the committed main.pdf
+        run: |
+          uv run --locked --with pypdfium2==5.14.0 python scripts/compare_paper_pdf_text.py \
+            "paper/$PAPER/main.pdf" "$RUNNER_TEMP/$PAPER.pdf"
+          sha256sum "paper/$PAPER/main.pdf" "$RUNNER_TEMP/$PAPER.pdf"
+
+      - name: Upload the rebuilt PDF and figures
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ${{ matrix.paper }}
+          path: |
+            ${{ runner.temp }}/${{ matrix.paper }}.pdf
+            paper/${{ matrix.paper }}/figures/

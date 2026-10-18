@@ -1,0 +1,500 @@
+{
+  "schema": "simulation-theory/paper-ledger-v1",
+  "slug": "pricing-a-bell-simulator",
+  "paper": "Pricing a Bell simulator",
+  "subtitle": "Precision, memory, communication and noise costs of reproducing CHSH statistics, stated from typed, test-backed claims",
+  "author": "Jaden Fix",
+  "affiliation": "Tempera",
+  "email": "Jaden@Tempera.dev",
+  "pages": 17,
+  "source_commit": "aa61193",
+  "pdf": "main.pdf",
+  "types": [
+    "theorem",
+    "standard result",
+    "cited theorem",
+    "model result",
+    "finite check",
+    "open problem"
+  ],
+  "claims": [
+    {
+      "id": "P3-01",
+      "name": "canonical CHSH metric",
+      "type": "theorem",
+      "status": "elementary",
+      "section": "2",
+      "assumptions": [
+        "canonical CHSH schedule with equal setting weights",
+        "declared two-parameter coplanar visibility-phase CHSH family"
+      ],
+      "nonclaims": [
+        "concerns one-trial predictive total variation only"
+      ],
+      "repo_claims": [
+        "ST-T12"
+      ]
+    },
+    {
+      "id": "P3-02",
+      "name": "Delft 2015 on the disk",
+      "type": "finite check",
+      "status": "finite check; reproduces the published statistic",
+      "section": "2",
+      "assumptions": [
+        "standard-library port of the published valid-trial filter applied to the released Delft 2015 data (n = 245)",
+        "published bound on the setting-generator bias"
+      ],
+      "nonclaims": [
+        "a Bell violation is not evidence for simulation",
+        "the fixed-n p-value assumes n fixed in advance"
+      ],
+      "repo_claims": [
+        "ST-F50",
+        "ST-F51"
+      ]
+    },
+    {
+      "id": "P3-03",
+      "name": "dithering boundary",
+      "type": "standard result",
+      "status": "standard (systematic dithering, Madow's construction)",
+      "section": "3",
+      "assumptions": [
+        "laws on four outcomes",
+        "the renderer may draw fresh private randomness on every trial"
+      ],
+      "nonclaims": [
+        "not new",
+        "finite precision is untestable only when private dithering is unrestricted"
+      ],
+      "repo_claims": [
+        "ST-T286"
+      ]
+    },
+    {
+      "id": "P3-04",
+      "name": "commensurable schedules cannot identify",
+      "type": "theorem",
+      "status": "new",
+      "section": "3",
+      "assumptions": [
+        "every setting cosine is a rational multiple of one number",
+        "4 divides D",
+        "the visibility range is wide enough: c (v_max - v_min) >= 4b / D",
+        "stationary renderer"
+      ],
+      "nonclaims": [
+        "no claim for odd D or for D below the threshold"
+      ],
+      "repo_claims": [
+        "ST-T287"
+      ]
+    },
+    {
+      "id": "P3-05",
+      "name": "canonical CHSH (commensurable case)",
+      "type": "theorem",
+      "status": "new",
+      "section": "3",
+      "assumptions": [
+        "canonical CHSH settings, all |c_j| = 1/sqrt(2)",
+        "4 divides D and D (v_max - v_min) >= 4 sqrt(2)",
+        "unknown visibility"
+      ],
+      "nonclaims": [
+        "the 5-bit (D = 32) renderer is an example, not a claim about the Delft source"
+      ],
+      "repo_claims": [
+        "ST-T287"
+      ]
+    },
+    {
+      "id": "P3-06",
+      "name": "the threshold is needed",
+      "type": "finite check",
+      "status": "finite check; boundary witness recorded in the ST-T287 record",
+      "section": "3",
+      "assumptions": [
+        "CHSH with v in [9/10, 1] and D divisible by 4 in [4, 400]; and v in [1/2, 1]"
+      ],
+      "nonclaims": [
+        "a bounded counterexample to the unconditional statement, not a general classification"
+      ],
+      "repo_claims": [
+        "ST-T287"
+      ]
+    },
+    {
+      "id": "P3-07",
+      "name": "settings 0 and pi/4",
+      "type": "theorem",
+      "status": "new",
+      "section": "3",
+      "assumptions": [
+        "schedule contains a setting with cosine 1 and one with cosine 1/sqrt(2)",
+        "v_min > 0",
+        "attainment and trial counts restricted to designs with cosines in {0, +-1, +-1/sqrt(2)}, 4 divides D, D >= 4 / (v_max - v_min)"
+      ],
+      "nonclaims": [
+        "exactly known cosines; IEEE-754 floating point and angle discretization are out of scope"
+      ],
+      "repo_claims": [
+        "ST-T288"
+      ]
+    },
+    {
+      "id": "P3-08",
+      "name": "universal converse and known unit visibility",
+      "type": "theorem",
+      "status": "(a) standard; (b) and (c) new",
+      "section": "3",
+      "assumptions": [
+        "(a) fixed horizon or almost surely bounded stopping time, K-outcome trials, D > K / 4",
+        "(b) visibility known to be exactly v = 1, angle set exactly to cos theta = 1 - 2/D, D even",
+        "(c) fixed angle pi/4, v = 1 known, D = 2^k with k >= 3"
+      ],
+      "nonclaims": [
+        "with v_max < 1 the rare-outcome mechanism of (b) disappears and no Theta(D log(1/eps)) rate is claimed"
+      ],
+      "repo_claims": [
+        "ST-T289"
+      ]
+    },
+    {
+      "id": "P3-09",
+      "name": "digits and constants",
+      "type": "finite check",
+      "status": "finite check",
+      "section": "3",
+      "assumptions": [
+        "k = 3..64 with exact integer-square-root decisions and 80-digit arithmetic",
+        "declared grid of 110 values of D <= 10^4 and v in [1/2, 1]"
+      ],
+      "nonclaims": [
+        "grid values corroborate, but do not replace, the proved constant 1/(3 + 2 sqrt(2))"
+      ],
+      "repo_claims": [
+        "ST-F57"
+      ]
+    },
+    {
+      "id": "P3-10",
+      "name": "area converse",
+      "type": "theorem",
+      "status": "new as applied",
+      "section": "4",
+      "assumptions": [
+        "rank-2 schedule",
+        "epsilon-accurate one-trial renderer with arbitrary emissions",
+        "declared two-parameter coplanar visibility-phase CHSH family"
+      ],
+      "nonclaims": [
+        "one-trial bound; n-trial, adaptive or transcript-level renderers are not covered"
+      ],
+      "repo_claims": [
+        "ST-T290"
+      ]
+    },
+    {
+      "id": "P3-11",
+      "name": "canonical CHSH memory",
+      "type": "theorem",
+      "status": "upper bounds new; lower bound new as applied (also from the ST-T05 packing)",
+      "section": "4",
+      "assumptions": [
+        "canonical CHSH schedule",
+        "epsilon <= 1/8 for the in-family count"
+      ],
+      "nonclaims": [
+        "clipped emissions need not be quantum-realizable",
+        "internal states are representational resources of a hypothetical renderer, not claims about parent hardware"
+      ],
+      "repo_claims": [
+        "ST-T291"
+      ]
+    },
+    {
+      "id": "P3-12",
+      "name": "universal ceiling",
+      "type": "standard result",
+      "status": "standard",
+      "section": "4",
+      "assumptions": [
+        "finite schedules"
+      ],
+      "nonclaims": [
+        "not new"
+      ],
+      "repo_claims": [
+        "ST-T292"
+      ]
+    },
+    {
+      "id": "P3-13",
+      "name": "tiling schedules are exact",
+      "type": "theorem",
+      "status": "new as applied",
+      "section": "4",
+      "assumptions": [
+        "exactly two or three direction classes"
+      ],
+      "nonclaims": [
+        "no exact constant for four or more classes"
+      ],
+      "repo_claims": [
+        "ST-T293"
+      ]
+    },
+    {
+      "id": "P3-14",
+      "name": "most memory with at most three classes",
+      "type": "theorem",
+      "status": "new",
+      "section": "4",
+      "assumptions": [
+        "rank-2 schedules with at most three direction classes"
+      ],
+      "nonclaims": [
+        "the hexagon is not the maximizer over all finite schedules (ST-T295)"
+      ],
+      "repo_claims": [
+        "ST-T294"
+      ]
+    },
+    {
+      "id": "P3-15",
+      "name": "the hexagon does not force the most memory",
+      "type": "theorem",
+      "status": "lower end new as applied; upper end classical and cited (Rogers asymptotic covering theorem; Fejes Toth lattice covering bound for centrally symmetric convex discs); new: A_4 < 18 sqrt(3)",
+      "section": "4",
+      "assumptions": [
+        "rank-2 schedules",
+        "rational enclosures certify A_4"
+      ],
+      "nonclaims": [
+        "the supremum over finite schedules is only bracketed, not computed",
+        "the lattice covering bound is Fejes Toth's and is cited, not reproved"
+      ],
+      "repo_claims": [
+        "ST-T295"
+      ]
+    },
+    {
+      "id": "P3-16",
+      "name": "local and global rankings differ",
+      "type": "theorem",
+      "status": "elementary",
+      "section": "4",
+      "assumptions": [
+        "center Fisher information of the declared family"
+      ],
+      "nonclaims": [
+        "local Fisher optimality is not claimed to rank schedules for memory"
+      ],
+      "repo_claims": [
+        "ST-T296"
+      ]
+    },
+    {
+      "id": "P3-17",
+      "name": "one-way signaling",
+      "type": "theorem",
+      "status": "(b) is Pironio's bound; (a) no earlier statement found but may be known; (c) is a trivial finite analogue of Toner and Bacon",
+      "section": "5",
+      "assumptions": [
+        "uniform settings independent of the shared randomness and of the past",
+        "per-trial communication budget"
+      ],
+      "nonclaims": [
+        "(b) is not new",
+        "one bit is the worst-case cost only",
+        "budgets that hold only on average need an Azuma-type argument that is not given"
+      ],
+      "repo_claims": [
+        "ST-T282"
+      ]
+    },
+    {
+      "id": "P3-18",
+      "name": "measurement dependence",
+      "type": "theorem",
+      "status": "reproduces Putz et al.",
+      "section": "5",
+      "assumptions": [
+        "local outputs",
+        "input law may depend on the hidden variable with p(s, t | omega) >= l",
+        "CHSH bound S <= 4 - 8l under uniform observed inputs"
+      ],
+      "nonclaims": [
+        "not new"
+      ],
+      "repo_claims": [
+        "ST-T283"
+      ]
+    },
+    {
+      "id": "P3-19",
+      "name": "detection efficiency",
+      "type": "model result",
+      "status": "reproduces Garg and Mermin",
+      "section": "5",
+      "assumptions": [
+        "Tsirelson behavior with independent symmetric detection efficiency eta and a no-click outcome"
+      ],
+      "nonclaims": [
+        "not new; not tested on Delft (event-ready)"
+      ],
+      "repo_claims": [
+        "ST-M85"
+      ]
+    },
+    {
+      "id": "P3-20",
+      "name": "statistical strength",
+      "type": "theorem",
+      "status": "value at v = 1 is that of van Dam, Gill and Grunwald; the visibility family and data-processing proof are new",
+      "section": "5",
+      "assumptions": [
+        "uniform inputs",
+        "local laws with uniform inputs"
+      ],
+      "nonclaims": [
+        "the v = 1 value is not new"
+      ],
+      "repo_claims": [
+        "ST-T284"
+      ]
+    },
+    {
+      "id": "P3-21",
+      "name": "anytime-valid tests and their limits",
+      "type": "standard result",
+      "status": "standard (Ville; Kelly; Wald)",
+      "section": "5",
+      "assumptions": [
+        "null holds conditionally on the past",
+        "data-independent mixtures or predictable bets",
+        "for the Wald floor, an almost surely finite stopping time with finite mean"
+      ],
+      "nonclaims": [
+        "not new"
+      ],
+      "repo_claims": [
+        "ST-T281",
+        "ST-T285"
+      ]
+    },
+    {
+      "id": "P3-22",
+      "name": "exact one-trial deficiency",
+      "type": "theorem",
+      "status": "closed form new; framework and reduction standard (Le Cam; Torgersen)",
+      "section": "6",
+      "assumptions": [
+        "one-trial interface",
+        "equal correlation magnitudes C (unequal magnitudes only under worst-setting aggregation)",
+        "central post-processing",
+        "0 <= lambda < 1 for the strict inequalities"
+      ],
+      "nonclaims": [
+        "Bell-local and n-trial deficiencies are not computed"
+      ],
+      "repo_claims": [
+        "ST-T306",
+        "ST-T307"
+      ]
+    },
+    {
+      "id": "P3-23",
+      "name": "risk transfer",
+      "type": "standard result",
+      "status": "standard (easy direction of Le Cam's randomization criterion)",
+      "section": "6",
+      "assumptions": [
+        "bounded loss"
+      ],
+      "nonclaims": [
+        "not new"
+      ],
+      "repo_claims": [
+        "ST-T308"
+      ]
+    },
+    {
+      "id": "P3-24",
+      "name": "deterministic disguises are worse",
+      "type": "theorem",
+      "status": "new; step (a) is a computer-assisted exact proof",
+      "section": "6",
+      "assumptions": [
+        "deterministic setting-preserving kernels (a relabeling chosen per setting)",
+        "0 < C < 1 and 0 <= lambda < 1 for (d)"
+      ],
+      "nonclaims": [
+        "compares only deterministic setting-preserving relabelings with the optimal central kernel of ST-T306"
+      ],
+      "repo_claims": [
+        "ST-T309"
+      ]
+    },
+    {
+      "id": "P3-25",
+      "name": "canonical CHSH deficiency audit",
+      "type": "finite check",
+      "status": "finite check",
+      "section": "6",
+      "assumptions": [
+        "lambda on the grid {0, 1/8, ..., 1}",
+        "canonical CHSH and one declared rational schedule"
+      ],
+      "nonclaims": [
+        "bounded corroboration, not a proof"
+      ],
+      "repo_claims": [
+        "ST-F60"
+      ]
+    },
+    {
+      "id": "P3-26",
+      "name": "Delft 2015, constant-bet mixtures, negative",
+      "type": "finite check",
+      "status": "finite check; negative result",
+      "section": "7",
+      "assumptions": [
+        "constant-bet mixtures on the CHSH win indicator fixed independently of the data",
+        "per-trial budgets",
+        "the published setting-predictability model"
+      ],
+      "nonclaims": [
+        "concerns constant-bet mixtures on the win indicator only",
+        "nothing in this section adjusts for the fixed-n chi-square p = 0.046 against uniform setting frequencies"
+      ],
+      "repo_claims": [
+        "ST-F56"
+      ]
+    }
+  ],
+  "context_repo_claims": [
+    "ST-F58",
+    "ST-M03",
+    "ST-O03",
+    "ST-O04",
+    "ST-O05",
+    "ST-O06",
+    "ST-O08",
+    "ST-T01",
+    "ST-T05",
+    "ST-T09",
+    "ST-T11",
+    "ST-T13",
+    "ST-T15"
+  ],
+  "context_note": "cited in prose or tables as context; stated in the repository, not restated as a result environment here",
+  "paper_nonclaims": [
+    "nothing in the paper is evidence for or against simulation",
+    "internal states and grid denominators are representational resources of a hypothetical renderer",
+    "typed and test-backed means executable tests and exact receipts, not formal proofs",
+    "prior-art searches were not exhaustive; 'new' means no earlier statement was found"
+  ]
+}
