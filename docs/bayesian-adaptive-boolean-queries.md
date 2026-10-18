@@ -22,7 +22,7 @@ V_h(C)=\min\left\{L(C),\min_i\sum_{b\in\{0,1\}}P(X_i=b\mid C)V_{h-1}(C_{i=b})\ri
 }
 \]
 
-Only coordinates that strictly split the current cell need be considered. Exact rational dynamic programming returns the optimal value and one optimal query at every reachable state.
+with base case `V_0(C)=L(C)`. Only coordinates that strictly split the current cell need be considered, since a non-splitting query leaves `C` unchanged and `V_{h-1}(C)>=V_h(C)`. Exact rational dynamic programming returns the optimal value and one optimal query at every reachable state.
 
 Because a nonadaptive subset is a special adaptive policy that ignores outcomes when scheduling later queries,
 

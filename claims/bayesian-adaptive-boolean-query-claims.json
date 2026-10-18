@@ -8,16 +8,16 @@
       "scope": "finite Boolean hidden models with exact deterministic coordinate queries and Bayesian terminal coding loss",
       "assumptions": ["query outcomes are deterministic functions of the hidden bit string", "future admissible queries depend only on the current cell and remaining budget"],
       "evidence": ["docs/bayesian-adaptive-boolean-queries.md", "src/simtheory/bayesian_adaptive_boolean_queries.py:exact_adaptive_boolean_query_design", "tests/test_bayesian_adaptive_boolean_queries.py"],
-      "nonclaims": ["the sufficiency statement changes with noisy or history-dependent query channels"]
+      "nonclaims": ["support-cell sufficiency is not asserted for noisy or history-dependent query channels, where the full posterior is the state"]
     },
     {
       "id": "ST-T216",
       "title": "Exact adaptive Boolean query value obeys the finite Bellman recursion over posterior cells",
       "kind": "THEOREM",
       "scope": "the declared finite query-budget model",
-      "assumptions": ["terminal loss is posterior minority probability", "only strictly splitting coordinates need be considered"],
-      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#bellman-recursion", "src/simtheory/bayesian_adaptive_boolean_queries.py:exact_adaptive_boolean_query_design"],
-      "nonclaims": ["the bounded solver is not asserted polynomial-time"]
+      "assumptions": ["terminal loss is posterior minority probability", "base case V_0(C)=L(C)"],
+      "evidence": ["docs/bayesian-adaptive-boolean-queries.md#bellman-recursion", "src/simtheory/bayesian_adaptive_boolean_queries.py:exact_adaptive_boolean_query_design", "tests/test_bayesian_adaptive_boolean_queries.py"],
+      "nonclaims": ["the bounded solver is not asserted polynomial-time", "restricting to strictly splitting coordinates is a lemma (a non-splitting query only spends budget), not an extra assumption"]
     },
     {
       "id": "ST-T217",
@@ -32,10 +32,10 @@
       "id": "ST-T218",
       "title": "A zero-myopic-value query can have positive finite-horizon option value",
       "kind": "THEOREM",
-      "scope": "finite adaptive experiment problems where an early observation changes which later query is useful",
+      "scope": "existence statement; witness: uniform three-bit multiplexer (ST-M61)",
       "assumptions": ["experiment scheduling may depend on earlier observed outcomes"],
       "evidence": ["docs/bayesian-adaptive-boolean-queries.md#multiplexer-adaptivity-gap", "tests/test_bayesian_adaptive_boolean_queries.py"],
-      "nonclaims": ["myopic value and option value need not coincide"]
+      "nonclaims": ["does not assert that every adaptive problem has a zero-myopic-value query with positive option value"]
     },
     {
       "id": "ST-M61",
