@@ -79,3 +79,19 @@ def test_majority_captured_weight_increases_with_observed_coordinate_set():
     full = exact_fourier_experiment_certificate(table, (0, 1, 2))
     assert empty.captured_weight <= one.captured_weight <= two.captured_weight <= full.captured_weight
     assert empty.bayes_gap >= one.bayes_gap >= two.bayes_gap >= full.bayes_gap
+
+
+def test_equal_captured_spectral_mass_does_not_fix_the_bayes_gap():
+    from simtheory.bayesian_boolean_experiments import bayesian_boolean_gap, uniform_boolean_prior
+    from simtheory.boolean_fourier_experiments import _bit
+
+    def table(fn):
+        return tuple(fn(*(_bit(i, j, 4) for j in range(4))) for i in range(16))
+
+    first = table(lambda a, b, c, d: c & d)
+    second = table(lambda a, b, c, d: int((a, b) != (0, 0)) & c)
+    prior = uniform_boolean_prior(4)
+    for f in (first, second):
+        assert captured_spectral_weight(boolean_walsh_coefficients(f), (0, 1)) == Fraction(1, 4)
+    assert bayesian_boolean_gap(first, prior, (0, 1)) == Fraction(1, 4)
+    assert bayesian_boolean_gap(second, prior, (0, 1)) == Fraction(3, 8)

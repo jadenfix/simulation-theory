@@ -90,7 +90,7 @@ V([k]\setminus\{i\})
 
 ## Why L1 and L2 both matter
 
-Fourier mass is an `L2` object while Bayesian classification/coding error depends on the `L1` magnitude of posterior bias. Two functions can capture the same spectral mass yet have different posterior-bias distributions and therefore different exact Bayes gaps. The sandwich quantifies, rather than erases, that distinction.
+Fourier mass is an `L2` object while Bayesian classification/coding error depends on the `L1` magnitude of posterior bias. Two functions can capture the same spectral mass yet have different posterior-bias distributions and therefore different exact Bayes gaps. For example, with `k=4` and `S={0,1}`, `f=x_2 AND x_3` and `f=[(x_0,x_1)!=(0,0)] AND x_2` both capture `W(S)=1/4`, but their gaps are `1/4` and `3/8`. The sandwich quantifies, rather than erases, that distinction.
 
 This is why a spectral-energy argument by itself is generally insufficient to recover exact experiment value. Exact value requires the conditional-bias distribution; spectral mass supplies certified lower and upper bounds.
 
@@ -100,4 +100,5 @@ This is why a spectral-energy argument by itself is generally insufficient to re
 - Spectral mass is not itself an empirical probability that a model is true.
 - The square-root version is a mathematical corollary; repository certificates stay rational through `B^2<=W<=B`.
 - These internal decision bounds are not physical lower bounds on a hypothetical simulator.
+- Walsh projection, Parseval's identity, and the spectral influence identity are classical (for example O'Donnell, *Analysis of Boolean Functions*, chapter 2) and are not claimed as new; the contribution is only their link to the K3 Bayes gap.
 - None of the results is evidence for simulation.
