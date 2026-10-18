@@ -2,7 +2,7 @@
 
 *Explicit evidence rates, a one-draw cap, and what the NIST beacon and Delft 2015 data do and do not show*
 
-simulation-theory contributors. Every result is stated from typed claims in this repository at commit `aa61193` (the results merged in PR #72 and the attribution sweep of PR #73).
+Jaden Fix, Tempera (Jaden@Tempera.dev). Every result is stated from typed claims in this repository at commit `aa61193` (the results merged in PR #72 and the attribution sweep of PR #73).
 
 **PDF:** [main.pdf](main.pdf) (19 pages).
 
