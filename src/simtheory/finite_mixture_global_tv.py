@@ -105,7 +105,29 @@ class GlobalTVModulusCertificate:
         else:
             if self.alpha != 0 or self.optimal_inverse_constant is not None:
                 return False
-        return self.event_count == len(self.face_certificates[0].events)
+        if self.event_count != len(self.face_certificates[0].events):
+            return False
+        # Bind every face receipt to this channel: the face list must be the
+        # complete enumeration, every face must use every nontrivial event, the
+        # game matrix must be the one the channel induces, and the observed laws
+        # must be the channel images of the certified priors.
+        k = self.affine.channel
+        unbounded = 1 << 62
+        expected_pairs = tuple(_face_pairs(len(k), unbounded))
+        if tuple(
+            (face.positive_indices, face.negative_indices) for face in self.face_certificates
+        ) != expected_pairs:
+            return False
+        events = _events(len(k[0]), unbounded)
+        for face in self.face_certificates:
+            if (
+                face.events != events
+                or face.game.cost_matrix != _face_matrix(k, face.pair_actions, events)
+                or face.positive_observed_law != mixture_law(face.positive_prior, k)
+                or face.negative_observed_law != mixture_law(face.negative_prior, k)
+            ):
+                return False
+        return True
 
 
 def _events(output_count: int, max_events: int) -> tuple[tuple[int, ...], ...]:
@@ -137,6 +159,20 @@ def _face_pairs(component_count: int, max_face_pairs: int):
         yield positive, negative
 
 
+def _face_matrix(
+    channel: Sequence[Sequence[Fraction]],
+    actions: Sequence[tuple[int, int]],
+    events: Sequence[Sequence[int]],
+) -> tuple[tuple[Fraction, ...], ...]:
+    return tuple(
+        tuple(
+            sum((channel[i][k] - channel[j][k] for k in event), Fraction(0))
+            for i, j in actions
+        )
+        for event in events
+    )
+
+
 def _face_certificate(
     channel: tuple[tuple[Fraction, ...], ...],
     positive: tuple[int, ...],
@@ -146,13 +182,7 @@ def _face_certificate(
     max_game_bases: int,
 ) -> DisjointFaceSeparationCertificate:
     actions = tuple((i, j) for i in positive for j in negative)
-    matrix = tuple(
-        tuple(
-            sum((channel[i][k] - channel[j][k] for k in event), Fraction(0))
-            for i, j in actions
-        )
-        for event in events
-    )
+    matrix = _face_matrix(channel, actions, events)
     game = solve_exact_zero_sum_game(matrix, max_bases=max_game_bases)
     m = len(channel)
     left = [Fraction(0)] * m

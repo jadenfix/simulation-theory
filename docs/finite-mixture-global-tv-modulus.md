@@ -85,7 +85,11 @@ Equivalently,
 }
 \]
 
+Enlarging `P` or `N` only enlarges the hulls, so the minimum is attained on complementary partitions `P\cup N=\{1,\dots,m\}`. When the rows are affinely independent the hulls are faces of the simplex `conv{K_i}`; otherwise they are hulls of row subsets.
+
 The dangerous direction can therefore be a **mixture versus mixture** ambiguity. Minimum pairwise row distance is not enough once there are at least three latent components.
+
+**Prior art.** This identity is an elementary consequence of the Jordan decomposition of a zero-sum vector. For affinely independent rows it is the total-variation (half-`l1`) version of the facial distance of the simplex `conv{K_i}`, the minimum distance between complementary faces (Pena and Rodriguez, *Math. Oper. Res.* 2019), which is closely related to the pyramidal width of Lacoste-Julien and Jaggi (NeurIPS 2015). `alpha(K)` is the minimum `l1` gain of `delta -> delta K` on the zero-sum subspace, the lower counterpart of the Dobrushin coefficient `max_{i,j} TV(K_i,K_j) = sup TV(delta K)/TV(delta)`. The identity is not claimed as a new convex-geometric result; the contribution of this layer is the exact rational computation and its use for mixture-channel inversion.
 
 ## 3. Turning one face distance into a finite zero-sum game
 
@@ -225,7 +229,7 @@ This is why using only maximum pairwise distinguishability, average classificati
 
 ## 7. Statistical consequence
 
-Suppose a finite-sample procedure gives an observed-law confidence radius `rho_obs`. The sharp deterministic transfer is
+Suppose a finite-sample procedure gives an observed-law confidence radius `rho_obs` with `rho_obs >= TV(\hat\pi K, \pi K)` for a model-image estimate `\hat\pi`. The sharp deterministic transfer is
 
 \[
 \boxed{
@@ -235,17 +239,20 @@ rho_{latent}
 }
 \]
 
-Thus sample complexity inherits a conditioning penalty. Under second-moment radii scaling as `N^{-1/2}`, maintaining a fixed latent-prior radius requires sample size proportional to
+If `rho_obs` only bounds the distance to an off-model empirical law, replace `rho_obs` by `2 rho_obs`.
+
+Thus sample complexity inherits a conditioning penalty. Under second-moment radii scaling as `N^{-1/2}`, the sample size sufficient under this transfer to maintain a fixed latent-prior radius scales as
 
 \[
 \boxed{C_*(K)^2=\alpha(K)^{-2}.}
 \]
 
-Near affine dependence this diverges even though every individual component pair may still look easy to classify.
+Near affine dependence this diverges even though every individual component pair may still look easy to classify. This is an upper-bound cost, not a minimax lower bound.
 
 ## Nonclaims
 
 - Channel rows are known exactly in this layer.
+- The disjoint-face identity is not claimed as a new convex-geometric result; it is the TV-norm facial distance / minimum-gain quantity of the cited literature.
 - The face/event enumeration is exponential and bounded by explicit caps.
 - `alpha(K)` is an inverse-conditioning quantity, not a posterior probability.
 - A small `alpha(K)` does not imply that the latent models are physically similar; it says mixtures of their declared emission laws can be observationally close.

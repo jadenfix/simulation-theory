@@ -87,3 +87,34 @@ def test_event_and_face_caps_fail_closed():
         assert "face-pair enumeration" in str(exc)
     else:
         raise AssertionError("expected face-pair cap to fail closed")
+
+
+def test_certificate_rejects_receipts_not_bound_to_its_channel():
+    from dataclasses import replace
+
+    epsilon = F(1, 10)
+    near = exact_global_tv_modulus(
+        ((1, 0, 0), (0, 1, 0), (F(1, 2), F(1, 2) - epsilon, epsilon))
+    )
+    identity = exact_global_tv_modulus(((1, 0, 0), (0, 1, 0), (0, 0, 1)))
+    assert near.valid and identity.valid
+    # Dropping the minimizing faces and claiming a larger alpha must fail.
+    kept = tuple(
+        face for face in near.face_certificates if face.separation > epsilon
+    )
+    best = min(range(len(kept)), key=lambda i: kept[i].separation)
+    forged = replace(
+        near,
+        face_certificates=kept,
+        alpha=kept[best].separation,
+        optimal_inverse_constant=1 / kept[best].separation,
+        minimizing_face_index=best,
+        face_pair_count=len(kept),
+    )
+    assert not forged.valid
+    # Pairing another channel's face receipts with this channel must fail.
+    swapped = replace(
+        identity,
+        affine=near.affine,
+    )
+    assert not swapped.valid

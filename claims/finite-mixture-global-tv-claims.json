@@ -7,8 +7,8 @@
       "kind": "THEOREM",
       "scope": "finite latent simplex with total-variation normalization TV(delta)=1",
       "assumptions": ["delta sums to zero and is nonzero"],
-      "evidence": ["docs/finite-mixture-global-tv-modulus.md#2-positivenegative-decomposition"],
-      "nonclaims": ["the decomposition concerns signed tangent directions, not physical negative probabilities"]
+      "evidence": ["docs/finite-mixture-global-tv-modulus.md#2-positivenegative-decomposition", "tests/test_finite_mixture_channel_identifiability.py"],
+      "nonclaims": ["the decomposition concerns signed tangent directions, not physical negative probabilities", "the decomposition is the classical Jordan decomposition and is not claimed as new"]
     },
     {
       "id": "ST-T245",
@@ -26,7 +26,7 @@
       "scope": "finite categorical latent-mixture channels",
       "assumptions": ["all disjoint nonempty face pairs and observed events are enumerated below explicit caps"],
       "evidence": ["docs/finite-mixture-global-tv-modulus.md#4-global-exactness", "src/simtheory/finite_mixture_global_tv.py:exact_global_tv_modulus", "tests/test_finite_mixture_global_tv.py"],
-      "nonclaims": ["alpha is a conditioning modulus rather than a posterior probability"]
+      "nonclaims": ["alpha is a conditioning modulus rather than a posterior probability", "the disjoint-face identity is not claimed as a new convex-geometric result; for affinely independent rows it is the TV-norm facial distance (Pena-Rodriguez) / minimum-gain quantity"]
     },
     {
       "id": "ST-T247",
