@@ -4,7 +4,9 @@ Run ``python -m simtheory verify`` (or ``make verify``). The steps are:
 
 1. byte-compile ``src``;
 2. validate every ``claims/*.json`` manifest: schema, globally unique IDs,
-   evidence files, Markdown anchors, and ``file.py:symbol`` references;
+   evidence files, Markdown anchors, and ``file.py:symbol`` references; and
+   every ``paper/*/claims.json`` ledger: unique IDs, assumptions, nonclaims,
+   and a ``tests/test_paper_*`` file that checks it;
 3. recompute the real-data receipts (Delft 2015 CHSH statistic and NIST beacon
    precommitments) from the committed summaries;
 4. rerun the deterministic experiment suite and compare it with
@@ -101,7 +103,48 @@ def check_manifests(report: Report) -> dict[str, list[str]]:
             cited_tests[identifier] = tests
     summary = ", ".join(f"{count} {kind.lower()}" for kind, count in sorted(kinds.items()))
     report.ok(f"{len(paths)} manifests, {len(seen)} claims ({summary})")
+    cited_tests.update(check_paper_ledgers(report, seen))
     return cited_tests
+
+
+def check_paper_ledgers(report: Report, repository_ids: dict[str, str]) -> dict[str, list[str]]:
+    """Validate each paper/<name>/claims.json against the tests/test_paper_* files that check it."""
+
+    cited: dict[str, list[str]] = {}
+    for path in sorted((ROOT / "paper").glob("*/claims.json")):
+        name = path.relative_to(ROOT).as_posix()
+        slug = path.parent.name.replace("-", "_")
+        found = {p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob(f"test_paper_{slug}*.py")}
+        # A paper's own workflow names every test file that checks it.
+        for workflow in (ROOT / ".github" / "workflows").glob("*.yml"):
+            text = workflow.read_text(encoding="utf-8")
+            if f"paper/{path.parent.name}" in text:
+                found.update(f"tests/{m}" for m in re.findall(r"(test_paper_\w+\.py)", text))
+        tests = sorted(t for t in found if (ROOT / t).is_file())
+        try:
+            claims = json.loads(path.read_text(encoding="utf-8"))["claims"]
+        except (OSError, ValueError, KeyError) as error:
+            report.fail(f"{name}: {error}")
+            continue
+        if not isinstance(claims, list) or not claims:
+            report.fail(f"{name}: no claims")
+            continue
+        if not tests:
+            report.fail(f"{name}: no tests/test_paper_* file checks this ledger")
+        local: set[str] = set()
+        for claim in claims:
+            identifier = claim.get("id") if isinstance(claim, dict) else None
+            if not isinstance(identifier, str) or not identifier:
+                report.fail(f"{name}: claim without an id")
+                continue
+            if identifier in local or identifier in repository_ids:
+                report.fail(f"{name}: duplicate claim id {identifier}")
+            local.add(identifier)
+            if not claim.get("assumptions") or not claim.get("nonclaims"):
+                report.fail(f"{name}: {identifier} needs assumptions and nonclaims")
+            cited[f"{path.parent.name}:{identifier}"] = tests
+        report.ok(f"{name}: {len(local)} paper claims, checked by {', '.join(tests) or 'no tests'}")
+    return cited
 
 
 def check_real_data(report: Report, online: bool) -> None:
