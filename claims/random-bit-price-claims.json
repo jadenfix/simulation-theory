@@ -1,0 +1,197 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T310",
+      "title": "Fixed-budget public randomness realizes exactly the dyadic codebook mixtures, and the shared-randomness value is reached with finitely many fair bits iff some optimal mixture is dyadic",
+      "kind": "THEOREM",
+      "scope": "any finite rational game of scenario rows against deterministic zero-error codebook columns, with b independent fair public bits",
+      "assumptions": [
+        "the seed is public to encoder and all decoders and is drawn before the source state",
+        "the scenario is chosen obliviously to the realized seed",
+        "the fixed-budget controller selects a codebook as a deterministic function of the b bits"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#3-theorems-st-t310-and-st-t311-the-dyadic-dichotomy-and-two-sided-gap-for-any-finite-game-theorem-2",
+        "src/simtheory/random_bit_price.py:polytope_meets_ring",
+        "src/simtheory/random_bit_price.py:grid_value",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "elementary: k-uniform approximation of optimal strategies is classical (Althofer 1994; Lipton-Young 1994), and that bounded-depth fair-coin samplers realize exactly the dyadic laws is the Knuth-Yao (1976) observation; only the exact dyadic dichotomy statement for these games is claimed",
+        "fair independent bits are assumed rather than extracted from a physical source",
+        "a seed-observing adversary is not covered"
+      ]
+    },
+    {
+      "id": "ST-T311",
+      "title": "Two-sided Theta(2^-b) gap for non-dyadic shared-randomness optima without nondegeneracy assumptions: 2^-b/(D_A q) <= V_b - V* <= Delta_S floor(s/2) 2^-b",
+      "kind": "THEOREM",
+      "scope": "finite rational games whose optimal mixture set contains no dyadic point, for every bit budget b",
+      "assumptions": [
+        "the seed is public to encoder and all decoders and is drawn before the source state",
+        "the scenario is chosen obliviously to the realized seed",
+        "payoff entries are rational with common denominator D_A and the value is p/q in lowest terms",
+        "s is the support size of any optimal mixture and Delta_S is the largest row range over that support; a basic optimal mixture with s <= min(R, n) exists by Shapley-Snow"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#3-theorems-st-t310-and-st-t311-the-dyadic-dichotomy-and-two-sided-gap-for-any-finite-game-theorem-2",
+        "src/simtheory/random_bit_price.py:rounding_gap_bound",
+        "src/simtheory/random_bit_price.py:largest_remainder_round",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "the upper constant Delta_S floor(s/2) is not claimed tight; only the lower constant is shown attained (K3 and ST-M27 at radius 1/2, even b)",
+        "the rounding is Hamilton (largest-remainder) apportionment; the Lipton-Young k-uniform rate is complementary (worse in b, independent of s and n)",
+        "nothing is claimed for irrational payoff matrices"
+      ]
+    },
+    {
+      "id": "ST-T312",
+      "title": "Price of the shared-randomness value: the least expected number of fair bits that attains V* is the minimum over the optimal set of the Knuth-Yao cost (attained), and no bounded-bit sampler attains a non-dyadic optimum",
+      "kind": "THEOREM",
+      "scope": "finite rational shared-codebook games and exact samplers driven by a stopping time on i.i.d. fair public bits",
+      "assumptions": [
+        "the seed is public to encoder and all decoders and is drawn before the source state",
+        "the scenario is chosen obliviously to the realized seed",
+        "the sampler must induce an optimal codebook law exactly",
+        "Knuth-Yao (1976) optimality of DDG sampling (tail bound, cost formula, H + 2 bound) is used as a cited standard result"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#5-theorem-3-knuth-and-yao-1976-standard-reproved-for-completeness-and-corollary-3-st-t312",
+        "src/simtheory/random_bit_price.py:ky_expected_bits",
+        "src/simtheory/random_bit_price.py:ddg_undecided",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "the tail optimality, the DDG cost formula and the H + 2 bound are Knuth-Yao 1976, reproved for completeness and not new; only the composition with the optimal set is claimed",
+        "the minimum over a non-singleton optimal set is attained but not computed in general",
+        "the H + 2 upper bound is cited and numerically checked rather than reproved"
+      ]
+    },
+    {
+      "id": "ST-T313",
+      "title": "t uniform L-ary public tosses (L >= 2) attain the shared-randomness value iff the optimal set meets L^-t Z^n, with gap at least 1/(D_A q L^t) otherwise",
+      "kind": "THEOREM",
+      "scope": "finite rational shared-codebook games with t uniform L-ary public tosses",
+      "assumptions": [
+        "the seed is public to encoder and all decoders and is drawn before the source state",
+        "the scenario is chosen obliviously to the realized seed",
+        "payoff entries are rational with common denominator D_A and the value is p/q in lowest terms",
+        "uniform independent L-ary tosses with L >= 2",
+        "the controller selects a codebook as a deterministic function of the tosses"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#7-theorem-st-t313-and-model-result-st-m93-coin-alphabets-theorem-4",
+        "src/simtheory/random_bit_price.py:polytope_meets_ring",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "building a uniform L-ary coin from fair bits is itself priced by ST-T312 and is not free",
+        "for L = 1 the ring decision is made only for single points"
+      ]
+    },
+    {
+      "id": "ST-M90",
+      "title": "Exact b-bit K3 value curve V_b = 2 - floor(2^b/3)/2^b never reaches five thirds",
+      "kind": "MODEL_RESULT",
+      "scope": "the K3 public-randomness game with three point-mass models and complete prefix length permutations of (1,2,2)",
+      "assumptions": [
+        "b independent fair public bits",
+        "the model is chosen obliviously to the seed"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#2-model-result-st-m90-the-k3-fixed-budget-value-curve-theorem-1",
+        "src/simtheory/random_bit_price.py:k3_grid_value_fast",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "the one-third coordination value of ST-M47 is realized only in the limit of unbounded bits",
+        "not claimed for games other than K3, ST-M26, ST-M45 and ST-M27 at radius 1/2"
+      ]
+    },
+    {
+      "id": "ST-M91",
+      "title": "Skew K3 shared-TV game at radius one half has b-bit gap exactly one tenth of the K3 gap",
+      "kind": "MODEL_RESULT",
+      "scope": "K3 with nominal prior (4/5,1/10,1/10) at TV radius 1/2 under shared-randomness expected prefix coding",
+      "assumptions": [
+        "the five-vertex by three-codebook matrix certified by the repository solver (columns give the short codeword to states 1, 0, 2)",
+        "b independent fair public bits and a seed-oblivious TV adversary"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#4-model-result-st-m91-the-skew-tv-instance-at-radius-12-proposition-5-st-m27",
+        "src/simtheory/random_bit_price.py:grid_value",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "the one-tenth ratio is specific to this radius and prior"
+      ]
+    },
+    {
+      "id": "ST-M92",
+      "title": "Exact K3 coordination costs eight thirds expected fair bits while ST-M21 costs exactly one bit and ST-M27 at radius at most 7/15 costs none",
+      "kind": "MODEL_RESULT",
+      "scope": "K3, ST-M26, ST-M45 and ST-M27 at radius 1/2 (singleton uniform optimum); ST-M21 and the K4 nonoracle example (singleton half-half optimum); ST-M27 at radii 2/5 and 7/15 (optimal set contains a pure law; a segment at 7/15), and every radius k/30 <= 7/15",
+      "assumptions": [
+        "the optimal set is the singleton uniform law, the singleton (1/2,1/2) law, or contains a pure law, as certified by optimal-set vertex enumeration in the reduced game",
+        "fair public bits and seed-oblivious adversaries"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#6-model-result-st-m92-knuth-yao-prices-of-the-committed-instances",
+        "src/simtheory/random_bit_price.py:ky_expected_bits",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "the 8/3-bit cost of an exact uniform ternary choice is classical (Knuth-Yao 1976; Lumbroso 2013); the model result is its identification as the exact coordination price of these games",
+        "the decision gain priced here is coordination randomness, not evidence about a simulator"
+      ]
+    },
+    {
+      "id": "ST-M93",
+      "title": "One uniform L-ary public toss attains the K3 shared-randomness value iff three divides L (also for ST-M27 at radius 1/2); for ST-M21 and K4 iff two divides L",
+      "kind": "MODEL_RESULT",
+      "scope": "K3 and ST-M27 at radius 1/2 for L = 1..12; K3 for all L^t <= 1000 with 3 not dividing L; ST-M21 and K4 for L <= 12",
+      "assumptions": [
+        "uniform independent L-ary tosses",
+        "the controller selects a codebook as a deterministic function of the tosses"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#7-theorem-st-t313-and-model-result-st-m93-coin-alphabets-theorem-4",
+        "src/simtheory/random_bit_price.py:k3_grid_value_fast",
+        "tests/test_random_bit_price_shared_randomness.py",
+        "receipts/random-bit-price-shared-randomness.txt"
+      ],
+      "nonclaims": [
+        "the statements are for the listed instances; the general criterion is ST-T313"
+      ]
+    },
+    {
+      "id": "ST-F61",
+      "title": "Exact finite certification of the random-bit price on committed and seeded random instances",
+      "kind": "FINITE_CHECK",
+      "scope": "K3 for b <= 12; eight committed matrices for b <= 10; 300 seeded random integer games for b <= 6; 200 seeded random rational laws for the Knuth-Yao identities; L <= 12 coin alphabets; repository cross-check of seven matrices plus the ST-M45 value; ST-M27 radius sweep",
+      "assumptions": [
+        "exact Fraction arithmetic except the floating-point entropy sandwich",
+        "repository matrices are cross-checked against the committed exact solvers"
+      ],
+      "evidence": [
+        "docs/random-bit-price-shared-randomness.md#10-finite-check-st-f61",
+        "src/simtheory/random_bit_price.py:run",
+        "receipts/random-bit-price-shared-randomness.txt",
+        "tests/test_random_bit_price_shared_randomness.py"
+      ],
+      "nonclaims": [
+        "the bounded enumeration is not by itself a proof for all b; the proofs are in the derivation",
+        "for ST-M45 only the value, not the matrix, is matched against the repository"
+      ]
+    }
+  ]
+}
