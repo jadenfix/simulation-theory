@@ -3,10 +3,10 @@
   "claims": [
     {
       "id": "ST-T229",
-      "title": "Independent latent-model counts satisfy an exact multinomial second-moment TV bound",
+      "title": "Independent latent-model counts satisfy the multinomial second-moment TV bound E TV^2 <= (k-1)/(4N)",
       "kind": "THEOREM",
       "scope": "N independent categorical latent-model draws over k observed labels",
-      "assumptions": ["latent labels are observed", "draws are iid from one stationary categorical law"],
+      "assumptions": ["latent labels are observed", "draws are iid from one stationary categorical law", "k is the number of categories fixed in advance (zero-count categories included) and the support of the law lies within them", "N is fixed before sampling"],
       "evidence": ["docs/independent-latent-prior-confidence.md#exact-second-moment-bound", "src/simtheory/independent_latent_prior_confidence.py:independent_latent_tv_confidence_radius", "tests/test_independent_latent_prior_confidence.py"],
       "nonclaims": ["lower-level repeated observations within one persistent latent unit are not counted as independent latent draws"]
     },
@@ -15,7 +15,7 @@
       "title": "Markov calibration gives a finite-sample TV confidence radius from independent latent-model draws",
       "kind": "THEOREM",
       "scope": "the same fixed-sample iid categorical design at failure probability alpha",
-      "assumptions": ["rho squared is at least (k-1)/(4N alpha)"],
+      "assumptions": ["rho squared is at least (k-1)/(4N alpha)", "the ST-T229 assumptions hold"],
       "evidence": ["docs/independent-latent-prior-confidence.md#exact-second-moment-bound", "src/simtheory/independent_latent_prior_confidence.py:independent_latent_tv_confidence_radius", "tests/test_independent_latent_prior_confidence.py"],
       "nonclaims": ["the conservative radius is not claimed optimal", "the guarantee is not anytime-valid"]
     },
@@ -33,16 +33,16 @@
       "title": "Independent-latent confidence balls compose with Bayesian value and marginal-gain TV sensitivity bounds",
       "kind": "THEOREM",
       "scope": "confidence event TV(p,p_hat)<=rho combined with the Bayesian Boolean prior-robustness lane",
-      "assumptions": ["the prior-robust value and gain Lipschitz theorems apply to the downstream decision problem"],
+      "assumptions": ["the prior-robust value and gain Lipschitz theorems apply to the downstream decision problem", "the counted latent labels index exactly the finite hidden-model space on which the downstream value is defined", "the nominal value or gain passed to the band is the value computed at the empirical prior"],
       "evidence": ["docs/independent-latent-prior-confidence.md#composition-with-bayesian-experiment-value", "src/simtheory/independent_latent_prior_confidence.py:data_calibrated_value_band", "src/simtheory/independent_latent_prior_confidence.py:data_calibrated_gain_interval", "tests/test_independent_latent_prior_confidence.py"],
       "nonclaims": ["confidence-set coverage does not imply the nominal prior is the true data-generating prior"]
     },
     {
       "id": "ST-T233",
-      "title": "The effective sample size for mixing-weight calibration is the number of independent latent draws, not within-unit observation count",
+      "title": "With observed latent labels, label counts are sufficient for the mixing law; within-unit observations carry no further information about it",
       "kind": "THEOREM",
       "scope": "hierarchical models distinguishing iid latent units from repeated conditional observations of one persistent latent state",
-      "assumptions": ["the confidence theorem is applied only to counts of independent latent labels"],
+      "assumptions": ["latent labels M_1..M_N are iid from the mixing law pi", "conditional on M_u, unit u's within-unit observations have a law that does not depend on pi"],
       "evidence": ["docs/independent-latent-prior-confidence.md#effective-sample-size-is-hierarchical", "tests/test_independent_latent_prior_confidence.py"],
       "nonclaims": ["within-unit observations may still identify the unit's latent model"]
     },
