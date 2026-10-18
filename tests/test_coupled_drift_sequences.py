@@ -48,6 +48,7 @@ def test_fixed_cost_sequence_recovers_nested_marginal_extrema():
     assert certificate.coupling_gap == 0
 
 
+@pytest.mark.slow
 def test_zero_drift_reduces_to_repeated_nominal_expectations():
     prior = (Fraction(1, 2), Fraction(1, 3), Fraction(1, 6))
     costs = ((1, 4, 2), (7, 0, 3), (2, 5, 1))
@@ -67,6 +68,7 @@ def test_zero_drift_reduces_to_repeated_nominal_expectations():
     assert all(distribution == prior for distribution in certificate.maximizing_path)
 
 
+@pytest.mark.slow
 def test_unit_drift_decouples_every_period():
     costs = ((1, 4, 2), (7, 0, 3), (2, 5, 1))
     certificate = exact_coupled_drift_cost(

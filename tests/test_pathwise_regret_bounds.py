@@ -1,6 +1,8 @@
 from fractions import Fraction
 from itertools import product
 
+import pytest
+
 from simtheory.pathwise_regret import affine_path_decision, exact_pathwise_regret_game
 from simtheory.pathwise_regret_bounds import exact_regret_value_bounds
 
@@ -16,6 +18,7 @@ def _binary_prediction_decisions(horizon: int):
     )
 
 
+@pytest.mark.slow
 def test_robust_value_difference_can_be_strictly_smaller_than_regret():
     regret = exact_pathwise_regret_game(
         (Fraction(1, 2), Fraction(1, 2)),

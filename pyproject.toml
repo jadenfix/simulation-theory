@@ -18,6 +18,7 @@ classifiers = [
 
 [project.scripts]
 simtheory-experiments = "simtheory.experiments:main"
+simtheory = "simtheory.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -26,3 +27,7 @@ where = ["src"]
 pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = "-q"
+markers = ["slow: exhaustive checks that take more than a few seconds; skipped by `verify --quick`"]
+
+[dependency-groups]
+dev = ["pytest>=8"]

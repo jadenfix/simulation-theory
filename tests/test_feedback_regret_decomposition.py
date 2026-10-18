@@ -1,5 +1,7 @@
 from fractions import Fraction
 
+import pytest
+
 from simtheory.confusion_graphs import ConfusionGraph
 from simtheory.feedback_regret_decomposition import decompose_feedback_regret
 from simtheory.feedback_regret_solver import exact_drift_information_regret
@@ -18,6 +20,7 @@ def _complete_graph(vertex_count: int) -> ConfusionGraph:
     )
 
 
+@pytest.mark.slow
 def test_deterministic_information_values_telescope_exactly():
     certificate = exact_drift_information_regret(
         _complete_graph(3),

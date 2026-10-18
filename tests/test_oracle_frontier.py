@@ -1,5 +1,7 @@
 from fractions import Fraction
 
+import pytest
+
 from simtheory.confusion_graphs import ConfusionGraph
 from simtheory.oracle_frontier import (
     advance_comparator_frontier,
@@ -23,6 +25,7 @@ def _complete_graph(vertex_count: int) -> ConfusionGraph:
     )
 
 
+@pytest.mark.slow
 def test_frontier_solver_matches_full_history_feedback_values():
     certificate = exact_frontier_feedback_regret(
         _complete_graph(3),
@@ -39,6 +42,7 @@ def test_frontier_solver_matches_full_history_feedback_values():
     assert certificate.current_frontier_state_count <= certificate.current_full_history_state_count
 
 
+@pytest.mark.slow
 def test_frontier_oracle_matches_every_exhaustive_path_oracle():
     certificate = exact_frontier_feedback_regret(
         _complete_graph(3),
