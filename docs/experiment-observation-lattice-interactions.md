@@ -4,7 +4,7 @@
 
 Pairwise complementarity is only the first nontrivial interaction order. This layer builds the complete finite set function over deterministic experiment subsets and computes its exact Boolean-lattice Möbius transform. The coefficients identify which combinations of experiments contribute value that cannot be represented by lower-order terms.
 
-The model is a static exact subcase of the active fixed-model program:
+The model is a one-shot static analogue of the active fixed-model program, in which the experiments in a subset `S` are observed jointly before a single code choice:
 
 - one model `m` is fixed;
 - model `m` has one declared categorical source law `p_m` on a zero-error confusion graph;

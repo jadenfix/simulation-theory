@@ -3,12 +3,12 @@
   "claims": [
     {
       "id": "ST-T194",
-      "title": "Deterministic experiment subsets induce an exact refinement lattice of fixed-model observation cells",
+      "title": "Deterministic experiment subsets map order-reversingly to fixed-model observation partitions, with the union of subsets giving the common refinement (meet) of their partitions",
       "kind": "THEOREM",
       "scope": "finite globally fixed model families with deterministic finite-valued model-label experiments",
       "assumptions": ["experiment subset S reveals the joint labels of experiments in S", "one fixed model generates the observation signature", "all experiment label vectors are predeclared"],
       "evidence": ["docs/experiment-observation-lattice-interactions.md#1-observation-partitions", "src/simtheory/experiment_observation_lattice.py:_observation_cells", "tests/test_experiment_observation_lattice.py"],
-      "nonclaims": ["the theorem does not cover stochastic experiment kernels in this static lattice layer", "the result is not evidence for simulation"]
+      "nonclaims": ["the theorem does not cover stochastic experiment kernels in this static lattice layer", "the subset-to-partition map is not a lattice homomorphism: the partition of an intersection of subsets need not be the join of their partitions", "the result is not evidence for simulation"]
     },
     {
       "id": "ST-T195",
@@ -25,7 +25,7 @@
       "kind": "THEOREM",
       "scope": "any rational value function defined on all subsets of a finite experiment set",
       "assumptions": ["subset values are indexed by bit masks", "interaction coefficients use the standard Boolean subset-lattice incidence algebra"],
-      "evidence": ["docs/experiment-observation-lattice-interactions.md#3-boolean-lattice-mobius-transform", "src/simtheory/experiment_observation_lattice.py:boolean_mobius_transform", "tests/test_experiment_observation_lattice.py"],
+      "evidence": ["docs/experiment-observation-lattice-interactions.md#3-boolean-lattice-möbius-transform", "src/simtheory/experiment_observation_lattice.py:boolean_mobius_transform", "tests/test_experiment_observation_lattice.py"],
       "nonclaims": ["Möbius coefficients are operational algebraic interactions rather than physical energies", "coefficient signs are not universally constrained"]
     },
     {
@@ -51,7 +51,7 @@
       "title": "Three-bit parity has zero first- and second-order nonconstant interactions and deterministic third-order coefficient minus one",
       "kind": "MODEL_RESULT",
       "scope": "the exact k=3 parity observation lattice",
-      "assumptions": ["all seven strict subsets have deterministic benchmark gap one", "the full subset has gap zero"],
+      "assumptions": ["k=3 parity source on complete K3 with one experiment per parity bit", "deterministic controllers evaluated against the full-menu model-informed oracle"],
       "evidence": ["docs/experiment-observation-lattice-interactions.md#5-pure-top-order-interaction-theorem", "tests/test_experiment_observation_lattice.py"],
       "nonclaims": ["the coefficient minus one is not a universal third-order interaction magnitude"]
     },
@@ -60,7 +60,7 @@
       "title": "Three-bit parity public-mixed lattice has sole nonconstant third-order coefficient minus one-half",
       "kind": "MODEL_RESULT",
       "scope": "the exact k=3 parity observation lattice after public-seed convexification",
-      "assumptions": ["all strict-subset mixed benchmark gaps equal one-half", "the full-subset mixed gap is zero"],
+      "assumptions": ["k=3 parity source on complete K3 with one experiment per parity bit", "an independent public seed mixes complete deterministic codes in each observation cell"],
       "evidence": ["docs/experiment-observation-lattice-interactions.md#5-pure-top-order-interaction-theorem", "tests/test_experiment_observation_lattice.py"],
       "nonclaims": ["the coefficient is specific to the declared finite K3 coding family"]
     },
