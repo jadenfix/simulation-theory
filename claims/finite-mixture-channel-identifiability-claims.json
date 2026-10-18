@@ -3,12 +3,12 @@
   "claims": [
     {
       "id": "ST-T238",
-      "title": "A finite categorical mixture prior is identifiable exactly when its component emission rows are affinely independent",
+      "title": "With known emission rows, the latent mixing weights of a finite categorical mixture are identifiable from pi K exactly when the rows are affinely independent",
       "kind": "THEOREM",
       "scope": "finite rational categorical channel K with a latent prior on its rows and exact observed mixture law pi K",
       "assumptions": ["component emission rows are known", "latent mixing weights lie on the probability simplex"],
       "evidence": ["docs/finite-mixture-channel-identifiability.md#1-affine-rank-criterion", "src/simtheory/finite_mixture_channel_identifiability.py:exact_finite_mixture_channel_certificate", "tests/test_finite_mixture_channel_identifiability.py"],
-      "nonclaims": ["identifiability does not imply small-sample estimability", "the result is not evidence for simulation"]
+      "nonclaims": ["identifiability does not imply small-sample estimability", "this is not joint identifiability of the prior and the channel rows", "the result is not evidence for simulation"]
     },
     {
       "id": "ST-T239",
@@ -43,7 +43,7 @@
       "kind": "THEOREM",
       "scope": "finite categorical mixture channels, normalized nonzero zero-sum latent perturbations",
       "assumptions": ["positive and negative parts of a normalized zero-sum perturbation are treated as disjoint-support probability mixtures"],
-      "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object", "tests/test_finite_mixture_channel_identifiability.py"],
       "nonclaims": ["the current coordinate-minor solver does not yet optimize this global modulus"]
     },
     {
@@ -52,7 +52,7 @@
       "kind": "THEOREM",
       "scope": "finite categorical channel rows viewed as points in the observed probability simplex",
       "assumptions": ["the row family is finite"],
-      "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object"],
+      "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object", "tests/test_finite_mixture_channel_identifiability.py"],
       "nonclaims": ["positive separation can still be arbitrarily small across different channel families"]
     },
     {
@@ -77,7 +77,7 @@
       "id": "ST-F43",
       "title": "Bounded exact finite-mixture affine-identifiability audit",
       "kind": "FINITE_CHECK",
-      "scope": "binary exact boundaries plus all three-row channels drawn from the denominator-two ternary simplex and denominator-three latent-prior test grid",
+      "scope": "binary exact boundaries plus all 3-subsets of distinct rows of the denominator-two ternary simplex and denominator-three latent-prior test grid",
       "assumptions": ["bounded coordinate-minor enumeration completes", "all probabilities use exact rational arithmetic"],
       "evidence": ["src/simtheory/finite_mixture_channel_identifiability.py", "tests/test_finite_mixture_channel_identifiability.py"],
       "nonclaims": ["bounded exhaustive checks are not a scalability theorem", "CI success is not empirical evidence for simulation"]

@@ -1,8 +1,9 @@
 """Exact affine identifiability certificates for finite latent-mixture channels.
 
 A prior ``pi`` over ``m`` latent components produces observed law ``q = pi K``.
-The prior is identifiable from ``q`` iff the rows of the categorical channel
-``K`` are affinely independent.  This module proves either side constructively:
+For a known channel ``K``, the prior is identifiable from ``q`` iff the rows
+of ``K`` are affinely independent (identifiability of ``K`` itself is not
+addressed).  This module proves either side constructively:
 rank failure returns two distinct rational priors with the same observed law;
 full affine rank returns an exact coordinate-minor inverse and an auditable TV
 conditioning bound.

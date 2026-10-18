@@ -153,3 +153,29 @@ def test_minor_search_cap_fails_closed_before_uncertified_fallback():
         assert "exceeded configured cap" in str(exc)
     else:
         raise AssertionError("expected bounded minor search to fail closed")
+
+
+def test_dependent_rows_give_zero_disjoint_hull_separation():
+    # ST-T242/ST-T243: normalize a collision direction by its TV; its positive and
+    # negative parts are disjoint-support priors whose mixtures coincide.
+    channel = ((F(1), F(0)), (F(0), F(1)), (F(1, 2), F(1, 2)))
+    cert = exact_finite_mixture_channel_certificate(channel)
+    assert not cert.identifiable and cert.collision is not None
+    delta = [a - b for a, b in zip(cert.collision.left_prior, cert.collision.right_prior)]
+    assert sum(delta) == 0 and any(delta)
+    scale = sum(abs(x) for x in delta) / 2
+    positive = tuple(max(x, F(0)) / scale for x in delta)
+    negative = tuple(max(-x, F(0)) / scale for x in delta)
+    assert sum(positive) == sum(negative) == 1
+    assert all(p == 0 or n == 0 for p, n in zip(positive, negative))
+    assert mixture_law(positive, channel) == mixture_law(negative, channel)
+    assert total_variation(mixture_law(positive, channel), mixture_law(negative, channel)) == 0
+
+
+def test_binary_channel_disjoint_hull_separation_is_row_tv():
+    # ST-T243, identifiable side: with two rows the only disjoint hull pair is the
+    # two rows themselves, separated by TV(K_1, K_2) > 0.
+    channel = ((F(3, 4), F(1, 4)), (F(1, 4), F(3, 4)))
+    assert exact_finite_mixture_channel_certificate(channel).identifiable
+    u, v = (F(1), F(0)), (F(0), F(1))
+    assert total_variation(mixture_law(u, channel), mixture_law(v, channel)) == F(1, 2)

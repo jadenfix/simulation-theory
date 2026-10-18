@@ -50,7 +50,7 @@ The mixture map is injective on the probability simplex exactly when
 }
 \]
 
-Equivalently, the emission rows `K_1,...,K_m` are affinely independent. In particular, an `n`-symbol observed alphabet cannot identify more than `n` affinely independent categorical component laws.
+Equivalently, the emission rows `K_1,...,K_m` are affinely independent. In particular, with an `n`-symbol observed alphabet, mixing weights are identifiable only if `m<=n` (at most `n` points of the `(n-1)`-simplex are affinely independent).
 
 ## 2. Rank failure gives an explicit collision
 
@@ -156,7 +156,7 @@ For a binary latent mixture with a binary observed alphabet, it reduces to
 C=\frac1{TV(K_1,K_2)},
 \]
 
-matching the exact coefficient from the binary-mixture layer.
+matching the exact coefficient of the binary-mixture layer (ST-T234).
 
 For the identity `K3` channel, however, the true inverse constant is one because the channel preserves TV exactly, while the generic coordinate-minor certificate returns two. The test suite records this deliberately: a safe certificate must not be mislabeled as an optimal modulus.
 
@@ -206,7 +206,7 @@ The current code certifies a computable upper bound on `C_*` through coordinate 
 
 ## 6. Why this matters for hierarchical evidence
 
-The preceding persistent-latent result separates repeated observations inside one latent unit from independent draws of latent units. This layer adds another prerequisite: even with genuinely independent units, the population mixing distribution can only be recovered from emissions to the extent that the emission channel is identifiable and well-conditioned.
+The persistent-latent evidence ceilings (ST-T225 to ST-T228) separate repeated observations inside one latent unit from independent draws of latent units. This layer adds another prerequisite: even with genuinely independent units, the population mixing distribution can only be recovered from emissions to the extent that the emission channel is identifiable and well-conditioned.
 
 Thus the chain is
 
