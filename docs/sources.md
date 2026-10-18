@@ -79,6 +79,18 @@ These works motivate the quantum causal-cut lane. The repository re-derives a bo
 
 The stabilizer-code lane uses binary symplectic commutation, normalizer quotients, and code distance to state local-indistinguishability claims operationally. A finite five-qubit code checker is not promoted into a theorem about scalable physical matter or parent-substrate cost.
 
+## Mixture conditioning and facial distance
+
+- D. H. Gutman and J. F. Pena, **The condition of a function relative to a polytope** (2018): https://arxiv.org/abs/1802.00271 ; later **The condition number of a function relative to a set**: https://arxiv.org/abs/1901.08359
+- J. Pena and D. Rodriguez, **Polytope conditioning and linear convergence of the Frank-Wolfe algorithm**, Math. Oper. Res. (2019): https://doi.org/10.1287/moor.2017.0910
+- S. Lacoste-Julien and M. Jaggi, **On the Global Linear Convergence of Frank-Wolfe Optimization Variants**, NeurIPS (2015)
+- J. Kleinberg and M. Sandler, **Using mixture models for collaborative filtering**, J. Comput. Syst. Sci. 74 (2008) 49-69
+- S. Arora, R. Ge, F. Koehler, T. Ma and A. Moitra, **Provable algorithms for inference in topic models**, ICML (2016)
+- Z. Lipton, Y.-X. Wang and A. Smola, **Detecting and correcting for label shift with black box predictors**, ICML (2018)
+- S. J. Yakowitz and J. D. Spragins, **On the identifiability of finite mixtures**, Ann. Math. Statist. 39 (1968) 209-214
+
+The global TV modulus of a finite latent-mixture channel is, for affinely independent rows, the TV-norm facial distance of Gutman and Pena, and in general the zero-sum restriction of the Kleinberg-Sandler condition number. The repository contributes exact rational certificates, not the identity.
+
 ## How sources are used
 
 A citation can motivate a hypothesis, model family, or definition. It does not inherit theorem status. Every repository result must still be assigned one of: theorem under stated assumptions, model result, bounded finite check, restricted empirical hypothesis, or open problem.

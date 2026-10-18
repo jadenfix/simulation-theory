@@ -78,6 +78,8 @@ Each row moves TV distance `epsilon`, while
 
 At `epsilon=1/2`, the two rows coincide and identifiability disappears.
 
+**Prior art.** The Lipschitz bound is the standard fact that a minimum gain (lower bound, or minimum modulus) of a linear map is 1-Lipschitz in the induced operator norm, by the reverse triangle inequality: rowwise TV radii `r_i` give `||delta(K'-K)||_TV <= 2 r_max TV(delta)` on zero-sum `delta`. It is the TV analogue of Weyl's singular-value perturbation inequality, and the sharpness example is an instance of the Gastinel-Kahan distance-to-singularity phenomenon (Kahan 1966; Higham, Accuracy and Stability of Numerical Algorithms, 2nd ed. 2002, Ch. 6) under a stochastic-row restriction. Neither is claimed as new.
+
 ## 2. Why max-row uncertainty can be too pessimistic
 
 The bound above charges every latent direction twice by the worst row radius. But a dangerous face pair may not use the most uncertain row on both sides.
@@ -128,6 +130,8 @@ Because this retains row-specific radii,
 \[
 L_{rob}\ge\max\{0,\alpha(K)-2r_{max}\}.
 \]
+
+The penalty `sum_{ij} lambda_ij (r_i + r_j) = u.r + v.r` does not depend on the event, so the penalized game value is simply `min over (u, v) of [TV(uK, vK) - (u + v).r]` over the face pair. The certificate is an elementary consequence of the convexity of TV and the triangle inequality, packaged with exact rational game certificates; it is not claimed as a new technique. It is an exactly computed lower certificate, not a claim that it equals the worst admissible channel modulus.
 
 ## 3. Exact asymmetric example
 
@@ -193,7 +197,7 @@ and the misspecification term cannot be dropped: with nominal binary identity ro
 
 If `L_rob=0`, the certificate is intentionally agnostic. Zero means the declared uncertainty set is too large for this proof to guarantee invertibility; it does not assert that every admissible channel is nonidentifiable.
 
-## 5. A phase boundary for channel estimation
+## 5. A sufficient uniform calibration condition for channel estimation
 
 For uniform row uncertainty `r_i=epsilon`, every pair action receives the same `2 epsilon` penalty. Hence
 

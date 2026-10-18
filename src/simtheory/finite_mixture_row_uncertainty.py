@@ -10,6 +10,12 @@ This module also computes a stronger face-specific lower certificate by
 penalizing each latent pair action (i,j) by r_i+r_j inside the exact disjoint-
 face zero-sum games.  A positive robust lower bound certifies identifiability of
 every channel in the declared rowwise uncertainty set.
+
+Prior art: the 2 r_max Lipschitz bound is the standard minimum-gain perturbation
+fact (reverse triangle inequality, the TV analogue of Weyl's inequality), and
+its sharpness is an instance of the Gastinel-Kahan distance to singularity. The
+facewise robust certificate is an elementary consequence of TV convexity and
+the triangle inequality, computed exactly.
 """
 
 from __future__ import annotations
