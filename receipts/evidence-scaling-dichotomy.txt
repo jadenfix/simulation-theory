@@ -1,0 +1,96 @@
+evidence-scaling-dichotomy check
+Decimal precision 60, assertion margin 1E-30
+== Part I: fresh draws (KT composite Bayes factor vs fair bits) ==
+A1 closed form BF_n(k) = C(2k,k)C(2n-2k,n-k)/(2^n C(n,k)) matches the sequential KT product on all 8190 sequences with 1 <= n <= 12
+A1 pathwise regret: (1/2) ln(pi n/2) < ln[max_q P_q / P_KT] <= (1/2) ln n + ln 2 on all count vectors, 1 <= n <= 128 (upper exact rational; min lower margin 0.00195311, min upper margin 0.00000000)
+A1 identity E_q[n chi^2(qhat || q)] = 1 holds exactly (Fractions) for 1 <= n <= 40 and 7 rational q
+A2 remainder r_n(q) = E_q[ln BF_n] - [n KL(q||1/2) - (1/2) ln n + (1/2) ln(2e/pi)]   ((1/2) ln(2e/pi) = 0.274209)
+     n         1/10         1/5         1/4         1/3         2/5         1/2     q=0 (vs -(1/2)ln pi)
+     1    -0.642273   -0.466953   -0.405021   -0.330842   -0.294344   -0.274209     -0.120782
+     2    -0.456049   -0.259215   -0.195774   -0.123708   -0.089775   -0.071476     -0.061891
+     4    -0.271242   -0.100349   -0.058766   -0.020552   -0.006143    0.000614     -0.031170
+     8    -0.109068   -0.011538    0.000215    0.004801    0.004375    0.003597     -0.015615
+    16    -0.012421    0.007908    0.005887    0.002804    0.001454    0.000792     -0.007811
+    32     0.010630    0.004071    0.002386    0.000971    0.000438    0.000177     -0.003906
+    64     0.005914    0.001704    0.001009    0.000399    0.000161    0.000042     -0.001953
+   128     0.002584    0.000788    0.000467    0.000181    0.000067    0.000010     -0.000977
+   256     0.001219    0.000380    0.000225    0.000086    0.000030    0.000003     -0.000488
+   512     0.000594    0.000186    0.000111    0.000042    0.000014    0.000001     -0.000244
+  1024     0.000293    0.000092    0.000055    0.000021    0.000007    0.000000     -0.000122
+  2048     0.000146    0.000046    0.000027    0.000010    0.000003    0.000000     -0.000061
+  5000     0.000059    0.000019    0.000011    0.000004    0.000001    0.000000     -0.000025
+A2 n * r_n(q) from n = 2048 to n = 5000 (finite evidence of an O(1/n) remainder; not proved): q=1/10: 0.2981 -> 0.2970 (conjecture 0.2963); q=1/5: 0.0942 -> 0.0939 (conjecture 0.0938); q=1/4: 0.0558 -> 0.0557 (conjecture 0.0556); q=1/3: 0.0210 -> 0.0209 (conjecture 0.0208); q=2/5: 0.0070 -> 0.0070 (conjecture 0.0069)
+A2 non-asymptotic sandwich n KL - (1/2) ln n - ln 2 < E_q[ln BF_n] < n KL - (1/2) ln n + 1 - (1/2) ln(pi/2) (= +0.7742) and E_q[ln BF_n] < n KL hold on every table entry
+A2 precision cross-check (n=512, q=1/3): 80-digit working precision (60-digit constants) agrees with 60 digits to 0.000 (< 1e-50)
+Beacon scale n = 131072, q = 1/2: exact E[ln BF_n] = -5.617542; asymptotic prediction -(1/2) ln n + (1/2) ln(2e/pi) = -5.617542; remainder = 9.701e-12
+Beacon data k = 65461: ln BF_n = -6.031714 (k re-derived from the pinned pulse file; ST-F52 reports -6.03); pathwise sandwich [-6.4991, -6.0317], n KL(qhat||1/2) = 0.085831
+A3 beacon power frontier (alpha = 1/100, beta = 1/20, n = 131072):
+    converse (Bretagnolle-Huber/Pinsker): no level-alpha test has power 0.95 at |q-1/2| < 0.002011
+    exact optimal one-sided NP test reaches power 0.95 between 718/n = 0.005478 (power 0.9495) and 719/n = 0.005486 (power 0.9501)
+    exact KT test (reject iff |k - n/2| >= 839, i.e. |qhat-1/2| >= 0.006401; pathwise e_n = 0.004522, d_n = 0.006534)
+    reaches power 0.95 between 1136/n = 0.008667 (power 0.9499) and 1137/n = 0.008675 (power 0.9504)
+    sufficient closed-form frontier d_n + sqrt(ln(1/beta)/(2n)) = 0.006534 + 0.003381 = 0.009914
+A3 n = 32, alpha = 1/10, beta = 1/10: pathwise d_n/e_n region checks pass on all k; exact KT power >= 1-beta at all 4 grid q beyond d_n + t_n; converse verified against the exact NP power at 10 grid q
+A3 n = 64, alpha = 1/10, beta = 1/10: pathwise d_n/e_n region checks pass on all k; exact KT power >= 1-beta at all 22 grid q beyond d_n + t_n; converse verified against the exact NP power at 22 grid q
+A3 n = 128, alpha = 1/20, beta = 1/10: pathwise d_n/e_n region checks pass on all k; exact KT power >= 1-beta at all 66 grid q beyond d_n + t_n; converse verified against the exact NP power at 48 grid q
+A3 n = 256, alpha = 1/100, beta = 1/20: pathwise d_n/e_n region checks pass on all k; exact KT power >= 1-beta at all 154 grid q beyond d_n + t_n; converse verified against the exact NP power at 97 grid q
+A3/M83 coarsening: observed bits are IID Bernoulli(f + (1-2f) q); the frontier in q scales by 1/(1-2f)
+    f =    0: closed-form frontier 0.009914, converse 0.002011
+    f = 1/10: closed-form frontier 0.012393, converse 0.002514
+    f =  1/4: closed-form frontier 0.019828, converse 0.004022
+    f =  2/5: closed-form frontier 0.049570, converse 0.010055
+    f > 0 maps q in {0,1} into the interior, so the interior constant (1/2) ln(2e/pi) applies (A2 table column q = 1/10 is q = 0 seen through f = 1/10)
+
+== Part II: one persistent latent draw ==
+B1/B2 binary latent, theta = (1/3, 2/3), a = (3/4,1/4), b = (1/4,3/4): KL(a||b) = 0.549306
+    T =  1: KL_T = 0.056079, gap = 0.493227 (direct E_a KL(post) agrees), P_a(MAP err) = 0.250000, bound = 2.000000, Bhattacharyya bound = 3.265986
+    T =  2: KL_T = 0.103173, gap = 0.446133 (direct E_a KL(post) agrees), P_a(MAP err) = 0.222222, bound = 1.777778, Bhattacharyya bound = 3.079201
+    T =  4: KL_T = 0.179430, gap = 0.369876 (direct E_a KL(post) agrees), P_a(MAP err) = 0.185185, bound = 1.481481, Bhattacharyya bound = 2.737068
+    T =  8: KL_T = 0.287118, gap = 0.262188 (direct E_a KL(post) agrees), P_a(MAP err) = 0.130620, bound = 1.044963, Bhattacharyya bound = 2.162622
+    T = 16: KL_T = 0.409198, gap = 0.140108 (direct E_a KL(post) agrees), P_a(MAP err) = 0.069097, bound = 0.552776, Bhattacharyya bound = 1.350114
+    T = 32: KL_T = 0.504820, gap = 0.044486 (direct E_a KL(post) agrees), P_a(MAP err) = 0.021709, bound = 0.173676, Bhattacharyya bound = 0.526199
+    T = 64: KL_T = 0.544045, gap = 0.005262 (direct E_a KL(post) agrees), P_a(MAP err) = 0.002546, bound = 0.020370, Bhattacharyya bound = 0.079930
+B1/B2 ternary latent, theta = (1/4, 1/2, 3/4), a = (1/2,1/3,1/6), b = (1/6,1/3,1/2): KL(a||b) = 0.366204
+    T =  1: KL_T = 0.056079, gap = 0.310125 (direct E_a KL(post) agrees), P_a(MAP err) = 0.458333, bound = 3.666667, Bhattacharyya bound = 6.976068
+    T =  2: KL_T = 0.097964, gap = 0.268240 (direct E_a KL(post) agrees), P_a(MAP err) = 0.437500, bound = 3.500000, Bhattacharyya bound = 6.538563
+    T =  4: KL_T = 0.157053, gap = 0.209151 (direct E_a KL(post) agrees), P_a(MAP err) = 0.369792, bound = 2.958333, Bhattacharyya bound = 5.783575
+    T =  8: KL_T = 0.223782, gap = 0.142422 (direct E_a KL(post) agrees), P_a(MAP err) = 0.279755, bound = 2.238037, Bhattacharyya bound = 4.634555
+    T = 16: KL_T = 0.281680, gap = 0.084524 (direct E_a KL(post) agrees), P_a(MAP err) = 0.182156, bound = 1.457251, Bhattacharyya bound = 3.189506
+    T = 32: KL_T = 0.326438, gap = 0.039766 (direct E_a KL(post) agrees), P_a(MAP err) = 0.086533, bound = 0.692261, Bhattacharyya bound = 1.721951
+    T = 64: KL_T = 0.355691, gap = 0.010513 (direct E_a KL(post) agrees), P_a(MAP err) = 0.022932, bound = 0.183456, Bhattacharyya bound = 0.560434
+B1/B2 support mismatch, theta = (1/4, 1/2, 3/4), a = (1/2,1/2,0), b = (1/3,1/3,1/3): KL(a||b) = 0.405465
+    T =  1: KL_T = 0.031584, gap = 0.373881 (direct E_a KL(post) agrees), P_a(MAP err) = 0.375000, bound = 1.831951, Bhattacharyya bound = 1.831951
+    T =  2: KL_T = 0.058435, gap = 0.347030 (direct E_a KL(post) agrees), P_a(MAP err) = 0.343750, bound = 1.683013, Bhattacharyya bound = 1.683013
+    T =  4: KL_T = 0.101370, gap = 0.304095 (direct E_a KL(post) agrees), P_a(MAP err) = 0.287109, bound = 1.433013, Bhattacharyya bound = 1.433013
+    T =  8: KL_T = 0.161650, gap = 0.243815 (direct E_a KL(post) agrees), P_a(MAP err) = 0.232994, bound = 1.074199, Bhattacharyya bound = 1.074199
+    T = 16: KL_T = 0.237128, gap = 0.168337 (direct E_a KL(post) agrees), P_a(MAP err) = 0.147356, bound = 0.674362, Bhattacharyya bound = 0.674362
+    T = 32: KL_T = 0.319695, gap = 0.085770 (direct E_a KL(post) agrees), P_a(MAP err) = 0.067761, bound = 0.339785, Bhattacharyya bound = 0.339785
+    T = 64: KL_T = 0.381556, gap = 0.023910 (direct E_a KL(post) agrees), P_a(MAP err) = 0.017222, bound = 0.108844, Bhattacharyya bound = 0.108844
+B1/B2 ternary emissions, rows (1/2,1/4,1/4), (1/4,1/4,1/2), a = (2/3,1/3), b = (1/3,2/3): KL(a||b) = 0.231049
+    T =  1: KL_T = 0.018595, gap = 0.212454 (direct E_a KL(post) agrees), P_a(MAP err) = 0.333333, bound = 1.000000, Bhattacharyya bound = 1.353553
+    T =  2: KL_T = 0.034639, gap = 0.196410 (direct E_a KL(post) agrees), P_a(MAP err) = 0.291667, bound = 0.875000, Bhattacharyya bound = 1.295495
+    T =  4: KL_T = 0.061494, gap = 0.169555 (direct E_a KL(post) agrees), P_a(MAP err) = 0.247396, bound = 0.742188, Bhattacharyya bound = 1.186743
+    T =  8: KL_T = 0.101595, gap = 0.129454 (direct E_a KL(post) agrees), P_a(MAP err) = 0.183584, bound = 0.550751, Bhattacharyya bound = 0.995860
+    T = 16: KL_T = 0.151699, gap = 0.079350 (direct E_a KL(post) agrees), P_a(MAP err) = 0.109287, bound = 0.327860, Bhattacharyya bound = 0.701264
+    T = 32: KL_T = 0.198430, gap = 0.032619 (direct E_a KL(post) agrees), P_a(MAP err) = 0.043848, bound = 0.131545, Bhattacharyya bound = 0.347734
+B1/B2 non-identifying, theta = (1/4, 1/4, 3/4), a = (1/2,1/3,1/6), b = (1/6,1/3,1/2): KL(a||b) = 0.366204
+    T =  1: KL_T = 0.056633, gap = 0.309571 (direct E_a KL(post) agrees), P_a(MAP err) = 0.500000, bound = 4.000000, Bhattacharyya bound = 6.898979
+    T =  4: KL_T = 0.143841, gap = 0.222363 (direct E_a KL(post) agrees), P_a(MAP err) = 0.402344, bound = 3.218750, Bhattacharyya bound = 5.625685
+    T = 16: KL_T = 0.230678, gap = 0.135526 (direct E_a KL(post) agrees), P_a(MAP err) = 0.341590, bound = 2.732719, Bhattacharyya bound = 3.685962
+    T = 64: KL_T = 0.242579, gap = 0.123625 (direct E_a KL(post) agrees), P_a(MAP err) = 0.333338, bound = 2.666704, Bhattacharyya bound = 3.266408
+B2 non-identifying example: KL_T increases to at most KL(merged a || merged b) = 0.242586 < KL(a||b) = 0.366204; the gap stays >= KL(a||b) - KL(merged) = 0.123618 > 0 for every T, so 'gap -> 0' needs distinguishable component laws (this is not a counterexample to the zero-gap condition)
+B2 'only if' counterexample (a = (1/4,1/4,1/2), b = (1/8,1/8,3/4), laws (1/2,1/2,0), (1/2,1/2,0), (0,0,1)): KL_T = KL(a||b) = 0.143841 for T in [1, 3, 6], so the gap is 0, yet M is not a function of Y (two components with equal ratio a_m/b_m share one law)
+B2 'only if' counterexample (deterministic theta = (0,1,1), a = (1/2,1/4,1/4), b = (1/4,3/8,3/8)): KL_T = KL(a||b) = 0.143841 for T in [1, 4], so the gap is 0, yet M is not a function of Y (two components with equal ratio a_m/b_m share one law)
+B1 counterexample: a = (1/2,1/2), b = (1,0), identical component laws: KL(a||b) = +inf but KL_T = 0 for all T (the infinities need not coincide)
+B1 no-domination growth: same a, b with theta = (1/3,2/3): KL_T = 0.2684, 1.3608, 6.7088 at T = 4, 16, 64 (unbounded because a is not << b; this is the Part I mechanism)
+B1 two independent world draws (T = 3 each): KL = 0.287618 = 2 x 0.143809 <= 2 KL(a||b) = 1.098612
+B3 component kernels differ (theta^a = (1/3,2/3), theta^b = (2/5,3/5)); per-step within-component KL = 0.009466
+    T =   1: KL_T = 0.035702 <= KL(a||b) + T * within = 0.558773
+    T =   4: KL_T = 0.139023 <= KL(a||b) + T * within = 0.587172
+    T =  16: KL_T = 0.471945 <= KL(a||b) + T * within = 0.700770
+    T =  64: KL_T = 1.141846 <= KL(a||b) + T * within = 1.155162
+    T = 256: KL_T = 2.972728 <= KL(a||b) + T * within = 2.972728
+    KL_T first exceeds the world-level cap KL(a||b) = 0.549306 at T = 64 in this list
+B1 continuous latent bias (a = Beta(1/2,1/2), b = Beta(1,1)), cap ln(4/pi) = 0.241564: KL_n = 0.0000 (n=1), 0.0164 (n=2), 0.0444 (n=4), 0.0790 (n=8), 0.1138 (n=16), 0.1445 (n=32), 0.1696 (n=64), 0.1890 (n=128), 0.2035 (n=256)
+
+ALL CHECKS PASSED; record sha256 = ab155ba86f245bd2d41a9c899163591c1b6b77e57a562be75641526cb8bcecb3

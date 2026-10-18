@@ -1,0 +1,309 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T272",
+      "title": "Two-sided pathwise KT sandwich: ln BF_n = n KL(qhat || 1/2) - (1/2) ln n - c_n(x) with c_n(x) in ((1/2) ln(pi/2), ln 2] for every sequence",
+      "kind": "THEOREM",
+      "scope": "every n >= 1 and every binary sequence x of length n; BF_n is the Krichevsky-Trofimov (Jeffreys mixture) Bayes factor against fair bits",
+      "assumptions": [
+        "BF_n(x) = 2^n P_KT(x) with P_KT the Beta(1/2,1/2) mixture of Bernoulli product laws",
+        "qhat is the empirical frequency of ones in x"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t272-pathwise-sandwich",
+        "src/simtheory/evidence_scaling.py:kt_bayes_factor",
+        "src/simtheory/evidence_scaling.py:kt_regret_ratio",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the upper regret bound is the classical KT bound (Krichevsky-Trofimov 1981; Willems-Shtarkov-Tjalkens 1995) and is not claimed as new; only the uniform pathwise lower bound rho_n(x) > (1/2) ln(pi n/2) is claimed, and its gamma-function inequality is standard",
+        "two-sided pathwise KT and Jeffreys regret bounds appear in Freund 1996 and Xie-Barron 2000; no priority is claimed for the lower bound",
+        "the upper constant ln 2 is attained only at n = 1; the exact maximal regret for n >= 2 is not given",
+        "the sandwich concerns the KT composite alternative only, not other priors on the bias"
+      ]
+    },
+    {
+      "id": "ST-T273",
+      "title": "Non-asymptotic expected-evidence sandwich: n KL(q || 1/2) - (1/2) ln n - ln 2 <= E_q[ln BF_n] <= n KL(q || 1/2) - (1/2) ln n + 1 - (1/2) ln(pi/2)",
+      "kind": "THEOREM",
+      "scope": "IID Bernoulli(q) bits, every q in [0,1] and every n >= 1",
+      "assumptions": [
+        "bits are IID Bernoulli(q) under the data-generating law",
+        "the test statistic is the KT Bayes factor of ST-T272"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t273-expected-sandwich",
+        "src/simtheory/evidence_scaling.py:expected_log_bf",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the lower half is ST-T271; only the expected upper bound is new",
+        "the sandwich is not tight to o(1); ST-T274 gives the limit",
+        "it says nothing about dependent, adaptive, or adversarial bit sources",
+        "it is not evidence for or against simulation; a simulator with q = 1/2 is invisible (ST-T01)"
+      ]
+    },
+    {
+      "id": "ST-T274",
+      "title": "Exact additive constant (Clarke-Barron, specialized): E_q[ln BF_n] = n KL(q || 1/2) - (1/2) ln n + (1/2) ln(2e/pi) + o(1) for interior q, and constant -(1/2) ln pi at q in {0, 1}",
+      "kind": "THEOREM",
+      "scope": "fixed q in [0,1] as n grows",
+      "assumptions": [
+        "bits are IID Bernoulli(q)",
+        "q is fixed while n grows (pointwise, not uniform, in q)"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t274-exact-constant",
+        "src/simtheory/evidence_scaling.py:remainder",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "not new: the interior constant (1/2) ln(2e/pi) is the Clarke-Barron (1990, 1994) expansion for Bernoulli with the Jeffreys prior (see also Xie-Barron 1997, 2000), and the boundary constant follows from Wallis; the self-contained proof is a re-derivation",
+        "the o(1) term is not uniform near q = 0 or q = 1",
+        "the rate of the o(1) term is not proved (see ST-O02)"
+      ]
+    },
+    {
+      "id": "ST-F53",
+      "title": "Bounded high-precision certificate of the KT remainder table and the beacon-scale fair expectation",
+      "kind": "FINITE_CHECK",
+      "scope": "q in {1/10, 1/5, 1/4, 1/3, 2/5, 1/2} and n up to 5000; q = 1/2 at n = 131072; the committed beacon pulses",
+      "assumptions": [
+        "Decimal arithmetic at 60 digits with correctly rounded ln; comparisons asserted with margin 1e-30",
+        "binomial tails beyond |k - n/2| > 4000 at n = 131072 are bounded by Hoeffding and contribute below 1e-100",
+        "the 80-digit cross-check uses 80-digit working precision with the 60-digit constants"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#finite-check-st-f53-remainder-table",
+        "src/simtheory/evidence_scaling.py:part_one",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the table certifies finitely many (n, q) pairs only",
+        "the exact fair expectation -5.6175 at n = 131072 is a property of the KT statistic, not of the beacon data; the observed -6.0317 is one realization"
+      ]
+    },
+    {
+      "id": "ST-T275",
+      "title": "Pathwise KT rejection region and Hoeffding power frontier for biased Bernoulli simulators",
+      "kind": "THEOREM",
+      "scope": "n IID Bernoulli(q) bits, level alpha and target power 1 - beta",
+      "assumptions": [
+        "the test rejects fairness when BF_n >= 1/alpha (level alpha by Ville's inequality under fair bits, as in ST-T08)",
+        "bits are IID Bernoulli(q) under the alternative"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t275-power-frontier",
+        "src/simtheory/evidence_scaling.py:sufficient_radius",
+        "src/simtheory/evidence_scaling.py:necessary_radius",
+        "src/simtheory/evidence_scaling.py:hoeffding_slack",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the closed-form frontier d_n + sqrt(ln(1/beta)/(2n)) is sufficient, not necessary; the exact KT frontier is smaller (ST-F54)",
+        "the power step is Hoeffding's inequality and the region uses binary Pinsker; both are standard",
+        "the frontier concerns IID biased simulators and says nothing about simulators that match the fair law"
+      ]
+    },
+    {
+      "id": "ST-T276",
+      "title": "Le Cam two-point converse (standard): no level-alpha test reaches power 1 - beta at |q - 1/2| below max{(1 - alpha - beta)/sqrt(2n), sqrt(ln(1/(2(alpha + beta)))/(4n))} over the branches whose condition holds",
+      "kind": "THEOREM",
+      "scope": "randomized tests on n IID bits",
+      "assumptions": [
+        "alpha + beta < 1 for the Pinsker branch and alpha + beta < 1/2 for the Bretagnolle-Huber branch",
+        "the test observes at most n bits; a sequential test that stops by time n is covered"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t276-le-cam-converse",
+        "src/simtheory/evidence_scaling.py:converse_radius",
+        "src/simtheory/evidence_scaling.py:np_power_exact",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "a direct application of the classical Le Cam two-point method with Pinsker and Bretagnolle-Huber (Le Cam 1973; Bretagnolle-Huber 1979; Tsybakov 2009, Lemma 2.6); not claimed as new",
+        "the converse constant is not optimal; the exact Neyman-Pearson frontier is larger (ST-F54)",
+        "tests that may observe more than n bits are not covered"
+      ]
+    },
+    {
+      "id": "ST-F54",
+      "title": "Beacon power frontier at n = 131072: fixed-n converse 0.00201 < optimal NP 0.00548 < exact KT 0.00867 < closed form 0.00991",
+      "kind": "FINITE_CHECK",
+      "scope": "n = 131072, alpha = 1/100, beta = 1/20, grid q = (65536 + i)/n",
+      "assumptions": [
+        "n and k are re-derived from the pinned NIST pulse file of ST-F52",
+        "powers are computed by Decimal recursion at 60 digits; bracketing powers differ from 0.95 by more than 1e-30",
+        "KT and NP power are monotone in |q - 1/2| (lemma in the derivation, checked exactly for small n), so grid bisection brackets the crossing"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#finite-check-st-f54-beacon-frontier",
+        "src/simtheory/evidence_scaling.py:part_one",
+        "src/simtheory/evidence_scaling.py:np_threshold_large",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "powers are for the fixed-n test BF_n >= 1/alpha; the ST-F52 sequential test rejects at least as often, so the KT frontier is conservative for it",
+        "the converse is of order 1/sqrt(n) and is off by a sqrt(ln n) factor from the KT frontier; it does not match it",
+        "the frontier describes which IID biased simulators the sample could have caught; it is not a randomness certification",
+        "simulators with |q - 1/2| below 0.00201 are not shown to exist or not to exist"
+      ]
+    },
+    {
+      "id": "ST-M84",
+      "title": "Binary symmetric coarsening rescales the power frontier and converse by 1/(1 - 2f) and moves boundary sources into the interior constant",
+      "kind": "MODEL_RESULT",
+      "scope": "a known binary symmetric channel with flip probability f in [0, 1/2) applied independently to every bit; extends ST-M83",
+      "assumptions": [
+        "the channel acts independently on every bit and is known",
+        "the observer only sees channel outputs"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#model-result-st-m84-coarsened-frontier",
+        "src/simtheory/evidence_scaling.py:part_one",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the rate contraction KL(q_f || 1/2) <= KL(q || 1/2) is ST-M83; only the frontier rescaling and the constant shift are new",
+        "the result does not cover unknown or adversarial channels",
+        "at f = 1/2 nothing is detectable, which is ST-T01, not a new result"
+      ]
+    },
+    {
+      "id": "ST-T277",
+      "title": "Persistent cap: KL(P_a^Y || P_b^Y) <= KL(a || b) (data processing; finite only when a << b) for every transcript design (any length, stopping rule or label-independent adaptive policy), and <= N KL(a || b) for N world draws",
+      "kind": "THEOREM",
+      "scope": "one persistent latent world M with laws a and b, a common observation kernel, standard Borel spaces",
+      "assumptions": [
+        "both hypotheses share the kernel P(Y | M) and the experimenter's policy does not depend on the hypothesis label",
+        "for the N-draw statement, any common kernel from (M_1..M_N) to Y; equality to the sum of per-unit KLs needs independent units"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t277-persistent-cap",
+        "src/simtheory/evidence_scaling.py:persistent_audit",
+        "src/simtheory/evidence_scaling.py:jeffreys_vs_uniform_kl",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the inequality is the classical data-processing inequality for KL (Csiszar 1967; Cover-Thomas Thm 2.8.1; Polyanskiy-Wu 2024) and is not claimed as new; the contribution is its application to world-level mixing weights",
+        "the bound is vacuous (+inf) when a is not << b; the ST-T226 support condition remains necessary for any finite ceiling",
+        "the two sides are not infinite together: KL(a || b) = +inf is compatible with KL(P_a^Y || P_b^Y) = 0 (identical components)",
+        "the bound controls the a-expected log Bayes factor, not every transcript (that is ST-T226)",
+        "it does not limit evidence about which latent model is active"
+      ]
+    },
+    {
+      "id": "ST-T278",
+      "title": "Saturation identity: KL(a || b) - KL(P_a^Y || P_b^Y) = E_a[KL(a(. | Y) || b(. | Y))], and for finite M the gap is zero iff a_m/b_m is constant on every posterior support",
+      "kind": "THEOREM",
+      "scope": "the ST-T277 setting with KL(a || b) < infinity; the zero-gap characterization for finite M",
+      "assumptions": [
+        "KL(a || b) < infinity",
+        "posteriors are regular conditional distributions of M given Y under a x K and b x K"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t278-saturation-identity",
+        "src/simtheory/evidence_scaling.py:persistent_audit",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the identity is the KL chain rule, and the zero-gap condition specializes the Kullback-Leibler (1951) sufficiency equality condition; only the finite-M ratio form is stated here",
+        "the converse direction (gap 0 implies M is a.s. a function of Y) is guaranteed when the ratios a_m / b_m are pairwise distinct on supp(b); it fails in general (counterexamples in ST-F55)",
+        "the identity does not say how fast the gap closes; see ST-T279"
+      ]
+    },
+    {
+      "id": "ST-T279",
+      "title": "Gap bound (R - 1) P_a(MAP error) plus an explicit support-mismatch term; hence the gap decays at least as fast as exp(-T min C + o(T)) over relevant pairs",
+      "kind": "THEOREM",
+      "scope": "finite latent set, a << b, conditionally IID transcripts for the decay corollary",
+      "assumptions": [
+        "a << b (otherwise the cap is +inf and the gap is undefined)",
+        "R = max over m, m' in supp(a) of (a_m b_m') / (b_m a_m')",
+        "for the decay corollary, the component laws in every relevant pair are distinct",
+        "the Chernoff parameter s may be chosen separately for each pair"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t279-gap-bound",
+        "src/simtheory/evidence_scaling.py:gap_bound",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the multi-hypothesis MAP-error Chernoff exponent is classical (Chernoff 1952; Leang-Johnson 1997); only the (R - 1) factor and the support-mismatch term are new",
+        "the decay rate is an upper bound on the gap's exponent, not shown to be tight",
+        "without distinct component laws the gap can stay bounded away from zero (non-identifying example in ST-F55)"
+      ]
+    },
+    {
+      "id": "ST-T280",
+      "title": "Component-kernel decomposition (standard): KL(P_a^Y || P_b^Y) <= KL(a || b) + E_a[KL(P^a_{Y|M} || P^b_{Y|M})]",
+      "kind": "THEOREM",
+      "scope": "hypotheses that differ in the mixing law and in the per-world kernels",
+      "assumptions": [
+        "standard Borel spaces; kernels P^a_{Y|M}, P^b_{Y|M} measurable in M",
+        "the identity for the difference needs KL(a || b) + E_a KL(K^a || K^b) < infinity"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#theorem-st-t280-kernel-decomposition",
+        "src/simtheory/evidence_scaling.py:part_two",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "chain rule plus data processing; standard and not claimed as new",
+        "no matching lower bound is claimed in general",
+        "it complements, and does not close, the ST-T226 scope nonclaim about component distinguishability",
+        "linear growth of the within-component part is evidence about per-world laws, not about the world-level weights"
+      ]
+    },
+    {
+      "id": "ST-F55",
+      "title": "Bounded exact-law audit of persistent-latent evidence, including counterexamples to the original sketch",
+      "kind": "FINITE_CHECK",
+      "scope": "binary, ternary, support-mismatch, ternary-emission and non-identifying examples up to T = 64; two counterexamples to 'gap 0 only if M is a function of Y'; one infinite-cap counterexample",
+      "assumptions": [
+        "probabilities are exact Fractions over sufficient count vectors; logarithms are 60-digit Decimals with margin 1e-30"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#finite-check-st-f55-persistent-audit",
+        "src/simtheory/evidence_scaling.py:part_two",
+        "src/simtheory/evidence_scaling.py:ONLY_IF_COUNTEREXAMPLES",
+        "tests/test_evidence_scaling_dichotomy.py",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "the reported value at T = 4 is 0.1794, not 0.180 as in the sketch",
+        "bounded examples do not validate any prior over simulators"
+      ]
+    },
+    {
+      "id": "ST-O02",
+      "title": "Second-order KT remainder: is r_n(q) = (1 - 2q)^2 / (24 n q (1 - q)) + O(1/n^2) for interior q?",
+      "kind": "OPEN_PROBLEM",
+      "scope": "r_n(q) is the ST-T274 remainder for fixed interior q",
+      "assumptions": [
+        "formally derived by second-order moment and Stirling expansions; numerics agree"
+      ],
+      "evidence": [
+        "docs/evidence-scaling-dichotomy.md#open-problem-st-o02-second-order-term",
+        "receipts/evidence-scaling-dichotomy.txt"
+      ],
+      "nonclaims": [
+        "heuristically derived by second-order moment and Stirling expansions; numerics agree; the remainder control is not written, so it is not a theorem",
+        "at q = 1/2 the remainder 9.7e-12 at n = 131072 suggests O(1/n^2), also unproved"
+      ]
+    }
+  ]
+}
