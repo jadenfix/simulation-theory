@@ -3,7 +3,7 @@
   "slug": "evidence-a-simulator-can-leave",
   "paper": "How much evidence can a simulator leave?",
   "subtitle": "Explicit evidence rates, a one-draw cap, and what the NIST beacon and Delft 2015 data do and do not show",
-  "author": "simulation-theory contributors",
+  "author": "Jaden Fix",
   "pages": 19,
   "source_commit": "aa61193",
   "pdf": "main.pdf",
