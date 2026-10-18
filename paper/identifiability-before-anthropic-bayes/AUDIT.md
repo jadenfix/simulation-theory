@@ -57,3 +57,16 @@ The exact JSON receipt is intended to be byte-stable. The PDF receives a release
 ## What still requires human judgment
 
 No automated audit establishes literature novelty, philosophical adequacy of an observer measure or self-location rule, or the truth of a simulation hypothesis. Before journal submission, at least one external reader familiar with anthropic/self-locating inference and one reader familiar with finite-mixture or latent-variable identifiability should independently seek counterexamples or prior work that subsumes the scoped contribution.
+
+## Second audit (2026-10-18)
+
+An adversarial re-read after merge found no false theorem. The fixes:
+
+- **Theorem 5 scope.** The theorem rules out only nonnegative gauges. A new remark gives an exact rational counterexample outside the gauge: with pi = (9/25, 16/25) and K = ((1/2, 1/4, 1/4), (1/6, 1/3, 1/2)), the signed unit-row-sum gauge A = ((18/11, -7/11), (7/39, 32/39)) yields pi' = (1936/15625, 13689/15625) and a strictly positive K' with the same one- and two-view laws; a third view separates them (Kruskal 1977 is now cited). The abstract, the Limitations section and the P1-T7 nonclaims say that two views exclude only the nonpermutation members of the nonnegative gauge and do not give global identifiability.
+- **Section title.** "Persistent latents and effective sample size" is now "Persistent latents and the sampling hierarchy"; no result defines an effective sample size.
+- **SSA plus SIA.** Proposition 1 has a new item: with worlds weighted by reference-class size, uniform-within-world kernels recover raw global counts. This is attributed as the standard SSA plus SIA observation (Bostrom 2002; Olum 2002; Bostrom and Cirkovic 2003). The "special cancellation" wording is replaced by "when the weighted sums happen to equal the raw ratio".
+- **Prior art.** Dorr and Arntzenius (2017) on self-locating priors and cosmological measures is cited in the introduction, Section 4 and Section 9, and in the non-novelty list.
+- **Typing.** Theorems 1 and 3 are labelled standard.
+- **Bibliography.** Proper nouns are braced so plainnat keeps their case; the arXiv identifiers of Neal (2006) and Schneider-Olum (2013) now render; the unconfirmed online date for Khawaja is removed; the key-year mismatches of thomas2024 and franceschi2014 are explained in citation_provenance.json.
+- **Ledger.** Each P1 claim now lists the repository claims it corresponds to (`repo_claims`), and a test checks that they exist with a matching kind; P1-T8 is marked paper-only.
+- **Typesetting.** Backticks in Section 11 became \texttt, the abstract was shortened, the date was updated, and the stray QED box after Proposition 3 was moved into the display with \qedhere.

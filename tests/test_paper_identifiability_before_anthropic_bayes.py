@@ -169,7 +169,7 @@ def test_manuscript_contains_scope_guards_core_citations_and_review_fixes():
     assert "both observations use the same channel $K$" in tex
     assert "same-channel repeated-view rigidity" in tex
     assert "Robust Bayesian methods for set-identified models" in tex
-    assert "receipt.json` is required to regenerate byte-for-byte" in tex
+    assert "\\texttt{receipt.json} is required to regenerate byte-for-byte" in tex
     assert "does not claim that PDF bytes must remain invariant" in tex
     assert "\\section{Limitations}" in tex
     assert "\\section{Conclusion}" in tex
@@ -354,3 +354,38 @@ def test_workflow_records_source_toolchain_and_checks_correct_author():
     assert "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
     assert "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02" in workflow
     assert "Jaden Figgs" not in workflow
+
+
+def test_paper_ledger_crosswalk_points_to_existing_repository_claims():
+    import glob
+
+    kinds = {}
+    for path in glob.glob(str(ROOT / "claims" / "*.json")):
+        for claim in json.loads(Path(path).read_text())["claims"]:
+            kinds[claim["id"]] = claim["kind"]
+    expected_kind = {"theorem": {"THEOREM", "MODEL_RESULT"}, "proposition": {"THEOREM", "MODEL_RESULT"}}
+    claims = json.loads((PAPER / "claims.json").read_text())["claims"]
+    for claim in claims:
+        assert "repo_claims" in claim
+        for identifier in claim["repo_claims"]:
+            assert identifier in kinds, identifier
+            assert kinds[identifier] in expected_kind[claim["type"]]
+        if not claim["repo_claims"]:
+            assert "paper-only" in claim["repo_claims_note"]
+    two_view = next(c for c in claims if c["id"] == "P1-T7")
+    assert any("do not identify (pi,K) in general" in x for x in two_view["nonclaims"])
+
+
+def test_manuscript_records_second_audit_fixes():
+    tex = (PAPER / "paper.tex").read_text()
+    bib = (PAPER / "references.bib").read_text()
+    assert "\\section{Persistent latents and the sampling hierarchy}" in tex
+    assert "effective sample size" not in tex
+    assert "Signed gauges lie outside the theorem" in tex
+    assert "kruskal1977" in tex and "{kruskal1977," in bib
+    assert "dorrarntzenius2017" in tex and "{dorrarntzenius2017," in bib
+    assert "olum2002" in tex and "bostromcirkovic2003" in tex
+    assert "special cancellation" not in tex
+    assert "{Bayesian}" in bib and "{Everettian}" in bib and "{Dr. Evil}" in bib
+    assert "howpublished={arXiv:math/0608592}" in bib
+    assert "27 April 2026" not in bib
