@@ -60,6 +60,8 @@ As observations are refined, `E[g|X_S]` is a martingale. Since absolute value is
 S\subseteq T\implies V(T)\le V(S).
 \]
 
+No uniformity is used for monotonicity itself: for any prior, `min(a+a',b+b') >= min(a,b)+min(a',b')`, so splitting a cell never increases its minority mass.
+
 ## Boolean influence appears exactly
 
 Observe every coordinate except `i`. Each observation cell contains one cube edge `{x,x\oplus e_i}`. A cell contributes zero when the two endpoint outputs agree and one endpoint's uniform mass when they disagree. Therefore

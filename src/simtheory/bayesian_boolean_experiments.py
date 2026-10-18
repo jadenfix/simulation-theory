@@ -18,7 +18,7 @@ observation cells.  Under the uniform prior and g=(-1)^f this is
     V(S) = (1 - E | E[g | X_S] |) / 2.
 
 If every coordinate except i is observed, each remaining cell is a two-point
-edge of the Boolean cube and V([k]\{i}) = Influence_i(f)/2 exactly.
+edge of the Boolean cube and V([k] minus {i}) = Influence_i(f)/2 exactly.
 
 These are finite exact decision identities.  They do not turn a supplied prior
 into empirical evidence and they are not evidence for simulation.

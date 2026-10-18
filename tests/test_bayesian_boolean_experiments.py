@@ -1,3 +1,4 @@
+from itertools import combinations
 from fractions import Fraction
 
 from simtheory.bayesian_boolean_experiments import (
@@ -89,3 +90,20 @@ def test_essential_coordinates_are_detected_operationally():
     assert uniform_boolean_influence(table, 1) == 0
     assert uniform_boolean_influence(table, 2) == 1
     assert uniform_boolean_influence(table, 3) == 0
+
+
+def test_gap_is_nonincreasing_under_refinement_for_every_three_bit_table_and_prior():
+    # ST-T207: no uniformity is needed; check uniform and a skewed prior with a zero atom.
+    priors = (
+        uniform_boolean_prior(3),
+        tuple(Fraction(w, 36) for w in (1, 2, 3, 4, 5, 6, 15, 0)),
+    )
+    subsets = [s for size in range(4) for s in combinations(range(3), size)]
+    for mask in range(256):
+        table = tuple((mask >> index) & 1 for index in range(8))
+        for prior in priors:
+            gaps = {s: bayesian_boolean_gap(table, prior, s) for s in subsets}
+            for small in subsets:
+                for large in subsets:
+                    if set(small) <= set(large):
+                        assert gaps[large] <= gaps[small]
