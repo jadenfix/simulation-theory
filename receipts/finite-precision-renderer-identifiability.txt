@@ -1,0 +1,79 @@
+finite-precision-renderer-identifiability receipt
+decimal precision 80
+
+[T0] dithering boundary (EXACT, Fractions)
+  D=    4 target=['1/3', '1/3', '1/6', '1/6'] components=3 ok=True
+  D=    8 target=['1/6', '1/3', '1/3', '1/6'] components=3 ok=True
+  D=   16 target=['1/14', '3/7', '3/7', '1/14'] components=3 ok=True
+  D=    3 target=['1/10', '1/5', '3/10', '2/5'] components=4 ok=True
+  D= 1024 target=['41/560', '239/560', '239/560', '41/560'] components=3 ok=True
+  uniform-3 dithering of H_2 on K=3: |averages|=28 |H_6|=28 equal=True
+  uniform-2 dithering of H_3 on K=3: |averages|=28 |H_6|=28 equal=True
+  uniform-2 dithering of H_2 on K=4: |averages|=35 |H_4|=35 equal=True
+  uniform-3 dithering of H_5 on K=2: |averages|=16 |H_15|=16 equal=True
+
+[T1] single-cosine schedules: Werner lattice and visibility-blind grid points (EXACT)
+  L_D formula == brute force for D=1..40: True; L_D empty for all odd D<=40: True
+  c=one       v in [1/2,1]: even D in 4..400 with P_v in H_D for some v: 199/199; sufficient condition first holds at D=8; sufficiency verified=True; D=0 mod 4 with no such v: []
+  c=one       v in [9/10,1]: even D in 4..400 with P_v in H_D for some v: 199/199; sufficient condition first holds at D=40; sufficiency verified=True; D=0 mod 4 with no such v: []
+  c=inv_sqrt2 v in [1/2,1]: even D in 4..400 with P_v in H_D for some v: 197/199; sufficient condition first holds at D=12; sufficiency verified=True; D=0 mod 4 with no such v: [4]
+  c=inv_sqrt2 v in [9/10,1]: even D in 4..400 with P_v in H_D for some v: 185/199; sufficient condition first holds at D=58; sufficiency verified=True; D=0 mod 4 with no such v: [4, 8, 16, 20, 28, 32, 44]
+  counterexample to the literal sketch: D=4, c=1/sqrt2, v in [9/10,1] -> grid points [] (empty=True)
+  CHSH schedule (|cos|=1/sqrt2), D=32: grid anti-correlators x=['3/8', '1/2', '5/8'] -> |S|=4x=['3/2', '2', '5/2']; x=5/8 gives law ['3/32', '13/32', '13/32', '3/32'] in H_32: True
+
+[T2] settings theta in {0, pi/4}, v in [1/2, 1] unknown
+  EXACT: m1^2 - 2 m2^2 != 0 for all (m1,m2) != 0 with |m_i| <= 100: True
+  NUMERICAL (Decimal 80 digits): g_D = min l_inf distance from grid anti-correlator pairs to the segment
+  declared D grid: 110 values in [4, 10000]; analytic bound g_D >= min(v_min, 1/((3+2sqrt2)D^2)) holds on all: True
+  analytic constant 1/(3+2sqrt2) = 0.171573; empirical min/max of D^2 g_D over D>=8: 0.836816 / 2.799929
+    D=     4 argmin (m1,m2)=(2, 2) |m1^2-2m2^2|=4 D^2 g_D=1.372583
+    D=     8 argmin (m1,m2)=(6, 4) |m1^2-2m2^2|=4 D^2 g_D=1.137085
+    D=    12 argmin (m1,m2)=(8, 6) |m1^2-2m2^2|=8 D^2 g_D=2.412122
+    D=    28 argmin (m1,m2)=(14, 10) |m1^2-2m2^2|=4 D^2 g_D=1.648486
+    D=    68 argmin (m1,m2)=(48, 34) |m1^2-2m2^2|=8 D^2 g_D=2.345176
+    D=   164 argmin (m1,m2)=(82, 58) |m1^2-2m2^2|=4 D^2 g_D=1.656608
+    D=   396 argmin (m1,m2)=(280, 198) |m1^2-2m2^2|=8 D^2 g_D=2.343206
+    D=   956 argmin (m1,m2)=(478, 338) |m1^2-2m2^2|=4 D^2 g_D=1.656847
+    D=   999 argmin (m1,m2)=(915, 647) |m1^2-2m2^2|=7 D^2 g_D=1.582842
+    D=  1000 argmin (m1,m2)=(676, 478) |m1^2-2m2^2|=8 D^2 g_D=2.450979
+    D=  1001 argmin (m1,m2)=(915, 647) |m1^2-2m2^2|=7 D^2 g_D=1.586011
+    D=  2308 argmin (m1,m2)=(1632, 1154) |m1^2-2m2^2|=8 D^2 g_D=2.343148
+    D=  5572 argmin (m1,m2)=(2786, 1970) |m1^2-2m2^2|=4 D^2 g_D=1.656854
+    D= 10000 argmin (m1,m2)=(6726, 4756) |m1^2-2m2^2|=4 D^2 g_D=1.231679
+  EXACT grid membership + NUMERICAL distances for the Pell-multiple converse renderer, all D = 0 mod 4 in [8, 2000]:
+    D values: 499; all checks pass: True; max D^2 * Delta = 117.1573 (analytic cap 144 v_max/(sqrt2 (dv)^2) = 407.29)
+  Pell subsequence D = 4P with v = 1 (exact grid laws; NUMERICAL KL, chi^2):
+    P/Q=3/2 D=     12 D^2*TV_pi4=2.911688 D^4*KL=32.7042 D^4*chi2=67.8234 D^2 g_D=2.412122
+    P/Q=7/5 D=     28 D^2*TV_pi4=2.814142 D^4*KL=31.8947 D^4*chi2=63.3552 D^2 g_D=1.648486
+    P/Q=17/12 D=     68 D^2*TV_pi4=2.830878 D^4*KL=32.0186 D^4*chi2=64.1110 D^2 g_D=2.345176
+    P/Q=41/29 D=    164 D^2*TV_pi4=2.828007 D^4*KL=31.9968 D^4*chi2=63.9810 D^2 g_D=1.656608
+    P/Q=99/70 D=    396 D^2*TV_pi4=2.828499 D^4*KL=32.0005 D^4*chi2=64.0033 D^2 g_D=2.343206
+    P/Q=239/169 D=    956 D^2*TV_pi4=2.828415 D^4*KL=31.9999 D^4*chi2=63.9994 D^2 g_D=1.656847
+    P/Q=577/408 D=   2308 D^2*TV_pi4=2.828429 D^4*KL=32.0000 D^4*chi2=64.0001 D^2 g_D=2.343148
+    P/Q=1393/985 D=   5572 D^2*TV_pi4=2.828427 D^4*KL=32.0000 D^4*chi2=64.0000 D^2 g_D=1.656854
+  achievability: n_s >= 8 (3+2sqrt2)^2 D^4 ln(4/eps) = 271.76 D^4 ln(4/eps) trials per setting
+  converse (Pell multiples, any D=0 mod 4 with (dv)D>=4): n_pi4 >= ((dv) D / 12)^4 ln(1/(4 eps)) / v_max^2
+    D=2^10: achievability scale 1.309e+15 trials, converse scale 5.334e+06 trials (eps=0.05)
+    D=2^20: achievability scale 1.440e+27 trials, converse scale 5.864e+18 trials (eps=0.05)
+    D=2^53: achievability scale 7.838e+66 trials, converse scale 3.193e+58 trials (eps=0.05)
+
+[T3] known v = 1, D = 2^k
+  fixed setting pi/4: brute force == largest remainder == 2^(1-k)||2^(k-3)sqrt2|| for k<=5: True (NUMERICAL Decimal)
+  2^k TV_k = 2||2^(k-3)sqrt2|| for k=3..64: min = 0.011975 at k=32; max = 0.994012
+  first values 2^k TV_k: k=3:0.8284, k=4:0.3431, k=5:0.6863, k=6:0.6274, k=7:0.7452, k=8:0.5097, k=9:0.9807, k=10:0.0387, k=11:0.0773, k=12:0.1547
+  (Finite check only: whether inf_k 2^k TV_k > 0 is open; Ridout gives TV_k >= 2^{-(1+e)k} for k >= k0(e), ineffective.)
+  adapted design cos(theta)=1-2/D: min TV(H_D, P_1) = 1/D exactly for D = 2^k, k=1..12, brute force D<=64, coarser 2^j grids >= 1/D: True (EXACT)
+  adapted design for other D: min TV = 1/D for even D in (6,10,12,14,18): True; = 1/(2D) for odd D in (3,5,7,9,15,33): True (EXACT)
+    NUMERICAL test errors eps=0.05, D=16: n=1049 (=16 D ln(3/eps) rounded up), threshold T=98, P_1 error=3.986e-05, worst H_D acceptance<=8.012e-04
+    NUMERICAL test errors eps=0.05, D=64: n=4193 (=16 D ln(3/eps) rounded up), threshold T=98, P_1 error=6.076e-05, worst H_D acceptance<=1.339e-03
+    NUMERICAL test errors eps=0.05, D=256: n=16771 (=16 D ln(3/eps) rounded up), threshold T=98, P_1 error=6.732e-05, worst H_D acceptance<=1.496e-03
+    NUMERICAL test errors eps=0.05, D=1024: n=67082 (=16 D ln(3/eps) rounded up), threshold T=98, P_1 error=6.900e-05, worst H_D acceptance<=1.537e-03
+  universal converse ingredients (200 random rational K=4 targets, D<=9): largest remainder optimal=True; max l1*D/(K/2)=56/67 (<=1); Hellinger^2<=l1: True
+    D=2^10: universal lower bound n >= (D-1)/2 ln(1/(4eps)) = 8.232e+02; adapted-design upper bound 16 D ln(3/eps) = 6.708e+04 (eps=0.05)
+    D=2^20: universal lower bound n >= (D-1)/2 ln(1/(4eps)) = 8.438e+05; adapted-design upper bound 16 D ln(3/eps) = 6.869e+07 (eps=0.05)
+    D=2^53: universal lower bound n >= (D-1)/2 ln(1/(4eps)) = 7.248e+15; adapted-design upper bound 16 D ln(3/eps) = 5.901e+17 (eps=0.05)
+
+[R] phase nuisance (visibility-phase family, ST-T11)
+  schedule {0,pi/4,pi/2}, phi=-pi/4, D=32: grid hits x=v/sqrt2 with v in [1/2,1]: ['3/8', '1/2', '5/8']; with v < 1/2: ['1/8', '1/4']; all exact grid laws: True
+
+ALL CHECKS PASS: True
