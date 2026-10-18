@@ -15,7 +15,7 @@
       "title": "Bayesian Boolean experiment value is sharply one-Lipschitz in prior total variation",
       "kind": "THEOREM",
       "scope": "finite priors on one common hidden-model support and one fixed observation subset",
-      "assumptions": ["loss is bounded in [0,1] before the K3 excess-cost reduction"],
+      "assumptions": ["the per-model excess of any fixed cell-to-leaf assignment lies in {0,1}"],
       "evidence": ["docs/bayesian-boolean-prior-robustness.md#sharp-total-variation-continuity", "src/simtheory/bayesian_boolean_prior_robustness.py:exact_value_sensitivity_certificate", "tests/test_bayesian_boolean_prior_robustness.py"],
       "nonclaims": ["the TV radius itself must come from a separate modeling or statistical argument"]
     },
@@ -26,7 +26,7 @@
       "scope": "differences of two Bayesian Boolean experiment values under a common prior perturbation",
       "assumptions": ["both endpoint values obey the one-Lipschitz theorem"],
       "evidence": ["docs/bayesian-boolean-prior-robustness.md#marginal-experiment-gains", "src/simtheory/bayesian_boolean_prior_robustness.py:marginal_gain_interval", "tests/test_bayesian_boolean_prior_robustness.py"],
-      "nonclaims": ["the factor two is a generic worst-case bound and may be loose for a specific experiment"]
+      "nonclaims": ["the factor two is a worst-case bound and may be loose for a specific experiment, but it is attained in general (tests/test_bayesian_boolean_prior_robustness.py::test_factor_two_gain_bound_is_attained)"]
     },
     {
       "id": "ST-T224",

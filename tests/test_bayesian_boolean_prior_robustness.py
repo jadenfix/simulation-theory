@@ -45,11 +45,25 @@ def test_experiment_value_ordering_has_exact_sufficient_tv_margin_rules():
 
 def test_marginal_gain_changes_under_prior_shift_but_stays_bounded():
     # XOR: observing either coordinate determines nothing under uniform prior,
-    # but under a skewed prior the same query can have a different gain.
+    # but under a skewed prior the same query has a strictly positive gain.
     table = (0, 1, 1, 0)
     p = (Fraction(1, 4),) * 4
-    q = (Fraction(7, 10), Fraction(1, 10), Fraction(1, 10), Fraction(1, 10))
+    q = (Fraction(2, 5), Fraction(1, 5), Fraction(2, 5), Fraction(0))
     tv = prior_total_variation(p, q)
     gp = marginal_gain(table, p, (), (0,))
     gq = marginal_gain(table, q, (), (0,))
+    assert gp == 0
+    assert gq == Fraction(1, 5)
+    assert tv == Fraction(3, 10)
     assert abs(gp - gq) <= 2 * tv
+
+
+def test_factor_two_gain_bound_is_attained():
+    table = (0, 1, 0, 0)
+    p = (Fraction(1, 10), Fraction(3, 10), Fraction(3, 5), Fraction(0))
+    q = (Fraction(1, 20), Fraction(7, 20), Fraction(3, 5), Fraction(0))
+    tv = prior_total_variation(p, q)
+    assert tv == Fraction(1, 20)
+    assert marginal_gain(table, p, (), (0,)) == Fraction(1, 5)
+    assert marginal_gain(table, q, (), (0,)) == Fraction(3, 10)
+    assert abs(marginal_gain(table, p, (), (0,)) - marginal_gain(table, q, (), (0,))) == 2 * tv
