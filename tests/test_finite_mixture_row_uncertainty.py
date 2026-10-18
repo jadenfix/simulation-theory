@@ -79,3 +79,31 @@ def test_invalid_row_radius_vector_is_rejected():
             pass
         else:
             raise AssertionError("invalid rowwise uncertainty must fail closed")
+
+
+def test_certificate_rejects_robust_faces_not_bound_to_the_radii():
+    from dataclasses import replace
+
+    identity = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
+    radii = (F(1, 4), F(1, 4), F(1, 4))
+    honest = exact_row_uncertain_global_tv(identity, radii)
+    zero = exact_row_uncertain_global_tv(identity, (0, 0, 0))
+    assert honest.valid and honest.facewise_lower_bound == F(1, 2)
+    forged = replace(
+        honest,
+        face_lower_certificates=zero.face_lower_certificates,
+        facewise_lower_bound=zero.facewise_lower_bound,
+        robust_inverse_upper_bound=zero.robust_inverse_upper_bound,
+    )
+    assert not forged.valid
+
+
+def test_robust_lower_bound_holds_for_admissible_perturbed_channels():
+    # ST-T251/ST-T252: identity K3 with only the last row uncertain by 1/4.
+    identity = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
+    cert = exact_row_uncertain_global_tv(identity, (0, 0, F(1, 4)))
+    assert cert.facewise_lower_bound == F(3, 4)
+    for row in ((F(1, 4), 0, F(3, 4)), (0, F(1, 4), F(3, 4)), (F(1, 8), F(1, 8), F(3, 4))):
+        perturbed = exact_global_tv_modulus(((1, 0, 0), (0, 1, 0), row))
+        assert perturbed.affine.identifiable
+        assert perturbed.alpha >= cert.facewise_lower_bound

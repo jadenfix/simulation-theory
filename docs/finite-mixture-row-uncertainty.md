@@ -82,7 +82,7 @@ At `epsilon=1/2`, the two rows coincide and identifiability disappears.
 
 The bound above charges every latent direction twice by the worst row radius. But a dangerous face pair may not use the most uncertain row on both sides.
 
-For disjoint latent faces `P,N`, a pair action `(i,j)` incurs the exact deterministic uncertainty penalty
+For disjoint latent faces `P,N`, a pair action `(i,j)` incurs the worst-case per-event uncertainty penalty
 
 \[
 r_i+r_j.
@@ -173,7 +173,7 @@ C_*(K')\le\frac1{L_{rob}}.
 }
 \]
 
-Consequently an observed-law confidence radius `rho_obs` transfers uniformly to
+Consequently, if `rho_obs` bounds `TV(\hat\pi K',\pi K')` with both priors pushed through the same admissible true channel `K'`, it transfers uniformly to
 
 \[
 \boxed{
@@ -182,6 +182,14 @@ rho_{latent}
 \min\left\{1,\frac{\rho_{obs}}{L_{rob}}\right\}.
 }
 \]
+
+The same-channel condition matters. If `\hat\pi` is fitted with the nominal channel `K` and `rho_obs` only bounds `TV(\hat q,\pi K')`, the triangle inequality gives
+
+\[
+TV(\hat\pi,\pi)\le\min\left\{1,\frac{\rho_{obs}+TV(\hat\pi K,\hat q)+\sum_i\hat\pi_i r_i}{L_{rob}}\right\}
+\]
+
+and the misspecification term cannot be dropped: with nominal binary identity rows, `r=(1/10,1/10)`, true rows `(9/10,1/10)` and `(1/10,9/10)`, and `\pi=(1,0)`, the observed law `(9/10,1/10)` is matched exactly (`rho_obs=0`), the nominal fit is `\hat\pi=(9/10,1/10)`, and `TV(\hat\pi,\pi)=1/10`. More generally the identified set `{\pi: \pi K'=q` for some admissible `K'}` has positive diameter.
 
 If `L_rob=0`, the certificate is intentionally agnostic. Zero means the declared uncertainty set is too large for this proof to guarantee invertibility; it does not assert that every admissible channel is nonidentifiable.
 
@@ -205,13 +213,13 @@ A sufficient uniform calibration condition for robust identifiability is therefo
 
 This is a useful experimental-design target: channel-row estimation must become more accurate as the nominal mixture geometry approaches affine dependence.
 
-If row-estimation error scales like `N^{-1/2}`, then preserving a fixed fraction of the nominal modulus requires row-estimation sample size scaling at least like
+If row-estimation error scales like `N^{-1/2}`, then the sufficient condition `epsilon<alpha/2` of this certificate needs row-estimation sample size of order
 
 \[
 \alpha(K)^{-2}.
 \]
 
-The same ill-conditioning that amplifies prior uncertainty therefore also raises the precision required of the channel model itself.
+No matching necessity is claimed. The same ill-conditioning that amplifies prior uncertainty therefore also raises the precision required of the channel model itself.
 
 ## Nonclaims
 

@@ -74,6 +74,13 @@ class RowUncertainGlobalTVCertificate:
             or any(not face.valid for face in self.face_lower_certificates)
         ):
             return False
+        # Bind each robust face to the nominal face it penalizes and to the
+        # declared radii, so a zero-radius receipt cannot stand in.
+        for face, nominal_face in zip(self.face_lower_certificates, self.nominal.face_certificates):
+            if face.nominal_face != nominal_face or face.pair_penalties != tuple(
+                self.row_radii[i] + self.row_radii[j] for i, j in nominal_face.pair_actions
+            ):
+                return False
         rmax = max(self.row_radii)
         simple = max(Fraction(0), self.nominal.alpha - 2 * rmax)
         facewise = min(face.lower_bound for face in self.face_lower_certificates)
@@ -149,7 +156,13 @@ def certified_latent_radius_with_channel_uncertainty(
     observed_tv_radius: Fraction,
     certificate: RowUncertainGlobalTVCertificate,
 ) -> Fraction:
-    """Transfer an observed-law radius through every admissible true channel."""
+    """Transfer an observed-law radius through every admissible true channel.
+
+    ``observed_tv_radius`` must bound TV(pi_hat K', pi K') with both priors pushed
+    through the same admissible true channel K'.  If pi_hat was fitted with the
+    nominal channel and the radius only bounds TV(q_hat, pi K'), the channel
+    misspecification term must be added first; see the module documentation.
+    """
 
     rho = Fraction(observed_tv_radius)
     if not 0 <= rho <= 1 or not certificate.valid:

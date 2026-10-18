@@ -33,9 +33,9 @@
       "title": "A positive facewise robust modulus certifies identifiability and inverse conditioning uniformly over the rowwise channel uncertainty set",
       "kind": "THEOREM",
       "scope": "finite rowwise-TV channel uncertainty sets with positive robust lower modulus",
-      "assumptions": ["the true channel lies inside every declared row TV ball"],
-      "evidence": ["docs/finite-mixture-row-uncertainty.md#4-robust-inverse-conditioning", "src/simtheory/finite_mixture_row_uncertainty.py:certified_latent_radius_with_channel_uncertainty"],
-      "nonclaims": ["zero lower bound means no certificate, not universal nonidentifiability"]
+      "assumptions": ["the true channel lies inside every declared row TV ball", "rho_obs bounds the TV distance between the two priors pushed through the same admissible true channel"],
+      "evidence": ["docs/finite-mixture-row-uncertainty.md#4-robust-inverse-conditioning", "src/simtheory/finite_mixture_row_uncertainty.py:certified_latent_radius_with_channel_uncertainty", "tests/test_finite_mixture_row_uncertainty.py"],
+      "nonclaims": ["zero lower bound means no certificate, not universal nonidentifiability", "a prior fitted with the nominal channel needs an added misspecification term; the identified set over admissible channels generally has positive diameter"]
     },
     {
       "id": "ST-T253",
