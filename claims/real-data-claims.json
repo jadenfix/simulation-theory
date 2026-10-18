@@ -2,7 +2,7 @@
   "schema": "simulation-theory.claims/v1",
   "claims": [
     {
-      "id": "ST-F32",
+      "id": "ST-F50",
       "title": "Delft 2015 CHSH statistic recomputed from the released data",
       "kind": "FINITE_CHECK",
       "scope": "the 4746 released heralding attempts of the Delft 2015 loophole-free Bell test and the authors' published valid-trial filter",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "ST-F33",
+      "id": "ST-F51",
       "title": "Delft correlations on the canonical CHSH disk",
       "kind": "FINITE_CHECK",
       "scope": "the equal-weight least-squares visibility-phase point of the four recomputed Delft correlations",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "ST-F34",
+      "id": "ST-F52",
       "title": "NIST beacon bits keep the composite simulation Bayes factor below the Ville threshold",
       "kind": "FINITE_CHECK",
       "scope": "131072 bits from NIST Randomness Beacon 2.0 chain 2 pulses 1987000 to 1987255, with pulse 1987256 used only for verification",
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "id": "ST-T185",
+      "id": "ST-T271",
       "title": "Composite Bayes-factor detection rate for a biased Bernoulli simulator",
       "kind": "THEOREM",
       "scope": "IID bits, a fair base law, and a restricted simulation hypothesis with unknown bias under a Beta(1/2,1/2) prior",
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "id": "ST-M50",
+      "id": "ST-M83",
       "title": "Binary symmetric coarsening slows restricted-signature detection",
       "kind": "MODEL_RESULT",
       "scope": "a Bernoulli(q) simulated source observed through one binary symmetric channel with flip probability f in [0, 1/2]",

@@ -38,9 +38,9 @@ all, an observer could tell it apart. For example:
 
 - **Evidence grows at a KL rate.** A simulated bit source with bias q is
   separated from fair bits at expected log Bayes factor at least
-  `n KL(q || 1/2) - (1/2) ln n - ln 2` (ST-T185). If its output is viewed through
+  `n KL(q || 1/2) - (1/2) ln n - ln 2` (ST-T271). If its output is viewed through
   a noisy channel, the rate shrinks by the channel's contraction coefficient
-  (ST-M14, ST-M50).
+  (ST-M14, ST-M83).
 - **Evidence has a ceiling.** If the likelihood ratio is confined to
   `[e^-eps, e^eps]`, the posterior log odds move by at most `eps` (ST-T02).
 - **A local classical simulator cannot reproduce Bell correlations.** On the
@@ -48,7 +48,7 @@ all, an observer could tell it apart. For example:
   metric, `TV = ||q - q'||_inf / (2 sqrt 2)` (ST-T12), and the local bound
   `S <= 2` is a chord across it. The released data of the Delft 2015
   loophole-free Bell test recompute to `S = 2.42 +- 0.20`, `p = 0.039`, a point
-  right of that chord (ST-F32, ST-F33).
+  right of that chord (ST-F50, ST-F51).
 - **Rendering on demand is not a signature by itself.** Lazy generation that
   samples each answer from the exact conditional law has the same transcript
   law as a pre-generated world

@@ -179,7 +179,13 @@ def test_real_data_claims_manifest_is_valid():
     manifest = load_claim_manifest(path)
     validate_local_evidence_paths(manifest, ROOT)
     kinds = {claim["id"]: claim["kind"] for claim in manifest["claims"]}
-    assert kinds["ST-F32"] == "FINITE_CHECK"
+    assert kinds == {
+        "ST-F50": "FINITE_CHECK",
+        "ST-F51": "FINITE_CHECK",
+        "ST-F52": "FINITE_CHECK",
+        "ST-T271": "THEOREM",
+        "ST-M83": "MODEL_RESULT",
+    }
     assert all(claim["nonclaims"] for claim in manifest["claims"])
 
 
