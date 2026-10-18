@@ -8,7 +8,7 @@ This is not the same sampling model as independently redrawing `M` before every 
 
 ## Exact likelihood-ratio identity
 
-Consider two candidate mixing vectors `a` and `b`, with `b_m>0` for every component. For any transcript `y` with positive probability under `b`,
+Consider two candidate mixing vectors `a` and `b`, with `b_m>0` for every component. This support (absolute-continuity) condition is essential: if `a_m>0=b_m` for some `m`, then `P_a(y)/P_b(y)` contains the term `a_mP_m(y)/P_b(y)`, which is unbounded as `P_b(y)\to0`, and there is no finite ceiling (for example `a=(1/2,1/2)`, `b=(1,0)`, `P_1(y)=\varepsilon`, `P_2(y)=1` gives ratio `(1+\varepsilon)/(2\varepsilon)`). For any transcript `y` with positive probability under `b`,
 
 \[
 P_a(y)=\sum_m a_m P_m(y),\qquad
@@ -53,7 +53,7 @@ The transcript Bayes factor is a convex average of the component prior-weight ra
 }
 \]
 
-The bound is independent of transcript length and of how complicated the model-conditional observation process is.
+The bound is independent of transcript length and of how complicated the model-conditional observation process is (for finitely many components; for transcript densities, read the identity with respect to a common dominating measure).
 
 ## Saturation
 
@@ -137,6 +137,7 @@ Treating every observation moment as an independent draw from the architecture p
 ## Nonclaims
 
 - The theorem does not say long transcripts cannot identify the persistent latent model.
+- The ceiling limits what one persistent draw says about the mixing weights (the hyperprior); it gives no finite bound without the support condition `b_m>0` wherever `a_m>0`.
 - It does not say model mixing weights are unlearnable when multiple independent latent draws or additional hierarchical structure exist.
 - Candidate mixing weights remain supplied model inputs unless a separate statistical model estimates them.
 - The result is a general hierarchical sampling theorem, not evidence that reality is simulated.
