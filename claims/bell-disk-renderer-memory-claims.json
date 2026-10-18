@@ -1,0 +1,209 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T290",
+      "title": "Arbitrary-center area converse for Bell visibility-phase renderers: N_w(eps) >= pi/(A_w eps^2)",
+      "kind": "THEOREM",
+      "scope": "rank-2 coplanar Bell schedules, renderer states emitting arbitrary laws on settings x outcomes, all q in the unit disk",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation",
+        "each renderer state emits one fixed law, not necessarily in the family or with setting marginal w"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#1-theorem-1-arbitrary-center-area-converse",
+        "src/simtheory/bell_disk_zonoid.py:served_region_area",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "the volumetric covering argument and Brunn's central-section principle are classical; new only as applied to off-family Bell renderers",
+        "not a multi-trial or adaptive transcript bound",
+        "the area converse is not claimed tight for non-tiling polar bodies; for tiling schedules an optimal packing already gives the same constant"
+      ]
+    },
+    {
+      "id": "ST-T291",
+      "title": "Sharp canonical CHSH renderer count with constant pi/32: pi/(32 eps^2) <= N <= pi(1 + 8 eps)^2/(32 eps^2), with an in-family upper bound for eps <= 1/8",
+      "kind": "THEOREM",
+      "scope": "canonical equal-weight CHSH schedule, eps > 0 (eps <= 1/8 for the in-family annulus bound), arbitrary-center and in-family covers of the unit disk",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation",
+        "clipped-center emissions are admissible for the arbitrary-center count"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#2-theorem-2-sharp-canonical-chsh-count",
+        "src/simtheory/bell_disk_zonoid.py:chsh_grid_counts",
+        "src/simtheory/bell_disk_zonoid.py:clipped_center_tv",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "the lower constant pi/32 also follows from ST-T05 packing and the square tiling; the 1/16 -> pi/32 change is over the ST-T13 inscribed-square construction, and is asymptotic (at eps = 3/25 ST-T13 gives the larger finite bound); the new part is the matching upper bound",
+        "clipped-center laws are not claimed quantum-realizable",
+        "internal predictive bits are not parent-hardware bits"
+      ]
+    },
+    {
+      "id": "ST-T292",
+      "title": "Universal pi^3 lower bound on the polar-zonotope area (classical polar-area/perimeter inequality specialized to per(Z) = 2)",
+      "kind": "THEOREM",
+      "scope": "every finite coplanar schedule (strict inequality); trivial (A_w = +infinity) in rank 1; equality only for the isotropic generalized schedule under the setting-measurable extension",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#3-theorem-3-universal-ceiling-of-the-area-converse",
+        "src/simtheory/bell_disk_zonoid.py:polar_area",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "equivalent to Lutwak's planar dual mixed-volume inequality (Pacific J. Math. 58 (1975)); standard argument (Cauchy's perimeter formula and Jensen), not claimed as new",
+        "bounds only the area converse; the true renderer constant can exceed 1/pi^2 by a covering-density factor"
+      ]
+    },
+    {
+      "id": "ST-T293",
+      "title": "Exact renderer asymptotics for two- and three-direction (tiling) schedules: N_w(eps) eps^2 -> pi/A_w for arbitrary and in-family emissions",
+      "kind": "THEOREM",
+      "scope": "rank-2 schedules with exactly 2 or 3 direction classes",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation",
+        "classical fact that centrally symmetric planar hexagons and parallelograms are lattice tiles (Fedorov), cited"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#4-theorem-4-tiling-schedules-are-exact",
+        "src/simtheory/bell_disk_zonoid.py:polar_vertices",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "the covering asymptotics for lattice tiles are classical and the lower bound for tiling schedules also follows from ST-T05 packing; the new content is the matching for arbitrary (off-family) emissions via ST-T290 and clipping",
+        "no exact constant for arbitrary emissions with 4 or more direction classes (ST-O05)",
+        "a one-class schedule has N_w(eps) = O(1/eps), constant 0"
+      ]
+    },
+    {
+      "id": "ST-T294",
+      "title": "Regular three-direction schedule uniquely minimizes the polar area among rank-2 schedules with 2 or 3 classes: 2-class minimum 32 (orthogonal equal weights, CHSH), 3-class minimum 18 sqrt3 (regular)",
+      "kind": "THEOREM",
+      "scope": "rank-2 schedules with 2 or 3 direction classes; uniqueness is of the law on direction classes, up to rotation",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#5-theorem-5-optimal-schedule-with-at-most-3-direction-classes",
+        "src/simtheory/bell_disk_zonoid.py:hexagon_closed_form",
+        "src/simtheory/bell_disk_zonoid.py:lemma_poly_gap",
+        "src/simtheory/bell_disk_zonoid.py:final_symmetric_gap",
+        "src/simtheory/bell_disk_zonoid.py:trine_product_schedule_class_weights",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "the regular hexagon schedule is not the global optimum over all schedules (ST-T295)",
+        "the constants depend only on the class law, not on whether a setting realization admits a Bell violation: Alice {0} with Bob {0, -pi/3, -2pi/3} admits none, while the 3x3 uniform trine product schedule realizes the same class law and contains a CHSH test with |S| = 5v/2; no 2x2 product schedule realizes the optimum",
+        "the discrete isoperimetric literature was not searched exhaustively; priority for the 3-class inequality is not asserted"
+      ]
+    },
+    {
+      "id": "ST-T295",
+      "title": "Covering-density bracket pi/A_w <= liminf N_w eps^2 <= limsup N_w eps^2 <= theta_L(Z°) pi/A_w <= 2/(sqrt27 pi), and non-optimality of tiling schedules (the regular 4-direction schedule beats the hexagon)",
+      "kind": "THEOREM",
+      "scope": "all rank-2 finite schedules and, under setting-measurable emissions, the isotropic generalized schedule",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation",
+        "L. Fejes Toth's centrally symmetric lattice covering bound 2pi/sqrt27 (via Sas 1939), cited, not reproved",
+        "the asymptotic covering theorem for translates (Rogers 1964), cited"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#6-theorem-6-bracket-for-general-schedules-the-tiling-optimum-is-not-global",
+        "src/simtheory/bell_disk_zonoid.py:regular_schedule_qs",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "the in-family limit theta_T(Z°) pi/A_w is classical (asymptotic covering theorem); the identification theta_T = theta_L = |K|/|h(K)| for centrally symmetric discs is cited from the literature and not verified here",
+        "the bracket is not an exact value for arbitrary emissions",
+        "the global memory-forcing optimum schedule is not identified"
+      ]
+    },
+    {
+      "id": "ST-T296",
+      "title": "Centre Fisher isotropy ties CHSH and every regular schedule (I(0) = I/2) while their memory constants differ",
+      "kind": "THEOREM",
+      "scope": "Fisher information at q = 0 for one randomized-setting trial; regular m-direction schedules, m >= 2",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#7-proposition-7-local-and-global-design-rankings-separate",
+        "src/simtheory/bell_disk_zonoid.py:run",
+        "tests/test_bell_disk_renderer_memory.py",
+        "receipts/bell-disk-renderer-memory.txt"
+      ],
+      "nonclaims": [
+        "an elementary design-optimality computation (sum of cos(2 theta_k) and sin(2 theta_k) vanish), not claimed as new; exact checks cover m <= 4",
+        "no claim about Fisher rankings away from the centre"
+      ]
+    },
+    {
+      "id": "ST-F58",
+      "title": "Bounded exact Bell-disk zonoid audit",
+      "kind": "FINITE_CHECK",
+      "scope": "exact Q(sqrt2), Q(sqrt3) and rational checks: polar areas, CHSH grid counts for eps = 1/40..1/400, clipped-centre covers, served-set areas, 62468-case hexagon grid, polynomial lemma samples, trine product schedule",
+      "assumptions": [
+        "all certifying comparisons use exact arithmetic with rational pi and sqrt enclosures"
+      ],
+      "evidence": [
+        "src/simtheory/bell_disk_zonoid.py:run",
+        "receipts/bell-disk-renderer-memory.txt",
+        "tests/test_bell_disk_renderer_memory.py"
+      ],
+      "nonclaims": [
+        "bounded checks are not the asymptotic theorems",
+        "CI success is not empirical evidence for simulation"
+      ]
+    },
+    {
+      "id": "ST-O05",
+      "title": "Exact renderer constant for arbitrary (off-family) emissions on non-tiling Bell schedules",
+      "kind": "OPEN_PROBLEM",
+      "scope": "schedules with 4 or more direction classes, including the isotropic schedule: existence of lim N_w eps^2 and its value; known: liminf >= pi/A_w and limsup <= theta_L(Z°) pi/A_w",
+      "assumptions": [
+        "P(a,b|x,y,v,phi) = 1/4[1 - ab v cos(alpha_x - beta_y - phi)] with q = (v cos phi, v sin phi) in the closed unit disk (ST-T11)",
+        "settings are drawn externally from a fixed finite schedule w with positive weights; accuracy is one-trial total variation"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#13-open-problems"
+      ],
+      "nonclaims": [
+        "the in-family constant is classical (ST-T295); only the arbitrary-emission constant is open",
+        "no exact constant is currently claimed"
+      ]
+    },
+    {
+      "id": "ST-O06",
+      "title": "Discrete dual-isoperimetric inequality per(P)^2 area(P°) >= 2 n^3 tan^2(pi/n) sin(2pi/n) for convex n-gons containing the origin",
+      "kind": "OPEN_PROBLEM",
+      "scope": "convex n-gons P containing the origin; the centrally symmetric n = 4, 6 cases are ST-T294",
+      "assumptions": [
+        "float experiments during review found no violation for n = 3..6"
+      ],
+      "evidence": [
+        "docs/bell-disk-renderer-memory.md#13-open-problems"
+      ],
+      "nonclaims": [
+        "not proved; the literature was not searched thoroughly, so the statement may be known"
+      ]
+    }
+  ]
+}
