@@ -91,9 +91,7 @@
   #v(0.15em)
   #text(size: 11pt, fill: ink2)[Explicit evidence rates, a one-draw cap, and what the NIST beacon and Delft 2015 data do and do not show]
   #v(0.6em)
-  #text(size: 10pt)[Jaden Fix]
-  #v(0.05em)
-  #text(size: 8.6pt, fill: ink2)[Tempera #h(0.6em) #link("mailto:Jaden@Tempera.dev")[Jaden\@Tempera.dev]]
+  #text(size: 10pt)[Jaden Fix] #h(0.5em) #text(size: 8.6pt, fill: ink2)[Tempera #h(0.6em) #link("mailto:Jaden@Tempera.dev")[Jaden\@Tempera.dev]]
   #v(0.05em)
   #text(size: 8.6pt, fill: ink2)[#link("https://github.com/jadenfix/simulation-theory")[github.com/jadenfix/simulation-theory] #h(0.6em) main at `aa61193` (results merged in PR \#72, `0c77232`) #h(0.6em) 18 October 2026]
 ]
