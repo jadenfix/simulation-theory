@@ -1,4 +1,4 @@
-# Two shared-latent views collapse the continuous mixture gauge to label switching
+# Two shared-latent views collapse the nonnegative stochastic mixture gauge to label switching
 
 ## 1. One view has a continuous gauge
 
@@ -183,6 +183,10 @@ If two component rows are identical, no number of conditionally iid views distin
 
 If a transformed latent component has zero prior mass, its row can change without affecting any observed moment. Strict positivity is therefore necessary for the off-diagonal argument to constrain every row of `A`. The tests include a full-rank binary channel with a zero-mass component and a nonpermutation gauge that preserves both views.
 
+### Nonnegativity of the gauge
+
+If `pi`, `pi'` are strictly positive and `K` has full row rank, then any `(pi',K')` with the same two-view law has `K'=AK` with `A=K'R` invertible and `A1=1`, and `T'=T` iff `A^T D_{pi'} A = D_pi`. The data impose only `AK >= 0`, not `A >= 0`; the permutation conclusion of Section 4 relies on the declared restriction `A >= 0`. Without it, rigidity fails: `((1/2,1/2), ((3/4,1/4),(1/4,3/4)))` and `((1/5,4/5), ((1,0),(3/8,5/8)))` share the one-view law `(1/2,1/2)` and the two-view law `((5/16,3/16),(3/16,5/16))`. They are related by `A=((3/2,-1/2),(1/4,3/4))`, which has unit row sums but a negative entry. A third shared-latent view separates this pair.
+
 ### Conditional independence and shared latent identity
 
 The formula `T=K^T D_pi K` assumes both observations share the same latent component and are conditionally independent given it. Two unrelated observations with independently redrawn latent components instead have product law
@@ -197,7 +201,7 @@ This distinction mirrors the earlier persistent-latent sampling result: *which v
 
 ## 7. Consequence for experimental design
 
-The one-view gauge says that more samples of the same marginal cannot identify both prior and channel. The two-view theorem identifies a concrete structural remedy:
+The one-view gauge says that more samples of the same marginal cannot identify both prior and channel. Within the nonnegative stochastic gauge family, the two-view theorem identifies a concrete structural remedy (this is not a global identifiability result; see Nonclaims):
 
 \[
 \boxed{
@@ -216,5 +220,5 @@ For simulation-style arguments this is a warning and an opportunity. Observation
 - The theorem concerns the specific gauge family `K'=AK, pi'=pi A^{-1}`; it is not a complete theorem for every latent-variable nonidentifiability.
 - It assumes exact finite categorical laws.
 - Label permutations remain observational symmetries.
-- Two views do not solve arbitrary latent models with rank deficiency, zero-weight components, unknown dependence, or model misspecification.
+- Two shared-latent views do not identify `(pi,K)` up to label permutation, even with full-rank `K`, strictly positive priors, known conditional independence, and correct specification: the pair in Section 6 ("Nonnegativity of the gauge") has equal one- and two-view laws and is related by a unit-row-sum gauge with a negative entry, outside the nonnegative gauge class of Section 4. Three or more views with Kruskal-type rank conditions are the standard route to global identifiability. Rank deficiency, zero-weight components, unknown dependence, and misspecification are further failure modes.
 - The result neither establishes nor refutes simulation theory.

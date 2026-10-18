@@ -87,3 +87,53 @@ def test_two_view_law_is_a_probability_matrix():
     assert all(v >= 0 for row in law for v in row)
     assert sum((v for row in law for v in row), Fraction(0)) == 1
     assert law[0][1] == law[1][0]
+
+
+def test_affine_and_linear_row_rank_coincide_for_probability_rows():
+    # ST-T260: rows summing to one make affine rank equal linear rank minus one.
+    from simtheory.latent_mixture_gauge import _rank, affine_row_rank
+
+    channels = (
+        ((1, 0), (1, 0)),
+        ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+        ((F(1, 2), F(1, 2), 0), (0, F(1, 2), F(1, 2)), (F(1, 2), 0, F(1, 2))),
+        ((F(1, 2), F(1, 2)), (1, 0), (0, 1)),
+    )
+    for channel in channels:
+        k = tuple(tuple(F(v) for v in row) for row in channel)
+        assert _rank(k) == affine_row_rank(k) + 1
+
+
+def test_independently_redrawn_pairs_have_product_law_unchanged_by_the_gauge():
+    # ST-T262: with redrawn latents the pair law is q q^T before and after the gauge.
+    prior = (F(1, 2), F(1, 2))
+    channel = ((1, 0), (0, 1))
+    gauge = ((F(3, 4), F(1, 4)), (0, 1))
+    cert = exact_two_view_gauge_certificate(prior, channel, gauge)
+    q = cert.gauge.common_observed_law
+    product_law = tuple(tuple(a * b for b in q) for a in q)
+    transformed_q = tuple(
+        sum((p * row[y] for p, row in zip(cert.gauge.transformed_prior, cert.gauge.transformed_channel)), F(0))
+        for y in range(2)
+    )
+    assert tuple(tuple(a * b for b in transformed_q) for a in transformed_q) == product_law
+    assert cert.transformed_two_view != product_law
+
+
+def test_two_views_do_not_identify_outside_the_nonnegative_gauge_class():
+    # Full-rank, strictly positive factorizations with equal one- and two-view laws,
+    # related by a unit-row-sum gauge with a negative entry.
+    first = ((F(1, 2), F(1, 2)), ((F(3, 4), F(1, 4)), (F(1, 4), F(3, 4))))
+    second = ((F(1, 5), F(4, 5)), ((F(1), F(0)), (F(3, 8), F(5, 8))))
+    assert two_view_law(*first) == two_view_law(*second) == (
+        (F(5, 16), F(3, 16)),
+        (F(3, 16), F(5, 16)),
+    )
+    three_view = [
+        tuple(
+            sum(p * row[a] * row[b] * row[c] for p, row in zip(*model))
+            for a in range(2) for b in range(2) for c in range(2)
+        )
+        for model in (first, second)
+    ]
+    assert three_view[0] != three_view[1]
