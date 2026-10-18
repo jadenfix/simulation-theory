@@ -30,7 +30,7 @@
     },
     {
       "id": "ST-T267",
-      "title": "With one label in each of two categories, redundant refinement can drive uniform count mass for either category arbitrarily close to zero or one while preserving all finite observable laws",
+      "title": "With one label in each of two categories, redundant refinement can drive uniform count mass for either category arbitrarily close to zero or one while preserving every finite shared-latent conditionally-iid view law (ST-T264)",
       "kind": "THEOREM",
       "scope": "two-category finite latent mixture with repeated positive-weight clone refinements",
       "assumptions": ["clone emission laws equal the refined parent emission law"],
