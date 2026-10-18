@@ -108,8 +108,25 @@ check into a universal theorem.
 | Bayesian Boolean experiments | K3 Bayes gap as posterior minority mass, influence and Walsh-Fourier bounds, adaptive query option value, cost-sensitive stopping, prior-robust value and ranking | [bayesian-boolean-experiment-geometry](docs/bayesian-boolean-experiment-geometry.md), [bayesian-boolean-fourier-geometry](docs/bayesian-boolean-fourier-geometry.md), [bayesian-adaptive-boolean-queries](docs/bayesian-adaptive-boolean-queries.md), [bayesian-cost-sensitive-query-stopping](docs/bayesian-cost-sensitive-query-stopping.md), [bayesian-boolean-prior-robustness](docs/bayesian-boolean-prior-robustness.md) | [boolean-experiment](claims/bayesian-boolean-experiment-claims.json), [boolean-fourier](claims/bayesian-boolean-fourier-claims.json), [adaptive-query](claims/bayesian-adaptive-boolean-query-claims.json), [cost-sensitive](claims/bayesian-cost-sensitive-query-claims.json), [prior-robustness](claims/bayesian-boolean-prior-robustness-claims.json) |
 | latent priors and mixtures | evidence ceilings for one persistent latent draw, confidence from independent latent draws, binary and finite-mixture identifiability with known channels, the exact TV conditioning modulus and its row-uncertainty bounds, the prior-channel gauge and its two-view rigidity inside the nonnegative gauge class, the orthogonal two-view fiber and its identified set, refinement invariance | [persistent-latent-prior-evidence-ceilings](docs/persistent-latent-prior-evidence-ceilings.md), [independent-latent-prior-confidence](docs/independent-latent-prior-confidence.md), [binary-latent-mixture-identifiability](docs/binary-latent-mixture-identifiability.md), [finite-mixture-channel-identifiability](docs/finite-mixture-channel-identifiability.md), [finite-mixture-global-tv-modulus](docs/finite-mixture-global-tv-modulus.md), [finite-mixture-row-uncertainty](docs/finite-mixture-row-uncertainty.md), [latent-mixture-gauge-nonidentifiability](docs/latent-mixture-gauge-nonidentifiability.md), [latent-mixture-two-view-rigidity](docs/latent-mixture-two-view-rigidity.md), [two-view-orthogonal-fiber](docs/two-view-orthogonal-fiber.md), [latent-refinement-invariance](docs/latent-refinement-invariance.md), [refinement-measure-uniqueness](docs/refinement-measure-uniqueness.md) | [persistent-latent](claims/persistent-latent-prior-claims.json), [latent-confidence](claims/independent-latent-prior-confidence-claims.json), [binary-mixture](claims/binary-latent-mixture-identifiability-claims.json), [finite-mixture](claims/finite-mixture-channel-identifiability-claims.json), [global-tv](claims/finite-mixture-global-tv-claims.json), [row-uncertainty](claims/finite-mixture-row-uncertainty-claims.json), [gauge](claims/latent-mixture-gauge-claims.json), [two-view](claims/latent-mixture-two-view-claims.json), [two-view-fiber](claims/two-view-orthogonal-fiber-claims.json), [refinement](claims/latent-refinement-claims.json), [refinement-measure](claims/refinement-measure-claims.json) |
 
-The paper draft [Identifiability Before Anthropic Bayes](paper/identifiability-before-anthropic-bayes/)
-keeps its own ledger of 8 claims, which `verify` checks against its tests. An
+Four papers are written from these claims, each with its own ledger in
+`paper/<slug>/claims.json` that `verify` checks against the repository claim IDs
+and the paper's tests:
+
+- [Identifiability Before Anthropic Bayes](paper/identifiability-before-anthropic-bayes/) (8 claims).
+- [How much evidence can a simulator leave?](paper/evidence-a-simulator-can-leave/main.pdf):
+  explicit Krichevsky-Trofimov evidence rates, the one-draw cap on evidence about
+  world-level weights, and what the NIST beacon and Delft 2015 data do and do not show
+  ([source and ledger](paper/evidence-a-simulator-can-leave/)).
+- [Pricing a Bell simulator](paper/pricing-a-bell-simulator/main.pdf): precision,
+  memory, communication and noise costs of reproducing CHSH statistics
+  ([source and ledger](paper/pricing-a-bell-simulator/)).
+- [Identification, evidence caps, and the price of shared randomness](paper/identifiability-and-randomness-as-resources/main.pdf):
+  the orthogonal two-view fiber, the persistent-latent cap, and exact fair-bit
+  costs in finite games ([source and ledger](paper/identifiability-and-randomness-as-resources/)).
+
+The three Typst papers were revised against synthetic referee reports, not
+external peer review; `.github/workflows/paper-typst.yml` regenerates their
+figures and rebuilds their PDFs on every pull request that touches them. An
 adversarial review of the mathematics and its publication readiness, with a record
 of how each finding was addressed, is in
 [docs/math-audit-publication-readiness.md](docs/math-audit-publication-readiness.md).
@@ -200,6 +217,7 @@ claims/          machine-readable scope, evidence, assumptions, and nonclaims
 docs/            derivations, examples, scope boundaries, and the research program
 data/real/       committed real-data summaries with provenance and hashes
 receipts/        expected output of the deterministic experiment suite
+paper/           paper sources, compiled PDFs, and per-paper claim ledgers
 ```
 
 ## Data credits

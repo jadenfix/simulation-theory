@@ -6,7 +6,8 @@ Run ``python -m simtheory verify`` (or ``make verify``). The steps are:
 2. validate every ``claims/*.json`` manifest: schema, globally unique IDs,
    evidence files, Markdown anchors, and ``file.py:symbol`` references; and
    every ``paper/*/claims.json`` ledger: unique IDs, assumptions, nonclaims,
-   and a ``tests/test_paper_*`` file that checks it;
+   repository claim IDs that exist, and a ``tests/test_paper_*`` file that
+   checks it;
 3. recompute the real-data receipts (Delft 2015 CHSH statistic and NIST beacon
    precommitments) from the committed summaries;
 4. rerun the deterministic experiment suite and compare it with
@@ -122,7 +123,8 @@ def check_paper_ledgers(report: Report, repository_ids: dict[str, str]) -> dict[
                 found.update(f"tests/{m}" for m in re.findall(r"(test_paper_\w+\.py)", text))
         tests = sorted(t for t in found if (ROOT / t).is_file())
         try:
-            claims = json.loads(path.read_text(encoding="utf-8"))["claims"]
+            ledger = json.loads(path.read_text(encoding="utf-8"))
+            claims = ledger["claims"]
         except (OSError, ValueError, KeyError) as error:
             report.fail(f"{name}: {error}")
             continue
@@ -132,6 +134,7 @@ def check_paper_ledgers(report: Report, repository_ids: dict[str, str]) -> dict[
         if not tests:
             report.fail(f"{name}: no tests/test_paper_* file checks this ledger")
         local: set[str] = set()
+        mapped: set[str] = set()
         for claim in claims:
             identifier = claim.get("id") if isinstance(claim, dict) else None
             if not isinstance(identifier, str) or not identifier:
@@ -142,8 +145,20 @@ def check_paper_ledgers(report: Report, repository_ids: dict[str, str]) -> dict[
             local.add(identifier)
             if not claim.get("assumptions") or not claim.get("nonclaims"):
                 report.fail(f"{name}: {identifier} needs assumptions and nonclaims")
+            # Every repository claim a paper claim maps to must exist.
+            for target in claim.get("repo_claims", []):
+                if target not in repository_ids:
+                    report.fail(f"{name}: {identifier} maps to unknown repository claim {target}")
+                else:
+                    mapped.add(target)
             cited[f"{path.parent.name}:{identifier}"] = tests
-        report.ok(f"{name}: {len(local)} paper claims, checked by {', '.join(tests) or 'no tests'}")
+        for target in ledger.get("context_repo_claims", []):
+            if target not in repository_ids:
+                report.fail(f"{name}: context claim {target} is not a repository claim")
+        report.ok(
+            f"{name}: {len(local)} paper claims mapped to {len(mapped)} repository claims, "
+            f"checked by {', '.join(tests) or 'no tests'}"
+        )
     return cited
 
 

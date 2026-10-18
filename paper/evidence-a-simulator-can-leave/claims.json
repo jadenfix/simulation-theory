@@ -1,0 +1,462 @@
+{
+  "schema": "simulation-theory/paper-ledger-v1",
+  "slug": "evidence-a-simulator-can-leave",
+  "paper": "How much evidence can a simulator leave?",
+  "subtitle": "Explicit evidence rates, a one-draw cap, and what the NIST beacon and Delft 2015 data do and do not show",
+  "author": "simulation-theory contributors",
+  "pages": 19,
+  "source_commit": "aa61193",
+  "pdf": "main.pdf",
+  "types": [
+    "theorem",
+    "standard result",
+    "cited theorem",
+    "model result",
+    "finite check",
+    "open problem"
+  ],
+  "claims": [
+    {
+      "id": "P2-01",
+      "name": "unrestricted indistinguishability",
+      "type": "standard result",
+      "status": "elementary, not claimed as new",
+      "section": "2",
+      "assumptions": [
+        "the simulator class contains a member whose induced law on the full observable space equals the base law"
+      ],
+      "nonclaims": [
+        "does not make restricted simulator hypotheses untestable",
+        "not evidence for or against the hypothesis that reality is simulated"
+      ],
+      "repo_claims": [
+        "ST-T01"
+      ]
+    },
+    {
+      "id": "P2-02",
+      "name": "pathwise sandwich",
+      "type": "theorem",
+      "status": "upper regret bound classical (Krichevsky-Trofimov; Willems-Shtarkov-Tjalkens); uniform lower bound stated with an explicit constant, no priority claimed (cf. Freund 1996; Xie-Barron 2000)",
+      "section": "3",
+      "assumptions": [
+        "binary sequences of any length n >= 1",
+        "Krichevsky-Trofimov (Jeffreys) mixture against fair bits"
+      ],
+      "nonclaims": [
+        "no priority is claimed for two-sided pathwise KT or Jeffreys regret bounds",
+        "holds for every sequence, so it is not a property of any particular data source"
+      ],
+      "repo_claims": [
+        "ST-T272"
+      ]
+    },
+    {
+      "id": "P2-03",
+      "name": "non-asymptotic expected sandwich",
+      "type": "theorem",
+      "status": "expected upper bound new; lower half is ST-T271 (standard)",
+      "section": "3",
+      "assumptions": [
+        "bits IID Bernoulli(q) under the alternative, q in [0, 1]",
+        "Jeffreys prior on q; fair-bit base law",
+        "every n >= 1"
+      ],
+      "nonclaims": [
+        "the 1.47-nat window is explicit, not sharp",
+        "does not cover dependent, adaptive or adversarial sources"
+      ],
+      "repo_claims": [
+        "ST-T273",
+        "ST-T271"
+      ]
+    },
+    {
+      "id": "P2-04",
+      "name": "the constant",
+      "type": "standard result",
+      "status": "Clarke-Barron expansion specialized; re-derived, not new",
+      "section": "3",
+      "assumptions": [
+        "fixed q; interior and boundary q treated separately"
+      ],
+      "nonclaims": [
+        "the o(1) term is pointwise in q, not uniform near q in {0, 1}"
+      ],
+      "repo_claims": [
+        "ST-T274"
+      ]
+    },
+    {
+      "id": "P2-05",
+      "name": "remainder table",
+      "type": "finite check",
+      "status": "bounded",
+      "section": "3",
+      "assumptions": [
+        "60-digit arithmetic on the declared grid q in {1/10, 1/5, 1/4, 1/3, 2/5, 1/2} at n = 5000, plus beacon scale q = 1/2, n = 131072"
+      ],
+      "nonclaims": [
+        "a bounded table, not a proof of the second-order remainder (open problem ST-O02)"
+      ],
+      "repo_claims": [
+        "ST-F53"
+      ]
+    },
+    {
+      "id": "P2-06",
+      "name": "second-order KT remainder",
+      "type": "open problem",
+      "status": "heuristically derived; remainder control not written",
+      "section": "3",
+      "assumptions": [
+        "interior q"
+      ],
+      "nonclaims": [
+        "the conjectured (1 - 2q)^2 / (24 n q (1 - q)) term is not proved; numerical agreement is not a proof"
+      ],
+      "repo_claims": [
+        "ST-O02"
+      ]
+    },
+    {
+      "id": "P2-07",
+      "name": "pathwise rejection region and power frontier",
+      "type": "theorem",
+      "status": "elementary; uses binary Pinsker and Hoeffding",
+      "section": "3.1",
+      "assumptions": [
+        "IID bits",
+        "alpha, beta in (0, 1)",
+        "level alpha under optional stopping by Ville's inequality"
+      ],
+      "nonclaims": [
+        "the sufficient frontier and the converse ST-T276 differ by a factor of order sqrt(ln n); they do not match"
+      ],
+      "repo_claims": [
+        "ST-T275"
+      ]
+    },
+    {
+      "id": "P2-08",
+      "name": "converse",
+      "type": "standard result",
+      "status": "Le Cam two-point method with Pinsker and Bretagnolle-Huber; not new",
+      "section": "3.1",
+      "assumptions": [
+        "randomized tests on n IID bits, including sequential tests stopped by time n"
+      ],
+      "nonclaims": [
+        "no matching constant with the sufficient frontier is claimed"
+      ],
+      "repo_claims": [
+        "ST-T276"
+      ]
+    },
+    {
+      "id": "P2-09",
+      "name": "coarsened observation",
+      "type": "model result",
+      "status": "exact inside the declared channel model; extends ST-M83",
+      "section": "3.1",
+      "assumptions": [
+        "every bit passes independently through a known binary symmetric channel with flip probability kappa in [0, 1/2)"
+      ],
+      "nonclaims": [
+        "unknown or dependent coarsening channels are not covered"
+      ],
+      "repo_claims": [
+        "ST-M84",
+        "ST-M83"
+      ]
+    },
+    {
+      "id": "P2-10",
+      "name": "one-draw cap",
+      "type": "standard result",
+      "status": "data-processing inequality, applied to world-level weights; standard",
+      "section": "4",
+      "assumptions": [
+        "both hypotheses share the transcript kernel K",
+        "experimenter policy does not depend on the hypothesis label",
+        "the N-unit form assumes independent world draws"
+      ],
+      "nonclaims": [
+        "vacuous when a is not absolutely continuous with respect to b",
+        "bounds expected evidence about world-level weights only; does not limit learning which world is active"
+      ],
+      "repo_claims": [
+        "ST-T277"
+      ]
+    },
+    {
+      "id": "P2-11",
+      "name": "saturation identity",
+      "type": "standard result",
+      "status": "standard: KL chain rule; zero-gap condition specializes the Kullback-Leibler sufficiency condition; only the finite-M ratio form and the counterexamples are offered",
+      "section": "4",
+      "assumptions": [
+        "KL(a || b) finite",
+        "finite M with component densities w.r.t. a common dominating measure for the zero-gap condition"
+      ],
+      "nonclaims": [
+        "the converse of 'M a function of Y implies zero gap' fails in general"
+      ],
+      "repo_claims": [
+        "ST-T278"
+      ]
+    },
+    {
+      "id": "P2-12",
+      "name": "gap bound and decay",
+      "type": "theorem",
+      "status": "(R - 1) factor and support-mismatch term new; MAP-error Chernoff exponent classical",
+      "section": "4",
+      "assumptions": [
+        "finite M with a absolutely continuous with respect to b",
+        "conditionally IID transcripts for the decay statement",
+        "every relevant component pair has distinct one-step laws"
+      ],
+      "nonclaims": [
+        "the gap decays at least as fast as the stated exponent; the exponent is not shown to be tight"
+      ],
+      "repo_claims": [
+        "ST-T279"
+      ]
+    },
+    {
+      "id": "P2-13",
+      "name": "different kernels",
+      "type": "standard result",
+      "status": "chain rule plus data processing; standard",
+      "section": "4",
+      "assumptions": [
+        "the hypotheses may use different kernels K^a and K^b"
+      ],
+      "nonclaims": [
+        "no matching lower bound is claimed"
+      ],
+      "repo_claims": [
+        "ST-T280"
+      ]
+    },
+    {
+      "id": "P2-14",
+      "name": "persistent audit",
+      "type": "finite check",
+      "status": "bounded exact-law audit",
+      "section": "4",
+      "assumptions": [
+        "exact rational laws over sufficient count vectors with 60-digit logarithms, declared examples up to T = 64"
+      ],
+      "nonclaims": [
+        "bounded instances corroborate the proofs; they are not proofs"
+      ],
+      "repo_claims": [
+        "ST-F55"
+      ]
+    },
+    {
+      "id": "P2-15",
+      "name": "betting e-processes",
+      "type": "standard result",
+      "status": "conditional-null extension of ST-T08; Bell-test supermartingales and beta-mixture closed forms are standard; only the exact rational closed form is new",
+      "section": "5",
+      "assumptions": [
+        "the win-rate null holds conditionally on the full past",
+        "mixing law fixed independently of the data, or predictable bets",
+        "trial order is the physical time order"
+      ],
+      "nonclaims": [
+        "does not say which resource level is physically correct"
+      ],
+      "repo_claims": [
+        "ST-T281",
+        "ST-T08"
+      ]
+    },
+    {
+      "id": "P2-16",
+      "name": "growth ceiling and sample-size floor",
+      "type": "standard result",
+      "status": "Kelly and Wald bounds; standard",
+      "section": "5",
+      "assumptions": [
+        "IID Bernoulli truth for the ceiling",
+        "for the floor: almost surely finite stopping time with finite mean under the truth"
+      ],
+      "nonclaims": [
+        "not a new inequality"
+      ],
+      "repo_claims": [
+        "ST-T285"
+      ]
+    },
+    {
+      "id": "P2-17",
+      "name": "uniform-setting statistical strength",
+      "type": "theorem",
+      "status": "the v = 1 value reproduces van Dam, Gill and Grunwald; only the v-family and the data-processing proof are new",
+      "section": "5",
+      "assumptions": [
+        "uniform settings independent of the hidden variable",
+        "isotropic CHSH law with visibility v in [0, 1]"
+      ],
+      "nonclaims": [
+        "the v = 1 value is not new"
+      ],
+      "repo_claims": [
+        "ST-T284"
+      ]
+    },
+    {
+      "id": "P2-18",
+      "name": "beacon evidence",
+      "type": "finite check",
+      "status": "bounded; not a randomness certification",
+      "section": "6.1",
+      "assumptions": [
+        "pinned NIST beacon pulse list, 131072 bits",
+        "composite KT test against fair bits at alpha = 0.01"
+      ],
+      "nonclaims": [
+        "not a randomness certification; NIST signatures are not checked",
+        "the pathwise sandwich holds for every sequence, so its agreement is a check of the computation, not of the source"
+      ],
+      "repo_claims": [
+        "ST-F52",
+        "ST-F53"
+      ]
+    },
+    {
+      "id": "P2-19",
+      "name": "beacon power frontier",
+      "type": "finite check",
+      "status": "bounded; exact 60-digit powers on a declared grid",
+      "section": "6.1",
+      "assumptions": [
+        "n = 131072, alpha = 1/100, beta = 1/20",
+        "IID biased sources only"
+      ],
+      "nonclaims": [
+        "says nothing about non-IID deviations from fair bits"
+      ],
+      "repo_claims": [
+        "ST-F54"
+      ]
+    },
+    {
+      "id": "P2-20",
+      "name": "Delft recomputation and disk placement",
+      "type": "finite check",
+      "status": "bounded; reproduces the published statistic",
+      "section": "6.2",
+      "assumptions": [
+        "the committed Delft 2015 valid trials (n = 245) and the published setting-predictability model"
+      ],
+      "nonclaims": [
+        "the fixed-n p = 0.039 assumes n fixed independently of the data",
+        "not evidence for or against the hypothesis that reality is simulated"
+      ],
+      "repo_claims": [
+        "ST-F50",
+        "ST-F51"
+      ]
+    },
+    {
+      "id": "P2-21",
+      "name": "escape-route frontiers",
+      "type": "theorem",
+      "status": "frontier (b) reproduces Pironio; (d) is the Putz et al. bound; (a) possibly known; new: exact dual certificates and attaining models",
+      "section": "6.2",
+      "assumptions": [
+        "parts (a) to (c): uniform settings independent of the shared randomness and of the past",
+        "part (d): local outputs, setting law may depend on the hidden variable with p(x, y | lambda) >= l; S bound under uniform observed settings",
+        "per-trial budgets"
+      ],
+      "nonclaims": [
+        "budgets that hold only on average over a run are not covered",
+        "(b) and (d) are not new"
+      ],
+      "repo_claims": [
+        "ST-T282",
+        "ST-T283"
+      ]
+    },
+    {
+      "id": "P2-22",
+      "name": "Delft anytime check",
+      "type": "finite check",
+      "status": "bounded; negative result; covers constant-bet mixtures on the win indicator only",
+      "section": "6.2",
+      "assumptions": [
+        "constant-bet mixtures on the CHSH win indicator fixed independently of the data",
+        "per-trial budgets holding conditionally on the past",
+        "the published setting-predictability model and RNG independence"
+      ],
+      "nonclaims": [
+        "does not cover full-data test factors, adaptive bets, or e-processes valid only for narrower model classes",
+        "does not show that no anytime-valid test could reject on these data"
+      ],
+      "repo_claims": [
+        "ST-F56"
+      ]
+    }
+  ],
+  "context_repo_claims": [
+    "ST-F57",
+    "ST-F58",
+    "ST-F59",
+    "ST-F60",
+    "ST-M67",
+    "ST-M85",
+    "ST-M86",
+    "ST-M87",
+    "ST-M88",
+    "ST-M89",
+    "ST-O03",
+    "ST-O04",
+    "ST-O05",
+    "ST-O06",
+    "ST-O07",
+    "ST-O08",
+    "ST-T02",
+    "ST-T05",
+    "ST-T12",
+    "ST-T13",
+    "ST-T225",
+    "ST-T226",
+    "ST-T227",
+    "ST-T228",
+    "ST-T286",
+    "ST-T287",
+    "ST-T288",
+    "ST-T289",
+    "ST-T290",
+    "ST-T291",
+    "ST-T292",
+    "ST-T293",
+    "ST-T294",
+    "ST-T295",
+    "ST-T296",
+    "ST-T297",
+    "ST-T298",
+    "ST-T299",
+    "ST-T300",
+    "ST-T301",
+    "ST-T302",
+    "ST-T303",
+    "ST-T304",
+    "ST-T305",
+    "ST-T306",
+    "ST-T307",
+    "ST-T308",
+    "ST-T309"
+  ],
+  "context_note": "cited in prose, in the claims table or in the reproduction map; stated in the repository, not restated as a result box here",
+  "paper_nonclaims": [
+    "nothing in the paper is evidence for or against simulation",
+    "proofs are written in the repository derivation documents and are not formally verified",
+    "the renderer results summarized in Section 7 are stated in the companion manuscript and the repository, not proved here"
+  ]
+}
