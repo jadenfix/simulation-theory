@@ -1,0 +1,308 @@
+{
+  "schema": "simulation-theory.claims/v1",
+  "claims": [
+    {
+      "id": "ST-T297",
+      "title": "The same-channel two-view fiber is exactly the set of orthogonal O with O diag(sqrt(pi)) K >= 0, via the stochastic reparametrization u = O s, pi' = u o u, K' = D_u^{-1} O W",
+      "kind": "THEOREM",
+      "scope": "k latent states, finite outcome alphabet, prior pi > 0, row-stochastic K of full row rank k, alternative models with exactly k latent states",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-a-fiber-classification",
+        "src/simtheory/two_view_fiber.py:fiber_point",
+        "src/simtheory/two_view_fiber.py:gauge_from_factorizations",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "part (a) (K' = A K with A 1 = 1 and A^T D_pi' A = D_pi, the data imposing only A K >= 0) is already in docs/latent-mixture-two-view-rigidity.md Section 6 (PR #64)",
+        "any two rank-k factorizations T = W^T W differ by an orthogonal Q (standard; Huang-Sidiropoulos-Swami 2014, Laurberg et al. 2008); the new content is the stochastic reparametrization",
+        "alternative models with more than k latent states are not classified"
+      ]
+    },
+    {
+      "id": "ST-T298",
+      "title": "For a strictly positive channel the two-view fiber contains a k(k-1)/2-dimensional manifold and the consistent priors contain an open neighbourhood of pi",
+      "kind": "THEOREM",
+      "scope": "the hypotheses of ST-T297 with every entry of K strictly positive and k >= 2",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws",
+        "K > 0 entrywise"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-a-fiber-classification",
+        "src/simtheory/two_view_fiber.py:section_A_k3",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "for channels with zeros the fiber can be finite without anchors (ST-M89)",
+        "no statement is made about the global topology or connectedness of the fiber"
+      ]
+    },
+    {
+      "id": "ST-T299",
+      "title": "The nonnegative-gauge rigidity of ST-T261 / P1-T7 is the statement that a nonnegative orthogonal matrix is a permutation",
+      "kind": "THEOREM",
+      "scope": "the hypotheses of ST-T297; A = D_u^{-1} O D_s is nonnegative iff O is",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-a-fiber-classification",
+        "tests/test_two_view_orthogonal_fiber.py"
+      ],
+      "nonclaims": [
+        "ST-T261 and P1-T7 remain correct as scoped; this claim only shows the scope excludes a manifold of genuine stochastic alternatives when K > 0"
+      ]
+    },
+    {
+      "id": "ST-T300",
+      "title": "Different-channel two-view fiber: a (k^2-k)-parameter signed family (known), with the nonnegative product gauge forced to a common permutation",
+      "kind": "THEOREM",
+      "scope": "T = K1^T D_pi K2 with K1, K2 row-stochastic of full row rank k and pi > 0",
+      "assumptions": [
+        "views are conditionally independent given one persistent latent state",
+        "the number of latent states k is fixed",
+        "exact population laws"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-a-st-t300-different-channels",
+        "src/simtheory/two_view_fiber.py:section_A_prime",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "the signed parametrization and its J(J-1) dimension are known (Henry-Kitamura-Salanie 2014, Sec. 4.2; Hall-Zhou 2003 for k = 2); only the product-gauge rigidity (b), which supplies the different-channel case set aside by the P1-T7 nonclaims, is claimed here",
+        "the dimension count is of the signed parameter set; positivity constraints are only shown to leave a full-dimensional neighbourhood when K1, K2 > 0"
+      ]
+    },
+    {
+      "id": "ST-T301",
+      "title": "Binary latent, two views: the sharp identified set of the prior weight is [1 - q_{y*}^2/T_{y*y*}, q_{x*}^2/T_{x*x*}], piecewise rational in the observable law",
+      "kind": "THEOREM",
+      "scope": "k = 2 under the hypotheses of ST-T297; {x*, y*} is the observable outcome pair that maximizes the angle between columns of any rank-2 factor of T, equivalently minimizes T_xy^2/(T_xx T_yy); outcomes with q_x = 0 are dropped; the weight is that of the latent favoured by x*",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws",
+        "label fixed by the likelihood-ratio orientation of x* versus y*"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-b-st-t301-sharp-identified-interval-k-2",
+        "src/simtheory/two_view_fiber.py:identified_interval_k2",
+        "src/simtheory/two_view_fiber.py:anchor_model",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "Theorem B specializes the sharp two-component bounds of Henry-Kitamura-Salanie 2014 (Theorem 1) to a shared channel, and the feasible-band mechanism is Lawton-Sylvestre 1971; only the explicit closed form is offered, with no priority claimed",
+        "without a label convention the identified set is [L,U] union [1-U,1-L]",
+        "the endpoints are rational only once the extreme pair is fixed; they can jump where an outcome probability tends to 0",
+        "the interval is for exact population laws; finite-sample confidence sets are not constructed"
+      ]
+    },
+    {
+      "id": "ST-T302",
+      "title": "Two views certify a positive floor ell(T) on every latent weight; the floor is sharp for k = 2",
+      "kind": "THEOREM",
+      "scope": "any k >= 2 under the hypotheses of ST-T297; ell(T) = min over extreme rays nu of the dual column cone of (nu.s)^2/|nu|^2, an orthogonal invariant of T",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-d-st-t302-a-certified-weight-floor-for-every-k",
+        "src/simtheory/two_view_fiber.py:weight_floor",
+        "src/simtheory/two_view_fiber.py:floor_sharpness_k3",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "sharpness for k >= 3 is checked only on the stated instance",
+        "the induced upper bound 1-(k-1) ell is not claimed sharp and is loose on the k = 3 witness"
+      ]
+    },
+    {
+      "id": "ST-T303",
+      "title": "Two views plus one anchor outcome per latent identify prior and channel up to label permutation; for k = 2 anchors are also necessary",
+      "kind": "THEOREM",
+      "scope": "the hypotheses of ST-T297; anchors refer to the true channel",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws",
+        "each latent i has an outcome x_i with K[j][x_i] = 0 for j != i and K[i][x_i] > 0"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-c-the-recovery-ladder",
+        "src/simtheory/two_view_fiber.py:section_C",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "sufficiency is the known separability / anchor-word mechanism (Donoho-Stodden 2003; Arora-Ge-Kannan-Moitra 2012) and no priority is claimed",
+        "anchors are not necessary for k >= 3 (ST-M89)"
+      ]
+    },
+    {
+      "id": "ST-T304",
+      "title": "(standard) Within a two-view fiber every Bayes factor equals one and the posterior conditional on T equals the prior conditional on T",
+      "kind": "THEOREM",
+      "scope": "n iid shared-latent two-view pairs, any prior on the k-state parameter space",
+      "assumptions": [
+        "the likelihood is a function of T only"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-e-st-t304-no-learning-inside-the-fiber-standard",
+        "tests/test_two_view_orthogonal_fiber.py"
+      ],
+      "nonclaims": [
+        "standard (Kadane 1974; Dawid 1979; Poirier 1998); the only new content is its location inside the two-view fiber",
+        "the Giacomini-Kitagawa robust-posterior limit is cited as a remark under its regularity conditions (label-fixed functional; convex hull otherwise), not proved here"
+      ]
+    },
+    {
+      "id": "ST-T305",
+      "title": "Two views can point-identify (pi, K) only if the row supports of K are pairwise incomparable (for k = 2: iff both latents have anchors)",
+      "kind": "THEOREM",
+      "scope": "the hypotheses of ST-T297",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-f-st-t305-a-necessary-condition-for-point-identification",
+        "src/simtheory/two_view_fiber.py:nested_support_rotation",
+        "src/simtheory/two_view_fiber.py:section_incomparable_supports",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "the condition is necessary, not sufficient; an exact characterization is open (ST-O07)"
+      ]
+    },
+    {
+      "id": "ST-M86",
+      "title": "The three-view laws of the binary fiber witnesses differ (259/5400 versus 42413/772200 at entry (0,0,0); KL(P_true || P_alt) about 0.00293 nats per triple), consistent with Kruskal uniqueness",
+      "kind": "MODEL_RESULT",
+      "scope": "the k = 2 witness of ST-M87 and its rotated fiber model",
+      "assumptions": [
+        "exact rational arithmetic; the KL value is a float"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#theorem-c-the-recovery-ladder",
+        "src/simtheory/two_view_fiber.py:section_A_k2",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "three-view identifiability itself is cited (Kruskal 1977; Allman-Matias-Rhodes 2009), not reproved; this result only checks that two specific three-view tensors differ"
+      ]
+    },
+    {
+      "id": "ST-M87",
+      "title": "Exact binary witness: pi = (9/25,16/25) and pi' = (1936/15625,13689/15625) share one- and two-view laws, with signed gauge [[18/11,-7/11],[7/39,32/39]] and K' > 0; identified interval [144/1825, 1849/2425]",
+      "kind": "MODEL_RESULT",
+      "scope": "K = [[1/2,1/4,1/4],[1/6,1/3,1/2]], rotation cos 24/25, sin 7/25",
+      "assumptions": [
+        "exact rational arithmetic"
+      ],
+      "evidence": [
+        "src/simtheory/two_view_fiber.py:section_A_k2",
+        "src/simtheory/two_view_fiber.py:section_B_k2",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "the numbers are instance specific",
+        "it is the first ledger witness whose alternative channel K' is strictly positive; the existing PR #64 / PR #68 signed pair is an anchor (endpoint) model with a zero in K'"
+      ]
+    },
+    {
+      "id": "ST-M88",
+      "title": "Exact three-state Cayley witness, exact different-channel witness, and the exact attained weight floor 4/153",
+      "kind": "MODEL_RESULT",
+      "scope": "pi = (1/9,4/9,4/9) with a rational Cayley rotation; pi = (2/5,3/5), K1 != K2, A = [[11/10,-1/10],[1/20,19/20]], B = [[38/35,-3/35],[2/35,33/35]]",
+      "assumptions": [
+        "exact rational arithmetic"
+      ],
+      "evidence": [
+        "src/simtheory/two_view_fiber.py:section_A_k3",
+        "src/simtheory/two_view_fiber.py:section_A_prime",
+        "src/simtheory/two_view_fiber.py:section_k3_inner_outer",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "the numbers are instance specific"
+      ]
+    },
+    {
+      "id": "ST-M89",
+      "title": "A channel without anchors that two views point-identify: pi uniform, K = (1/8)[[0,0,1,3,1,3],[1,3,0,0,3,1],[3,1,3,1,0,0]] (sufficiently scattered)",
+      "kind": "MODEL_RESULT",
+      "scope": "the stated rank-3 channel with uniform prior; every column has exactly two nonzero entries",
+      "assumptions": [
+        "exact rational arithmetic; all extreme rays of the dual cone are enumerated from pairwise facet intersections"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#model-result-st-m89-a-channel-without-anchors-that-two-views-point-identify",
+        "src/simtheory/two_view_fiber.py:section_no_anchor_scattered",
+        "src/simtheory/two_view_fiber.py:dual_cone_extreme_rays_3d",
+        "tests/test_two_view_orthogonal_fiber.py",
+        "receipts/two-view-orthogonal-fiber.txt"
+      ],
+      "nonclaims": [
+        "an instance of the sufficiently scattered uniqueness theorem for symmetric NMF (Huang-Sidiropoulos-Swami 2014), not a new mechanism",
+        "it shows anchors are not necessary for k >= 3; it does not characterize point identification"
+      ]
+    },
+    {
+      "id": "ST-F59",
+      "title": "Bounded exact two-view fiber audit",
+      "kind": "FINITE_CHECK",
+      "scope": "201-point rational tan(theta/2) grid and endpoint probes (k = 2); 728-point anchored Cayley grid (k = 3); 9261-point Cayley grid of exact fiber models with exact floor 4/153 (k = 3); 25-point nonnegative product-gauge grid; 49-point different-channel gauge grid; PR #68 finding-3 pair as the lower endpoint model; 2196-point scattered-channel grid; nested-support rotation; endpoint jump",
+      "assumptions": [
+        "Fraction arithmetic for every decision; floats only to place probe points and report a KL value"
+      ],
+      "evidence": [
+        "src/simtheory/two_view_fiber.py:run",
+        "receipts/two-view-orthogonal-fiber.txt",
+        "tests/test_two_view_orthogonal_fiber.py"
+      ],
+      "nonclaims": [
+        "the k = 3 grid values 784/23409 and 1369/2025 are label-free values attained by fiber models, not an interval and not the sharp identified set",
+        "bounded checks are not empirical evidence for or against simulation"
+      ]
+    },
+    {
+      "id": "ST-O07",
+      "title": "Point identification and sharp two-view identified sets for k >= 3",
+      "kind": "OPEN_PROBLEM",
+      "scope": "the orthonormal-frames-in-a-cone problem {O in O(k): O D_s K >= 0} for k >= 3: an exact criterion between pairwise-incomparable supports (necessary, ST-T305) and sufficiently scattered channels (sufficient), sharp weight envelopes, and finite-sample sets",
+      "assumptions": [
+        "k latent states with pi > 0, finite outcome alphabet, row-stochastic K of full row rank k, and k fixed and known",
+        "both views share one persistent latent state, are conditionally independent given it, and use the same channel K (the alternative uses one common channel K')",
+        "exact population laws"
+      ],
+      "evidence": [
+        "docs/two-view-orthogonal-fiber.md#open-problems"
+      ],
+      "nonclaims": [
+        "anchors are known not to be necessary for k >= 3 (ST-M89)",
+        "no sharp k >= 3 identified set is claimed"
+      ]
+    }
+  ]
+}
