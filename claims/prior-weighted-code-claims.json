@@ -62,6 +62,7 @@
         "tests/test_prior_weighted_codes.py"
       ],
       "nonclaims": [
+        "(standard: chromatic entropy, Alon-Orlitsky 1996, IEEE Trans. Inf. Theory 42, combined with the Shannon and Huffman one-bit redundancy bound) not claimed as new; only the bookkeeping for zero-mass declared classes is recorded here",
         "minimum coloring entropy is not asserted to be the exact one-shot expected prefix length",
         "the universal upper bound is weak L star at most H coloring plus one when zero-mass declared classes require codewords; strictness needs a positive-mass condition",
         "the one-bit redundancy bound is not an asymptotic graph-power result"

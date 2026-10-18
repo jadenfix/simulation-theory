@@ -17,7 +17,7 @@
       "scope": "public histories in the same finite hidden Markov source model that induce equal posterior beliefs and equal previous code actions",
       "assumptions": ["hidden transitions and observations are conditionally Markov under the supplied matrices", "future transition and observation laws are code-independent", "stage cost depends on the hidden state only through the declared source law and selected code"],
       "evidence": ["docs/stochastic-law-observation-beliefs.md#3-belief-sufficiency", "src/simtheory/stochastic_observation_beliefs.py:next_observation_branches", "tests/test_stochastic_observation_beliefs.py"],
-      "nonclaims": ["belief sufficiency fails if omitted history variables affect transitions, observations, or costs", "a Bayesian posterior is not interchangeable with a frequentist confidence region or robust information set"]
+      "nonclaims": ["(standard: belief-state sufficiency for partially observed Markov control, Astrom 1965; Smallwood-Sondik 1973) not claimed as new; only the exact rational specialization to the declared hidden Markov coding model is claimed", "belief sufficiency fails if omitted history variables affect transitions, observations, or costs", "a Bayesian posterior is not interchangeable with a frequentist confidence region or robust information set"]
     },
     {
       "id": "ST-T164",
@@ -26,7 +26,7 @@
       "scope": "two finite rational observation experiments where the coarse kernel equals the fine kernel followed by a row-stochastic garbling channel",
       "assumptions": ["the hidden law model, initial prior, action set, horizon, and switching cost are held fixed", "source-independent private randomization may be used to simulate the garbled signal", "finite expected-cost belief control admits a deterministic optimal policy"],
       "evidence": ["docs/stochastic-law-observation-beliefs.md#7-blackwell-garbling-monotonicity", "src/simtheory/stochastic_observation_beliefs.py:exact_blackwell_observation_value", "tests/test_stochastic_observation_beliefs.py"],
-      "nonclaims": ["the theorem does not price acquiring, storing, or communicating the finer signal", "a finer signal need not provide a strict improvement", "the result assumes the declared probabilistic model is correct"]
+      "nonclaims": ["(standard: the easy direction of Blackwell's comparison of experiments, Blackwell 1951 and 1953) not claimed as new; only the specialization to minimum expected coding cost is claimed", "the theorem does not price acquiring, storing, or communicating the finer signal", "a finer signal need not provide a strict improvement", "the result assumes the declared probabilistic model is correct"]
     },
     {
       "id": "ST-T165",

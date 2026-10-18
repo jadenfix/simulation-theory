@@ -16,6 +16,7 @@
         "tests/test_distributed_consistency.py"
       ],
       "nonclaims": [
+        "(elementary: injectivity of the pre-query message; the one-way INDEX problem and its randomized Omega(m) bound are Kremer-Nisan-Ron 1999) not claimed as new; only the restatement as a causal-cut bound for query-after-message renderers is claimed",
         "if the query is known before communication, the m-bit conclusion does not apply",
         "the result does not identify parent-universe hardware or prove simulation"
       ]
@@ -35,6 +36,7 @@
         "tests/test_distributed_consistency.py"
       ],
       "nonclaims": [
+        "(standard: the coordinatewise Fano bound m(1 - H_2(eps)) for random-access codes; Nayak 1999 proves it even for quantum messages) not claimed as new; only the causal-cut reading is claimed",
         "the information lower bound is not asserted to equal exact finite communication complexity for every m and epsilon",
         "mutual-information bits are not automatically physical storage or energy"
       ]

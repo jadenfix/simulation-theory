@@ -432,6 +432,19 @@ as exact.
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Belief-state recursions and the sufficiency of the posterior for partially
+  observed Markov control (ST-T162, ST-T163): K. J. Astrom, Optimal control of
+  Markov processes with incomplete state information, J. Math. Anal. Appl. 10
+  (1965) 174-205; R. D. Smallwood and E. J. Sondik, Oper. Res. 21 (1973)
+  1071-1088.
+- Garbling monotonicity (ST-T164) is the easy direction of Blackwell's
+  comparison of experiments (D. Blackwell 1951; Ann. Math. Statist. 24 (1953)
+  265-272).
+
 ## Nonclaims
 
 - The initial prior, transition matrix, and observation kernel are assumed known.

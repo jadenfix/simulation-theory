@@ -8,7 +8,7 @@
       "scope": "finite rational categorical channel K with a latent prior on its rows and exact observed mixture law pi K",
       "assumptions": ["component emission rows are known", "latent mixing weights lie on the probability simplex"],
       "evidence": ["docs/finite-mixture-channel-identifiability.md#1-affine-rank-criterion", "src/simtheory/finite_mixture_channel_identifiability.py:exact_finite_mixture_channel_certificate", "tests/test_finite_mixture_channel_identifiability.py"],
-      "nonclaims": ["identifiability does not imply small-sample estimability", "this is not joint identifiability of the prior and the channel rows", "the result is not evidence for simulation"]
+      "nonclaims": ["(standard: a finite mixture with known components is identifiable exactly when the components are linearly independent, Teicher 1963; Yakowitz-Spragins 1968; for probability rows linear and affine independence coincide) not claimed as new; only the exact rational certificate is claimed", "identifiability does not imply small-sample estimability", "this is not joint identifiability of the prior and the channel rows", "the result is not evidence for simulation"]
     },
     {
       "id": "ST-T239",
@@ -44,7 +44,7 @@
       "scope": "finite categorical mixture channels, normalized nonzero zero-sum latent perturbations",
       "assumptions": ["positive and negative parts of a normalized zero-sum perturbation are treated as disjoint-support probability mixtures"],
       "evidence": ["docs/finite-mixture-channel-identifiability.md#5-the-exact-global-conditioning-object", "tests/test_finite_mixture_channel_identifiability.py"],
-      "nonclaims": ["the current coordinate-minor solver does not yet optimize this global modulus"]
+      "nonclaims": ["not claimed as new: this is the identity of ST-T246; for affinely independent rows it is Gutman-Pena 2018 (arXiv:1802.00271) Proposition 1 in the TV norm, and in general it is the zero-sum restriction of the Kleinberg-Sandler 2008 l1 condition number", "the current coordinate-minor solver does not yet optimize this global modulus"]
     },
     {
       "id": "ST-T243",

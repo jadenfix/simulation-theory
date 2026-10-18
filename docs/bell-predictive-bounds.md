@@ -283,3 +283,18 @@ The one-parameter visibility family has simple one-dimensional geometry. The nex
 - distributed causal networks with independently stored transcripts.
 
 Those families can produce genuinely multidimensional packing numbers and stronger state-complexity lower bounds.
+
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- The CHSH inequality and the quantum bound: J. F. Clauser, M. A. Horne,
+  A. Shimony and R. A. Holt, Phys. Rev. Lett. 23 (1969) 880; B. S. Tsirelson
+  (Cirel'son), Lett. Math. Phys. 4 (1980) 93-100. The Werner family: R. F.
+  Werner, Phys. Rev. A 40 (1989) 4277.
+- The adaptive-query bound (ST-T10) combines the KL chain rule for adaptively
+  chosen experiments with Pinsker's inequality (M. S. Pinsker, *Information
+  and Information Stability of Random Variables and Processes*, 1964).
+
+The exact TV formula for the Werner predictive laws (ST-T09) is a direct
+computation; no priority is claimed for it.

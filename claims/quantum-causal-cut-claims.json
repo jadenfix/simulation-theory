@@ -16,6 +16,7 @@
         "tests/test_quantum_random_access.py"
       ],
       "nonclaims": [
+        "(standard: Nayak 1999, arXiv:quant-ph/9904093, building on Ambainis-Nayak-Ta-Shma-Vazirani 2002) not claimed as new; only the specialization to a post-message query interface is claimed",
         "continuous quantum amplitudes do not become parent-universe storage units",
         "the lower bound is not evidence that the actual universe uses a random-access encoding"
       ]
@@ -35,6 +36,7 @@
         "tests/test_quantum_random_access.py"
       ],
       "nonclaims": [
+        "(standard: the entanglement-assisted factor-two ceiling on transmitted classical information is Nayak-Salzman 2006, J. ACM 53) not claimed as new; only the causal-cut reading is claimed",
         "the storage and generation cost of preshared entanglement is not included in transmitted-qubit count",
         "entanglement improves the constant but does not remove linear scaling at fixed error"
       ]
@@ -54,6 +56,7 @@
         "tests/test_quantum_random_access.py"
       ],
       "nonclaims": [
+        "(standard: superdense coding, Bennett-Wiesner 1992) not claimed as new",
         "preshared entanglement is an explicit consumed resource rather than a universally free resource",
         "the theorem concerns internal exact classical payload, not unknown parent communication physics"
       ]
@@ -73,6 +76,7 @@
         "tests/test_quantum_random_access.py"
       ],
       "nonclaims": [
+        "(standard: inverting the Nayak 1999 bound and its entanglement-assisted form, Nayak-Salzman 2006, through the binary entropy) not claimed as new",
         "the converse does not assert finite-code achievability at equality",
         "zero lower bound means only that this converse no longer excludes exact decoding"
       ]

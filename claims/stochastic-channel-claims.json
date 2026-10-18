@@ -16,6 +16,7 @@
         "tests/test_stochastic_channels.py"
       ],
       "nonclaims": [
+        "(standard: the Dobrushin contraction coefficient, Dobrushin 1956) not claimed as new; only the exact finite certificate for declared outcome channels is claimed",
         "a record-dependent intervention channel can insert new record information and is outside this theorem",
         "the coefficient is not asserted to contract every statistical divergence by the same factor"
       ]
@@ -55,6 +56,7 @@
         "tests/test_stochastic_channels.py"
       ],
       "nonclaims": [
+        "(standard: submultiplicativity of the Dobrushin coefficient under composition, Dobrushin 1956) not claimed as new",
         "the product is an upper bound and can be strict",
         "serial observation-channel contraction is not a noisy-network coding capacity theorem"
       ]

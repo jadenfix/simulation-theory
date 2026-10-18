@@ -58,6 +58,7 @@
         "tests/test_observation_channel_value.py"
       ],
       "nonclaims": [
+        "(standard: the easy direction of Blackwell's comparison of experiments, Blackwell 1951 and 1953: a garbled experiment cannot have higher decision value) not claimed as new; only the specialization to shared-randomness coding value is claimed",
         "the theorem is stated for the shared-randomness value because simulating a stochastic garbling requires admitted randomness",
         "Blackwell order is a partial order and is not replaced by one scalar information score"
       ]

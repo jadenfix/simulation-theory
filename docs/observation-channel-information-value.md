@@ -741,6 +741,17 @@ rendering.
 
 ---
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Garbling monotonicity (ST-T133) is the easy direction of Blackwell's
+  comparison of experiments: D. Blackwell, Comparison of experiments, Proc.
+  Second Berkeley Symp. (1951) 93-102; Equivalent comparisons of experiments,
+  Ann. Math. Statist. 24 (1953) 265-272.
+- The shared-randomness values are values of finite zero-sum games, which
+  exist by J. von Neumann, Math. Ann. 100 (1928) 295-320.
+
 ## Nonclaims
 
 - The scenario index is selected adversarially from a finite declared set.

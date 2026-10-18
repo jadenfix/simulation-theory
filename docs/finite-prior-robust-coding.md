@@ -904,3 +904,21 @@ the adversary has a mass-transport solution: move probability from the shortest
 states to the longest states until the radius or available mass is exhausted.
 That continuous inner problem can then be composed with the complete finite
 code universe developed here.
+
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Prefix codes and Huffman optimality: Kraft (1949), McMillan (1956),
+  D. A. Huffman, Proc. IRE 40 (1952) 1098-1101.
+- The shared-randomness game value, its least-favorable prior (ST-T96) and
+  its sparse support (ST-T95) follow from J. von Neumann's minimax theorem
+  (Math. Ann. 100 (1928) 295-320), A. Wald's least-favorable priors
+  (*Statistical Decision Functions*, 1950), and basic optimal solutions of
+  finite games (L. S. Shapley and R. N. Snow, Basic solutions of discrete
+  games, Ann. Math. Studies 24 (1950) 27-35).
+- Convex-hull control (ST-T94) is linearity of expected length in the prior.
+- Minimax redundancy over a class of sources is the subject of universal
+  coding (L. D. Davisson, Universal noiseless coding, IEEE Trans. Inf. Theory
+  19 (1973) 783-795); this note studies the finite one-shot zero-error version
+  with exact certificates.

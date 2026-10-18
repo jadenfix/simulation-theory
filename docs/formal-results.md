@@ -449,6 +449,22 @@ C(I(m)) >= a m
 
 for an externally justified `a>0`. The code makes this coefficient an explicit input rather than inferring it.
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- Unrestricted indistinguishability (ST-T01) and the evidence ceiling (ST-T02)
+  are elementary consequences of equal laws and of Bayes' rule in log-odds form.
+- The Fano bound (ST-T06): R. M. Fano, *Transmission of Information*, MIT
+  Press (1961), in the usual mutual-information form of Fano's method.
+- The Bernoulli e-process (ST-T08) is the likelihood-ratio martingale of
+  A. Wald's sequential probability ratio test (Ann. Math. Statist. 16 (1945)
+  117-186) with J. Ville's maximal inequality (*Etude critique de la notion de
+  collectif*, 1939).
+
+These are recorded to fix notation for the simulator interface, not as new
+results.
+
 ## Current open problems
 
 The proof-complete results above do not establish whether reality is simulated. The highest-value open targets are:

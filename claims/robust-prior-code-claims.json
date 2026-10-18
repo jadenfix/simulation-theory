@@ -83,6 +83,7 @@
         "tests/test_robust_prior_codes.py"
       ],
       "nonclaims": [
+        "(standard: a finite zero-sum game has an optimal mixed strategy supported on at most as many pure strategies as the opponent has, by basic optimal solutions of a linear program, Shapley-Snow 1950) not claimed as new; only the exact certificate for robust prefix coding is claimed",
         "private encoder randomness is not treated as shared codebook knowledge",
         "the certificate bounds codebook support by the number of scenarios but does not price exact non-dyadic random-seed generation"
       ]
@@ -104,6 +105,7 @@
         "tests/test_robust_prior_codes.py"
       ],
       "nonclaims": [
+        "(standard: a direct consequence of von Neumann's minimax theorem for finite games, von Neumann 1928, in Wald's least-favorable-prior form) not claimed as new; only the exact rational certificate for prefix coding over a finite prior hull is claimed",
         "the identity is for minimax expected length and is not transferred to peak length or nonlinear queueing loss",
         "the regret dual retains the explicit mixture of scenario-oracle baselines"
       ]

@@ -227,6 +227,20 @@ Removing any term breaks the inference:
 - poor conditioning amplifies observed-law uncertainty;
 - finite data still require an explicit confidence argument.
 
+## Prior art
+
+The standard results below are used or restated in this note and are not claimed as new.
+
+- With known components, the mixing weights are identifiable exactly when the
+  components are linearly independent (ST-T238, with ST-T239 as the explicit
+  converse): H. Teicher, Identifiability of finite mixtures, Ann. Math. Statist.
+  34 (1963) 1265-1269; S. J. Yakowitz and J. D. Spragins, Ann. Math. Statist. 39
+  (1968) 209-214. For probability rows, linear and affine independence
+  coincide, since `z K = 0` forces `sum_i z_i = 0`.
+- The global TV modulus of section 5 is credited in
+  [finite-mixture-global-tv-modulus](finite-mixture-global-tv-modulus.md)
+  (Gutman and Pena; Kleinberg and Sandler).
+
 ## Nonclaims
 
 - Component emission rows are treated as known in this layer.
