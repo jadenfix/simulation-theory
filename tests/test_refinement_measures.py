@@ -73,3 +73,40 @@ def test_invalid_measure_inputs_fail_closed():
             pass
         else:
             raise AssertionError("out-of-simplex weight should be rejected")
+
+
+def test_grid_additivity_equations_have_the_identity_as_unique_solution():
+    # ST-T268 on the grid {k/N}: x_{a+b} = x_a + x_b for a+b <= N and x_N = 1
+    # determine x_k = k/N, with no candidate rule assumed in advance.
+    n = 12
+    rows = []
+    for a in range(n + 1):
+        for b in range(a, n + 1 - a):
+            row = [F(0)] * (n + 2)
+            row[a + b] += 1
+            row[a] -= 1
+            row[b] -= 1
+            rows.append(row)
+    last = [F(0)] * (n + 2)
+    last[n] = F(1)
+    last[n + 1] = F(1)
+    rows.append(last)
+    # Gauss-Jordan elimination over the rationals on the augmented system.
+    pivot_row = 0
+    pivots = []
+    for column in range(n + 1):
+        pivot = next((r for r in range(pivot_row, len(rows)) if rows[r][column] != 0), None)
+        if pivot is None:
+            continue
+        rows[pivot_row], rows[pivot] = rows[pivot], rows[pivot_row]
+        scale = rows[pivot_row][column]
+        rows[pivot_row] = [value / scale for value in rows[pivot_row]]
+        for r in range(len(rows)):
+            if r != pivot_row and rows[r][column] != 0:
+                factor = rows[r][column]
+                rows[r] = [x - factor * y for x, y in zip(rows[r], rows[pivot_row])]
+        pivots.append(column)
+        pivot_row += 1
+    assert pivots == list(range(n + 1))
+    assert all(row[n + 1] == 0 for row in rows[pivot_row:])
+    assert [rows[k][n + 1] for k in range(n + 1)] == [F(k, n) for k in range(n + 1)]

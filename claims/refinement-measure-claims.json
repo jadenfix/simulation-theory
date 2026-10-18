@@ -8,7 +8,7 @@
       "scope": "local weight-only mass rules on Q intersect [0,1] with mu(1)=1 and additivity over every finite rational partition",
       "assumptions": ["mass depends only on the local rational probability weight"],
       "evidence": ["docs/refinement-measure-uniqueness.md#2-rational-uniqueness-theorem", "src/simtheory/refinement_measures.py:rational_refinement_uniqueness_certificate", "tests/test_refinement_measures.py"],
-      "nonclaims": ["measures depending on additional physical or causal structure are outside this characterization"]
+      "nonclaims": ["measures depending on additional physical or causal structure are outside this characterization", "the argument is an elementary Cauchy-equation step and no mathematical novelty is claimed", "extension to real weights is not claimed here; it needs a regularity condition such as nonnegativity or monotonicity, without which Hamel-basis solutions exist"]
     },
     {
       "id": "ST-T269",
@@ -41,7 +41,7 @@
       "id": "ST-F49",
       "title": "Bounded exact rational refinement-measure audit",
       "kind": "FINITE_CHECK",
-      "scope": "all rational weights with denominators through twenty, clone counts through fifty, escort powers zero through three, and invalid-weight rejection",
+      "scope": "identity p*(1/q)=p/q for rational weights with denominators through twenty; escort scaling for clone counts {2,3,5,10} at powers 0-3; escort category masses for clone counts {2,5,10,20,50} at powers 0-2; unique solution x_k=k/N of the additivity equations on the grid {k/N} for N=12; invalid-weight rejection",
       "assumptions": ["all calculations use exact rational arithmetic"],
       "evidence": ["src/simtheory/refinement_measures.py", "tests/test_refinement_measures.py"],
       "nonclaims": ["bounded checks are not empirical evidence for simulation"]
