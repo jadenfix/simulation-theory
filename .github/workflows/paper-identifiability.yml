@@ -68,8 +68,8 @@ jobs:
       - name: Fail on unresolved references or overfull boxes
         working-directory: paper/identifiability-before-anthropic-bayes
         run: |
-          ! grep -E 'LaTeX Warning: (Citation|Reference).*undefined|There were undefined references|There were undefined citations' paper.log
-          ! grep -E 'Overfull \\hbox|Overfull \\vbox' paper.log
+          if grep -E 'LaTeX Warning: (Citation|Reference).*undefined|There were undefined references|There were undefined citations' paper.log; then exit 1; fi
+          if grep -E 'Overfull \\hbox|Overfull \\vbox' paper.log; then exit 1; fi
 
       - name: PDF preflight and release hashes
         working-directory: paper/identifiability-before-anthropic-bayes

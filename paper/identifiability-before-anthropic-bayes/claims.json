@@ -35,7 +35,7 @@
       "type": "proposition",
       "status": "elementary Bayes decomposition; finite conditional-kernel formulation of established xerographic/self-location, observer-selection, and observer-measure specification ideas",
       "assumptions": ["finite world and candidate-center sets for the displayed formula", "a normalized world prior and a normalized conditional self-location kernel are declared", "evidence likelihoods are specified for each world-center pair", "simulant and non-simulant categories are disjoint subsets of candidate centers", "the count-calibration and kernel-mass-ratio corollaries require a fixed world, nondiscriminating evidence over the declared candidate class, and positive denominator mass"],
-      "nonclaims": ["the self-location kernel or location-distribution idea is not claimed as novel", "observer-selection formalization, observer-measure role separation, and the absence of a required literal global sampler are not claimed as novel", "does not select a normatively correct self-location kernel", "does not assert that a physical global sampler literally selects an observer", "does not refute indifference or Thomas-style calibration", "raw count ratios arise only under additional uniformity, nondiscriminating-evidence, and world-weighting assumptions", "representation-only cloning is invariant only when the parent kernel mass is conserved across clones"]
+      "nonclaims": ["the self-location kernel or location-distribution idea is not claimed as novel", "observer-selection formalization, observer-measure role separation, and the absence of a required literal global sampler are not claimed as novel", "does not select a normatively correct self-location kernel", "does not assert that a physical global sampler literally selects an observer", "does not refute indifference or Thomas-style calibration", "raw count ratios are guaranteed by additional uniformity, nondiscriminating-evidence, and world-weighting assumptions and otherwise arise only through special cancellation", "representation-only cloning is invariant only when the parent kernel mass is conserved across clones"]
     },
     {
       "id": "P1-T4",
@@ -48,7 +48,7 @@
     {
       "id": "P1-T5",
       "name": "known-channel affine-rank identification",
-      "type": "theorem",
+      "type": "proposition",
       "status": "standard finite-mixture linear geometry",
       "assumptions": ["the observation channel K is a known channel", "finite latent and observed alphabets"],
       "nonclaims": ["not claimed as novel", "does not address joint unknown prior/channel identification", "failure of point identification does not make Bayesian analysis impossible; it calls for explicit prior sensitivity, identified sets, or robust posterior ranges rather than data-unique point certainty", "does not by itself provide a finite-sample conditioning guarantee"]
