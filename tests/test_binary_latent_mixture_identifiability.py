@@ -61,3 +61,14 @@ def test_required_sample_size_scaling_is_inverse_square_in_row_separation():
     _, _, r2_d1 = bernoulli_emission_second_moment_theta_radius(500, 500, 0, 1, Fraction(1, 10))
     _, _, r2_dhalf = bernoulli_emission_second_moment_theta_radius(500, 500, Fraction(1, 4), Fraction(3, 4), Fraction(1, 10))
     assert r2_dhalf / r2_d1 == 4
+
+
+def test_off_segment_sample_frequency_is_clipped_not_rejected():
+    # Rows 1/5 and 4/5; a sample of all ones lies beyond the segment [1/5, 4/5].
+    theta_hat, observed_r2, latent_r2 = bernoulli_emission_second_moment_theta_radius(
+        10, 0, Fraction(1, 5), Fraction(4, 5)
+    )
+    assert theta_hat == 1
+    assert latent_r2 == observed_r2 / Fraction(9, 25)
+    theta_hat, _, _ = bernoulli_emission_second_moment_theta_radius(0, 10, Fraction(1, 5), Fraction(4, 5))
+    assert theta_hat == 0

@@ -76,6 +76,8 @@ When `p0 != p1` and `q` lies on the mixture segment,
 }
 \]
 
+An empirical frequency `q_hat` can fall off the segment even when the model is correct. Clipping `theta_hat` to `[0,1]` then preserves the radius bound, because projection onto `[0,1]` is non-expansive and `theta` lies in `[0,1]`.
+
 ## Fixed-sample uncertainty amplification
 
 For `N` independent Bernoulli emissions, the empirical success frequency `q_hat` obeys
@@ -103,7 +105,7 @@ the corresponding latent-weight squared radius is
 r_\theta^2=\frac1{4N\alpha d^2}.}
 \]
 
-The inverse-square factor is the central conditioning result. Halving row separation multiplies the sample size required for the same latent-weight precision by four.
+The inverse-square factor is the central conditioning result. Under this conservative second-moment bound, halving row separation multiplies the sample size the bound requires for the same latent-weight radius by four; the true required sample size also depends on `q(1-q)` and can change by a different factor.
 
 At `d=0`, no finite sample size repairs nonidentifiability because the observation laws are exactly equal.
 
@@ -113,7 +115,7 @@ This theorem assumes every independent unit receives a fresh latent draw. If one
 
 ## Nonclaims
 
-- Emission rows are treated as known exactly. Estimating them introduces another uncertainty layer.
+- Emission rows are treated as known and labelled. If the rows are unknown, theta is not identifiable from one emission per unit at all: `(theta,R_0,R_1)` and `(1-theta,R_1,R_0)` give the same law (label switching), and any observed law has infinitely many binary-mixture representations (for example `Q=(1/2,1/2)` from rows `(1,0),(0,1)` with `theta=1/2`, or from identical rows `(1/2,1/2)` with any `theta`). Identifying theta then requires extra structure such as several conditionally independent emissions per unit.
 - The second-moment/Markov confidence radius is conservative and fixed-sample.
 - The binary exact scaling does not automatically generalize to a scalar coefficient for arbitrary multi-component mixtures; rank and conditioning of the full channel matter.
 - None of these identifiability results is evidence for simulation.

@@ -8,7 +8,7 @@
       "scope": "two latent components with known categorical emission rows and arbitrary binary mixing weights",
       "assumptions": ["both mixing hypotheses use the same two emission rows"],
       "evidence": ["docs/binary-latent-mixture-identifiability.md#exact-tv-geometry", "src/simtheory/binary_latent_mixture_identifiability.py:binary_mixture_identifiability_certificate", "tests/test_binary_latent_mixture_identifiability.py"],
-      "nonclaims": ["the scalar identity is specific to a two-component mixture"]
+      "nonclaims": ["the scalar identity is specific to a two-component mixture", "with unknown emission rows the mixing weight is not identifiable from one emission per unit (label switching and non-unique representations)"]
     },
     {
       "id": "ST-T235",
@@ -26,14 +26,14 @@
       "scope": "binary mixtures with positive emission-row TV separation d",
       "assumptions": ["the compared latent and observed laws remain in the declared mixture family"],
       "evidence": ["docs/binary-latent-mixture-identifiability.md#exact-tv-geometry", "src/simtheory/binary_latent_mixture_identifiability.py:latent_radius_from_emission_radius", "tests/test_binary_latent_mixture_identifiability.py"],
-      "nonclaims": ["the amplified radius may be conservative when additional structure is available"]
+      "nonclaims": ["the amplified radius may be conservative when additional structure is available", "for an off-family observed centre Q_hat with TV(Q_hat,Q_theta)<=rho, only the set {theta': TV(Q_hat,Q_theta')<=rho}, of diameter at most 2rho/d, is controlled"]
     },
     {
       "id": "ST-T237",
       "title": "Binary Bernoulli emission calibration inflates latent-weight squared uncertainty by inverse row separation squared",
       "kind": "THEOREM",
       "scope": "N independent units with one Bernoulli emission each from a binary latent mixture with known row probabilities",
-      "assumptions": ["units receive independent latent draws", "emission rows are known exactly", "fixed-sample second-moment/Markov calibration is used"],
+      "assumptions": ["units receive independent latent draws", "emissions are conditionally independent across units given their latent draws (one emission per unit)", "emission rows are known exactly", "N is fixed in advance", "fixed-sample second-moment/Markov calibration is used", "theta_hat is clipped to [0,1] when the sample frequency falls off the mixture segment"],
       "evidence": ["docs/binary-latent-mixture-identifiability.md#fixed-sample-uncertainty-amplification", "src/simtheory/binary_latent_mixture_identifiability.py:bernoulli_emission_second_moment_theta_radius", "tests/test_binary_latent_mixture_identifiability.py"],
       "nonclaims": ["the fixed-sample Markov bound is not claimed optimal"]
     },
@@ -42,9 +42,9 @@
       "title": "Halving binary emission-row separation quadruples the fixed-sample latent squared-radius inflation",
       "kind": "MODEL_RESULT",
       "scope": "clean Bernoulli rows 0 versus 1 compared with noisy rows 1/4 versus 3/4 at equal N and alpha",
-      "assumptions": ["both empirical emission frequencies equal one half"],
+      "assumptions": ["equal N and alpha in both designs"],
       "evidence": ["tests/test_binary_latent_mixture_identifiability.py"],
-      "nonclaims": ["the exact numerical factor follows from this binary row-separation comparison"]
+      "nonclaims": ["the factor four is a property of the conservative worst-case-variance (1/(4N)) bound; the exact sampling-variance ratio depends on theta and is not claimed to equal four"]
     },
     {
       "id": "ST-F42",

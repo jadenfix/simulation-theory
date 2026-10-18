@@ -8,7 +8,7 @@ For any theta,eta,
 
     TV(Q_theta,Q_eta)=|theta-eta| TV(R_0,R_1).
 
-Thus d=TV(R_0,R_1) is the exact inverse-conditioning coefficient.  If d=0 the
+Thus d=TV(R_0,R_1) is the exact conditioning coefficient (its inverse is the amplification factor).  If d=0 the
 mixing weight is not identifiable from emissions at all.  If d>0, an observed-
 law TV error rho implies latent-weight error at most rho/d.
 """
@@ -123,6 +123,11 @@ def bernoulli_emission_second_moment_theta_radius(
     observed-law squared radius 1/(4 N alpha). Division by row separation^2
     transfers it to theta space.  This returns squared radii exactly and avoids
     square roots; callers may round outward on a rational grid if needed.
+
+    A sample frequency can fall off the mixture segment even when the model is
+    correct (about half the time when theta is 0 or 1).  theta_hat is then
+    clipped to [0,1]; projection is non-expansive and theta lies in [0,1], so
+    |theta_hat - theta| <= |q_hat - q| / d still holds.
     """
     s, f = int(success_count), int(failure_count)
     if s < 0 or f < 0 or s + f < 1:
@@ -131,10 +136,14 @@ def bernoulli_emission_second_moment_theta_radius(
     if not 0 < alpha < 1:
         raise ValueError("failure probability must lie in (0,1)")
     q_hat = Fraction(s, s + f)
-    theta_hat = binary_bernoulli_emission_theta(q_hat, row0_one_probability, row1_one_probability)
-    separation = abs(Fraction(row1_one_probability) - Fraction(row0_one_probability))
+    p0 = Fraction(row0_one_probability)
+    p1 = Fraction(row1_one_probability)
+    if not all(0 <= x <= 1 for x in (p0, p1)):
+        raise ValueError("Bernoulli probabilities must lie in [0,1]")
+    separation = abs(p1 - p0)
     if separation == 0:
         raise ValueError("identical Bernoulli emission rows do not identify theta")
+    theta_hat = min(Fraction(1), max(Fraction(0), (q_hat - p0) / (p1 - p0)))
     observed_r2 = Fraction(1, 4 * (s + f)) / alpha
     latent_r2 = observed_r2 / (separation * separation)
     return theta_hat, observed_r2, latent_r2
