@@ -175,3 +175,27 @@ Before any claim is described as new:
 There is real paper material here, but the strongest paper is **not** a proof that reality is simulated. It is a structural paper showing why identifiability, sampling hierarchy, representation invariance, and causal observation structure must be fixed before anthropic or simulation-style Bayesian conclusions are justified.
 
 The strongest technical mathematics is the finite-mixture inverse-conditioning program, but its novelty remains provisional until the facial-distance/minimum-gain literature is exhaustively reconciled.
+## Status after integration (2026-10-17)
+
+The open research PRs this audit reviewed (#47, #48, #51 to #58, #60 to #67, #69) were re-read against these findings, corrected where needed, rebased one at a time onto main and merged. How each finding was handled:
+
+- **Finding 2 (facial distance).** The global TV modulus doc and ST-T244/ST-T246 now say that the disjoint-face identity is the Jordan decomposition plus, for affinely independent rows, the TV-norm facial distance (Pena and Rodriguez 2019; compare the pyramidal width of Lacoste-Julien and Jaggi 2015). They also call it the lower counterpart of the Dobrushin coefficient and do not claim it as new. The minimum is attained on complementary partitions.
+- **Finding 3 (two-view scope).** The rigidity theorem is now titled and stated inside the nonnegative stochastic gauge class. A tested counterexample shows that two shared-latent views do not identify `(pi,K)` globally, even with full rank and strictly positive priors. The pair `((1/2,1/2), ((3/4,1/4),(1/4,3/4)))` and `((1/5,4/5), ((1,0),(3/8,5/8)))` has equal one- and two-view laws. The two are related by a unit-row-sum gauge with a negative entry, and a third view separates them.
+- **Finding 4 (refinement additivity).** ST-T268 is marked as an elementary Cauchy step: no novelty is claimed, and no extension to real weights is made without a regularity condition. The finite check now solves the additivity equations on a grid instead of restating the identity.
+- **Finding 5 (persistent-latent support).** ST-T225, ST-T226, ST-T228, the doc and the paper abstract state the support condition `b_m>0` wherever `a_m>0`. A worked example shows that the ratio is unbounded without it. The ceiling is described as a statement about the mixing weights that does not prevent a long transcript from identifying the active component.
+- **Finding 6 (conservative radii).** The independent-latent and binary-mixture lanes call their second-moment/Markov radii conservative, valid with probability `1-alpha` under the iid model, and not optimal. The factor-four sample-size statement is attributed to the worst-case-variance bound, not to the true sample size.
+- **Finding 7 (stacked PRs).** No stacked branch was merged as a stack. Each PR was rebased onto main, so main now holds the reviewed mathematics.
+
+Errors found during integration that this audit had not flagged:
+
+- The complementarity slack in #47 had the wrong sign in its definition.
+- The local-continuum step of the one-view gauge (#63) needed the perturbation to move the channel.
+- The row-uncertainty latent-radius transfer (#62) silently assumed that `rho_obs` compares priors through the same true channel.
+- The certificate validators in #61 and #62 accepted forged receipts.
+- A shifted-prior test in #55 was vacuous.
+- The menu-regret K4 values (#67) hold only at horizon one.
+- The off-segment theta estimate in #58 raised an error with positive probability.
+- The paper's "only under" count-calibration wording stated necessity where only sufficiency holds.
+- The paper workflow's reference and overfull-box checks never failed the job.
+
+Each fix is recorded in the corresponding PR's commits.
